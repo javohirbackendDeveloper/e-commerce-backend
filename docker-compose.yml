@@ -1,0 +1,57 @@
+services:
+  order-service:
+    build:
+      context: .
+      dockerfile: ./apps/order-service/Dockerfile
+      target: development
+    command: npm run start:dev order-service
+    env_file:
+      - ./apps/order-service/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4002:4002"
+
+  products-service:
+    build:
+      context: .
+      dockerfile: ./apps/products-service/Dockerfile
+      target: development
+    command: npm run start:dev products-service
+    env_file:
+      - ./apps/products-service/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4003:4003"
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: ./apps/auth-service/Dockerfile
+      target: development
+    command: npm run start:dev auth-service
+    ports:
+      - "4001:4001"
+    env_file:
+      - ./apps/auth-service/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - "5672:5672"
+
+volumes:
+  mongodb_master_data:
+    driver: local

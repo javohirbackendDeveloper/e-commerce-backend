@@ -17,6 +17,21 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {}
+    "paths": {
+      "@app/common": [
+        "libs/common/src",
+        "libs/common/src"
+      ],
+      "@app/common/*": [
+        "libs/common/src/*",
+        "libs/common/src/*"
+      ],
+      "@app/rmq": [
+        "libs/rmq/src"
+      ],
+      "@app/rmq/*": [
+        "libs/rmq/src/*"
+      ]
+    }
   }
 }
