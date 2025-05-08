@@ -15,6 +15,9 @@ export class RmqModule {
     if (!name) {
       throw new BadRequestException("Name not found in registering rmq");
     }
+
+    console.log({ name });
+
     return {
       module: RmqModule,
       imports: [

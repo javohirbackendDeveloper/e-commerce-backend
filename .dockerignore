@@ -6,10 +6,16 @@
 
 # Build dependencies
 dist.do
-node_modules
 
 # Environment (contains sensitive data)
 *.env
+
+**/node_modules
+.git
+.env
+dist
+*.md
+.DS_Store
 
 # Misc
 .eslintrc.js

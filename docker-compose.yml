@@ -1,57 +1,64 @@
+version: "3.8"
+
 services:
-  order-service:
-    build:
-      context: .
-      dockerfile: ./apps/order-service/Dockerfile
-      target: development
-    command: npm run start:dev order-service
-    env_file:
-      - ./apps/order-service/.env
-    depends_on:
-      - rabbitmq
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    ports:
-      - "4002:4002"
-
-  products-service:
-    build:
-      context: .
-      dockerfile: ./apps/products-service/Dockerfile
-      target: development
-    command: npm run start:dev products-service
-    env_file:
-      - ./apps/products-service/.env
-    depends_on:
-      - rabbitmq
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    ports:
-      - "4003:4003"
-
-  auth-service:
-    build:
-      context: .
-      dockerfile: ./apps/auth-service/Dockerfile
-      target: development
-    command: npm run start:dev auth-service
-    ports:
-      - "4001:4001"
-    env_file:
-      - ./apps/auth-service/.env
-    depends_on:
-      - rabbitmq
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-
   rabbitmq:
-    image: rabbitmq
+    image: rabbitmq:3.12-management
     ports:
       - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
 
-volumes:
-  mongodb_master_data:
-    driver: local
+  order_service:
+    build:
+      context: .
+      dockerfile: ./apps/order_service/Dockerfile
+    env_file:
+      - ./apps/order_service/.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "4002:4002"
+    networks:
+      - app-network
+
+  products_service:
+    build:
+      context: .
+      dockerfile: ./apps/products_service/Dockerfile
+    env_file:
+      - ./apps/products_service/.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "4003:4003"
+    networks:
+      - app-network
+
+  auth_service:
+    build:
+      context: .
+      dockerfile: ./apps/auth_service/Dockerfile
+    env_file:
+      - ./apps/auth_service/.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "4001:4001"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

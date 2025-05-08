@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderStatus {
+  PENDING // Buyurtma qabul qilindi, to'lov kutilmoqda
+  CONFIRMED // To'lov tasdiqlandi, buyurtma qayta ishlanmoqda
+  FULFILLED // Buyurtma tayyor, jo'natishga tayyor (yoki jo'natilgan)
+  COMPLETED // Mijozga yetkazib berildi
+}
+
+model Orders {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String
+  productIds Json
+  status     OrderStatus @default(PENDING)
+  totalPrice Float
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}

@@ -1,15 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { RmqOptions, Transport } from '@nestjs/microservices';
+import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { RmqContext, RmqOptions, Transport } from "@nestjs/microservices";
 
 @Injectable()
 export class RmqService {
   constructor(private readonly configService: ConfigService) {}
 
-  getOptions(queue: string, noAck: boolean): RmqOptions {
-    const url = this.configService.get<string>('RABBIT_MQ_URI');
+  getOptions(queue: string, noAck: boolean = false): RmqOptions {
+    const url = this.configService.get<string>("RABBIT_MQ_URI");
     if (!url) {
-      throw new Error('RABBIT_MQ_URI is not defined in config');
+      throw new Error("RABBIT_MQ_URI is not defined in config");
     }
 
     return {
@@ -21,5 +21,11 @@ export class RmqService {
         persistent: true,
       },
     };
+  }
+
+  ack(context: RmqContext) {
+    const channel = context.getChannelRef();
+    const originalMessage = context.getMessage();
+    channel.ack(originalMessage);
   }
 }
