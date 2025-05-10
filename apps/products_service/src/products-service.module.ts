@@ -1,24 +1,24 @@
 import { Module } from "@nestjs/common";
-import { ProductsServiceController } from "./products-service.controller";
-import { ProductsServiceService } from "./products-service.service";
 import { ConfigModule } from "@nestjs/config";
-import { ProductPrismaService } from "../prisma/prisma.service";
-import { RmqModule, RmqService } from "@app/common";
 import * as Joi from "joi";
+import { RmqModule, RmqService } from "@app/common";
+import { CategoryModule } from "./category/category.module";
+import { ProductModule } from "./product/product.module";
+import { PrismaService } from "../prisma/prisma.service";
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: "./apps/products_service/.env",
       isGlobal: true,
-      validationSchema: Joi.object({
-        RABBIT_MQ_URI: Joi.string().required(),
-        RABBIT_MQ_PRODUCTS_SERVICE_QUEUE: Joi.string().required(),
-      }),
     }),
-    RmqModule,
+    RmqModule.register({ name: "ORDER_SERVICE" }),
+    CategoryModule,
+    ProductModule,
+    CommentsModule,
   ],
-  controllers: [ProductsServiceController],
-  providers: [ProductsServiceService, ProductPrismaService, RmqService],
+  controllers: [],
+  providers: [PrismaService, RmqService],
 })
 export class ProductsServiceModule {}

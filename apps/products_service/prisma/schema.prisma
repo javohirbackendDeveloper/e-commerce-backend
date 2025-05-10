@@ -7,7 +7,7 @@
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
-  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+  binaryTargets = ["native", "linux-musl"]
 }
 
 datasource db {
@@ -15,6 +15,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Comments{
+   id String @id @default(auto()) @map("_id") @db.ObjectId
+   title String
+   sent_person String
+   image String?
+   stars Int @default(0)
+   replyMessage String?
+   createdAt DateTime @default(now())
+   updatedAt DateTime @updatedAt
+   productId String @db.ObjectId
+   product Product @relation(fields: [productId] , references: [id])
+   @@index([sent_person])
+}
 
 model Product {
  id String @id @default(auto()) @map("_id") @db.ObjectId
@@ -22,23 +35,28 @@ model Product {
  description String @default("")
  price Float 
  quantity Int
- category String
  product_images String[] @default([])
- comments String[] @default([])
  ordered String[] @default([])
  createdAt DateTime @default(now())
  updatedAt DateTime @updatedAt
-
- @@index([category])
+ comments Comments[]
+categoryId String @db.ObjectId
+ category Category @relation(fields: [categoryId] , references: [id])
+ 
+ @@index([categoryId])
  @@index([product_name])
 }
 
-model Comments{
-   id String @id @default(auto()) @map("_id") @db.ObjectId
-   title String
-   sent_person String
-   createdAt DateTime @default(now())
-   updatedAt DateTime @updatedAt
 
-   @@index([sent_person])
+
+
+
+// CATEGORY PART
+
+model Category {
+     id String @id @default(auto()) @map("_id") @db.ObjectId
+     parentId String?
+     title String @unique
+     children Int @default(0)
+     product Product[]
 }

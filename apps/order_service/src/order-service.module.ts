@@ -1,28 +1,23 @@
 import { Module } from "@nestjs/common";
 import { OrderServiceController } from "./order-service.controller";
 import { OrderServiceService } from "./order-service.service";
-import { ConfigModule } from "@nestjs/config";
-import * as Joi from "joi";
-import { RmqModule } from "@app/common";
-import { PRODUCTS_SERVICE } from "./constants/services";
-import { MongooseModule } from "@nestjs/mongoose";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { RmqModule, RmqService } from "@app/common";
 import { PrismaService } from "../prisma/prisma.service";
+import { ORDER_SERVICE } from "./constants/services";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: "./apps/order_service/.env",
       isGlobal: true,
-      validationSchema: Joi.object({
-        RABBIT_MQ_URI: Joi.string().required(),
-        RABBIT_MQ_ORDER_SERVICE_QUEUE: Joi.string().required(),
-      }),
     }),
+
     RmqModule.register({
-      name: PRODUCTS_SERVICE,
+      name: ORDER_SERVICE,
     }),
   ],
   controllers: [OrderServiceController],
-  providers: [OrderServiceService, PrismaService],
+  providers: [OrderServiceService, PrismaService, RmqService],
 })
 export class OrderServiceModule {}

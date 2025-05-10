@@ -25,7 +25,7 @@ export class AdminController {
   }
 
   @Post("login")
-  @HttpCode(HttpStatus.ACCEPTED)
+  @HttpCode(HttpStatus.CREATED)
   async loginAdmin(
     @Body() loginAdminDto: AdminLoginDto,
     @Res({ passthrough: true }) response: Response

@@ -1,4 +1,5 @@
 import { ConfigService } from "@nestjs/config";
+import { Roles } from "apps/auth_service/constants/enum_roles";
 import { Response } from "express";
 import * as jwt from "jsonwebtoken";
 
@@ -22,7 +23,7 @@ export class CreateToken {
         `${this.role.toUpperCase()}_ACCESS_TOKEN_SECRET`
       ),
       {
-        expiresIn: "1m",
+        expiresIn: "15m",
       }
     );
 
@@ -37,6 +38,11 @@ export class CreateToken {
           expiresIn: "7d",
         }
       );
+
+    Roles.forEach((role) => {
+      response.clearCookie(`${role.toLowerCase()}_access_token`);
+      response.clearCookie(`${role.toLowerCase()}_access_token`);
+    });
 
     response.cookie(`${this.role.toLowerCase()}_access_token`, accessToken, {
       httpOnly: true,

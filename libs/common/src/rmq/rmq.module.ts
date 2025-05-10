@@ -16,8 +16,6 @@ export class RmqModule {
       throw new BadRequestException("Name not found in registering rmq");
     }
 
-    console.log({ name });
-
     return {
       module: RmqModule,
       imports: [
@@ -27,8 +25,11 @@ export class RmqModule {
             useFactory: (configService: ConfigService) => ({
               transport: Transport.RMQ,
               options: {
-                urls: [configService.get<string>("RABBIT_MQ_URI") as string],
+                urls: [configService.get<string>("RABBIT_MQ_URI")],
                 queue: configService.get<string>(`RABBIT_MQ_${name}_QUEUE`),
+              },
+              queueOptions: {
+                durable: true,
               },
             }),
             inject: [ConfigService],

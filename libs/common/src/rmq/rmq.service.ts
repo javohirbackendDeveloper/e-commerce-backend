@@ -6,19 +6,25 @@ import { RmqContext, RmqOptions, Transport } from "@nestjs/microservices";
 export class RmqService {
   constructor(private readonly configService: ConfigService) {}
 
-  getOptions(queue: string, noAck: boolean = false): RmqOptions {
+  getOptions(name: string, noAck: boolean = false): RmqOptions {
     const url = this.configService.get<string>("RABBIT_MQ_URI");
     if (!url) {
       throw new Error("RABBIT_MQ_URI is not defined in config");
     }
+    console.log({ name });
+
+    const queue = this.configService.get<string>(`RABBIT_MQ_${name}_QUEUE`);
 
     return {
       transport: Transport.RMQ,
       options: {
         urls: [url],
-        queue: this.configService.get<string>(`RABBIT_MQ_${queue}_QUEUE`),
-        noAck,
-        persistent: true,
+        queue,
+        queueOptions: {
+          durable: true,
+        },
+        // noAck,
+        // persistent: true,
       },
     };
   }

@@ -16,6 +16,8 @@ export class OrderServiceController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async createOrder(@Body() createOrderDto: CreateOrderDto) {
+    console.log("Data came to order controller ", createOrderDto);
+
     return this.orderServiceService.createOrder(createOrderDto);
   }
 }

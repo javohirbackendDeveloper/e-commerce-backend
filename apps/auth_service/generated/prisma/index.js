@@ -137,7 +137,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Administrator\\Desktop\\e_commerce\\apps\\auth-service\\generated\\prisma",
+      "value": "C:\\Users\\Administrator\\Desktop\\e_commerce\\apps\\auth_service\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -155,7 +155,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Administrator\\Desktop\\e_commerce\\apps\\auth-service\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Administrator\\Desktop\\e_commerce\\apps\\auth_service\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

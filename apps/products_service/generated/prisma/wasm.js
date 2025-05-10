@@ -113,26 +113,35 @@ Prisma.NullTypes = {
  * Enums
  */
 
+exports.Prisma.CommentsScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  sent_person: 'sent_person',
+  image: 'image',
+  stars: 'stars',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  productId: 'productId'
+};
+
 exports.Prisma.ProductScalarFieldEnum = {
   id: 'id',
   product_name: 'product_name',
   description: 'description',
   price: 'price',
   quantity: 'quantity',
-  category: 'category',
   product_images: 'product_images',
-  comments: 'comments',
   ordered: 'ordered',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  categoryId: 'categoryId'
 };
 
-exports.Prisma.CommentsScalarFieldEnum = {
+exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
+  parentId: 'parentId',
   title: 'title',
-  sent_person: 'sent_person',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  children: 'children'
 };
 
 exports.Prisma.SortOrder = {
@@ -147,8 +156,9 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
+  Comments: 'Comments',
   Product: 'Product',
-  Comments: 'Comments'
+  Category: 'Category'
 };
 
 /**

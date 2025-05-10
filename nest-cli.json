@@ -8,13 +8,13 @@
   "monorepo": true,
   "root": "apps/e_commerce",
   "projects": {
-    "api-gateway": {
+    "api_gateway": {
       "type": "application",
-      "root": "apps/api-gateway",
+      "root": "apps/api_gateway",
       "entryFile": "main",
-      "sourceRoot": "apps/api-gateway/src",
+      "sourceRoot": "apps/api_gateway/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+        "tsConfigPath": "apps/api_gateway/tsconfig.app.json"
       }
     },
     "auth_service": {
