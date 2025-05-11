@@ -6,6 +6,7 @@ import { CategoryModule } from "./category/category.module";
 import { ProductModule } from "./product/product.module";
 import { PrismaService } from "../prisma/prisma.service";
 import { CommentsModule } from './comments/comments.module';
+import { LikedProductModule } from './liked-product/liked-product.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { CommentsModule } from './comments/comments.module';
     CategoryModule,
     ProductModule,
     CommentsModule,
+    LikedProductModule,
   ],
   controllers: [],
   providers: [PrismaService, RmqService],

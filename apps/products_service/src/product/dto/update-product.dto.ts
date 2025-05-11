@@ -33,4 +33,12 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
   @IsMongoId()
   @IsOptional()
   categoryId?: string;
+
+  @IsString()
+  @IsOptional()
+  brand?: string;
+
+  @IsArray()
+  @IsOptional()
+  color?: string[];
 }

@@ -16,32 +16,36 @@ datasource db {
 }
 
 model Comments {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  sent_person String
-  image       String?
-  stars       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  productId   String   @db.ObjectId
-  product     Product  @relation(fields: [productId], references: [id])
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  sent_person  String
+  image        String?
+  stars        Int      @default(0)
+  replyMessage String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  productId    String   @db.ObjectId
+  product      Product  @relation(fields: [productId], references: [id])
 
   @@index([sent_person])
 }
 
 model Product {
-  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
   product_name   String
-  description    String     @default("")
+  description    String         @default("")
   price          Float
   quantity       Int
-  product_images String[]   @default([])
-  ordered        String[]   @default([])
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
+  color          String[]
+  brand          String
+  product_images String[]       @default([])
+  ordered        String[]       @default([])
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
   comments       Comments[]
-  categoryId     String     @db.ObjectId
-  category       Category   @relation(fields: [categoryId], references: [id])
+  likes          LikedProduct[]
+  categoryId     String         @db.ObjectId
+  category       Category       @relation(fields: [categoryId], references: [id])
 
   @@index([categoryId])
   @@index([product_name])
@@ -55,4 +59,14 @@ model Category {
   title    String    @unique
   children Int       @default(0)
   product  Product[]
+}
+
+// LIKED PRODUCTS
+
+model LikedProduct {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String?
+  productId String   @db.ObjectId
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
 }

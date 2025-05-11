@@ -23,9 +23,14 @@ export class CategoryController {
     return this.categoryService.create(createCategoryDto);
   }
 
-  @Get()
+  @Get("findAll")
   findAll() {
     return this.categoryService.findAll();
+  }
+
+  @Get()
+  findAllParentCats() {
+    return this.categoryService.findAllParentCats();
   }
 
   @Get(":id")

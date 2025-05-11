@@ -35,11 +35,14 @@ model Product {
  description String @default("")
  price Float 
  quantity Int
+ color String[]
+ brand String
  product_images String[] @default([])
  ordered String[] @default([])
  createdAt DateTime @default(now())
  updatedAt DateTime @updatedAt
  comments Comments[]
+ likes LikedProduct[]
 categoryId String @db.ObjectId
  category Category @relation(fields: [categoryId] , references: [id])
  
@@ -59,4 +62,18 @@ model Category {
      title String @unique
      children Int @default(0)
      product Product[]
+}
+
+
+
+// LIKED PRODUCTS
+
+
+model LikedProduct {
+     id String @id @default(auto()) @map("_id") @db.ObjectId
+     userId String?
+     productId String @db.ObjectId
+     product Product @relation(fields: [productId] , references: [id])
+     createdAt DateTime @default(now())
+
 }

@@ -119,6 +119,7 @@ exports.Prisma.CommentsScalarFieldEnum = {
   sent_person: 'sent_person',
   image: 'image',
   stars: 'stars',
+  replyMessage: 'replyMessage',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   productId: 'productId'
@@ -130,6 +131,8 @@ exports.Prisma.ProductScalarFieldEnum = {
   description: 'description',
   price: 'price',
   quantity: 'quantity',
+  color: 'color',
+  brand: 'brand',
   product_images: 'product_images',
   ordered: 'ordered',
   createdAt: 'createdAt',
@@ -142,6 +145,13 @@ exports.Prisma.CategoryScalarFieldEnum = {
   parentId: 'parentId',
   title: 'title',
   children: 'children'
+};
+
+exports.Prisma.LikedProductScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  productId: 'productId',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -158,7 +168,8 @@ exports.Prisma.QueryMode = {
 exports.Prisma.ModelName = {
   Comments: 'Comments',
   Product: 'Product',
-  Category: 'Category'
+  Category: 'Category',
+  LikedProduct: 'LikedProduct'
 };
 
 /**

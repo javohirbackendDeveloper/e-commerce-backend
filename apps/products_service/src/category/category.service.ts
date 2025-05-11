@@ -7,6 +7,7 @@ import {
 import { CreateCategoryDto } from "./dto/create-category.dto";
 import { UpdateCategoryDto } from "./dto/update-category.dto";
 import { PrismaService } from "apps/products_service/prisma/prisma.service";
+import { Category } from "apps/products_service/generated/prisma";
 
 @Injectable()
 export class CategoryService {
@@ -65,7 +66,20 @@ export class CategoryService {
     }
   }
 
-  async findAll(): Promise<CreateCategoryDto[]> {
+  async findAll(): Promise<Category[]> {
+    try {
+      const categories = await this.prismaService.category.findMany();
+
+      return categories;
+    } catch (error) {
+      throw new HttpException(
+        error.message || "Internal server error",
+        error.status || 500
+      );
+    }
+  }
+
+  async findAllParentCats(): Promise<Category[]> {
     try {
       const categories = await this.prismaService.category.findMany({
         where: { parentId: "" },
@@ -131,6 +145,31 @@ export class CategoryService {
       throw new HttpException(
         error.message || "Internal server error",
         error.status || 500
+      );
+    }
+  }
+
+  // recursive get function
+
+  async getAllChildCategories(categoryId: string, allCategories: Category[]) {
+    try {
+      let result = [categoryId];
+
+      for (const cat of allCategories) {
+        if (cat.parentId.toString() === categoryId.toString()) {
+          const children = await this.getAllChildCategories(
+            cat.id,
+            allCategories
+          );
+          result = result.concat(children);
+        }
+      }
+
+      return result;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        HttpStatus.INTERNAL_SERVER_ERROR
       );
     }
   }

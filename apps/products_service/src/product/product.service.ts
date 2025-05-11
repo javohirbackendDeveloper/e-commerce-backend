@@ -9,12 +9,16 @@ import {
 import { CreateProductDto } from "./dto/create-product.dto";
 import { UpdateProductDto } from "./dto/update-product.dto";
 import { PrismaService } from "apps/products_service/prisma/prisma.service";
-import { Product } from "apps/products_service/generated/prisma";
+import { Category, Product } from "apps/products_service/generated/prisma";
 import { ReturnData } from "./interface";
+import { CategoryService } from "../category/category.service";
 
 @Injectable()
 export class ProductService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly categoryService: CategoryService,
+    private readonly prismaService: PrismaService
+  ) {}
 
   async create(
     createProductDto: CreateProductDto
@@ -136,5 +140,24 @@ export class ProductService {
       },
     });
     console.log({ products });
+  }
+
+  async getAllProductsByCategory(categoryId: string): Promise<Product[]> {
+    const allCategories = await this.categoryService.findAll();
+
+    const allChildCategories = await this.categoryService.getAllChildCategories(
+      categoryId,
+      allCategories
+    );
+
+    const products = await this.prismaService.product.findMany({
+      where: {
+        categoryId: {
+          in: allChildCategories,
+        },
+      },
+    });
+
+    return products;
   }
 }

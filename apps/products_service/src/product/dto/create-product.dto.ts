@@ -31,4 +31,12 @@ export class CreateProductDto {
   @IsNotEmpty()
   @IsMongoId()
   categoryId: string;
+
+  @IsString()
+  @IsNotEmpty()
+  brand: string;
+
+  @IsArray()
+  @IsNotEmpty()
+  color: string[];
 }
