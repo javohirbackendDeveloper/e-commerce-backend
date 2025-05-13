@@ -10,18 +10,11 @@ import {
 import { ProductService } from "./product.service";
 import { CreateProductDto } from "./dto/create-product.dto";
 import { UpdateProductDto } from "./dto/update-product.dto";
-import { EventPattern, Payload } from "@nestjs/microservices";
+import { EventPattern, MessagePattern, Payload } from "@nestjs/microservices";
 
 @Controller("product")
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
-
-  @EventPattern("order_created")
-  async getProductByIds(@Payload() productIds: string[]) {
-    console.log("Message received from order service");
-
-    this.productService.getProductsByIds(productIds);
-  }
 
   @Post()
   create(@Body() createProductDto: CreateProductDto) {
@@ -51,5 +44,25 @@ export class ProductController {
   @Delete(":id")
   remove(@Param("id") id: string) {
     return this.productService.remove(id);
+  }
+
+  // APIS WITH RABBITMQ
+
+  @MessagePattern("get_products")
+  async getProductByIds(@Payload() productIds: string[]) {
+    console.log(
+      "Message received from order service in get_products",
+      productIds
+    );
+
+    return this.productService.getProductsByIds(productIds);
+  }
+
+  @MessagePattern("get_cart_product")
+  async getOneProductById(@Payload() productId: string) {
+    console.log("Message received from order service  in get_cart_product", {
+      productId,
+    });
+    return this.productService.findOne(productId);
   }
 }

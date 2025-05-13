@@ -12,19 +12,21 @@ import { PrismaService } from "apps/products_service/prisma/prisma.service";
 import { Category, Product } from "apps/products_service/generated/prisma";
 import { ReturnData } from "./interface";
 import { CategoryService } from "../category/category.service";
+import { SearchService } from "../search/search.service";
 
 @Injectable()
 export class ProductService {
   constructor(
     private readonly categoryService: CategoryService,
-    private readonly prismaService: PrismaService
+    private readonly prismaService: PrismaService,
+    private readonly searchService: SearchService
   ) {}
 
   async create(
     createProductDto: CreateProductDto
   ): Promise<Product | ReturnData> {
     try {
-      const { categoryId } = createProductDto;
+      const { categoryId, product_name, description } = createProductDto;
       const category = await this.prismaService.category.findUnique({
         where: { id: categoryId },
       });
@@ -41,6 +43,9 @@ export class ProductService {
       const product = await this.prismaService.product.create({
         data: createProductDto,
       });
+
+      await this.searchService.addProductToIndex(product);
+
       return product;
     } catch (error) {
       throw new BadRequestException("Invalid product data");
@@ -101,10 +106,13 @@ export class ProductService {
         );
       }
 
-      return await this.prismaService.product.update({
+      const product = await this.prismaService.product.update({
         where: { id },
         data: updateProductDto,
       });
+
+      this.searchService.update(product);
+      return product;
     } catch (error) {
       if (error.code === "P2025") {
         throw new NotFoundException(`Product with ID ${id} not found`);
@@ -115,6 +123,17 @@ export class ProductService {
 
   async remove(id: string) {
     try {
+      const product = await this.prismaService.product.findUnique({
+        where: { id },
+      });
+
+      if (!product) {
+        throw new HttpException(
+          "This product not found with id " + id,
+          HttpStatus.NOT_FOUND
+        );
+      }
+      await this.searchService.delete(product);
       await this.prismaService.product.delete({ where: { id } });
       return {
         message: `Product with id ${id} deleted successfully`,
@@ -131,7 +150,7 @@ export class ProductService {
     }
   }
 
-  async getProductsByIds(productIds: string[]) {
+  async getProductsByIds(productIds: string[]): Promise<Product[]> {
     const products = await this.prismaService.product.findMany({
       where: {
         id: {
@@ -139,7 +158,7 @@ export class ProductService {
         },
       },
     });
-    console.log({ products });
+    return products;
   }
 
   async getAllProductsByCategory(categoryId: string): Promise<Product[]> {

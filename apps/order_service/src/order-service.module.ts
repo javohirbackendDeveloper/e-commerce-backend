@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { RmqModule, RmqService } from "@app/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { ORDER_SERVICE } from "./constants/services";
+import { CartModule } from "./cart/cart.module";
 
 @Module({
   imports: [
@@ -16,6 +17,8 @@ import { ORDER_SERVICE } from "./constants/services";
     RmqModule.register({
       name: ORDER_SERVICE,
     }),
+
+    CartModule,
   ],
   controllers: [OrderServiceController],
   providers: [OrderServiceService, PrismaService, RmqService],

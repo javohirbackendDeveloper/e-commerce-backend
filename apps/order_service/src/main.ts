@@ -11,6 +11,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   app.use(allowUrls);
+
+  app.setGlobalPrefix("order");
   const configService = app.get(ConfigService);
   const PORT = configService.get("PORT") || 3002;
   await app.listen(PORT, () => {

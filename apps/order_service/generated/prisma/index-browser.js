@@ -123,6 +123,15 @@ exports.Prisma.OrdersScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CartItemScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  quantity: 'quantity',
+  productId: 'productId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -140,7 +149,8 @@ exports.OrderStatus = exports.$Enums.OrderStatus = {
 };
 
 exports.Prisma.ModelName = {
-  Orders: 'Orders'
+  Orders: 'Orders',
+  CartItem: 'CartItem'
 };
 
 /**

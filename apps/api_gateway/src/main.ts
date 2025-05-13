@@ -8,6 +8,7 @@ async function bootstrap() {
   const PORT = process.env.PORT || 3000;
   app.use(cookieParser());
   app.use(express.json());
+
   await app.listen(PORT, () => {
     console.log("api-gateway is running at " + PORT);
   });

@@ -30,3 +30,14 @@ model Orders {
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
 }
+
+// CART MODEL
+
+model CartItem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  quantity  Int
+  productId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
