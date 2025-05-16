@@ -20,6 +20,7 @@ enum Roles {
   Admin
   SuperAdmin
   Courier
+  PunktAdmin
 }
 
 model User {
@@ -29,6 +30,8 @@ model User {
   first_name   String?
   last_name    String?
   phone_number String
+  region       String?
+  city         String?
   role         Roles   @default(User)
 }
 
@@ -40,4 +43,15 @@ model Admin {
   last_name    String?
   phone_number String
   role         Roles   @default(Admin)
+}
+
+model PunktAdmin {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  username     String  @unique
+  punktId      String?
+  password     String
+  first_name   String?
+  last_name    String?
+  phone_number String
+  role         Roles   @default(PunktAdmin)
 }

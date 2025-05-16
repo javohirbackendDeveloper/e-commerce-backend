@@ -11,7 +11,8 @@ import { CartItem } from "apps/order_service/generated/prisma";
 export class CartService {
   constructor(
     private readonly prismService: PrismaService,
-    @Inject("ORDER_SERVICE") private readonly orderClient: ClientProxy
+    @Inject("ORDER_SERVICE") private readonly orderClient: ClientProxy,
+    @Inject("PRODUCTS_SERVICE") private readonly productClient: ClientProxy
   ) {}
 
   async create(createCartItemDto: CreateCartDto, req: Request) {
@@ -88,12 +89,23 @@ export class CartService {
         where: { userId: userId as string },
       });
 
+      if (!cartItems) {
+        throw new HttpException(
+          "You don't have any product in your cart",
+          HttpStatus.NOT_FOUND
+        );
+      }
       const cartProductIds = cartItems.map((cart) => cart.productId);
 
       let allProducts = [];
       if (cartProductIds.length > 0) {
         allProducts = await firstValueFrom(
-          this.orderClient.send("get_products", cartProductIds)
+          this.productClient.send("get_products", cartProductIds)
+        );
+      } else {
+        throw new HttpException(
+          "You don't have any product in your cart",
+          HttpStatus.NOT_FOUND
         );
       }
 
@@ -118,8 +130,10 @@ export class CartService {
         0
       );
 
-      return [...cartItemsWithProduct, { grandPrice }];
+      return { cartItemsWithProduct, grandPrice };
     } catch (err) {
+      console.log(err);
+
       throw new HttpException(
         err.message || "Internal server error",
         err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR

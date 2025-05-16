@@ -50,19 +50,13 @@ export class ProductController {
 
   @MessagePattern("get_products")
   async getProductByIds(@Payload() productIds: string[]) {
-    console.log(
-      "Message received from order service in get_products",
-      productIds
-    );
+    console.log("Message came ", productIds);
 
     return this.productService.getProductsByIds(productIds);
   }
 
   @MessagePattern("get_cart_product")
   async getOneProductById(@Payload() productId: string) {
-    console.log("Message received from order service  in get_cart_product", {
-      productId,
-    });
     return this.productService.findOne(productId);
   }
 }

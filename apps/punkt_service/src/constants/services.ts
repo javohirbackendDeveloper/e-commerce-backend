@@ -1,0 +1,1 @@
+export const PUNKT_SERVICE = "PUNKT_SERVICE";

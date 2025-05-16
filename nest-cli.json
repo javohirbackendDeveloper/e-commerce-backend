@@ -26,6 +26,15 @@
         "tsConfigPath": "apps/auth_service/tsconfig.app.json"
       }
     },
+    "common": {
+      "type": "library",
+      "root": "libs/common",
+      "entryFile": "index",
+      "sourceRoot": "libs/common/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/common/tsconfig.lib.json"
+      }
+    },
     "order_service": {
       "type": "application",
       "root": "apps/order_service",
@@ -44,13 +53,22 @@
         "tsConfigPath": "apps/products_service/tsconfig.app.json"
       }
     },
-    "common": {
-      "type": "library",
-      "root": "libs/common",
-      "entryFile": "index",
-      "sourceRoot": "libs/common/src",
+    "punkt_service": {
+      "type": "application",
+      "root": "apps/punkt_service",
+      "entryFile": "main",
+      "sourceRoot": "apps/punkt_service/src",
       "compilerOptions": {
-        "tsConfigPath": "libs/common/tsconfig.lib.json"
+        "tsConfigPath": "apps/punkt_service/tsconfig.app.json"
+      }
+    },
+    "staff_service": {
+      "type": "application",
+      "root": "apps/staff_service",
+      "entryFile": "main",
+      "sourceRoot": "apps/staff_service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/staff_service/tsconfig.app.json"
       }
     }
   }

@@ -1,10 +1,9 @@
 import { Module } from "@nestjs/common";
-import { AuthServiceController } from "./auth-service.controller";
-import { AuthServiceService } from "./auth-service.service";
 import { ConfigModule } from "@nestjs/config";
 import { UserModule } from "./user/user.module";
 import { AdminModule } from "./admin/admin.module";
 import { RmqService } from "@app/common";
+import { PunktAdminModule } from "./punkt-admin/punkt-admin.module";
 
 @Module({
   imports: [
@@ -14,8 +13,9 @@ import { RmqService } from "@app/common";
     }),
     UserModule,
     AdminModule,
+    PunktAdminModule,
   ],
-  controllers: [AuthServiceController],
-  providers: [AuthServiceService, RmqService],
+  controllers: [],
+  providers: [RmqService],
 })
 export class AuthServiceModule {}

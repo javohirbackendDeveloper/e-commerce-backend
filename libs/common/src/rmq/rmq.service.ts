@@ -11,7 +11,6 @@ export class RmqService {
     if (!url) {
       throw new Error("RABBIT_MQ_URI is not defined in config");
     }
-    console.log({ name });
 
     const queue = this.configService.get<string>(`RABBIT_MQ_${name}_QUEUE`);
 
@@ -23,8 +22,8 @@ export class RmqService {
         queueOptions: {
           durable: true,
         },
-        // noAck,
-        // persistent: true,
+        noAck,
+        persistent: true,
       },
     };
   }

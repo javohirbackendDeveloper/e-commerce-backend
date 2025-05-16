@@ -16,20 +16,49 @@ datasource db {
 
 
 
-enum OrderStatus { 
-   PENDING     // Buyurtma qabul qilindi, to'lov kutilmoqda
-  CONFIRMED   // To'lov tasdiqlandi, buyurtma qayta ishlanmoqda
-  FULFILLED   // Buyurtma tayyor, jo'natishga tayyor (yoki jo'natilgan)
-  COMPLETED   // Mijozga yetkazib berildi
+ enum OrderStatus {
+  Created                // Foydalanuvchi order bergan
+  AwaitingPayment  // To‘lov kutilmoqda (Yetkazib berganda to'lanadi)
+  Paid                     // To‘lov muvaffaqiyatli bo‘lgan
+  Processing         // Operator/kuryer tayinlanmoqda
+  Shipped                // Yetkazib berish yo‘lda
+  Delivered          // Mijozga yetkazildi
+  Cancelled         // Mijoz yoki tizim tomonidan bekor qilingan
 }
+
+enum DeliveringType {
+  Punkt
+  Courier
+}
+
+enum PaymentType  {
+  Card
+  Delivered
+}
+
+
 model Orders {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String
-  productIds Json
-  status OrderStatus @default(PENDING)
-  totalPrice Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                     String         @id @default(auto()) @map("_id") @db.ObjectId
+  userId                 String
+  productIds             CartItem[]
+  status                 OrderStatus    @default(Created)
+  totalPrice             Float
+  deliveringType         DeliveringType @default(Punkt)
+  
+  paymenttype PaymentType
+
+  locationText           String        
+  locationLongitude      Float?         
+  locationLatitude       Float?
+  punktId                String     
+
+  recipient_firstname    String
+  recipient_lastname     String
+  recipient_phone        String
+  
+  deliverTime            DateTime 
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
 }
 
 
@@ -37,13 +66,16 @@ model Orders {
 
 // CART MODEL
 
-
-
 model CartItem {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   userId String
   quantity Int
   productId String
+
+
+ orderId String?
+ orders Orders? @relation(fields: [orderId] , references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

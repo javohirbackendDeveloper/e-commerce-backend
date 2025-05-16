@@ -41,7 +41,7 @@ export class CreateToken {
 
     Roles.forEach((role) => {
       response.clearCookie(`${role.toLowerCase()}_access_token`);
-      response.clearCookie(`${role.toLowerCase()}_access_token`);
+      response.clearCookie(`${role.toLowerCase()}_refresh_token`);
     });
 
     response.cookie(`${this.role.toLowerCase()}_access_token`, accessToken, {

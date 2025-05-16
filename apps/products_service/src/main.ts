@@ -20,10 +20,12 @@ async function bootstrap() {
 
   // microservice connecting
   const rmqService = app.get<RmqService>(RmqService);
-  app.connectMicroservice<RmqOptions>(rmqService.getOptions("ORDER_SERVICE"));
+  app.connectMicroservice<RmqOptions>(
+    rmqService.getOptions("PRODUCTS_SERVICE")
+  );
   await app.startAllMicroservices();
 
-  // lestening port
+  // listening port
   const PORT = process.env.PORT || 3003;
   await app.listen(PORT, () => {
     console.log(`Products service is running at ${PORT}`);

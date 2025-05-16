@@ -116,9 +116,18 @@ Prisma.NullTypes = {
 exports.Prisma.OrdersScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  productIds: 'productIds',
   status: 'status',
   totalPrice: 'totalPrice',
+  deliveringType: 'deliveringType',
+  paymenttype: 'paymenttype',
+  locationText: 'locationText',
+  locationLongitude: 'locationLongitude',
+  locationLatitude: 'locationLatitude',
+  punktId: 'punktId',
+  recipient_firstname: 'recipient_firstname',
+  recipient_lastname: 'recipient_lastname',
+  recipient_phone: 'recipient_phone',
+  deliverTime: 'deliverTime',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -128,6 +137,7 @@ exports.Prisma.CartItemScalarFieldEnum = {
   userId: 'userId',
   quantity: 'quantity',
   productId: 'productId',
+  orderId: 'orderId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -142,10 +152,23 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 exports.OrderStatus = exports.$Enums.OrderStatus = {
-  PENDING: 'PENDING',
-  CONFIRMED: 'CONFIRMED',
-  FULFILLED: 'FULFILLED',
-  COMPLETED: 'COMPLETED'
+  Created: 'Created',
+  AwaitingPayment: 'AwaitingPayment',
+  Paid: 'Paid',
+  Processing: 'Processing',
+  Shipped: 'Shipped',
+  Delivered: 'Delivered',
+  Cancelled: 'Cancelled'
+};
+
+exports.DeliveringType = exports.$Enums.DeliveringType = {
+  Punkt: 'Punkt',
+  Courier: 'Courier'
+};
+
+exports.PaymentType = exports.$Enums.PaymentType = {
+  Card: 'Card',
+  Delivered: 'Delivered'
 };
 
 exports.Prisma.ModelName = {

@@ -23,6 +23,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Admin = $Result.DefaultSelection<Prisma.$AdminPayload>
+/**
+ * Model PunktAdmin
+ * 
+ */
+export type PunktAdmin = $Result.DefaultSelection<Prisma.$PunktAdminPayload>
 
 /**
  * Enums
@@ -32,7 +37,8 @@ export namespace $Enums {
   User: 'User',
   Admin: 'Admin',
   SuperAdmin: 'SuperAdmin',
-  Courier: 'Courier'
+  Courier: 'Courier',
+  PunktAdmin: 'PunktAdmin'
 };
 
 export type Roles = (typeof Roles)[keyof typeof Roles]
@@ -154,6 +160,16 @@ export class PrismaClient<
     * ```
     */
   get admin(): Prisma.AdminDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.punktAdmin`: Exposes CRUD operations for the **PunktAdmin** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PunktAdmins
+    * const punktAdmins = await prisma.punktAdmin.findMany()
+    * ```
+    */
+  get punktAdmin(): Prisma.PunktAdminDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -595,7 +611,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Admin: 'Admin'
+    Admin: 'Admin',
+    PunktAdmin: 'PunktAdmin'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -614,7 +631,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "admin"
+      modelProps: "user" | "admin" | "punktAdmin"
       txIsolationLevel: never
     }
     model: {
@@ -766,6 +783,80 @@ export namespace Prisma {
           }
         }
       }
+      PunktAdmin: {
+        payload: Prisma.$PunktAdminPayload<ExtArgs>
+        fields: Prisma.PunktAdminFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PunktAdminFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PunktAdminPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PunktAdminFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PunktAdminPayload>
+          }
+          findFirst: {
+            args: Prisma.PunktAdminFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PunktAdminPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PunktAdminFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PunktAdminPayload>
+          }
+          findMany: {
+            args: Prisma.PunktAdminFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PunktAdminPayload>[]
+          }
+          create: {
+            args: Prisma.PunktAdminCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PunktAdminPayload>
+          }
+          createMany: {
+            args: Prisma.PunktAdminCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.PunktAdminDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PunktAdminPayload>
+          }
+          update: {
+            args: Prisma.PunktAdminUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PunktAdminPayload>
+          }
+          deleteMany: {
+            args: Prisma.PunktAdminDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PunktAdminUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PunktAdminUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PunktAdminPayload>
+          }
+          aggregate: {
+            args: Prisma.PunktAdminAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePunktAdmin>
+          }
+          groupBy: {
+            args: Prisma.PunktAdminGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PunktAdminGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.PunktAdminFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.PunktAdminAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.PunktAdminCountArgs<ExtArgs>
+            result: $Utils.Optional<PunktAdminCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -839,6 +930,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     admin?: AdminOmit
+    punktAdmin?: PunktAdminOmit
   }
 
   /* Types for Logging */
@@ -950,6 +1042,8 @@ export namespace Prisma {
     first_name: string | null
     last_name: string | null
     phone_number: string | null
+    region: string | null
+    city: string | null
     role: $Enums.Roles | null
   }
 
@@ -960,6 +1054,8 @@ export namespace Prisma {
     first_name: string | null
     last_name: string | null
     phone_number: string | null
+    region: string | null
+    city: string | null
     role: $Enums.Roles | null
   }
 
@@ -970,6 +1066,8 @@ export namespace Prisma {
     first_name: number
     last_name: number
     phone_number: number
+    region: number
+    city: number
     role: number
     _all: number
   }
@@ -982,6 +1080,8 @@ export namespace Prisma {
     first_name?: true
     last_name?: true
     phone_number?: true
+    region?: true
+    city?: true
     role?: true
   }
 
@@ -992,6 +1092,8 @@ export namespace Prisma {
     first_name?: true
     last_name?: true
     phone_number?: true
+    region?: true
+    city?: true
     role?: true
   }
 
@@ -1002,6 +1104,8 @@ export namespace Prisma {
     first_name?: true
     last_name?: true
     phone_number?: true
+    region?: true
+    city?: true
     role?: true
     _all?: true
   }
@@ -1085,6 +1189,8 @@ export namespace Prisma {
     first_name: string | null
     last_name: string | null
     phone_number: string
+    region: string | null
+    city: string | null
     role: $Enums.Roles
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
@@ -1112,6 +1218,8 @@ export namespace Prisma {
     first_name?: boolean
     last_name?: boolean
     phone_number?: boolean
+    region?: boolean
+    city?: boolean
     role?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -1124,10 +1232,12 @@ export namespace Prisma {
     first_name?: boolean
     last_name?: boolean
     phone_number?: boolean
+    region?: boolean
+    city?: boolean
     role?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "password" | "first_name" | "last_name" | "phone_number" | "role", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "password" | "first_name" | "last_name" | "phone_number" | "region" | "city" | "role", ExtArgs["result"]["user"]>
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -1139,6 +1249,8 @@ export namespace Prisma {
       first_name: string | null
       last_name: string | null
       phone_number: string
+      region: string | null
+      city: string | null
       role: $Enums.Roles
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -1538,6 +1650,8 @@ export namespace Prisma {
     readonly first_name: FieldRef<"User", 'String'>
     readonly last_name: FieldRef<"User", 'String'>
     readonly phone_number: FieldRef<"User", 'String'>
+    readonly region: FieldRef<"User", 'String'>
+    readonly city: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Roles'>
   }
     
@@ -2842,6 +2956,971 @@ export namespace Prisma {
 
 
   /**
+   * Model PunktAdmin
+   */
+
+  export type AggregatePunktAdmin = {
+    _count: PunktAdminCountAggregateOutputType | null
+    _min: PunktAdminMinAggregateOutputType | null
+    _max: PunktAdminMaxAggregateOutputType | null
+  }
+
+  export type PunktAdminMinAggregateOutputType = {
+    id: string | null
+    username: string | null
+    punktId: string | null
+    password: string | null
+    first_name: string | null
+    last_name: string | null
+    phone_number: string | null
+    role: $Enums.Roles | null
+  }
+
+  export type PunktAdminMaxAggregateOutputType = {
+    id: string | null
+    username: string | null
+    punktId: string | null
+    password: string | null
+    first_name: string | null
+    last_name: string | null
+    phone_number: string | null
+    role: $Enums.Roles | null
+  }
+
+  export type PunktAdminCountAggregateOutputType = {
+    id: number
+    username: number
+    punktId: number
+    password: number
+    first_name: number
+    last_name: number
+    phone_number: number
+    role: number
+    _all: number
+  }
+
+
+  export type PunktAdminMinAggregateInputType = {
+    id?: true
+    username?: true
+    punktId?: true
+    password?: true
+    first_name?: true
+    last_name?: true
+    phone_number?: true
+    role?: true
+  }
+
+  export type PunktAdminMaxAggregateInputType = {
+    id?: true
+    username?: true
+    punktId?: true
+    password?: true
+    first_name?: true
+    last_name?: true
+    phone_number?: true
+    role?: true
+  }
+
+  export type PunktAdminCountAggregateInputType = {
+    id?: true
+    username?: true
+    punktId?: true
+    password?: true
+    first_name?: true
+    last_name?: true
+    phone_number?: true
+    role?: true
+    _all?: true
+  }
+
+  export type PunktAdminAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PunktAdmin to aggregate.
+     */
+    where?: PunktAdminWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PunktAdmins to fetch.
+     */
+    orderBy?: PunktAdminOrderByWithRelationInput | PunktAdminOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PunktAdminWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PunktAdmins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PunktAdmins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PunktAdmins
+    **/
+    _count?: true | PunktAdminCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PunktAdminMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PunktAdminMaxAggregateInputType
+  }
+
+  export type GetPunktAdminAggregateType<T extends PunktAdminAggregateArgs> = {
+        [P in keyof T & keyof AggregatePunktAdmin]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePunktAdmin[P]>
+      : GetScalarType<T[P], AggregatePunktAdmin[P]>
+  }
+
+
+
+
+  export type PunktAdminGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PunktAdminWhereInput
+    orderBy?: PunktAdminOrderByWithAggregationInput | PunktAdminOrderByWithAggregationInput[]
+    by: PunktAdminScalarFieldEnum[] | PunktAdminScalarFieldEnum
+    having?: PunktAdminScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PunktAdminCountAggregateInputType | true
+    _min?: PunktAdminMinAggregateInputType
+    _max?: PunktAdminMaxAggregateInputType
+  }
+
+  export type PunktAdminGroupByOutputType = {
+    id: string
+    username: string
+    punktId: string | null
+    password: string
+    first_name: string | null
+    last_name: string | null
+    phone_number: string
+    role: $Enums.Roles
+    _count: PunktAdminCountAggregateOutputType | null
+    _min: PunktAdminMinAggregateOutputType | null
+    _max: PunktAdminMaxAggregateOutputType | null
+  }
+
+  type GetPunktAdminGroupByPayload<T extends PunktAdminGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PunktAdminGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PunktAdminGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PunktAdminGroupByOutputType[P]>
+            : GetScalarType<T[P], PunktAdminGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PunktAdminSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    username?: boolean
+    punktId?: boolean
+    password?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    phone_number?: boolean
+    role?: boolean
+  }, ExtArgs["result"]["punktAdmin"]>
+
+
+
+  export type PunktAdminSelectScalar = {
+    id?: boolean
+    username?: boolean
+    punktId?: boolean
+    password?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    phone_number?: boolean
+    role?: boolean
+  }
+
+  export type PunktAdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "punktId" | "password" | "first_name" | "last_name" | "phone_number" | "role", ExtArgs["result"]["punktAdmin"]>
+
+  export type $PunktAdminPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PunktAdmin"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      username: string
+      punktId: string | null
+      password: string
+      first_name: string | null
+      last_name: string | null
+      phone_number: string
+      role: $Enums.Roles
+    }, ExtArgs["result"]["punktAdmin"]>
+    composites: {}
+  }
+
+  type PunktAdminGetPayload<S extends boolean | null | undefined | PunktAdminDefaultArgs> = $Result.GetResult<Prisma.$PunktAdminPayload, S>
+
+  type PunktAdminCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PunktAdminFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PunktAdminCountAggregateInputType | true
+    }
+
+  export interface PunktAdminDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PunktAdmin'], meta: { name: 'PunktAdmin' } }
+    /**
+     * Find zero or one PunktAdmin that matches the filter.
+     * @param {PunktAdminFindUniqueArgs} args - Arguments to find a PunktAdmin
+     * @example
+     * // Get one PunktAdmin
+     * const punktAdmin = await prisma.punktAdmin.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PunktAdminFindUniqueArgs>(args: SelectSubset<T, PunktAdminFindUniqueArgs<ExtArgs>>): Prisma__PunktAdminClient<$Result.GetResult<Prisma.$PunktAdminPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PunktAdmin that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PunktAdminFindUniqueOrThrowArgs} args - Arguments to find a PunktAdmin
+     * @example
+     * // Get one PunktAdmin
+     * const punktAdmin = await prisma.punktAdmin.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PunktAdminFindUniqueOrThrowArgs>(args: SelectSubset<T, PunktAdminFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PunktAdminClient<$Result.GetResult<Prisma.$PunktAdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PunktAdmin that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PunktAdminFindFirstArgs} args - Arguments to find a PunktAdmin
+     * @example
+     * // Get one PunktAdmin
+     * const punktAdmin = await prisma.punktAdmin.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PunktAdminFindFirstArgs>(args?: SelectSubset<T, PunktAdminFindFirstArgs<ExtArgs>>): Prisma__PunktAdminClient<$Result.GetResult<Prisma.$PunktAdminPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PunktAdmin that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PunktAdminFindFirstOrThrowArgs} args - Arguments to find a PunktAdmin
+     * @example
+     * // Get one PunktAdmin
+     * const punktAdmin = await prisma.punktAdmin.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PunktAdminFindFirstOrThrowArgs>(args?: SelectSubset<T, PunktAdminFindFirstOrThrowArgs<ExtArgs>>): Prisma__PunktAdminClient<$Result.GetResult<Prisma.$PunktAdminPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PunktAdmins that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PunktAdminFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PunktAdmins
+     * const punktAdmins = await prisma.punktAdmin.findMany()
+     * 
+     * // Get first 10 PunktAdmins
+     * const punktAdmins = await prisma.punktAdmin.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const punktAdminWithIdOnly = await prisma.punktAdmin.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PunktAdminFindManyArgs>(args?: SelectSubset<T, PunktAdminFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PunktAdminPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PunktAdmin.
+     * @param {PunktAdminCreateArgs} args - Arguments to create a PunktAdmin.
+     * @example
+     * // Create one PunktAdmin
+     * const PunktAdmin = await prisma.punktAdmin.create({
+     *   data: {
+     *     // ... data to create a PunktAdmin
+     *   }
+     * })
+     * 
+     */
+    create<T extends PunktAdminCreateArgs>(args: SelectSubset<T, PunktAdminCreateArgs<ExtArgs>>): Prisma__PunktAdminClient<$Result.GetResult<Prisma.$PunktAdminPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PunktAdmins.
+     * @param {PunktAdminCreateManyArgs} args - Arguments to create many PunktAdmins.
+     * @example
+     * // Create many PunktAdmins
+     * const punktAdmin = await prisma.punktAdmin.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PunktAdminCreateManyArgs>(args?: SelectSubset<T, PunktAdminCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a PunktAdmin.
+     * @param {PunktAdminDeleteArgs} args - Arguments to delete one PunktAdmin.
+     * @example
+     * // Delete one PunktAdmin
+     * const PunktAdmin = await prisma.punktAdmin.delete({
+     *   where: {
+     *     // ... filter to delete one PunktAdmin
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PunktAdminDeleteArgs>(args: SelectSubset<T, PunktAdminDeleteArgs<ExtArgs>>): Prisma__PunktAdminClient<$Result.GetResult<Prisma.$PunktAdminPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PunktAdmin.
+     * @param {PunktAdminUpdateArgs} args - Arguments to update one PunktAdmin.
+     * @example
+     * // Update one PunktAdmin
+     * const punktAdmin = await prisma.punktAdmin.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PunktAdminUpdateArgs>(args: SelectSubset<T, PunktAdminUpdateArgs<ExtArgs>>): Prisma__PunktAdminClient<$Result.GetResult<Prisma.$PunktAdminPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PunktAdmins.
+     * @param {PunktAdminDeleteManyArgs} args - Arguments to filter PunktAdmins to delete.
+     * @example
+     * // Delete a few PunktAdmins
+     * const { count } = await prisma.punktAdmin.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PunktAdminDeleteManyArgs>(args?: SelectSubset<T, PunktAdminDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PunktAdmins.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PunktAdminUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PunktAdmins
+     * const punktAdmin = await prisma.punktAdmin.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PunktAdminUpdateManyArgs>(args: SelectSubset<T, PunktAdminUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PunktAdmin.
+     * @param {PunktAdminUpsertArgs} args - Arguments to update or create a PunktAdmin.
+     * @example
+     * // Update or create a PunktAdmin
+     * const punktAdmin = await prisma.punktAdmin.upsert({
+     *   create: {
+     *     // ... data to create a PunktAdmin
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PunktAdmin we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PunktAdminUpsertArgs>(args: SelectSubset<T, PunktAdminUpsertArgs<ExtArgs>>): Prisma__PunktAdminClient<$Result.GetResult<Prisma.$PunktAdminPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PunktAdmins that matches the filter.
+     * @param {PunktAdminFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const punktAdmin = await prisma.punktAdmin.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: PunktAdminFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a PunktAdmin.
+     * @param {PunktAdminAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const punktAdmin = await prisma.punktAdmin.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: PunktAdminAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of PunktAdmins.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PunktAdminCountArgs} args - Arguments to filter PunktAdmins to count.
+     * @example
+     * // Count the number of PunktAdmins
+     * const count = await prisma.punktAdmin.count({
+     *   where: {
+     *     // ... the filter for the PunktAdmins we want to count
+     *   }
+     * })
+    **/
+    count<T extends PunktAdminCountArgs>(
+      args?: Subset<T, PunktAdminCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PunktAdminCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PunktAdmin.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PunktAdminAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PunktAdminAggregateArgs>(args: Subset<T, PunktAdminAggregateArgs>): Prisma.PrismaPromise<GetPunktAdminAggregateType<T>>
+
+    /**
+     * Group by PunktAdmin.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PunktAdminGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PunktAdminGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PunktAdminGroupByArgs['orderBy'] }
+        : { orderBy?: PunktAdminGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PunktAdminGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPunktAdminGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PunktAdmin model
+   */
+  readonly fields: PunktAdminFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PunktAdmin.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PunktAdminClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PunktAdmin model
+   */
+  interface PunktAdminFieldRefs {
+    readonly id: FieldRef<"PunktAdmin", 'String'>
+    readonly username: FieldRef<"PunktAdmin", 'String'>
+    readonly punktId: FieldRef<"PunktAdmin", 'String'>
+    readonly password: FieldRef<"PunktAdmin", 'String'>
+    readonly first_name: FieldRef<"PunktAdmin", 'String'>
+    readonly last_name: FieldRef<"PunktAdmin", 'String'>
+    readonly phone_number: FieldRef<"PunktAdmin", 'String'>
+    readonly role: FieldRef<"PunktAdmin", 'Roles'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PunktAdmin findUnique
+   */
+  export type PunktAdminFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PunktAdmin
+     */
+    select?: PunktAdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PunktAdmin
+     */
+    omit?: PunktAdminOmit<ExtArgs> | null
+    /**
+     * Filter, which PunktAdmin to fetch.
+     */
+    where: PunktAdminWhereUniqueInput
+  }
+
+  /**
+   * PunktAdmin findUniqueOrThrow
+   */
+  export type PunktAdminFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PunktAdmin
+     */
+    select?: PunktAdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PunktAdmin
+     */
+    omit?: PunktAdminOmit<ExtArgs> | null
+    /**
+     * Filter, which PunktAdmin to fetch.
+     */
+    where: PunktAdminWhereUniqueInput
+  }
+
+  /**
+   * PunktAdmin findFirst
+   */
+  export type PunktAdminFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PunktAdmin
+     */
+    select?: PunktAdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PunktAdmin
+     */
+    omit?: PunktAdminOmit<ExtArgs> | null
+    /**
+     * Filter, which PunktAdmin to fetch.
+     */
+    where?: PunktAdminWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PunktAdmins to fetch.
+     */
+    orderBy?: PunktAdminOrderByWithRelationInput | PunktAdminOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PunktAdmins.
+     */
+    cursor?: PunktAdminWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PunktAdmins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PunktAdmins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PunktAdmins.
+     */
+    distinct?: PunktAdminScalarFieldEnum | PunktAdminScalarFieldEnum[]
+  }
+
+  /**
+   * PunktAdmin findFirstOrThrow
+   */
+  export type PunktAdminFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PunktAdmin
+     */
+    select?: PunktAdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PunktAdmin
+     */
+    omit?: PunktAdminOmit<ExtArgs> | null
+    /**
+     * Filter, which PunktAdmin to fetch.
+     */
+    where?: PunktAdminWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PunktAdmins to fetch.
+     */
+    orderBy?: PunktAdminOrderByWithRelationInput | PunktAdminOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PunktAdmins.
+     */
+    cursor?: PunktAdminWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PunktAdmins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PunktAdmins.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PunktAdmins.
+     */
+    distinct?: PunktAdminScalarFieldEnum | PunktAdminScalarFieldEnum[]
+  }
+
+  /**
+   * PunktAdmin findMany
+   */
+  export type PunktAdminFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PunktAdmin
+     */
+    select?: PunktAdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PunktAdmin
+     */
+    omit?: PunktAdminOmit<ExtArgs> | null
+    /**
+     * Filter, which PunktAdmins to fetch.
+     */
+    where?: PunktAdminWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PunktAdmins to fetch.
+     */
+    orderBy?: PunktAdminOrderByWithRelationInput | PunktAdminOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PunktAdmins.
+     */
+    cursor?: PunktAdminWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PunktAdmins from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PunktAdmins.
+     */
+    skip?: number
+    distinct?: PunktAdminScalarFieldEnum | PunktAdminScalarFieldEnum[]
+  }
+
+  /**
+   * PunktAdmin create
+   */
+  export type PunktAdminCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PunktAdmin
+     */
+    select?: PunktAdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PunktAdmin
+     */
+    omit?: PunktAdminOmit<ExtArgs> | null
+    /**
+     * The data needed to create a PunktAdmin.
+     */
+    data: XOR<PunktAdminCreateInput, PunktAdminUncheckedCreateInput>
+  }
+
+  /**
+   * PunktAdmin createMany
+   */
+  export type PunktAdminCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PunktAdmins.
+     */
+    data: PunktAdminCreateManyInput | PunktAdminCreateManyInput[]
+  }
+
+  /**
+   * PunktAdmin update
+   */
+  export type PunktAdminUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PunktAdmin
+     */
+    select?: PunktAdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PunktAdmin
+     */
+    omit?: PunktAdminOmit<ExtArgs> | null
+    /**
+     * The data needed to update a PunktAdmin.
+     */
+    data: XOR<PunktAdminUpdateInput, PunktAdminUncheckedUpdateInput>
+    /**
+     * Choose, which PunktAdmin to update.
+     */
+    where: PunktAdminWhereUniqueInput
+  }
+
+  /**
+   * PunktAdmin updateMany
+   */
+  export type PunktAdminUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PunktAdmins.
+     */
+    data: XOR<PunktAdminUpdateManyMutationInput, PunktAdminUncheckedUpdateManyInput>
+    /**
+     * Filter which PunktAdmins to update
+     */
+    where?: PunktAdminWhereInput
+    /**
+     * Limit how many PunktAdmins to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PunktAdmin upsert
+   */
+  export type PunktAdminUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PunktAdmin
+     */
+    select?: PunktAdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PunktAdmin
+     */
+    omit?: PunktAdminOmit<ExtArgs> | null
+    /**
+     * The filter to search for the PunktAdmin to update in case it exists.
+     */
+    where: PunktAdminWhereUniqueInput
+    /**
+     * In case the PunktAdmin found by the `where` argument doesn't exist, create a new PunktAdmin with this data.
+     */
+    create: XOR<PunktAdminCreateInput, PunktAdminUncheckedCreateInput>
+    /**
+     * In case the PunktAdmin was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PunktAdminUpdateInput, PunktAdminUncheckedUpdateInput>
+  }
+
+  /**
+   * PunktAdmin delete
+   */
+  export type PunktAdminDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PunktAdmin
+     */
+    select?: PunktAdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PunktAdmin
+     */
+    omit?: PunktAdminOmit<ExtArgs> | null
+    /**
+     * Filter which PunktAdmin to delete.
+     */
+    where: PunktAdminWhereUniqueInput
+  }
+
+  /**
+   * PunktAdmin deleteMany
+   */
+  export type PunktAdminDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PunktAdmins to delete
+     */
+    where?: PunktAdminWhereInput
+    /**
+     * Limit how many PunktAdmins to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PunktAdmin findRaw
+   */
+  export type PunktAdminFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * PunktAdmin aggregateRaw
+   */
+  export type PunktAdminAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * PunktAdmin without action
+   */
+  export type PunktAdminDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PunktAdmin
+     */
+    select?: PunktAdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PunktAdmin
+     */
+    omit?: PunktAdminOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -2852,6 +3931,8 @@ export namespace Prisma {
     first_name: 'first_name',
     last_name: 'last_name',
     phone_number: 'phone_number',
+    region: 'region',
+    city: 'city',
     role: 'role'
   };
 
@@ -2869,6 +3950,20 @@ export namespace Prisma {
   };
 
   export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
+
+
+  export const PunktAdminScalarFieldEnum: {
+    id: 'id',
+    username: 'username',
+    punktId: 'punktId',
+    password: 'password',
+    first_name: 'first_name',
+    last_name: 'last_name',
+    phone_number: 'phone_number',
+    role: 'role'
+  };
+
+  export type PunktAdminScalarFieldEnum = (typeof PunktAdminScalarFieldEnum)[keyof typeof PunktAdminScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -2947,6 +4042,8 @@ export namespace Prisma {
     first_name?: StringNullableFilter<"User"> | string | null
     last_name?: StringNullableFilter<"User"> | string | null
     phone_number?: StringFilter<"User"> | string
+    region?: StringNullableFilter<"User"> | string | null
+    city?: StringNullableFilter<"User"> | string | null
     role?: EnumRolesFilter<"User"> | $Enums.Roles
   }
 
@@ -2957,6 +4054,8 @@ export namespace Prisma {
     first_name?: SortOrder
     last_name?: SortOrder
     phone_number?: SortOrder
+    region?: SortOrder
+    city?: SortOrder
     role?: SortOrder
   }
 
@@ -2970,6 +4069,8 @@ export namespace Prisma {
     first_name?: StringNullableFilter<"User"> | string | null
     last_name?: StringNullableFilter<"User"> | string | null
     phone_number?: StringFilter<"User"> | string
+    region?: StringNullableFilter<"User"> | string | null
+    city?: StringNullableFilter<"User"> | string | null
     role?: EnumRolesFilter<"User"> | $Enums.Roles
   }, "id" | "username">
 
@@ -2980,6 +4081,8 @@ export namespace Prisma {
     first_name?: SortOrder
     last_name?: SortOrder
     phone_number?: SortOrder
+    region?: SortOrder
+    city?: SortOrder
     role?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -2996,6 +4099,8 @@ export namespace Prisma {
     first_name?: StringNullableWithAggregatesFilter<"User"> | string | null
     last_name?: StringNullableWithAggregatesFilter<"User"> | string | null
     phone_number?: StringWithAggregatesFilter<"User"> | string
+    region?: StringNullableWithAggregatesFilter<"User"> | string | null
+    city?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumRolesWithAggregatesFilter<"User"> | $Enums.Roles
   }
 
@@ -3061,6 +4166,73 @@ export namespace Prisma {
     role?: EnumRolesWithAggregatesFilter<"Admin"> | $Enums.Roles
   }
 
+  export type PunktAdminWhereInput = {
+    AND?: PunktAdminWhereInput | PunktAdminWhereInput[]
+    OR?: PunktAdminWhereInput[]
+    NOT?: PunktAdminWhereInput | PunktAdminWhereInput[]
+    id?: StringFilter<"PunktAdmin"> | string
+    username?: StringFilter<"PunktAdmin"> | string
+    punktId?: StringNullableFilter<"PunktAdmin"> | string | null
+    password?: StringFilter<"PunktAdmin"> | string
+    first_name?: StringNullableFilter<"PunktAdmin"> | string | null
+    last_name?: StringNullableFilter<"PunktAdmin"> | string | null
+    phone_number?: StringFilter<"PunktAdmin"> | string
+    role?: EnumRolesFilter<"PunktAdmin"> | $Enums.Roles
+  }
+
+  export type PunktAdminOrderByWithRelationInput = {
+    id?: SortOrder
+    username?: SortOrder
+    punktId?: SortOrder
+    password?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    phone_number?: SortOrder
+    role?: SortOrder
+  }
+
+  export type PunktAdminWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    username?: string
+    AND?: PunktAdminWhereInput | PunktAdminWhereInput[]
+    OR?: PunktAdminWhereInput[]
+    NOT?: PunktAdminWhereInput | PunktAdminWhereInput[]
+    punktId?: StringNullableFilter<"PunktAdmin"> | string | null
+    password?: StringFilter<"PunktAdmin"> | string
+    first_name?: StringNullableFilter<"PunktAdmin"> | string | null
+    last_name?: StringNullableFilter<"PunktAdmin"> | string | null
+    phone_number?: StringFilter<"PunktAdmin"> | string
+    role?: EnumRolesFilter<"PunktAdmin"> | $Enums.Roles
+  }, "id" | "username">
+
+  export type PunktAdminOrderByWithAggregationInput = {
+    id?: SortOrder
+    username?: SortOrder
+    punktId?: SortOrder
+    password?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    phone_number?: SortOrder
+    role?: SortOrder
+    _count?: PunktAdminCountOrderByAggregateInput
+    _max?: PunktAdminMaxOrderByAggregateInput
+    _min?: PunktAdminMinOrderByAggregateInput
+  }
+
+  export type PunktAdminScalarWhereWithAggregatesInput = {
+    AND?: PunktAdminScalarWhereWithAggregatesInput | PunktAdminScalarWhereWithAggregatesInput[]
+    OR?: PunktAdminScalarWhereWithAggregatesInput[]
+    NOT?: PunktAdminScalarWhereWithAggregatesInput | PunktAdminScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PunktAdmin"> | string
+    username?: StringWithAggregatesFilter<"PunktAdmin"> | string
+    punktId?: StringNullableWithAggregatesFilter<"PunktAdmin"> | string | null
+    password?: StringWithAggregatesFilter<"PunktAdmin"> | string
+    first_name?: StringNullableWithAggregatesFilter<"PunktAdmin"> | string | null
+    last_name?: StringNullableWithAggregatesFilter<"PunktAdmin"> | string | null
+    phone_number?: StringWithAggregatesFilter<"PunktAdmin"> | string
+    role?: EnumRolesWithAggregatesFilter<"PunktAdmin"> | $Enums.Roles
+  }
+
   export type UserCreateInput = {
     id?: string
     username: string
@@ -3068,6 +4240,8 @@ export namespace Prisma {
     first_name?: string | null
     last_name?: string | null
     phone_number: string
+    region?: string | null
+    city?: string | null
     role?: $Enums.Roles
   }
 
@@ -3078,6 +4252,8 @@ export namespace Prisma {
     first_name?: string | null
     last_name?: string | null
     phone_number: string
+    region?: string | null
+    city?: string | null
     role?: $Enums.Roles
   }
 
@@ -3087,6 +4263,8 @@ export namespace Prisma {
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
     phone_number?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
   }
 
@@ -3096,6 +4274,8 @@ export namespace Prisma {
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
     phone_number?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
   }
 
@@ -3106,6 +4286,8 @@ export namespace Prisma {
     first_name?: string | null
     last_name?: string | null
     phone_number: string
+    region?: string | null
+    city?: string | null
     role?: $Enums.Roles
   }
 
@@ -3115,6 +4297,8 @@ export namespace Prisma {
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
     phone_number?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
   }
 
@@ -3124,6 +4308,8 @@ export namespace Prisma {
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
     phone_number?: StringFieldUpdateOperationsInput | string
+    region?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
   }
 
@@ -3193,6 +4379,79 @@ export namespace Prisma {
     role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
   }
 
+  export type PunktAdminCreateInput = {
+    id?: string
+    username: string
+    punktId?: string | null
+    password: string
+    first_name?: string | null
+    last_name?: string | null
+    phone_number: string
+    role?: $Enums.Roles
+  }
+
+  export type PunktAdminUncheckedCreateInput = {
+    id?: string
+    username: string
+    punktId?: string | null
+    password: string
+    first_name?: string | null
+    last_name?: string | null
+    phone_number: string
+    role?: $Enums.Roles
+  }
+
+  export type PunktAdminUpdateInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    punktId?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: StringFieldUpdateOperationsInput | string
+    role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
+  }
+
+  export type PunktAdminUncheckedUpdateInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    punktId?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: StringFieldUpdateOperationsInput | string
+    role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
+  }
+
+  export type PunktAdminCreateManyInput = {
+    id?: string
+    username: string
+    punktId?: string | null
+    password: string
+    first_name?: string | null
+    last_name?: string | null
+    phone_number: string
+    role?: $Enums.Roles
+  }
+
+  export type PunktAdminUpdateManyMutationInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    punktId?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: StringFieldUpdateOperationsInput | string
+    role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
+  }
+
+  export type PunktAdminUncheckedUpdateManyInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    punktId?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: StringFieldUpdateOperationsInput | string
+    role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -3238,6 +4497,8 @@ export namespace Prisma {
     first_name?: SortOrder
     last_name?: SortOrder
     phone_number?: SortOrder
+    region?: SortOrder
+    city?: SortOrder
     role?: SortOrder
   }
 
@@ -3248,6 +4509,8 @@ export namespace Prisma {
     first_name?: SortOrder
     last_name?: SortOrder
     phone_number?: SortOrder
+    region?: SortOrder
+    city?: SortOrder
     role?: SortOrder
   }
 
@@ -3258,6 +4521,8 @@ export namespace Prisma {
     first_name?: SortOrder
     last_name?: SortOrder
     phone_number?: SortOrder
+    region?: SortOrder
+    city?: SortOrder
     role?: SortOrder
   }
 
@@ -3331,6 +4596,39 @@ export namespace Prisma {
   export type AdminMinOrderByAggregateInput = {
     id?: SortOrder
     username?: SortOrder
+    password?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    phone_number?: SortOrder
+    role?: SortOrder
+  }
+
+  export type PunktAdminCountOrderByAggregateInput = {
+    id?: SortOrder
+    username?: SortOrder
+    punktId?: SortOrder
+    password?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    phone_number?: SortOrder
+    role?: SortOrder
+  }
+
+  export type PunktAdminMaxOrderByAggregateInput = {
+    id?: SortOrder
+    username?: SortOrder
+    punktId?: SortOrder
+    password?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    phone_number?: SortOrder
+    role?: SortOrder
+  }
+
+  export type PunktAdminMinOrderByAggregateInput = {
+    id?: SortOrder
+    username?: SortOrder
+    punktId?: SortOrder
     password?: SortOrder
     first_name?: SortOrder
     last_name?: SortOrder

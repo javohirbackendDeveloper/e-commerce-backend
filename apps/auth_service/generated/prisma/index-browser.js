@@ -120,12 +120,25 @@ exports.Prisma.UserScalarFieldEnum = {
   first_name: 'first_name',
   last_name: 'last_name',
   phone_number: 'phone_number',
+  region: 'region',
+  city: 'city',
   role: 'role'
 };
 
 exports.Prisma.AdminScalarFieldEnum = {
   id: 'id',
   username: 'username',
+  password: 'password',
+  first_name: 'first_name',
+  last_name: 'last_name',
+  phone_number: 'phone_number',
+  role: 'role'
+};
+
+exports.Prisma.PunktAdminScalarFieldEnum = {
+  id: 'id',
+  username: 'username',
+  punktId: 'punktId',
   password: 'password',
   first_name: 'first_name',
   last_name: 'last_name',
@@ -146,12 +159,14 @@ exports.Roles = exports.$Enums.Roles = {
   User: 'User',
   Admin: 'Admin',
   SuperAdmin: 'SuperAdmin',
-  Courier: 'Courier'
+  Courier: 'Courier',
+  PunktAdmin: 'PunktAdmin'
 };
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Admin: 'Admin'
+  Admin: 'Admin',
+  PunktAdmin: 'PunktAdmin'
 };
 
 /**

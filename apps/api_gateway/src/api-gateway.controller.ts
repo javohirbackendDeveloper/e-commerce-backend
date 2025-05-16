@@ -60,12 +60,24 @@ export class ApiGatewayController {
         isAuthorized = await this.validateToken(req, "Admin");
       }
       target = process.env.PRODUCTS_SERVICE_URL;
-    } else if (url.startsWith("/order")) {
+    } else if (url.startsWith("/orders")) {
       isAuthorized = await this.validateToken(req, "User");
       target = process.env.ORDER_SERVICE_URL;
+      // if()
     } else if (url.startsWith("/auth")) {
-      target = process.env.AUTH_SERVICE_URL;
-      isAuthorized = true;
+      if (url.startsWith("/auth/punkt_admin/register")) {
+        target = process.env.AUTH_SERVICE_URL;
+        isAuthorized = await this.validateToken(req, "Admin");
+      } else {
+        target = process.env.AUTH_SERVICE_URL;
+        isAuthorized = true;
+      }
+    } else if (url.startsWith("/punkts")) {
+      target = process.env.PUNKT_SERVICE_URL;
+      isAuthorized = await this.validateToken(req, "Admin");
+    } else if (url.startsWith("/staff")) {
+      target = process.env.STAFF_SERVICE_URL;
+      isAuthorized = await this.validateToken(req, "Admin");
     } else {
       return res
         .status(HttpStatus.NOT_FOUND)

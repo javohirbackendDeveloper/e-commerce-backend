@@ -8,11 +8,12 @@ import { allowUrls } from "@app/common/cors_for_backend/middleware";
 
 async function bootstrap() {
   const app = await NestFactory.create(OrderServiceModule);
+  // global middlewares
   app.useGlobalPipes(new ValidationPipe());
-
   app.use(allowUrls);
+  app.setGlobalPrefix("orders");
 
-  app.setGlobalPrefix("order");
+  // listening port
   const configService = app.get(ConfigService);
   const PORT = configService.get("PORT") || 3002;
   await app.listen(PORT, () => {
