@@ -1,6 +1,9 @@
 import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { CreateOrderDto } from "./dto/create-order.dto";
-import { UpdateOrderDto } from "./dto/update-order.dto";
+import {
+  UpdateOrderDto,
+  UpdateOrderDtoForPunktAdmin,
+} from "./dto/update-order.dto";
 import { DeliverStatus } from "./enums/deliverType.enum";
 import { PaymentStatus } from "./enums/paymentStatus.enum";
 import { CartService } from "../cart/cart.service";
@@ -9,7 +12,8 @@ import { firstValueFrom } from "rxjs";
 import { ClientProxy } from "@nestjs/microservices";
 import { OrderStatus } from "./enums/orderStatus.enum";
 import { PrismaService } from "apps/order_service/prisma/prisma.service";
-import { Orders } from "apps/order_service/generated/prisma";
+import { Orders, Prisma } from "apps/order_service/generated/prisma";
+import { FilterOrdersDto } from "./dto/filterOrders.dto";
 
 @Injectable()
 export class OrderService {
@@ -17,12 +21,13 @@ export class OrderService {
     private readonly cartService: CartService,
     @Inject("ORDER_SERVICE") private readonly orderClient: ClientProxy,
     @Inject("PUNKT_SERVICE") private readonly punktClient: ClientProxy,
+    @Inject("STAFF_SERVICE") private readonly staffClient: ClientProxy,
     private readonly prismaService: PrismaService
   ) {}
 
   // APIS FOR USERS
 
-  async create(createOrderDto: CreateOrderDto, req: Request) {
+  async create(createOrderDto: CreateOrderDto, req: Request): Promise<Orders> {
     try {
       const {
         deliveringType,
@@ -124,8 +129,6 @@ export class OrderService {
           locationLatitude
         );
 
-        console.log({ theNearestPunkt });
-
         createData.locationLongitude = locationLongitude;
         createData.locationLatitude = locationLatitude;
         createData.punktId = theNearestPunkt.nearestPunkt?.id;
@@ -140,7 +143,7 @@ export class OrderService {
       });
 
       // There must be reporter that reports to get_punkt_orders api of punkt_service when created new order
-      // return order;
+      return order;
     } catch (err) {
       throw new HttpException(
         err.message || "Internal server error",
@@ -190,39 +193,17 @@ export class OrderService {
     }
   }
 
-  // Haversine formula
-  private calculateHaversineDistance(
-    lat1: number,
-    lon1: number,
-    lat2: number,
-    lon2: number
-  ): number {
-    const R = 6371;
-    const dLat = this.toRadians(lat2 - lat1);
-    const dLon = this.toRadians(lon2 - lon1);
-
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(this.toRadians(lat1)) *
-        Math.cos(this.toRadians(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c;
-  }
-
-  // Convert degrees to radians
-  private toRadians(degrees: number): number {
-    return degrees * (Math.PI / 180);
-  }
-
-  async getUserOrders(req: Request): Promise<Orders[]> {
+  async getUserOrders(
+    filterQueries: Prisma.OrdersWhereInput,
+    req: Request
+  ): Promise<Orders[]> {
     try {
       const userId = req.headers["x_user_id"];
+      const existFilter: Prisma.OrdersWhereInput =
+        await this.existFilters(filterQueries);
 
       const orders = await this.prismaService.orders.findMany({
-        where: { userId: userId as string },
+        where: { userId: userId as string, ...existFilter },
       });
 
       return orders;
@@ -234,7 +215,11 @@ export class OrderService {
     }
   }
 
-  async update(id: string, updateOrderDto: UpdateOrderDto, req: Request) {
+  async update(
+    id: string,
+    updateOrderDto: UpdateOrderDto,
+    req: Request
+  ): Promise<Orders> {
     try {
       const {
         recipient_firstname,
@@ -283,6 +268,192 @@ export class OrderService {
       });
 
       return updatedOrder;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  // APIS FOR PUNKTS
+
+  async getPunktOrders(
+    filterQueries: Prisma.OrdersWhereInput,
+    req: Request
+  ): Promise<Orders[]> {
+    try {
+      const punktAdmin = await this.getOnePunktAdmin(req);
+
+      if (!punktAdmin.punktId) {
+        throw new HttpException(
+          "You don't have any punkts yet",
+          HttpStatus.BAD_REQUEST
+        );
+      }
+
+      const existFilters: Prisma.OrdersWhereInput =
+        await this.existFilters(filterQueries);
+
+      const orders = await this.prismaService.orders.findMany({
+        where: { punktId: punktAdmin.punktId, ...existFilters },
+      });
+
+      return orders;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  async updatOrdersForPunktAdmin(
+    id: string,
+    updateOrderDto: UpdateOrderDtoForPunktAdmin,
+    req: Request
+  ): Promise<Orders> {
+    try {
+      const { status } = updateOrderDto;
+
+      const punktAdmin = await this.getOnePunktAdmin(req);
+
+      if (!punktAdmin.punktId) {
+        throw new HttpException(
+          "You don't have any punkts yet",
+          HttpStatus.BAD_REQUEST
+        );
+      }
+      const order = await this.prismaService.orders.findUnique({
+        where: { id, punktId: punktAdmin.punktId },
+      });
+
+      if (!order) {
+        throw new HttpException(
+          "This order not found in your punkt",
+          HttpStatus.NOT_FOUND
+        );
+      }
+
+      const allowedOrderStatus = [
+        "Processing",
+        "Shipped",
+        "Delivered",
+        "Cancelled",
+      ];
+
+      if (!allowedOrderStatus.includes(status)) {
+        throw new HttpException(
+          "You cannot update this order to this status " + status,
+          HttpStatus.BAD_REQUEST
+        );
+      }
+
+      const updatedOrder = await this.prismaService.orders.update({
+        where: { id },
+        data: {
+          status,
+        },
+      });
+
+      return updatedOrder;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  // PRIVATE FUNCTIONS
+
+  private existFilters(filterQueries: Prisma.OrdersWhereInput) {
+    let existFilter: Prisma.OrdersWhereInput = {};
+
+    if (filterQueries.status) {
+      existFilter.status = filterQueries.status;
+    }
+    if (
+      filterQueries.deliveringType &&
+      Object.values(DeliverStatus).includes(
+        filterQueries.deliveringType as DeliverStatus
+      )
+    ) {
+      existFilter.deliveringType = filterQueries.deliveringType;
+    }
+    if (
+      filterQueries.paymenttype &&
+      Object.values(PaymentStatus).includes(
+        filterQueries.paymenttype as PaymentStatus
+      )
+    ) {
+      existFilter.paymenttype = filterQueries.paymenttype;
+    }
+    if (filterQueries.punktId) {
+      existFilter.punktId = filterQueries.punktId;
+    }
+    return existFilter;
+  }
+
+  // get one punktAdmin
+  async getOnePunktAdmin(req: Request) {
+    const punktAdminId = req.headers["x_user_id"];
+
+    const punktAdmin = await firstValueFrom(
+      this.staffClient.send("get_one_punktAdmin", punktAdminId)
+    );
+
+    if (!punktAdmin) {
+      throw new HttpException(
+        "You are not punkt-admin",
+        HttpStatus.UNAUTHORIZED
+      );
+    }
+
+    return punktAdmin;
+  }
+
+  // Haversine formula
+  private calculateHaversineDistance(
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number
+  ): number {
+    const R = 6371;
+    const dLat = this.toRadians(lat2 - lat1);
+    const dLon = this.toRadians(lon2 - lon1);
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(this.toRadians(lat1)) *
+        Math.cos(this.toRadians(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  // Convert degrees to radians
+  private toRadians(degrees: number): number {
+    return degrees * (Math.PI / 180);
+  }
+
+  // APIS FOR ADMINS
+
+  async getAllOrders(filterQueries: Prisma.OrdersWhereInput) {
+    try {
+      const existFilter = await this.existFilters(filterQueries);
+      const orders = await this.prismaService.orders.findMany({
+        where: { ...existFilter },
+      });
+
+      const sortedOrders = orders.sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      );
+      return sortedOrders;
     } catch (err) {
       throw new HttpException(
         err.message || "Internal server error",

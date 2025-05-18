@@ -10,6 +10,7 @@ import { Prisma, Punkt } from "apps/punkt_service/generated/prisma";
 export class PunktService {
   constructor(
     @Inject("PUNKT_SERVICE") private readonly punktClient: ClientProxy,
+    @Inject("STAFF_SERVICE") private readonly staffClient: ClientProxy,
     private readonly prismaService: PrismaService
   ) {}
 
@@ -33,7 +34,7 @@ export class PunktService {
       }
 
       const punktAdmin = await firstValueFrom(
-        this.punktClient.send("get_one_punktAdmin", punktAdminId)
+        this.staffClient.send("get_one_punktAdmin", punktAdminId)
       );
 
       if (!punktAdmin) {
@@ -45,7 +46,7 @@ export class PunktService {
 
       if (punktAdmin.punktId) {
         throw new HttpException(
-          "This punkt admin working other punkt",
+          "This punkt admin working in other punkt",
           HttpStatus.CONFLICT
         );
       }
@@ -57,8 +58,8 @@ export class PunktService {
         },
       });
 
-      const updatePunktAdmin = await firstValueFrom(
-        this.punktClient.send("update_one_punktAdmin", {
+      const updatedPunktAdmin = await firstValueFrom(
+        this.staffClient.send("update_one_punktAdmin", {
           id: punktAdmin.id,
           data: {
             punktId: punkt.id,

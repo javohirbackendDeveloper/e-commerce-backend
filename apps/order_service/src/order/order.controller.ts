@@ -7,11 +7,17 @@ import {
   Param,
   Delete,
   Req,
+  Query,
 } from "@nestjs/common";
 import { OrderService } from "./order.service";
 import { CreateOrderDto } from "./dto/create-order.dto";
-import { UpdateOrderDto } from "./dto/update-order.dto";
+import {
+  UpdateOrderDto,
+  UpdateOrderDtoForPunktAdmin,
+} from "./dto/update-order.dto";
 import { Request } from "express";
+import { FilterOrdersDto } from "./dto/filterOrders.dto";
+import { Prisma } from "apps/order_service/generated/prisma";
 
 @Controller("order")
 export class OrderController {
@@ -24,8 +30,11 @@ export class OrderController {
   }
 
   @Get("user")
-  getUserOrders(@Req() req: Request) {
-    return this.orderService.getUserOrders(req);
+  getUserOrders(
+    @Query() filterQueries: Prisma.OrdersWhereInput,
+    @Req() req: Request
+  ) {
+    return this.orderService.getUserOrders(filterQueries, req);
   }
 
   @Patch("user/:id")
@@ -40,10 +49,29 @@ export class OrderController {
   // PUNKT APIS
 
   @Get("punkt")
-  getPunktOrders(@Req() req: Request) {
-    return this.orderService.getUserOrders(req);
+  findPunktOrders(
+    @Query() filterQueries: Prisma.OrdersWhereInput,
+    @Req() req: Request
+  ) {
+    return this.orderService.getPunktOrders(filterQueries, req);
   }
 
-  @Get(":id")
-  findOne(@Param("id") id: string) {}
+  @Patch("punkt/:id")
+  updateForPunktAdmin(
+    @Req() req: Request,
+    @Param("id") id: string,
+    @Body() updateOrderDto: UpdateOrderDtoForPunktAdmin
+  ) {
+    return this.orderService.updatOrdersForPunktAdmin(id, updateOrderDto, req);
+  }
+
+  // APIS FOR ADMINS
+
+  @Get("admin")
+  getAllOrders(
+    @Query() filterQueries: Prisma.OrdersWhereInput,
+    @Req() req: Request
+  ) {
+    return this.orderService.getAllOrders(filterQueries);
+  }
 }

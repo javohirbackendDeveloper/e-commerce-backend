@@ -10,10 +10,7 @@ import { PUNKT_SERVICE } from "./constants/services";
       envFilePath: "./apps/punkt_service/.env",
       isGlobal: true,
     }),
-    RmqModule.register({ name: "ORDER_SERVICE" }),
-    RmqModule.register({
-      name: PUNKT_SERVICE,
-    }),
+
     PunktModule,
   ],
   controllers: [],

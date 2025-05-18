@@ -16,7 +16,7 @@ async function bootstrap() {
 
   // microservice connecting
   const rmqService = app.get<RmqService>(RmqService);
-  app.connectMicroservice<RmqOptions>(rmqService.getOptions("PUNKT_SERVICE"));
+  app.connectMicroservice<RmqOptions>(rmqService.getOptions("STAFF_SERVICE"));
   await app.startAllMicroservices();
 
   // LISTENING PORT

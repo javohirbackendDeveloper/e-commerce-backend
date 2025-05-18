@@ -1,5 +1,6 @@
 import { IsEnum, IsOptional, IsPhoneNumber, IsString } from "class-validator";
 import { UpdateOrderStatus } from "../enums/orderStatus.enum";
+import { OrderStatus } from "apps/order_service/generated/prisma";
 
 export class UpdateOrderDto {
   @IsString()
@@ -21,4 +22,10 @@ export class UpdateOrderDto {
   @IsEnum(UpdateOrderStatus)
   @IsOptional()
   status?: string;
+}
+
+export class UpdateOrderDtoForPunktAdmin {
+  @IsEnum(OrderStatus)
+  @IsOptional()
+  status?: OrderStatus;
 }

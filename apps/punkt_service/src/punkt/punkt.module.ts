@@ -2,7 +2,11 @@ import { Module } from "@nestjs/common";
 import { PunktService } from "./punkt.service";
 import { PunktController } from "./punkt.controller";
 import { RmqModule } from "@app/common";
-import { PUNKT_SERVICE } from "../constants/services";
+import {
+  ORDER_SERVICE,
+  PUNKT_SERVICE,
+  STAFF_SERVICE,
+} from "../constants/services";
 import { PrismaService } from "apps/punkt_service/prisma/prisma.service";
 
 @Module({
@@ -10,7 +14,8 @@ import { PrismaService } from "apps/punkt_service/prisma/prisma.service";
     RmqModule.register({
       name: PUNKT_SERVICE,
     }),
-    RmqModule.register({ name: "ORDER_SERVICE" }),
+    RmqModule.register({ name: ORDER_SERVICE }),
+    RmqModule.register({ name: STAFF_SERVICE }),
   ],
   controllers: [PunktController],
   providers: [PunktService, PrismaService],

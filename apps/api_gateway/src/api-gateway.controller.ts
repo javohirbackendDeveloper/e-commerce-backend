@@ -61,9 +61,18 @@ export class ApiGatewayController {
       }
       target = process.env.PRODUCTS_SERVICE_URL;
     } else if (url.startsWith("/orders")) {
-      isAuthorized = await this.validateToken(req, "User");
-      target = process.env.ORDER_SERVICE_URL;
-      // if()
+      if (url.startsWith("/orders/order/user")) {
+        isAuthorized = await this.validateToken(req, "User");
+        target = process.env.ORDER_SERVICE_URL;
+      }
+      if (url.startsWith("/orders/order/punkt")) {
+        isAuthorized = await this.validateToken(req, "PunktAdmin");
+        target = process.env.ORDER_SERVICE_URL;
+      }
+      if (url.startsWith("/orders/order/admin")) {
+        isAuthorized = await this.validateToken(req, "Admin");
+        target = process.env.ORDER_SERVICE_URL;
+      }
     } else if (url.startsWith("/auth")) {
       if (url.startsWith("/auth/punkt_admin/register")) {
         target = process.env.AUTH_SERVICE_URL;
@@ -94,6 +103,8 @@ export class ApiGatewayController {
 
     delete headers["content-length"];
     const allRoles = Roles;
+    console.log({ allRoles });
+
     for (const role of allRoles) {
       const token = req.cookies[`${role.toLowerCase()}_access_token`];
       if (token) {

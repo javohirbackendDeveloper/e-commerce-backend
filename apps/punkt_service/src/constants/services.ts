@@ -1,1 +1,3 @@
 export const PUNKT_SERVICE = "PUNKT_SERVICE";
+export const STAFF_SERVICE = "STAFF_SERVICE";
+export const ORDER_SERVICE = "ORDER_SERVICE";

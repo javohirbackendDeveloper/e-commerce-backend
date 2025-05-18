@@ -8,6 +8,7 @@ import {
   ORDER_SERVICE,
   PRODUCTS_SERVICE,
   PUNKT_SERVICE,
+  STAFF_SERVICE,
 } from "../constants/services";
 import { CartModule } from "../cart/cart.module";
 
@@ -23,6 +24,9 @@ const services = [];
     }),
     RmqModule.register({
       name: PRODUCTS_SERVICE,
+    }),
+    RmqModule.register({
+      name: STAFF_SERVICE,
     }),
   ],
   controllers: [OrderController],

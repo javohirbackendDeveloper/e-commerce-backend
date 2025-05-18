@@ -48,6 +48,8 @@ export class PunktAdminController {
 
   @MessagePattern("get_one_punktAdmin")
   async getOne(@Payload() id: string) {
+    console.log("Message came to staff_controller ", id);
+
     return this.punktAdminService.findOne(id);
   }
 
