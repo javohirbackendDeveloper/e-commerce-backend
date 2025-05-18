@@ -320,7 +320,7 @@ export class OrderService {
 
       if (!punktAdmin.punktId) {
         throw new HttpException(
-          "You don't have any punkts yet",
+          "You don't have any punkt yet",
           HttpStatus.BAD_REQUEST
         );
       }
