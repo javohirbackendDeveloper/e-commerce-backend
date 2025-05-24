@@ -1,3 +1,4 @@
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import {
   IsBoolean,
   IsNotEmpty,
@@ -6,83 +7,87 @@ import {
   IsString,
 } from "class-validator";
 
+class TimeRange {
+  @ApiProperty()
+  @IsString()
+  startTime: string;
+
+  @ApiProperty()
+  @IsString()
+  endTime: string;
+}
+
 class WorkingHours {
-  @IsString()
+  @ApiPropertyOptional({ type: TimeRange })
   @IsOptional()
-  dushanba?: {
-    startTime: string;
-    endTime: string;
-  };
-  @IsString()
+  dushanba?: TimeRange;
+
+  @ApiPropertyOptional({ type: TimeRange })
   @IsOptional()
-  seshanba?: {
-    startTime: string;
-    endTime: string;
-  };
-  @IsString()
+  seshanba?: TimeRange;
+
+  @ApiPropertyOptional({ type: TimeRange })
   @IsOptional()
-  chorshanba?: {
-    startTime: string;
-    endTime: string;
-  };
-  @IsString()
+  chorshanba?: TimeRange;
+
+  @ApiPropertyOptional({ type: TimeRange })
   @IsOptional()
-  payshanba?: {
-    startTime: string;
-    endTime: string;
-  };
-  @IsString()
+  payshanba?: TimeRange;
+
+  @ApiPropertyOptional({ type: TimeRange })
   @IsOptional()
-  juma?: {
-    startTime: string;
-    endTime: string;
-  };
-  @IsString()
+  juma?: TimeRange;
+
+  @ApiPropertyOptional({ type: TimeRange })
   @IsOptional()
-  shanba?: {
-    startTime: string;
-    endTime: string;
-  };
-  @IsString()
+  shanba?: TimeRange;
+
+  @ApiPropertyOptional({ type: TimeRange })
   @IsOptional()
-  yakshanba?: {
-    startTime: string;
-    endTime: string;
-  };
+  yakshanba?: TimeRange;
 }
 
 export class CreatePunktDto {
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   name: string;
 
+  @ApiProperty({ type: WorkingHours })
   @IsNotEmpty()
   workingHours: WorkingHours;
 
+  @ApiPropertyOptional()
   @IsBoolean()
   @IsOptional()
-  canTryOn: boolean;
+  canTryOn?: boolean;
 
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   locationText: string;
 
+  @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
   locationLongitude: number;
 
+  @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
   locationLatitude: number;
 
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   region: string;
 
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   city: string;
 
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   punktAdminId: string;

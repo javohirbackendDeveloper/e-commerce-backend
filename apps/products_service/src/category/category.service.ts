@@ -1,43 +1,23 @@
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotFoundException,
-} from "@nestjs/common";
-import { CreateCategoryDto } from "./dto/create-category.dto";
+  CreateCategoryDto,
+  CreateSubCategoryDto,
+} from "./dto/create-category.dto";
 import { UpdateCategoryDto } from "./dto/update-category.dto";
 import { PrismaService } from "apps/products_service/prisma/prisma.service";
 import { Category } from "apps/products_service/generated/prisma";
+import { CloudinaryService } from "../cloudinary/cloudinary.service";
 
 @Injectable()
 export class CategoryService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly cloudinaryService: CloudinaryService
+  ) {}
 
-  async create(
-    createCategoryDto: CreateCategoryDto
-  ): Promise<CreateCategoryDto> {
+  async createSubCategory(createSubCategoryDto: CreateSubCategoryDto) {
     try {
-      const { parentId, title } = createCategoryDto;
-
-      if (parentId) {
-        const parentCategory = await this.prismaService.category.findUnique({
-          where: { id: parentId },
-        });
-
-        if (!parentCategory) {
-          throw new HttpException(
-            "This parent category not found with this id " + parentId,
-            HttpStatus.NOT_FOUND
-          );
-        }
-
-        await this.prismaService.category.update({
-          where: { id: parentId },
-          data: {
-            children: parentCategory.children + 1,
-          },
-        });
-      }
+      const { title, parentId } = createSubCategoryDto;
 
       const existTitle = await this.prismaService.category.findUnique({
         where: { title },
@@ -50,15 +30,82 @@ export class CategoryService {
         );
       }
 
+      const parentCat = await this.prismaService.category.findUnique({
+        where: { id: parentId },
+      });
+
+      if (!parentCat) {
+        throw new HttpException(
+          "This parent category not found with this id " + parentId,
+          HttpStatus.NOT_FOUND
+        );
+      }
+
+      const subcategory = await this.prismaService.category.create({
+        data: { title, parentId },
+      });
+
+      await this.prismaService.category.update({
+        where: { id: parentCat.id },
+        data: {
+          children: parentCat.children + 1,
+        },
+      });
+      return subcategory;
+    } catch (err) {
+      console.log(err);
+
+      throw new HttpException(
+        err.message,
+        err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  async create(
+    createCategoryDto: CreateCategoryDto,
+    file: Express.Multer.File
+  ): Promise<CreateCategoryDto> {
+    try {
+      const { title } = createCategoryDto;
+
+      let parentCategory: Category | null = null;
+
+      const existTitle = await this.prismaService.category.findUnique({
+        where: { title },
+      });
+
+      if (existTitle) {
+        throw new HttpException(
+          "This  category title already exist",
+          HttpStatus.BAD_REQUEST
+        );
+      }
+
+      if (!file) {
+        throw new HttpException(
+          "Please upload icon to add category",
+          HttpStatus.BAD_REQUEST
+        );
+      }
+
+      const iconUrl = await this.cloudinaryService.uploadFile(
+        file,
+        "categories"
+      );
+
       const category = await this.prismaService.category.create({
         data: {
           title,
-          parentId: parentId || "",
+          icon: iconUrl || "",
+          parentId: "",
         },
       });
 
       return category;
     } catch (error) {
+      console.log(error);
+
       throw new HttpException(
         error.message || "Internal server error",
         error.status || 500
@@ -94,13 +141,13 @@ export class CategoryService {
     }
   }
 
-  async findOne(id: string): Promise<CreateCategoryDto[]> {
+  async findOne(id: string): Promise<Category> {
     try {
-      const categories = await this.prismaService.category.findMany({
-        where: { parentId: id },
+      const category = await this.prismaService.category.findUnique({
+        where: { id },
       });
 
-      return categories;
+      return category;
     } catch (error) {
       throw new HttpException(
         error.message || "Internal server error",
@@ -111,13 +158,30 @@ export class CategoryService {
 
   async update(
     id: string,
-    updateCategoryDto: UpdateCategoryDto
+    updateCategoryDto: UpdateCategoryDto,
+    file: Express.Multer.File
   ): Promise<CreateCategoryDto> {
     const { title } = updateCategoryDto;
     try {
+      const existCategory = await this.prismaService.category.findUnique({
+        where: { id },
+      });
+
+      if (!existCategory) {
+        throw new HttpException(
+          "This category not found with this id " + id,
+          HttpStatus.NOT_FOUND
+        );
+      }
+
+      let iconUrl: string = existCategory.icon;
+      if (file) {
+        await this.cloudinaryService.deleteImage(existCategory.icon);
+        iconUrl = await this.cloudinaryService.uploadFile(file, "categories");
+      }
       const category = await this.prismaService.category.update({
         where: { id },
-        data: { title },
+        data: { title, icon: iconUrl || "" },
       });
       return category;
     } catch (error) {
@@ -131,9 +195,27 @@ export class CategoryService {
   // recursive delete function
   async remove(id: string) {
     try {
+      // DELETING ICON OF THIS CATEGORY FROM CLOUDINARY
+
+      const category = await this.prismaService.category.findUnique({
+        where: { id },
+      });
+      if (!category) {
+        throw new HttpException(
+          "This category not found with this is " + id,
+          HttpStatus.NOT_FOUND
+        );
+      }
+
+      if (category.icon) {
+        await this.cloudinaryService.deleteImage(category.icon);
+      }
+
+      // deleting sub categories
       const categories = await this.prismaService.category.findMany({
         where: { parentId: id },
       });
+
       for (const category of categories) {
         await this.remove(category.id);
       }
@@ -141,7 +223,21 @@ export class CategoryService {
       await this.prismaService.category.delete({
         where: { id },
       });
+
+      if (category.parentId) {
+        await this.prismaService.category.update({
+          where: { id: category.parentId },
+          data: {
+            children: {
+              decrement: 1,
+            },
+          },
+        });
+      }
+      return { message: "Turkum muvaffaqiyatli o'chirildi" };
     } catch (error) {
+      console.log({ error });
+
       throw new HttpException(
         error.message || "Internal server error",
         error.status || 500
@@ -151,21 +247,56 @@ export class CategoryService {
 
   // recursive get function
 
-  async getAllChildCategories(categoryId: string, allCategories: Category[]) {
+  async getAllChildCategories(categoryId: string): Promise<Category[]> {
     try {
-      let result = [categoryId];
+      const categories = await this.prismaService.category.findMany({
+        where: { parentId: categoryId },
+      });
 
-      for (const cat of allCategories) {
-        if (cat.parentId.toString() === categoryId.toString()) {
-          const children = await this.getAllChildCategories(
-            cat.id,
-            allCategories
-          );
-          result = result.concat(children);
-        }
-      }
+      return categories;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
 
-      return result;
+  // recursive get child category ids
+  async getAllChildCategoryIds(categoryId: string): Promise<string[]> {
+    try {
+      const directChildren = await this.prismaService.category.findMany({
+        where: { parentId: categoryId },
+      });
+
+      if (!directChildren.length) return [categoryId];
+
+      const allDescendants = await Promise.all(
+        directChildren.map((child) => this.getAllChildCategoryIds(child.id))
+      );
+
+      return [categoryId, ...allDescendants.flat()];
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  // getAll leaf categories
+
+  async getAllLeafCategories(): Promise<any[]> {
+    try {
+      const categories = await this.prismaService.category.findMany({
+        where: {
+          children: {
+            equals: 0,
+          },
+        },
+      });
+
+      return categories;
     } catch (err) {
       throw new HttpException(
         err.message || "Internal server error",

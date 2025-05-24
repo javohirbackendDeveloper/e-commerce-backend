@@ -3,7 +3,6 @@ import { OrderService } from "./order.service";
 import { OrderController } from "./order.controller";
 import { CartService } from "../cart/cart.service";
 import { PrismaService } from "apps/order_service/prisma/prisma.service";
-import { RmqModule } from "@app/common";
 import {
   ORDER_SERVICE,
   PRODUCTS_SERVICE,
@@ -11,6 +10,7 @@ import {
   STAFF_SERVICE,
 } from "../constants/services";
 import { CartModule } from "../cart/cart.module";
+import { RmqModule } from "libs/common/src";
 
 const services = [];
 

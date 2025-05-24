@@ -38,6 +38,7 @@ export class AdminGuard implements CanActivate {
     const admin = await this.adminService.getAdmin(decode.id);
     if (!admin) return false;
 
+    request.admin = admin;
     return admin.role === "Admin";
   }
 }

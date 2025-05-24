@@ -3,12 +3,12 @@ import { ApiGatewayController } from "./api-gateway.controller";
 import { ApiGatewayService } from "./api-gateway.service";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { HttpModule } from "@nestjs/axios";
-import { RmqModule } from "@app/common";
 import {
   AUTH_SERVICE,
   ORDER_SERVICE,
   PRODUCTS_SERVICE,
 } from "./constants/services";
+import { RmqModule } from "libs/common/src";
 
 @Module({
   imports: [

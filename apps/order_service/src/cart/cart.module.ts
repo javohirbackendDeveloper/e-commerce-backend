@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 import { CartService } from "./cart.service";
 import { CartController } from "./cart.controller";
-import { RmqModule } from "@app/common";
 import { ORDER_SERVICE, PRODUCTS_SERVICE } from "../constants/services";
 import { PrismaService } from "apps/order_service/prisma/prisma.service";
+import { RmqModule } from "libs/common/src";
 
 @Module({
   imports: [

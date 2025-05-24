@@ -2,8 +2,8 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { UserModule } from "./user/user.module";
 import { AdminModule } from "./admin/admin.module";
-import { RmqService } from "@app/common";
 import { PunktAdminModule } from "./punkt-admin/punkt-admin.module";
+import { RmqService } from "libs/common/src";
 
 @Module({
   imports: [

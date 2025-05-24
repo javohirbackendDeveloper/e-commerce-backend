@@ -3,19 +3,33 @@ import { AuthServiceModule } from "./auth-service.module";
 import { BadRequestException, ValidationPipe } from "@nestjs/common";
 import * as cookieParser from "cookie-parser";
 import { AllExceptionsFilter } from "./filters/all-exceptions.filters";
-import { RmqService } from "@app/common";
 import { RmqOptions } from "@nestjs/microservices";
-import { allowUrls } from "@app/common/cors_for_backend/middleware";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { RmqService } from "libs/common/src";
+import { allowUrls } from "libs/common/src/cors_for_backend/middleware";
 
 async function bootstrap() {
   const app = await NestFactory.create(AuthServiceModule);
 
-  app.use(allowUrls);
+  // SWAGGER CONFIGURATION
 
+  const config = new DocumentBuilder()
+    .setTitle("auth_service")
+    .setVersion("1.0.0")
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup("api", app, document);
+
+  app.use("/swagger-json", (_, res) => res.json(document));
+
+  // Connecting to microservice
   const rmqService = app.get<RmqService>(RmqService);
   app.connectMicroservice<RmqOptions>(rmqService.getOptions("AUTH_SERVICE"));
   await app.startAllMicroservices();
 
+  // GLOBAL MIDDLEWARES
+
+  app.use(allowUrls);
   app.setGlobalPrefix("auth");
   app.useGlobalPipes(
     new ValidationPipe({
@@ -39,6 +53,7 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter());
   app.use(cookieParser());
 
+  // Listening port
   const PORT = process.env.PORT || 3001;
   await app.listen(PORT, () => {
     console.log("auth_service is running at " + PORT);

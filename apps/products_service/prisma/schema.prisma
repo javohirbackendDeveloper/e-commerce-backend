@@ -54,14 +54,17 @@ categoryId String @db.ObjectId
 
 
 
+
 // CATEGORY PART
 
 model Category {
      id String @id @default(auto()) @map("_id") @db.ObjectId
      parentId String?
+     icon String?
      title String @unique
      children Int @default(0)
      product Product[]
+     brand Brand[]
 }
 
 
@@ -75,5 +78,16 @@ model LikedProduct {
      productId String @db.ObjectId
      product Product @relation(fields: [productId] , references: [id])
      createdAt DateTime @default(now())
+
+}
+
+
+// brand model 
+
+model Brand {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String @unique
+  categoryId String @db.ObjectId
+  category Category @relation(fields: [categoryId] , references: [id])
 
 }

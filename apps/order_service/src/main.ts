@@ -4,10 +4,23 @@ import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { OrderServiceModule } from "./order-service.module";
 import { ClientProxy } from "@nestjs/microservices";
-import { allowUrls } from "@app/common/cors_for_backend/middleware";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { allowUrls } from "libs/common/src/cors_for_backend/middleware";
 
 async function bootstrap() {
   const app = await NestFactory.create(OrderServiceModule);
+
+  // SWAGGER CONFIGURATION
+
+  const config = new DocumentBuilder()
+    .setTitle("order_service")
+    .setVersion("1.0.0")
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup("api", app, document);
+
+  app.use("/swagger-json", (_, res) => res.json(document));
+
   // global middlewares
   app.useGlobalPipes(new ValidationPipe());
   app.use(allowUrls);

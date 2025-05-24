@@ -1,13 +1,13 @@
 import { Module } from "@nestjs/common";
 import { PunktService } from "./punkt.service";
 import { PunktController } from "./punkt.controller";
-import { RmqModule } from "@app/common";
 import {
   ORDER_SERVICE,
   PUNKT_SERVICE,
   STAFF_SERVICE,
 } from "../constants/services";
 import { PrismaService } from "apps/punkt_service/prisma/prisma.service";
+import { RmqModule } from "libs/common/src";
 
 @Module({
   imports: [

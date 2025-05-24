@@ -1,17 +1,15 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import * as Joi from "joi";
-import { RmqModule, RmqService } from "@app/common";
 import { CategoryModule } from "./category/category.module";
 import { ProductModule } from "./product/product.module";
 import { PrismaService } from "../prisma/prisma.service";
 import { CommentsModule } from "./comments/comments.module";
 import { LikedProductModule } from "./liked-product/liked-product.module";
-import {
-  ElasticsearchModule,
-  ElasticsearchService,
-} from "@nestjs/elasticsearch";
 import { SearchModule } from "./search/search.module";
+import { CloudinaryModule } from "./cloudinary/cloudinary.module";
+import { BrandModule } from "./brand/brand.module";
+import { RmqModule, RmqService } from "libs/common/src";
 
 @Module({
   imports: [
@@ -30,6 +28,8 @@ import { SearchModule } from "./search/search.module";
     CommentsModule,
     LikedProductModule,
     SearchModule,
+    CloudinaryModule,
+    BrandModule,
   ],
   controllers: [],
   providers: [PrismaService, RmqService],

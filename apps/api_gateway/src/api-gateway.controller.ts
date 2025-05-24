@@ -7,7 +7,7 @@ import {
   Injectable,
 } from "@nestjs/common";
 import { Request, Response } from "express";
-import { firstValueFrom, lastValueFrom } from "rxjs";
+import { lastValueFrom } from "rxjs";
 import * as jwt from "jsonwebtoken";
 import { HttpService } from "@nestjs/axios";
 import { ConfigService } from "@nestjs/config";
@@ -23,17 +23,14 @@ export class ApiGatewayController {
 
   async validateToken(req: Request, role: string) {
     const token = req.cookies[`${role.toLowerCase()}_access_token`];
-
     if (!token) return false;
     try {
       const secret = this.configService.get<string>(
         `${role}_ACCESS_TOKEN_SECRET`
       );
-
       const decoded = jwt.verify(token, secret);
-
       return decoded?.role === role;
-    } catch (err) {
+    } catch {
       return false;
     }
   }
@@ -42,11 +39,10 @@ export class ApiGatewayController {
   async proxy(@Req() req: Request, @Res() res: Response) {
     const url = req.url;
     const method = req.method;
-    const data = req.body;
-
-    let target = "";
     let isAuthorized = false;
+    let target = "";
 
+    // ROUTING
     if (url.startsWith("/products")) {
       if (method === "GET") {
         isAuthorized = true;
@@ -54,6 +50,8 @@ export class ApiGatewayController {
         isAuthorized =
           (await this.validateToken(req, "User")) ||
           (await this.validateToken(req, "Admin"));
+      } else if (url.startsWith("/products/category")) {
+        isAuthorized = await this.validateToken(req, "Admin");
       } else if (url.startsWith("/products/liked-product")) {
         isAuthorized = await this.validateToken(req, "User");
       } else {
@@ -64,12 +62,10 @@ export class ApiGatewayController {
       if (url.startsWith("/orders/order/user")) {
         isAuthorized = await this.validateToken(req, "User");
         target = process.env.ORDER_SERVICE_URL;
-      }
-      if (url.startsWith("/orders/order/punkt")) {
+      } else if (url.startsWith("/orders/order/punkt")) {
         isAuthorized = await this.validateToken(req, "PunktAdmin");
         target = process.env.ORDER_SERVICE_URL;
-      }
-      if (url.startsWith("/orders/order/admin")) {
+      } else if (url.startsWith("/orders/order/admin")) {
         isAuthorized = await this.validateToken(req, "Admin");
         target = process.env.ORDER_SERVICE_URL;
       }
@@ -99,13 +95,12 @@ export class ApiGatewayController {
         .json({ message: "Unauthorized" });
     }
 
+    // HEADERS tayyorlash
     const headers = { ...req.headers };
+    delete headers["content-length"]; // content-length qayta hisoblanadi
 
-    delete headers["content-length"];
-    const allRoles = Roles;
-    console.log({ allRoles });
-
-    for (const role of allRoles) {
+    // USER INFO qo‘shish
+    for (const role of Roles) {
       const token = req.cookies[`${role.toLowerCase()}_access_token`];
       if (token) {
         try {
@@ -113,14 +108,60 @@ export class ApiGatewayController {
             `${role}_ACCESS_TOKEN_SECRET`
           );
           const decoded = jwt.verify(token, secret) as any;
-
           if (decoded?.id) {
             headers["x_user_id"] = decoded.id;
             headers["x_user_role"] = decoded.role;
           }
-        } catch (err) {}
+        } catch {}
       }
     }
+
+    // MULTIPART REQUEST (e.g. /products/category POST icon va title)
+    if (req.headers["content-type"]?.includes("multipart/form-data")) {
+      const chunks: Buffer[] = [];
+      req.on("data", (chunk) => chunks.push(chunk));
+
+      req.on("end", async () => {
+        const buffer = Buffer.concat(chunks);
+        try {
+          const response = await lastValueFrom(
+            this.httpService.request({
+              method,
+              url: `${target}${url}`,
+              data: buffer,
+              headers: {
+                ...headers,
+                x_allowed_origin: process.env.API_GATEWAY_URL,
+                "content-type": req.headers["content-type"]!,
+              },
+              responseType: "stream",
+            })
+          );
+
+          res.setHeader(
+            "Content-Type",
+            response.headers["content-type"] || "application/json"
+          );
+          if (response.headers["set-cookie"]) {
+            res.setHeader("Set-Cookie", response.headers["set-cookie"]);
+          }
+
+          return response.data.pipe(res);
+        } catch (error) {
+          const status =
+            error.response?.status || HttpStatus.INTERNAL_SERVER_ERROR;
+          const message = error.response?.data?.message || "Internal error";
+          return res.status(status).json({
+            message,
+            status,
+          });
+        }
+      });
+      return;
+    }
+
+    // JSON va boshqa content-type uchun:
+    const data = req.body;
     try {
       const response = await lastValueFrom(
         this.httpService.request({
@@ -140,9 +181,11 @@ export class ApiGatewayController {
       return res.status(response.status).json(response.data);
     } catch (error) {
       const status = error.response?.status || HttpStatus.INTERNAL_SERVER_ERROR;
-      return res
-        .status(status)
-        .json(error.response?.data || { message: "Internal error" });
+      const message = error.response?.data?.message || "Internal error";
+      return res.status(status).json({
+        message,
+        status,
+      });
     }
   }
 }

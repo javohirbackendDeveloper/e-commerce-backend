@@ -2,13 +2,25 @@ import { NestFactory } from "@nestjs/core";
 import { ApiGatewayModule } from "./api-gateway.module";
 import * as cookieParser from "cookie-parser";
 import * as express from "express";
+import { getMergedSwaggerApis } from "./swagger/swagger-merge.service";
+import * as swaggerUi from "swagger-ui-express";
 
 async function bootstrap() {
   const app = await NestFactory.create(ApiGatewayModule);
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT;
   app.use(cookieParser());
   app.use(express.json());
+  app.enableCors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  });
+  // SWAGGER CONFIGURATION
 
+  const mergedSwagger = await getMergedSwaggerApis();
+
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(mergedSwagger));
+
+  // LISTENING PORT
   await app.listen(PORT, () => {
     console.log("api-gateway is running at " + PORT);
   });

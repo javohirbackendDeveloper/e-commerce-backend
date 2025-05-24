@@ -13,17 +13,43 @@ import {
 import { Request, Response } from "express";
 import { AdminService } from "./admin.service";
 import { AdminLoginDto, CreateAdminDto } from "./dto/createAdmin.dto";
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from "@nestjs/swagger";
+import { ReturnAdminDto, ReturnLoginDto } from "./dto/return.dto";
+import { AdminGuard } from "../guards/admin-auth.guard";
 
+@ApiTags("auth_service/admin")
 @Controller("admin")
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
+  @ApiOperation({ summary: "Register a new admin" })
+  @ApiCreatedResponse({
+    description: "Admin has been successfully registered",
+    type: ReturnAdminDto,
+  })
+  @ApiBadRequestResponse({
+    description: "Validation failed or bad request body",
+  })
   @Post("register")
   @HttpCode(HttpStatus.CREATED)
   async createAdmin(@Body() createAdminDto: CreateAdminDto) {
     return this.adminService.adminRegister(createAdminDto);
   }
 
+  @ApiOperation({ summary: "Login an existing admin" })
+  @ApiOkResponse({
+    description: "Admin successfully logged in. Token returned.",
+    type: ReturnLoginDto,
+  })
+  @ApiBadRequestResponse({
+    description: "Invalid login credentials or bad payload",
+  })
   @Post("login")
   @HttpCode(HttpStatus.CREATED)
   async loginAdmin(
@@ -33,17 +59,41 @@ export class AdminController {
     return this.adminService.login(loginAdminDto, response);
   }
 
+  @ApiOperation({ summary: "Get admin details by ID" })
+  @ApiOkResponse({
+    description: "Admin data retrieved successfully",
+    type: ReturnAdminDto,
+  })
+  @ApiBadRequestResponse({
+    description: "Invalid ID or admin not found",
+  })
   @Get("getAdmin/:id")
   @HttpCode(HttpStatus.OK)
   async getAdmin(@Param("id") id: string) {
     return this.adminService.getAdmin(id);
   }
+
+  @ApiOperation({ summary: "Get list of all registered admins" })
+  @ApiOkResponse({
+    description: "List of all admins retrieved successfully",
+    type: [ReturnAdminDto],
+  })
   @Get("getAdmins")
   @HttpCode(HttpStatus.OK)
   async getAdmins() {
     return this.adminService.getAdmins();
   }
 
+  @ApiOperation({
+    summary: "Generate new access token using refresh token",
+  })
+  @ApiOkResponse({
+    description: "New access token generated",
+    type: ReturnLoginDto,
+  })
+  @ApiBadRequestResponse({
+    description: "Refresh token missing or invalid",
+  })
   @Post("refreshToken")
   @HttpCode(HttpStatus.OK)
   async refreshToken(
@@ -53,9 +103,29 @@ export class AdminController {
     return this.adminService.refreshToken(req as any, res);
   }
 
+  @ApiOperation({ summary: "Logout current admin" })
+  @ApiOkResponse({
+    description: "Admin successfully logged out",
+  })
   @Post("logout")
   @HttpCode(HttpStatus.OK)
   async logoutAdmin(@Res({ passthrough: true }) res: Response) {
     return this.adminService.logoutAdmin(res);
+  }
+
+  @ApiOperation({ summary: "Get admin details by token" })
+  @ApiOkResponse({
+    description: "Admin data retrieved successfully",
+    type: ReturnAdminDto,
+  })
+  @ApiBadRequestResponse({
+    description: "Invalid token or admin not found",
+  })
+  @Get("getAdminByToken")
+  @UseGuards(AdminGuard)
+  @HttpCode(HttpStatus.OK)
+  async getAdminByToken(@Req() req: Request) {
+    const admin = (req as any).admin;
+    return admin;
   }
 }

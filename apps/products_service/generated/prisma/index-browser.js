@@ -143,6 +143,7 @@ exports.Prisma.ProductScalarFieldEnum = {
 exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
   parentId: 'parentId',
+  icon: 'icon',
   title: 'title',
   children: 'children'
 };
@@ -152,6 +153,12 @@ exports.Prisma.LikedProductScalarFieldEnum = {
   userId: 'userId',
   productId: 'productId',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.BrandScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  categoryId: 'categoryId'
 };
 
 exports.Prisma.SortOrder = {
@@ -169,7 +176,8 @@ exports.Prisma.ModelName = {
   Comments: 'Comments',
   Product: 'Product',
   Category: 'Category',
-  LikedProduct: 'LikedProduct'
+  LikedProduct: 'LikedProduct',
+  Brand: 'Brand'
 };
 
 /**

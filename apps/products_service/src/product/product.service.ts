@@ -26,7 +26,17 @@ export class ProductService {
     createProductDto: CreateProductDto
   ): Promise<Product | ReturnData> {
     try {
-      const { categoryId, product_name, description } = createProductDto;
+      const {
+        categoryId,
+        product_name,
+        description,
+        price,
+        quantity,
+        product_images,
+        brand,
+        color,
+      } = createProductDto;
+
       const category = await this.prismaService.category.findUnique({
         where: { id: categoryId },
       });
@@ -41,13 +51,28 @@ export class ProductService {
       }
 
       const product = await this.prismaService.product.create({
-        data: createProductDto,
+        data: {
+          product_name,
+          description,
+          price,
+          quantity,
+          product_images,
+          brand,
+          color,
+          category: {
+            connect: {
+              id: categoryId,
+            },
+          },
+        },
       });
 
-      await this.searchService.addProductToIndex(product);
+      // await this.searchService.addProductToIndex(product);
 
       return product;
     } catch (error) {
+      console.log({ error });
+
       throw new BadRequestException("Invalid product data");
     }
   }
@@ -162,17 +187,13 @@ export class ProductService {
   }
 
   async getAllProductsByCategory(categoryId: string): Promise<Product[]> {
-    const allCategories = await this.categoryService.findAll();
-
-    const allChildCategories = await this.categoryService.getAllChildCategories(
-      categoryId,
-      allCategories
-    );
+    const allChildCategories =
+      await this.categoryService.getAllChildCategories(categoryId);
 
     const products = await this.prismaService.product.findMany({
       where: {
         categoryId: {
-          in: allChildCategories,
+          in: allChildCategories.map((cat) => cat.id),
         },
       },
     });
