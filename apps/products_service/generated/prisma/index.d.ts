@@ -38,6 +38,56 @@ export type LikedProduct = $Result.DefaultSelection<Prisma.$LikedProductPayload>
  * 
  */
 export type Brand = $Result.DefaultSelection<Prisma.$BrandPayload>
+/**
+ * Model BrandCategory
+ * 
+ */
+export type BrandCategory = $Result.DefaultSelection<Prisma.$BrandCategoryPayload>
+/**
+ * Model FilterType
+ * 
+ */
+export type FilterType = $Result.DefaultSelection<Prisma.$FilterTypePayload>
+/**
+ * Model FilterValues
+ * 
+ */
+export type FilterValues = $Result.DefaultSelection<Prisma.$FilterValuesPayload>
+/**
+ * Model FilterCategory
+ * 
+ */
+export type FilterCategory = $Result.DefaultSelection<Prisma.$FilterCategoryPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const InputType: {
+  CHECKBOX: 'CHECKBOX',
+  SELECT: 'SELECT',
+  RANGE: 'RANGE'
+};
+
+export type InputType = (typeof InputType)[keyof typeof InputType]
+
+
+export const TypeOfFilter: {
+  GENERAL: 'GENERAL',
+  SPECIFIC: 'SPECIFIC'
+};
+
+export type TypeOfFilter = (typeof TypeOfFilter)[keyof typeof TypeOfFilter]
+
+}
+
+export type InputType = $Enums.InputType
+
+export const InputType: typeof $Enums.InputType
+
+export type TypeOfFilter = $Enums.TypeOfFilter
+
+export const TypeOfFilter: typeof $Enums.TypeOfFilter
 
 /**
  * ##  Prisma Client ʲˢ
@@ -180,6 +230,46 @@ export class PrismaClient<
     * ```
     */
   get brand(): Prisma.BrandDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.brandCategory`: Exposes CRUD operations for the **BrandCategory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BrandCategories
+    * const brandCategories = await prisma.brandCategory.findMany()
+    * ```
+    */
+  get brandCategory(): Prisma.BrandCategoryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.filterType`: Exposes CRUD operations for the **FilterType** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FilterTypes
+    * const filterTypes = await prisma.filterType.findMany()
+    * ```
+    */
+  get filterType(): Prisma.FilterTypeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.filterValues`: Exposes CRUD operations for the **FilterValues** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FilterValues
+    * const filterValues = await prisma.filterValues.findMany()
+    * ```
+    */
+  get filterValues(): Prisma.FilterValuesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.filterCategory`: Exposes CRUD operations for the **FilterCategory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FilterCategories
+    * const filterCategories = await prisma.filterCategory.findMany()
+    * ```
+    */
+  get filterCategory(): Prisma.FilterCategoryDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -624,7 +714,11 @@ export namespace Prisma {
     Product: 'Product',
     Category: 'Category',
     LikedProduct: 'LikedProduct',
-    Brand: 'Brand'
+    Brand: 'Brand',
+    BrandCategory: 'BrandCategory',
+    FilterType: 'FilterType',
+    FilterValues: 'FilterValues',
+    FilterCategory: 'FilterCategory'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -643,7 +737,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "comments" | "product" | "category" | "likedProduct" | "brand"
+      modelProps: "comments" | "product" | "category" | "likedProduct" | "brand" | "brandCategory" | "filterType" | "filterValues" | "filterCategory"
       txIsolationLevel: never
     }
     model: {
@@ -1017,6 +1111,302 @@ export namespace Prisma {
           }
         }
       }
+      BrandCategory: {
+        payload: Prisma.$BrandCategoryPayload<ExtArgs>
+        fields: Prisma.BrandCategoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BrandCategoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandCategoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BrandCategoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandCategoryPayload>
+          }
+          findFirst: {
+            args: Prisma.BrandCategoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandCategoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BrandCategoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandCategoryPayload>
+          }
+          findMany: {
+            args: Prisma.BrandCategoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandCategoryPayload>[]
+          }
+          create: {
+            args: Prisma.BrandCategoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandCategoryPayload>
+          }
+          createMany: {
+            args: Prisma.BrandCategoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.BrandCategoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandCategoryPayload>
+          }
+          update: {
+            args: Prisma.BrandCategoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandCategoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.BrandCategoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BrandCategoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.BrandCategoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BrandCategoryPayload>
+          }
+          aggregate: {
+            args: Prisma.BrandCategoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBrandCategory>
+          }
+          groupBy: {
+            args: Prisma.BrandCategoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BrandCategoryGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.BrandCategoryFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.BrandCategoryAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.BrandCategoryCountArgs<ExtArgs>
+            result: $Utils.Optional<BrandCategoryCountAggregateOutputType> | number
+          }
+        }
+      }
+      FilterType: {
+        payload: Prisma.$FilterTypePayload<ExtArgs>
+        fields: Prisma.FilterTypeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FilterTypeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterTypePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FilterTypeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterTypePayload>
+          }
+          findFirst: {
+            args: Prisma.FilterTypeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterTypePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FilterTypeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterTypePayload>
+          }
+          findMany: {
+            args: Prisma.FilterTypeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterTypePayload>[]
+          }
+          create: {
+            args: Prisma.FilterTypeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterTypePayload>
+          }
+          createMany: {
+            args: Prisma.FilterTypeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.FilterTypeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterTypePayload>
+          }
+          update: {
+            args: Prisma.FilterTypeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterTypePayload>
+          }
+          deleteMany: {
+            args: Prisma.FilterTypeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FilterTypeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.FilterTypeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterTypePayload>
+          }
+          aggregate: {
+            args: Prisma.FilterTypeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFilterType>
+          }
+          groupBy: {
+            args: Prisma.FilterTypeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FilterTypeGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.FilterTypeFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.FilterTypeAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.FilterTypeCountArgs<ExtArgs>
+            result: $Utils.Optional<FilterTypeCountAggregateOutputType> | number
+          }
+        }
+      }
+      FilterValues: {
+        payload: Prisma.$FilterValuesPayload<ExtArgs>
+        fields: Prisma.FilterValuesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FilterValuesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterValuesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FilterValuesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterValuesPayload>
+          }
+          findFirst: {
+            args: Prisma.FilterValuesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterValuesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FilterValuesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterValuesPayload>
+          }
+          findMany: {
+            args: Prisma.FilterValuesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterValuesPayload>[]
+          }
+          create: {
+            args: Prisma.FilterValuesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterValuesPayload>
+          }
+          createMany: {
+            args: Prisma.FilterValuesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.FilterValuesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterValuesPayload>
+          }
+          update: {
+            args: Prisma.FilterValuesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterValuesPayload>
+          }
+          deleteMany: {
+            args: Prisma.FilterValuesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FilterValuesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.FilterValuesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterValuesPayload>
+          }
+          aggregate: {
+            args: Prisma.FilterValuesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFilterValues>
+          }
+          groupBy: {
+            args: Prisma.FilterValuesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FilterValuesGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.FilterValuesFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.FilterValuesAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.FilterValuesCountArgs<ExtArgs>
+            result: $Utils.Optional<FilterValuesCountAggregateOutputType> | number
+          }
+        }
+      }
+      FilterCategory: {
+        payload: Prisma.$FilterCategoryPayload<ExtArgs>
+        fields: Prisma.FilterCategoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FilterCategoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterCategoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FilterCategoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterCategoryPayload>
+          }
+          findFirst: {
+            args: Prisma.FilterCategoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterCategoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FilterCategoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterCategoryPayload>
+          }
+          findMany: {
+            args: Prisma.FilterCategoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterCategoryPayload>[]
+          }
+          create: {
+            args: Prisma.FilterCategoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterCategoryPayload>
+          }
+          createMany: {
+            args: Prisma.FilterCategoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.FilterCategoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterCategoryPayload>
+          }
+          update: {
+            args: Prisma.FilterCategoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterCategoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.FilterCategoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FilterCategoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.FilterCategoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilterCategoryPayload>
+          }
+          aggregate: {
+            args: Prisma.FilterCategoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFilterCategory>
+          }
+          groupBy: {
+            args: Prisma.FilterCategoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FilterCategoryGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.FilterCategoryFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.FilterCategoryAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.FilterCategoryCountArgs<ExtArgs>
+            result: $Utils.Optional<FilterCategoryCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1093,6 +1483,10 @@ export namespace Prisma {
     category?: CategoryOmit
     likedProduct?: LikedProductOmit
     brand?: BrandOmit
+    brandCategory?: BrandCategoryOmit
+    filterType?: FilterTypeOmit
+    filterValues?: FilterValuesOmit
+    filterCategory?: FilterCategoryOmit
   }
 
   /* Types for Logging */
@@ -1229,11 +1623,13 @@ export namespace Prisma {
   export type CategoryCountOutputType = {
     product: number
     brand: number
+    filter: number
   }
 
   export type CategoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     product?: boolean | CategoryCountOutputTypeCountProductArgs
     brand?: boolean | CategoryCountOutputTypeCountBrandArgs
+    filter?: boolean | CategoryCountOutputTypeCountFilterArgs
   }
 
   // Custom InputTypes
@@ -1258,7 +1654,85 @@ export namespace Prisma {
    * CategoryCountOutputType without action
    */
   export type CategoryCountOutputTypeCountBrandArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: BrandWhereInput
+    where?: BrandCategoryWhereInput
+  }
+
+  /**
+   * CategoryCountOutputType without action
+   */
+  export type CategoryCountOutputTypeCountFilterArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FilterCategoryWhereInput
+  }
+
+
+  /**
+   * Count Type BrandCountOutputType
+   */
+
+  export type BrandCountOutputType = {
+    categories: number
+  }
+
+  export type BrandCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    categories?: boolean | BrandCountOutputTypeCountCategoriesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * BrandCountOutputType without action
+   */
+  export type BrandCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandCountOutputType
+     */
+    select?: BrandCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * BrandCountOutputType without action
+   */
+  export type BrandCountOutputTypeCountCategoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BrandCategoryWhereInput
+  }
+
+
+  /**
+   * Count Type FilterTypeCountOutputType
+   */
+
+  export type FilterTypeCountOutputType = {
+    filterCategory: number
+    values: number
+  }
+
+  export type FilterTypeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    filterCategory?: boolean | FilterTypeCountOutputTypeCountFilterCategoryArgs
+    values?: boolean | FilterTypeCountOutputTypeCountValuesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * FilterTypeCountOutputType without action
+   */
+  export type FilterTypeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterTypeCountOutputType
+     */
+    select?: FilterTypeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * FilterTypeCountOutputType without action
+   */
+  export type FilterTypeCountOutputTypeCountFilterCategoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FilterCategoryWhereInput
+  }
+
+  /**
+   * FilterTypeCountOutputType without action
+   */
+  export type FilterTypeCountOutputTypeCountValuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FilterValuesWhereInput
   }
 
 
@@ -3663,6 +4137,7 @@ export namespace Prisma {
     children?: boolean
     product?: boolean | Category$productArgs<ExtArgs>
     brand?: boolean | Category$brandArgs<ExtArgs>
+    filter?: boolean | Category$filterArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["category"]>
 
@@ -3680,6 +4155,7 @@ export namespace Prisma {
   export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     product?: boolean | Category$productArgs<ExtArgs>
     brand?: boolean | Category$brandArgs<ExtArgs>
+    filter?: boolean | Category$filterArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -3687,7 +4163,8 @@ export namespace Prisma {
     name: "Category"
     objects: {
       product: Prisma.$ProductPayload<ExtArgs>[]
-      brand: Prisma.$BrandPayload<ExtArgs>[]
+      brand: Prisma.$BrandCategoryPayload<ExtArgs>[]
+      filter: Prisma.$FilterCategoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4059,7 +4536,8 @@ export namespace Prisma {
   export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     product<T extends Category$productArgs<ExtArgs> = {}>(args?: Subset<T, Category$productArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    brand<T extends Category$brandArgs<ExtArgs> = {}>(args?: Subset<T, Category$brandArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    brand<T extends Category$brandArgs<ExtArgs> = {}>(args?: Subset<T, Category$brandArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    filter<T extends Category$filterArgs<ExtArgs> = {}>(args?: Subset<T, Category$filterArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilterCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4492,23 +4970,47 @@ export namespace Prisma {
    */
   export type Category$brandArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Brand
+     * Select specific fields to fetch from the BrandCategory
      */
-    select?: BrandSelect<ExtArgs> | null
+    select?: BrandCategorySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Brand
+     * Omit specific fields from the BrandCategory
      */
-    omit?: BrandOmit<ExtArgs> | null
+    omit?: BrandCategoryOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: BrandInclude<ExtArgs> | null
-    where?: BrandWhereInput
-    orderBy?: BrandOrderByWithRelationInput | BrandOrderByWithRelationInput[]
-    cursor?: BrandWhereUniqueInput
+    include?: BrandCategoryInclude<ExtArgs> | null
+    where?: BrandCategoryWhereInput
+    orderBy?: BrandCategoryOrderByWithRelationInput | BrandCategoryOrderByWithRelationInput[]
+    cursor?: BrandCategoryWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: BrandScalarFieldEnum | BrandScalarFieldEnum[]
+    distinct?: BrandCategoryScalarFieldEnum | BrandCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * Category.filter
+   */
+  export type Category$filterArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterCategory
+     */
+    select?: FilterCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterCategory
+     */
+    omit?: FilterCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterCategoryInclude<ExtArgs> | null
+    where?: FilterCategoryWhereInput
+    orderBy?: FilterCategoryOrderByWithRelationInput | FilterCategoryOrderByWithRelationInput[]
+    cursor?: FilterCategoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FilterCategoryScalarFieldEnum | FilterCategoryScalarFieldEnum[]
   }
 
   /**
@@ -5511,19 +6013,16 @@ export namespace Prisma {
   export type BrandMinAggregateOutputType = {
     id: string | null
     name: string | null
-    categoryId: string | null
   }
 
   export type BrandMaxAggregateOutputType = {
     id: string | null
     name: string | null
-    categoryId: string | null
   }
 
   export type BrandCountAggregateOutputType = {
     id: number
     name: number
-    categoryId: number
     _all: number
   }
 
@@ -5531,19 +6030,16 @@ export namespace Prisma {
   export type BrandMinAggregateInputType = {
     id?: true
     name?: true
-    categoryId?: true
   }
 
   export type BrandMaxAggregateInputType = {
     id?: true
     name?: true
-    categoryId?: true
   }
 
   export type BrandCountAggregateInputType = {
     id?: true
     name?: true
-    categoryId?: true
     _all?: true
   }
 
@@ -5622,7 +6118,6 @@ export namespace Prisma {
   export type BrandGroupByOutputType = {
     id: string
     name: string
-    categoryId: string
     _count: BrandCountAggregateOutputType | null
     _min: BrandMinAggregateOutputType | null
     _max: BrandMaxAggregateOutputType | null
@@ -5645,8 +6140,8 @@ export namespace Prisma {
   export type BrandSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    categoryId?: boolean
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
+    categories?: boolean | Brand$categoriesArgs<ExtArgs>
+    _count?: boolean | BrandCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["brand"]>
 
 
@@ -5654,23 +6149,22 @@ export namespace Prisma {
   export type BrandSelectScalar = {
     id?: boolean
     name?: boolean
-    categoryId?: boolean
   }
 
-  export type BrandOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "categoryId", ExtArgs["result"]["brand"]>
+  export type BrandOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["brand"]>
   export type BrandInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    category?: boolean | CategoryDefaultArgs<ExtArgs>
+    categories?: boolean | Brand$categoriesArgs<ExtArgs>
+    _count?: boolean | BrandCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $BrandPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Brand"
     objects: {
-      category: Prisma.$CategoryPayload<ExtArgs>
+      categories: Prisma.$BrandCategoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
-      categoryId: string
     }, ExtArgs["result"]["brand"]>
     composites: {}
   }
@@ -6034,7 +6528,7 @@ export namespace Prisma {
    */
   export interface Prisma__BrandClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    category<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    categories<T extends Brand$categoriesArgs<ExtArgs> = {}>(args?: Subset<T, Brand$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6066,7 +6560,6 @@ export namespace Prisma {
   interface BrandFieldRefs {
     readonly id: FieldRef<"Brand", 'String'>
     readonly name: FieldRef<"Brand", 'String'>
-    readonly categoryId: FieldRef<"Brand", 'String'>
   }
     
 
@@ -6437,6 +6930,30 @@ export namespace Prisma {
   }
 
   /**
+   * Brand.categories
+   */
+  export type Brand$categoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandCategory
+     */
+    select?: BrandCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandCategory
+     */
+    omit?: BrandCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandCategoryInclude<ExtArgs> | null
+    where?: BrandCategoryWhereInput
+    orderBy?: BrandCategoryOrderByWithRelationInput | BrandCategoryOrderByWithRelationInput[]
+    cursor?: BrandCategoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BrandCategoryScalarFieldEnum | BrandCategoryScalarFieldEnum[]
+  }
+
+  /**
    * Brand without action
    */
   export type BrandDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6452,6 +6969,3907 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: BrandInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model BrandCategory
+   */
+
+  export type AggregateBrandCategory = {
+    _count: BrandCategoryCountAggregateOutputType | null
+    _min: BrandCategoryMinAggregateOutputType | null
+    _max: BrandCategoryMaxAggregateOutputType | null
+  }
+
+  export type BrandCategoryMinAggregateOutputType = {
+    id: string | null
+    brandId: string | null
+    categoryId: string | null
+  }
+
+  export type BrandCategoryMaxAggregateOutputType = {
+    id: string | null
+    brandId: string | null
+    categoryId: string | null
+  }
+
+  export type BrandCategoryCountAggregateOutputType = {
+    id: number
+    brandId: number
+    categoryId: number
+    _all: number
+  }
+
+
+  export type BrandCategoryMinAggregateInputType = {
+    id?: true
+    brandId?: true
+    categoryId?: true
+  }
+
+  export type BrandCategoryMaxAggregateInputType = {
+    id?: true
+    brandId?: true
+    categoryId?: true
+  }
+
+  export type BrandCategoryCountAggregateInputType = {
+    id?: true
+    brandId?: true
+    categoryId?: true
+    _all?: true
+  }
+
+  export type BrandCategoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BrandCategory to aggregate.
+     */
+    where?: BrandCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrandCategories to fetch.
+     */
+    orderBy?: BrandCategoryOrderByWithRelationInput | BrandCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BrandCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrandCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrandCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BrandCategories
+    **/
+    _count?: true | BrandCategoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BrandCategoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BrandCategoryMaxAggregateInputType
+  }
+
+  export type GetBrandCategoryAggregateType<T extends BrandCategoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateBrandCategory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBrandCategory[P]>
+      : GetScalarType<T[P], AggregateBrandCategory[P]>
+  }
+
+
+
+
+  export type BrandCategoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BrandCategoryWhereInput
+    orderBy?: BrandCategoryOrderByWithAggregationInput | BrandCategoryOrderByWithAggregationInput[]
+    by: BrandCategoryScalarFieldEnum[] | BrandCategoryScalarFieldEnum
+    having?: BrandCategoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BrandCategoryCountAggregateInputType | true
+    _min?: BrandCategoryMinAggregateInputType
+    _max?: BrandCategoryMaxAggregateInputType
+  }
+
+  export type BrandCategoryGroupByOutputType = {
+    id: string
+    brandId: string
+    categoryId: string
+    _count: BrandCategoryCountAggregateOutputType | null
+    _min: BrandCategoryMinAggregateOutputType | null
+    _max: BrandCategoryMaxAggregateOutputType | null
+  }
+
+  type GetBrandCategoryGroupByPayload<T extends BrandCategoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BrandCategoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BrandCategoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BrandCategoryGroupByOutputType[P]>
+            : GetScalarType<T[P], BrandCategoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BrandCategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    brandId?: boolean
+    categoryId?: boolean
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+    category?: boolean | CategoryDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["brandCategory"]>
+
+
+
+  export type BrandCategorySelectScalar = {
+    id?: boolean
+    brandId?: boolean
+    categoryId?: boolean
+  }
+
+  export type BrandCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "brandId" | "categoryId", ExtArgs["result"]["brandCategory"]>
+  export type BrandCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brand?: boolean | BrandDefaultArgs<ExtArgs>
+    category?: boolean | CategoryDefaultArgs<ExtArgs>
+  }
+
+  export type $BrandCategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BrandCategory"
+    objects: {
+      brand: Prisma.$BrandPayload<ExtArgs>
+      category: Prisma.$CategoryPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      brandId: string
+      categoryId: string
+    }, ExtArgs["result"]["brandCategory"]>
+    composites: {}
+  }
+
+  type BrandCategoryGetPayload<S extends boolean | null | undefined | BrandCategoryDefaultArgs> = $Result.GetResult<Prisma.$BrandCategoryPayload, S>
+
+  type BrandCategoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BrandCategoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BrandCategoryCountAggregateInputType | true
+    }
+
+  export interface BrandCategoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BrandCategory'], meta: { name: 'BrandCategory' } }
+    /**
+     * Find zero or one BrandCategory that matches the filter.
+     * @param {BrandCategoryFindUniqueArgs} args - Arguments to find a BrandCategory
+     * @example
+     * // Get one BrandCategory
+     * const brandCategory = await prisma.brandCategory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BrandCategoryFindUniqueArgs>(args: SelectSubset<T, BrandCategoryFindUniqueArgs<ExtArgs>>): Prisma__BrandCategoryClient<$Result.GetResult<Prisma.$BrandCategoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BrandCategory that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BrandCategoryFindUniqueOrThrowArgs} args - Arguments to find a BrandCategory
+     * @example
+     * // Get one BrandCategory
+     * const brandCategory = await prisma.brandCategory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BrandCategoryFindUniqueOrThrowArgs>(args: SelectSubset<T, BrandCategoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BrandCategoryClient<$Result.GetResult<Prisma.$BrandCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BrandCategory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandCategoryFindFirstArgs} args - Arguments to find a BrandCategory
+     * @example
+     * // Get one BrandCategory
+     * const brandCategory = await prisma.brandCategory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BrandCategoryFindFirstArgs>(args?: SelectSubset<T, BrandCategoryFindFirstArgs<ExtArgs>>): Prisma__BrandCategoryClient<$Result.GetResult<Prisma.$BrandCategoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BrandCategory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandCategoryFindFirstOrThrowArgs} args - Arguments to find a BrandCategory
+     * @example
+     * // Get one BrandCategory
+     * const brandCategory = await prisma.brandCategory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BrandCategoryFindFirstOrThrowArgs>(args?: SelectSubset<T, BrandCategoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__BrandCategoryClient<$Result.GetResult<Prisma.$BrandCategoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BrandCategories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandCategoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BrandCategories
+     * const brandCategories = await prisma.brandCategory.findMany()
+     * 
+     * // Get first 10 BrandCategories
+     * const brandCategories = await prisma.brandCategory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const brandCategoryWithIdOnly = await prisma.brandCategory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BrandCategoryFindManyArgs>(args?: SelectSubset<T, BrandCategoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrandCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BrandCategory.
+     * @param {BrandCategoryCreateArgs} args - Arguments to create a BrandCategory.
+     * @example
+     * // Create one BrandCategory
+     * const BrandCategory = await prisma.brandCategory.create({
+     *   data: {
+     *     // ... data to create a BrandCategory
+     *   }
+     * })
+     * 
+     */
+    create<T extends BrandCategoryCreateArgs>(args: SelectSubset<T, BrandCategoryCreateArgs<ExtArgs>>): Prisma__BrandCategoryClient<$Result.GetResult<Prisma.$BrandCategoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BrandCategories.
+     * @param {BrandCategoryCreateManyArgs} args - Arguments to create many BrandCategories.
+     * @example
+     * // Create many BrandCategories
+     * const brandCategory = await prisma.brandCategory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BrandCategoryCreateManyArgs>(args?: SelectSubset<T, BrandCategoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a BrandCategory.
+     * @param {BrandCategoryDeleteArgs} args - Arguments to delete one BrandCategory.
+     * @example
+     * // Delete one BrandCategory
+     * const BrandCategory = await prisma.brandCategory.delete({
+     *   where: {
+     *     // ... filter to delete one BrandCategory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BrandCategoryDeleteArgs>(args: SelectSubset<T, BrandCategoryDeleteArgs<ExtArgs>>): Prisma__BrandCategoryClient<$Result.GetResult<Prisma.$BrandCategoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BrandCategory.
+     * @param {BrandCategoryUpdateArgs} args - Arguments to update one BrandCategory.
+     * @example
+     * // Update one BrandCategory
+     * const brandCategory = await prisma.brandCategory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BrandCategoryUpdateArgs>(args: SelectSubset<T, BrandCategoryUpdateArgs<ExtArgs>>): Prisma__BrandCategoryClient<$Result.GetResult<Prisma.$BrandCategoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BrandCategories.
+     * @param {BrandCategoryDeleteManyArgs} args - Arguments to filter BrandCategories to delete.
+     * @example
+     * // Delete a few BrandCategories
+     * const { count } = await prisma.brandCategory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BrandCategoryDeleteManyArgs>(args?: SelectSubset<T, BrandCategoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BrandCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandCategoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BrandCategories
+     * const brandCategory = await prisma.brandCategory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BrandCategoryUpdateManyArgs>(args: SelectSubset<T, BrandCategoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one BrandCategory.
+     * @param {BrandCategoryUpsertArgs} args - Arguments to update or create a BrandCategory.
+     * @example
+     * // Update or create a BrandCategory
+     * const brandCategory = await prisma.brandCategory.upsert({
+     *   create: {
+     *     // ... data to create a BrandCategory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BrandCategory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BrandCategoryUpsertArgs>(args: SelectSubset<T, BrandCategoryUpsertArgs<ExtArgs>>): Prisma__BrandCategoryClient<$Result.GetResult<Prisma.$BrandCategoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BrandCategories that matches the filter.
+     * @param {BrandCategoryFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const brandCategory = await prisma.brandCategory.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: BrandCategoryFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a BrandCategory.
+     * @param {BrandCategoryAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const brandCategory = await prisma.brandCategory.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: BrandCategoryAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of BrandCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandCategoryCountArgs} args - Arguments to filter BrandCategories to count.
+     * @example
+     * // Count the number of BrandCategories
+     * const count = await prisma.brandCategory.count({
+     *   where: {
+     *     // ... the filter for the BrandCategories we want to count
+     *   }
+     * })
+    **/
+    count<T extends BrandCategoryCountArgs>(
+      args?: Subset<T, BrandCategoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BrandCategoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BrandCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandCategoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BrandCategoryAggregateArgs>(args: Subset<T, BrandCategoryAggregateArgs>): Prisma.PrismaPromise<GetBrandCategoryAggregateType<T>>
+
+    /**
+     * Group by BrandCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BrandCategoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BrandCategoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BrandCategoryGroupByArgs['orderBy'] }
+        : { orderBy?: BrandCategoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BrandCategoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBrandCategoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BrandCategory model
+   */
+  readonly fields: BrandCategoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BrandCategory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BrandCategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    brand<T extends BrandDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BrandDefaultArgs<ExtArgs>>): Prisma__BrandClient<$Result.GetResult<Prisma.$BrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    category<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BrandCategory model
+   */
+  interface BrandCategoryFieldRefs {
+    readonly id: FieldRef<"BrandCategory", 'String'>
+    readonly brandId: FieldRef<"BrandCategory", 'String'>
+    readonly categoryId: FieldRef<"BrandCategory", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BrandCategory findUnique
+   */
+  export type BrandCategoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandCategory
+     */
+    select?: BrandCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandCategory
+     */
+    omit?: BrandCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandCategory to fetch.
+     */
+    where: BrandCategoryWhereUniqueInput
+  }
+
+  /**
+   * BrandCategory findUniqueOrThrow
+   */
+  export type BrandCategoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandCategory
+     */
+    select?: BrandCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandCategory
+     */
+    omit?: BrandCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandCategory to fetch.
+     */
+    where: BrandCategoryWhereUniqueInput
+  }
+
+  /**
+   * BrandCategory findFirst
+   */
+  export type BrandCategoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandCategory
+     */
+    select?: BrandCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandCategory
+     */
+    omit?: BrandCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandCategory to fetch.
+     */
+    where?: BrandCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrandCategories to fetch.
+     */
+    orderBy?: BrandCategoryOrderByWithRelationInput | BrandCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BrandCategories.
+     */
+    cursor?: BrandCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrandCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrandCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BrandCategories.
+     */
+    distinct?: BrandCategoryScalarFieldEnum | BrandCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * BrandCategory findFirstOrThrow
+   */
+  export type BrandCategoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandCategory
+     */
+    select?: BrandCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandCategory
+     */
+    omit?: BrandCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandCategory to fetch.
+     */
+    where?: BrandCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrandCategories to fetch.
+     */
+    orderBy?: BrandCategoryOrderByWithRelationInput | BrandCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BrandCategories.
+     */
+    cursor?: BrandCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrandCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrandCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BrandCategories.
+     */
+    distinct?: BrandCategoryScalarFieldEnum | BrandCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * BrandCategory findMany
+   */
+  export type BrandCategoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandCategory
+     */
+    select?: BrandCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandCategory
+     */
+    omit?: BrandCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which BrandCategories to fetch.
+     */
+    where?: BrandCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BrandCategories to fetch.
+     */
+    orderBy?: BrandCategoryOrderByWithRelationInput | BrandCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BrandCategories.
+     */
+    cursor?: BrandCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BrandCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BrandCategories.
+     */
+    skip?: number
+    distinct?: BrandCategoryScalarFieldEnum | BrandCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * BrandCategory create
+   */
+  export type BrandCategoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandCategory
+     */
+    select?: BrandCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandCategory
+     */
+    omit?: BrandCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandCategoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a BrandCategory.
+     */
+    data: XOR<BrandCategoryCreateInput, BrandCategoryUncheckedCreateInput>
+  }
+
+  /**
+   * BrandCategory createMany
+   */
+  export type BrandCategoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BrandCategories.
+     */
+    data: BrandCategoryCreateManyInput | BrandCategoryCreateManyInput[]
+  }
+
+  /**
+   * BrandCategory update
+   */
+  export type BrandCategoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandCategory
+     */
+    select?: BrandCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandCategory
+     */
+    omit?: BrandCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandCategoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a BrandCategory.
+     */
+    data: XOR<BrandCategoryUpdateInput, BrandCategoryUncheckedUpdateInput>
+    /**
+     * Choose, which BrandCategory to update.
+     */
+    where: BrandCategoryWhereUniqueInput
+  }
+
+  /**
+   * BrandCategory updateMany
+   */
+  export type BrandCategoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BrandCategories.
+     */
+    data: XOR<BrandCategoryUpdateManyMutationInput, BrandCategoryUncheckedUpdateManyInput>
+    /**
+     * Filter which BrandCategories to update
+     */
+    where?: BrandCategoryWhereInput
+    /**
+     * Limit how many BrandCategories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BrandCategory upsert
+   */
+  export type BrandCategoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandCategory
+     */
+    select?: BrandCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandCategory
+     */
+    omit?: BrandCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandCategoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the BrandCategory to update in case it exists.
+     */
+    where: BrandCategoryWhereUniqueInput
+    /**
+     * In case the BrandCategory found by the `where` argument doesn't exist, create a new BrandCategory with this data.
+     */
+    create: XOR<BrandCategoryCreateInput, BrandCategoryUncheckedCreateInput>
+    /**
+     * In case the BrandCategory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BrandCategoryUpdateInput, BrandCategoryUncheckedUpdateInput>
+  }
+
+  /**
+   * BrandCategory delete
+   */
+  export type BrandCategoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandCategory
+     */
+    select?: BrandCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandCategory
+     */
+    omit?: BrandCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandCategoryInclude<ExtArgs> | null
+    /**
+     * Filter which BrandCategory to delete.
+     */
+    where: BrandCategoryWhereUniqueInput
+  }
+
+  /**
+   * BrandCategory deleteMany
+   */
+  export type BrandCategoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BrandCategories to delete
+     */
+    where?: BrandCategoryWhereInput
+    /**
+     * Limit how many BrandCategories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BrandCategory findRaw
+   */
+  export type BrandCategoryFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * BrandCategory aggregateRaw
+   */
+  export type BrandCategoryAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * BrandCategory without action
+   */
+  export type BrandCategoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BrandCategory
+     */
+    select?: BrandCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BrandCategory
+     */
+    omit?: BrandCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BrandCategoryInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model FilterType
+   */
+
+  export type AggregateFilterType = {
+    _count: FilterTypeCountAggregateOutputType | null
+    _min: FilterTypeMinAggregateOutputType | null
+    _max: FilterTypeMaxAggregateOutputType | null
+  }
+
+  export type FilterTypeMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    inputType: $Enums.InputType | null
+    type: $Enums.TypeOfFilter | null
+  }
+
+  export type FilterTypeMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    inputType: $Enums.InputType | null
+    type: $Enums.TypeOfFilter | null
+  }
+
+  export type FilterTypeCountAggregateOutputType = {
+    id: number
+    title: number
+    inputType: number
+    type: number
+    _all: number
+  }
+
+
+  export type FilterTypeMinAggregateInputType = {
+    id?: true
+    title?: true
+    inputType?: true
+    type?: true
+  }
+
+  export type FilterTypeMaxAggregateInputType = {
+    id?: true
+    title?: true
+    inputType?: true
+    type?: true
+  }
+
+  export type FilterTypeCountAggregateInputType = {
+    id?: true
+    title?: true
+    inputType?: true
+    type?: true
+    _all?: true
+  }
+
+  export type FilterTypeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FilterType to aggregate.
+     */
+    where?: FilterTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FilterTypes to fetch.
+     */
+    orderBy?: FilterTypeOrderByWithRelationInput | FilterTypeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FilterTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FilterTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FilterTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FilterTypes
+    **/
+    _count?: true | FilterTypeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FilterTypeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FilterTypeMaxAggregateInputType
+  }
+
+  export type GetFilterTypeAggregateType<T extends FilterTypeAggregateArgs> = {
+        [P in keyof T & keyof AggregateFilterType]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFilterType[P]>
+      : GetScalarType<T[P], AggregateFilterType[P]>
+  }
+
+
+
+
+  export type FilterTypeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FilterTypeWhereInput
+    orderBy?: FilterTypeOrderByWithAggregationInput | FilterTypeOrderByWithAggregationInput[]
+    by: FilterTypeScalarFieldEnum[] | FilterTypeScalarFieldEnum
+    having?: FilterTypeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FilterTypeCountAggregateInputType | true
+    _min?: FilterTypeMinAggregateInputType
+    _max?: FilterTypeMaxAggregateInputType
+  }
+
+  export type FilterTypeGroupByOutputType = {
+    id: string
+    title: string
+    inputType: $Enums.InputType
+    type: $Enums.TypeOfFilter
+    _count: FilterTypeCountAggregateOutputType | null
+    _min: FilterTypeMinAggregateOutputType | null
+    _max: FilterTypeMaxAggregateOutputType | null
+  }
+
+  type GetFilterTypeGroupByPayload<T extends FilterTypeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FilterTypeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FilterTypeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FilterTypeGroupByOutputType[P]>
+            : GetScalarType<T[P], FilterTypeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FilterTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    inputType?: boolean
+    type?: boolean
+    filterCategory?: boolean | FilterType$filterCategoryArgs<ExtArgs>
+    values?: boolean | FilterType$valuesArgs<ExtArgs>
+    _count?: boolean | FilterTypeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["filterType"]>
+
+
+
+  export type FilterTypeSelectScalar = {
+    id?: boolean
+    title?: boolean
+    inputType?: boolean
+    type?: boolean
+  }
+
+  export type FilterTypeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "inputType" | "type", ExtArgs["result"]["filterType"]>
+  export type FilterTypeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    filterCategory?: boolean | FilterType$filterCategoryArgs<ExtArgs>
+    values?: boolean | FilterType$valuesArgs<ExtArgs>
+    _count?: boolean | FilterTypeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $FilterTypePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FilterType"
+    objects: {
+      filterCategory: Prisma.$FilterCategoryPayload<ExtArgs>[]
+      values: Prisma.$FilterValuesPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      inputType: $Enums.InputType
+      type: $Enums.TypeOfFilter
+    }, ExtArgs["result"]["filterType"]>
+    composites: {}
+  }
+
+  type FilterTypeGetPayload<S extends boolean | null | undefined | FilterTypeDefaultArgs> = $Result.GetResult<Prisma.$FilterTypePayload, S>
+
+  type FilterTypeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FilterTypeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FilterTypeCountAggregateInputType | true
+    }
+
+  export interface FilterTypeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FilterType'], meta: { name: 'FilterType' } }
+    /**
+     * Find zero or one FilterType that matches the filter.
+     * @param {FilterTypeFindUniqueArgs} args - Arguments to find a FilterType
+     * @example
+     * // Get one FilterType
+     * const filterType = await prisma.filterType.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FilterTypeFindUniqueArgs>(args: SelectSubset<T, FilterTypeFindUniqueArgs<ExtArgs>>): Prisma__FilterTypeClient<$Result.GetResult<Prisma.$FilterTypePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one FilterType that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FilterTypeFindUniqueOrThrowArgs} args - Arguments to find a FilterType
+     * @example
+     * // Get one FilterType
+     * const filterType = await prisma.filterType.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FilterTypeFindUniqueOrThrowArgs>(args: SelectSubset<T, FilterTypeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FilterTypeClient<$Result.GetResult<Prisma.$FilterTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FilterType that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterTypeFindFirstArgs} args - Arguments to find a FilterType
+     * @example
+     * // Get one FilterType
+     * const filterType = await prisma.filterType.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FilterTypeFindFirstArgs>(args?: SelectSubset<T, FilterTypeFindFirstArgs<ExtArgs>>): Prisma__FilterTypeClient<$Result.GetResult<Prisma.$FilterTypePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FilterType that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterTypeFindFirstOrThrowArgs} args - Arguments to find a FilterType
+     * @example
+     * // Get one FilterType
+     * const filterType = await prisma.filterType.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FilterTypeFindFirstOrThrowArgs>(args?: SelectSubset<T, FilterTypeFindFirstOrThrowArgs<ExtArgs>>): Prisma__FilterTypeClient<$Result.GetResult<Prisma.$FilterTypePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FilterTypes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterTypeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FilterTypes
+     * const filterTypes = await prisma.filterType.findMany()
+     * 
+     * // Get first 10 FilterTypes
+     * const filterTypes = await prisma.filterType.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const filterTypeWithIdOnly = await prisma.filterType.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FilterTypeFindManyArgs>(args?: SelectSubset<T, FilterTypeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilterTypePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a FilterType.
+     * @param {FilterTypeCreateArgs} args - Arguments to create a FilterType.
+     * @example
+     * // Create one FilterType
+     * const FilterType = await prisma.filterType.create({
+     *   data: {
+     *     // ... data to create a FilterType
+     *   }
+     * })
+     * 
+     */
+    create<T extends FilterTypeCreateArgs>(args: SelectSubset<T, FilterTypeCreateArgs<ExtArgs>>): Prisma__FilterTypeClient<$Result.GetResult<Prisma.$FilterTypePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many FilterTypes.
+     * @param {FilterTypeCreateManyArgs} args - Arguments to create many FilterTypes.
+     * @example
+     * // Create many FilterTypes
+     * const filterType = await prisma.filterType.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FilterTypeCreateManyArgs>(args?: SelectSubset<T, FilterTypeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FilterType.
+     * @param {FilterTypeDeleteArgs} args - Arguments to delete one FilterType.
+     * @example
+     * // Delete one FilterType
+     * const FilterType = await prisma.filterType.delete({
+     *   where: {
+     *     // ... filter to delete one FilterType
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FilterTypeDeleteArgs>(args: SelectSubset<T, FilterTypeDeleteArgs<ExtArgs>>): Prisma__FilterTypeClient<$Result.GetResult<Prisma.$FilterTypePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one FilterType.
+     * @param {FilterTypeUpdateArgs} args - Arguments to update one FilterType.
+     * @example
+     * // Update one FilterType
+     * const filterType = await prisma.filterType.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FilterTypeUpdateArgs>(args: SelectSubset<T, FilterTypeUpdateArgs<ExtArgs>>): Prisma__FilterTypeClient<$Result.GetResult<Prisma.$FilterTypePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more FilterTypes.
+     * @param {FilterTypeDeleteManyArgs} args - Arguments to filter FilterTypes to delete.
+     * @example
+     * // Delete a few FilterTypes
+     * const { count } = await prisma.filterType.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FilterTypeDeleteManyArgs>(args?: SelectSubset<T, FilterTypeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FilterTypes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterTypeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FilterTypes
+     * const filterType = await prisma.filterType.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FilterTypeUpdateManyArgs>(args: SelectSubset<T, FilterTypeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FilterType.
+     * @param {FilterTypeUpsertArgs} args - Arguments to update or create a FilterType.
+     * @example
+     * // Update or create a FilterType
+     * const filterType = await prisma.filterType.upsert({
+     *   create: {
+     *     // ... data to create a FilterType
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FilterType we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FilterTypeUpsertArgs>(args: SelectSubset<T, FilterTypeUpsertArgs<ExtArgs>>): Prisma__FilterTypeClient<$Result.GetResult<Prisma.$FilterTypePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FilterTypes that matches the filter.
+     * @param {FilterTypeFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const filterType = await prisma.filterType.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: FilterTypeFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a FilterType.
+     * @param {FilterTypeAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const filterType = await prisma.filterType.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: FilterTypeAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of FilterTypes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterTypeCountArgs} args - Arguments to filter FilterTypes to count.
+     * @example
+     * // Count the number of FilterTypes
+     * const count = await prisma.filterType.count({
+     *   where: {
+     *     // ... the filter for the FilterTypes we want to count
+     *   }
+     * })
+    **/
+    count<T extends FilterTypeCountArgs>(
+      args?: Subset<T, FilterTypeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FilterTypeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FilterType.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterTypeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FilterTypeAggregateArgs>(args: Subset<T, FilterTypeAggregateArgs>): Prisma.PrismaPromise<GetFilterTypeAggregateType<T>>
+
+    /**
+     * Group by FilterType.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterTypeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FilterTypeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FilterTypeGroupByArgs['orderBy'] }
+        : { orderBy?: FilterTypeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FilterTypeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFilterTypeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FilterType model
+   */
+  readonly fields: FilterTypeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FilterType.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FilterTypeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    filterCategory<T extends FilterType$filterCategoryArgs<ExtArgs> = {}>(args?: Subset<T, FilterType$filterCategoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilterCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    values<T extends FilterType$valuesArgs<ExtArgs> = {}>(args?: Subset<T, FilterType$valuesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilterValuesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FilterType model
+   */
+  interface FilterTypeFieldRefs {
+    readonly id: FieldRef<"FilterType", 'String'>
+    readonly title: FieldRef<"FilterType", 'String'>
+    readonly inputType: FieldRef<"FilterType", 'InputType'>
+    readonly type: FieldRef<"FilterType", 'TypeOfFilter'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FilterType findUnique
+   */
+  export type FilterTypeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterType
+     */
+    select?: FilterTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterType
+     */
+    omit?: FilterTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterTypeInclude<ExtArgs> | null
+    /**
+     * Filter, which FilterType to fetch.
+     */
+    where: FilterTypeWhereUniqueInput
+  }
+
+  /**
+   * FilterType findUniqueOrThrow
+   */
+  export type FilterTypeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterType
+     */
+    select?: FilterTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterType
+     */
+    omit?: FilterTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterTypeInclude<ExtArgs> | null
+    /**
+     * Filter, which FilterType to fetch.
+     */
+    where: FilterTypeWhereUniqueInput
+  }
+
+  /**
+   * FilterType findFirst
+   */
+  export type FilterTypeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterType
+     */
+    select?: FilterTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterType
+     */
+    omit?: FilterTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterTypeInclude<ExtArgs> | null
+    /**
+     * Filter, which FilterType to fetch.
+     */
+    where?: FilterTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FilterTypes to fetch.
+     */
+    orderBy?: FilterTypeOrderByWithRelationInput | FilterTypeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FilterTypes.
+     */
+    cursor?: FilterTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FilterTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FilterTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FilterTypes.
+     */
+    distinct?: FilterTypeScalarFieldEnum | FilterTypeScalarFieldEnum[]
+  }
+
+  /**
+   * FilterType findFirstOrThrow
+   */
+  export type FilterTypeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterType
+     */
+    select?: FilterTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterType
+     */
+    omit?: FilterTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterTypeInclude<ExtArgs> | null
+    /**
+     * Filter, which FilterType to fetch.
+     */
+    where?: FilterTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FilterTypes to fetch.
+     */
+    orderBy?: FilterTypeOrderByWithRelationInput | FilterTypeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FilterTypes.
+     */
+    cursor?: FilterTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FilterTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FilterTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FilterTypes.
+     */
+    distinct?: FilterTypeScalarFieldEnum | FilterTypeScalarFieldEnum[]
+  }
+
+  /**
+   * FilterType findMany
+   */
+  export type FilterTypeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterType
+     */
+    select?: FilterTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterType
+     */
+    omit?: FilterTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterTypeInclude<ExtArgs> | null
+    /**
+     * Filter, which FilterTypes to fetch.
+     */
+    where?: FilterTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FilterTypes to fetch.
+     */
+    orderBy?: FilterTypeOrderByWithRelationInput | FilterTypeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FilterTypes.
+     */
+    cursor?: FilterTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FilterTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FilterTypes.
+     */
+    skip?: number
+    distinct?: FilterTypeScalarFieldEnum | FilterTypeScalarFieldEnum[]
+  }
+
+  /**
+   * FilterType create
+   */
+  export type FilterTypeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterType
+     */
+    select?: FilterTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterType
+     */
+    omit?: FilterTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterTypeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FilterType.
+     */
+    data: XOR<FilterTypeCreateInput, FilterTypeUncheckedCreateInput>
+  }
+
+  /**
+   * FilterType createMany
+   */
+  export type FilterTypeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FilterTypes.
+     */
+    data: FilterTypeCreateManyInput | FilterTypeCreateManyInput[]
+  }
+
+  /**
+   * FilterType update
+   */
+  export type FilterTypeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterType
+     */
+    select?: FilterTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterType
+     */
+    omit?: FilterTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterTypeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FilterType.
+     */
+    data: XOR<FilterTypeUpdateInput, FilterTypeUncheckedUpdateInput>
+    /**
+     * Choose, which FilterType to update.
+     */
+    where: FilterTypeWhereUniqueInput
+  }
+
+  /**
+   * FilterType updateMany
+   */
+  export type FilterTypeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FilterTypes.
+     */
+    data: XOR<FilterTypeUpdateManyMutationInput, FilterTypeUncheckedUpdateManyInput>
+    /**
+     * Filter which FilterTypes to update
+     */
+    where?: FilterTypeWhereInput
+    /**
+     * Limit how many FilterTypes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FilterType upsert
+   */
+  export type FilterTypeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterType
+     */
+    select?: FilterTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterType
+     */
+    omit?: FilterTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterTypeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FilterType to update in case it exists.
+     */
+    where: FilterTypeWhereUniqueInput
+    /**
+     * In case the FilterType found by the `where` argument doesn't exist, create a new FilterType with this data.
+     */
+    create: XOR<FilterTypeCreateInput, FilterTypeUncheckedCreateInput>
+    /**
+     * In case the FilterType was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FilterTypeUpdateInput, FilterTypeUncheckedUpdateInput>
+  }
+
+  /**
+   * FilterType delete
+   */
+  export type FilterTypeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterType
+     */
+    select?: FilterTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterType
+     */
+    omit?: FilterTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterTypeInclude<ExtArgs> | null
+    /**
+     * Filter which FilterType to delete.
+     */
+    where: FilterTypeWhereUniqueInput
+  }
+
+  /**
+   * FilterType deleteMany
+   */
+  export type FilterTypeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FilterTypes to delete
+     */
+    where?: FilterTypeWhereInput
+    /**
+     * Limit how many FilterTypes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * FilterType findRaw
+   */
+  export type FilterTypeFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * FilterType aggregateRaw
+   */
+  export type FilterTypeAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * FilterType.filterCategory
+   */
+  export type FilterType$filterCategoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterCategory
+     */
+    select?: FilterCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterCategory
+     */
+    omit?: FilterCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterCategoryInclude<ExtArgs> | null
+    where?: FilterCategoryWhereInput
+    orderBy?: FilterCategoryOrderByWithRelationInput | FilterCategoryOrderByWithRelationInput[]
+    cursor?: FilterCategoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FilterCategoryScalarFieldEnum | FilterCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * FilterType.values
+   */
+  export type FilterType$valuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterValues
+     */
+    select?: FilterValuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterValues
+     */
+    omit?: FilterValuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterValuesInclude<ExtArgs> | null
+    where?: FilterValuesWhereInput
+    orderBy?: FilterValuesOrderByWithRelationInput | FilterValuesOrderByWithRelationInput[]
+    cursor?: FilterValuesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FilterValuesScalarFieldEnum | FilterValuesScalarFieldEnum[]
+  }
+
+  /**
+   * FilterType without action
+   */
+  export type FilterTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterType
+     */
+    select?: FilterTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterType
+     */
+    omit?: FilterTypeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterTypeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model FilterValues
+   */
+
+  export type AggregateFilterValues = {
+    _count: FilterValuesCountAggregateOutputType | null
+    _min: FilterValuesMinAggregateOutputType | null
+    _max: FilterValuesMaxAggregateOutputType | null
+  }
+
+  export type FilterValuesMinAggregateOutputType = {
+    id: string | null
+    value: string | null
+    filterId: string | null
+  }
+
+  export type FilterValuesMaxAggregateOutputType = {
+    id: string | null
+    value: string | null
+    filterId: string | null
+  }
+
+  export type FilterValuesCountAggregateOutputType = {
+    id: number
+    value: number
+    filterId: number
+    _all: number
+  }
+
+
+  export type FilterValuesMinAggregateInputType = {
+    id?: true
+    value?: true
+    filterId?: true
+  }
+
+  export type FilterValuesMaxAggregateInputType = {
+    id?: true
+    value?: true
+    filterId?: true
+  }
+
+  export type FilterValuesCountAggregateInputType = {
+    id?: true
+    value?: true
+    filterId?: true
+    _all?: true
+  }
+
+  export type FilterValuesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FilterValues to aggregate.
+     */
+    where?: FilterValuesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FilterValues to fetch.
+     */
+    orderBy?: FilterValuesOrderByWithRelationInput | FilterValuesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FilterValuesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FilterValues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FilterValues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FilterValues
+    **/
+    _count?: true | FilterValuesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FilterValuesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FilterValuesMaxAggregateInputType
+  }
+
+  export type GetFilterValuesAggregateType<T extends FilterValuesAggregateArgs> = {
+        [P in keyof T & keyof AggregateFilterValues]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFilterValues[P]>
+      : GetScalarType<T[P], AggregateFilterValues[P]>
+  }
+
+
+
+
+  export type FilterValuesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FilterValuesWhereInput
+    orderBy?: FilterValuesOrderByWithAggregationInput | FilterValuesOrderByWithAggregationInput[]
+    by: FilterValuesScalarFieldEnum[] | FilterValuesScalarFieldEnum
+    having?: FilterValuesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FilterValuesCountAggregateInputType | true
+    _min?: FilterValuesMinAggregateInputType
+    _max?: FilterValuesMaxAggregateInputType
+  }
+
+  export type FilterValuesGroupByOutputType = {
+    id: string
+    value: string
+    filterId: string
+    _count: FilterValuesCountAggregateOutputType | null
+    _min: FilterValuesMinAggregateOutputType | null
+    _max: FilterValuesMaxAggregateOutputType | null
+  }
+
+  type GetFilterValuesGroupByPayload<T extends FilterValuesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FilterValuesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FilterValuesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FilterValuesGroupByOutputType[P]>
+            : GetScalarType<T[P], FilterValuesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FilterValuesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    value?: boolean
+    filterId?: boolean
+    filter?: boolean | FilterTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["filterValues"]>
+
+
+
+  export type FilterValuesSelectScalar = {
+    id?: boolean
+    value?: boolean
+    filterId?: boolean
+  }
+
+  export type FilterValuesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "value" | "filterId", ExtArgs["result"]["filterValues"]>
+  export type FilterValuesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    filter?: boolean | FilterTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $FilterValuesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FilterValues"
+    objects: {
+      filter: Prisma.$FilterTypePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      value: string
+      filterId: string
+    }, ExtArgs["result"]["filterValues"]>
+    composites: {}
+  }
+
+  type FilterValuesGetPayload<S extends boolean | null | undefined | FilterValuesDefaultArgs> = $Result.GetResult<Prisma.$FilterValuesPayload, S>
+
+  type FilterValuesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FilterValuesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FilterValuesCountAggregateInputType | true
+    }
+
+  export interface FilterValuesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FilterValues'], meta: { name: 'FilterValues' } }
+    /**
+     * Find zero or one FilterValues that matches the filter.
+     * @param {FilterValuesFindUniqueArgs} args - Arguments to find a FilterValues
+     * @example
+     * // Get one FilterValues
+     * const filterValues = await prisma.filterValues.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FilterValuesFindUniqueArgs>(args: SelectSubset<T, FilterValuesFindUniqueArgs<ExtArgs>>): Prisma__FilterValuesClient<$Result.GetResult<Prisma.$FilterValuesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one FilterValues that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FilterValuesFindUniqueOrThrowArgs} args - Arguments to find a FilterValues
+     * @example
+     * // Get one FilterValues
+     * const filterValues = await prisma.filterValues.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FilterValuesFindUniqueOrThrowArgs>(args: SelectSubset<T, FilterValuesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FilterValuesClient<$Result.GetResult<Prisma.$FilterValuesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FilterValues that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterValuesFindFirstArgs} args - Arguments to find a FilterValues
+     * @example
+     * // Get one FilterValues
+     * const filterValues = await prisma.filterValues.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FilterValuesFindFirstArgs>(args?: SelectSubset<T, FilterValuesFindFirstArgs<ExtArgs>>): Prisma__FilterValuesClient<$Result.GetResult<Prisma.$FilterValuesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FilterValues that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterValuesFindFirstOrThrowArgs} args - Arguments to find a FilterValues
+     * @example
+     * // Get one FilterValues
+     * const filterValues = await prisma.filterValues.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FilterValuesFindFirstOrThrowArgs>(args?: SelectSubset<T, FilterValuesFindFirstOrThrowArgs<ExtArgs>>): Prisma__FilterValuesClient<$Result.GetResult<Prisma.$FilterValuesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FilterValues that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterValuesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FilterValues
+     * const filterValues = await prisma.filterValues.findMany()
+     * 
+     * // Get first 10 FilterValues
+     * const filterValues = await prisma.filterValues.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const filterValuesWithIdOnly = await prisma.filterValues.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FilterValuesFindManyArgs>(args?: SelectSubset<T, FilterValuesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilterValuesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a FilterValues.
+     * @param {FilterValuesCreateArgs} args - Arguments to create a FilterValues.
+     * @example
+     * // Create one FilterValues
+     * const FilterValues = await prisma.filterValues.create({
+     *   data: {
+     *     // ... data to create a FilterValues
+     *   }
+     * })
+     * 
+     */
+    create<T extends FilterValuesCreateArgs>(args: SelectSubset<T, FilterValuesCreateArgs<ExtArgs>>): Prisma__FilterValuesClient<$Result.GetResult<Prisma.$FilterValuesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many FilterValues.
+     * @param {FilterValuesCreateManyArgs} args - Arguments to create many FilterValues.
+     * @example
+     * // Create many FilterValues
+     * const filterValues = await prisma.filterValues.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FilterValuesCreateManyArgs>(args?: SelectSubset<T, FilterValuesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FilterValues.
+     * @param {FilterValuesDeleteArgs} args - Arguments to delete one FilterValues.
+     * @example
+     * // Delete one FilterValues
+     * const FilterValues = await prisma.filterValues.delete({
+     *   where: {
+     *     // ... filter to delete one FilterValues
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FilterValuesDeleteArgs>(args: SelectSubset<T, FilterValuesDeleteArgs<ExtArgs>>): Prisma__FilterValuesClient<$Result.GetResult<Prisma.$FilterValuesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one FilterValues.
+     * @param {FilterValuesUpdateArgs} args - Arguments to update one FilterValues.
+     * @example
+     * // Update one FilterValues
+     * const filterValues = await prisma.filterValues.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FilterValuesUpdateArgs>(args: SelectSubset<T, FilterValuesUpdateArgs<ExtArgs>>): Prisma__FilterValuesClient<$Result.GetResult<Prisma.$FilterValuesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more FilterValues.
+     * @param {FilterValuesDeleteManyArgs} args - Arguments to filter FilterValues to delete.
+     * @example
+     * // Delete a few FilterValues
+     * const { count } = await prisma.filterValues.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FilterValuesDeleteManyArgs>(args?: SelectSubset<T, FilterValuesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FilterValues.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterValuesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FilterValues
+     * const filterValues = await prisma.filterValues.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FilterValuesUpdateManyArgs>(args: SelectSubset<T, FilterValuesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FilterValues.
+     * @param {FilterValuesUpsertArgs} args - Arguments to update or create a FilterValues.
+     * @example
+     * // Update or create a FilterValues
+     * const filterValues = await prisma.filterValues.upsert({
+     *   create: {
+     *     // ... data to create a FilterValues
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FilterValues we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FilterValuesUpsertArgs>(args: SelectSubset<T, FilterValuesUpsertArgs<ExtArgs>>): Prisma__FilterValuesClient<$Result.GetResult<Prisma.$FilterValuesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FilterValues that matches the filter.
+     * @param {FilterValuesFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const filterValues = await prisma.filterValues.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: FilterValuesFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a FilterValues.
+     * @param {FilterValuesAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const filterValues = await prisma.filterValues.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: FilterValuesAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of FilterValues.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterValuesCountArgs} args - Arguments to filter FilterValues to count.
+     * @example
+     * // Count the number of FilterValues
+     * const count = await prisma.filterValues.count({
+     *   where: {
+     *     // ... the filter for the FilterValues we want to count
+     *   }
+     * })
+    **/
+    count<T extends FilterValuesCountArgs>(
+      args?: Subset<T, FilterValuesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FilterValuesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FilterValues.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterValuesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FilterValuesAggregateArgs>(args: Subset<T, FilterValuesAggregateArgs>): Prisma.PrismaPromise<GetFilterValuesAggregateType<T>>
+
+    /**
+     * Group by FilterValues.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterValuesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FilterValuesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FilterValuesGroupByArgs['orderBy'] }
+        : { orderBy?: FilterValuesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FilterValuesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFilterValuesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FilterValues model
+   */
+  readonly fields: FilterValuesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FilterValues.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FilterValuesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    filter<T extends FilterTypeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FilterTypeDefaultArgs<ExtArgs>>): Prisma__FilterTypeClient<$Result.GetResult<Prisma.$FilterTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FilterValues model
+   */
+  interface FilterValuesFieldRefs {
+    readonly id: FieldRef<"FilterValues", 'String'>
+    readonly value: FieldRef<"FilterValues", 'String'>
+    readonly filterId: FieldRef<"FilterValues", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FilterValues findUnique
+   */
+  export type FilterValuesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterValues
+     */
+    select?: FilterValuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterValues
+     */
+    omit?: FilterValuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterValuesInclude<ExtArgs> | null
+    /**
+     * Filter, which FilterValues to fetch.
+     */
+    where: FilterValuesWhereUniqueInput
+  }
+
+  /**
+   * FilterValues findUniqueOrThrow
+   */
+  export type FilterValuesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterValues
+     */
+    select?: FilterValuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterValues
+     */
+    omit?: FilterValuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterValuesInclude<ExtArgs> | null
+    /**
+     * Filter, which FilterValues to fetch.
+     */
+    where: FilterValuesWhereUniqueInput
+  }
+
+  /**
+   * FilterValues findFirst
+   */
+  export type FilterValuesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterValues
+     */
+    select?: FilterValuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterValues
+     */
+    omit?: FilterValuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterValuesInclude<ExtArgs> | null
+    /**
+     * Filter, which FilterValues to fetch.
+     */
+    where?: FilterValuesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FilterValues to fetch.
+     */
+    orderBy?: FilterValuesOrderByWithRelationInput | FilterValuesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FilterValues.
+     */
+    cursor?: FilterValuesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FilterValues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FilterValues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FilterValues.
+     */
+    distinct?: FilterValuesScalarFieldEnum | FilterValuesScalarFieldEnum[]
+  }
+
+  /**
+   * FilterValues findFirstOrThrow
+   */
+  export type FilterValuesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterValues
+     */
+    select?: FilterValuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterValues
+     */
+    omit?: FilterValuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterValuesInclude<ExtArgs> | null
+    /**
+     * Filter, which FilterValues to fetch.
+     */
+    where?: FilterValuesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FilterValues to fetch.
+     */
+    orderBy?: FilterValuesOrderByWithRelationInput | FilterValuesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FilterValues.
+     */
+    cursor?: FilterValuesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FilterValues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FilterValues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FilterValues.
+     */
+    distinct?: FilterValuesScalarFieldEnum | FilterValuesScalarFieldEnum[]
+  }
+
+  /**
+   * FilterValues findMany
+   */
+  export type FilterValuesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterValues
+     */
+    select?: FilterValuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterValues
+     */
+    omit?: FilterValuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterValuesInclude<ExtArgs> | null
+    /**
+     * Filter, which FilterValues to fetch.
+     */
+    where?: FilterValuesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FilterValues to fetch.
+     */
+    orderBy?: FilterValuesOrderByWithRelationInput | FilterValuesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FilterValues.
+     */
+    cursor?: FilterValuesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FilterValues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FilterValues.
+     */
+    skip?: number
+    distinct?: FilterValuesScalarFieldEnum | FilterValuesScalarFieldEnum[]
+  }
+
+  /**
+   * FilterValues create
+   */
+  export type FilterValuesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterValues
+     */
+    select?: FilterValuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterValues
+     */
+    omit?: FilterValuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterValuesInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FilterValues.
+     */
+    data: XOR<FilterValuesCreateInput, FilterValuesUncheckedCreateInput>
+  }
+
+  /**
+   * FilterValues createMany
+   */
+  export type FilterValuesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FilterValues.
+     */
+    data: FilterValuesCreateManyInput | FilterValuesCreateManyInput[]
+  }
+
+  /**
+   * FilterValues update
+   */
+  export type FilterValuesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterValues
+     */
+    select?: FilterValuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterValues
+     */
+    omit?: FilterValuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterValuesInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FilterValues.
+     */
+    data: XOR<FilterValuesUpdateInput, FilterValuesUncheckedUpdateInput>
+    /**
+     * Choose, which FilterValues to update.
+     */
+    where: FilterValuesWhereUniqueInput
+  }
+
+  /**
+   * FilterValues updateMany
+   */
+  export type FilterValuesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FilterValues.
+     */
+    data: XOR<FilterValuesUpdateManyMutationInput, FilterValuesUncheckedUpdateManyInput>
+    /**
+     * Filter which FilterValues to update
+     */
+    where?: FilterValuesWhereInput
+    /**
+     * Limit how many FilterValues to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FilterValues upsert
+   */
+  export type FilterValuesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterValues
+     */
+    select?: FilterValuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterValues
+     */
+    omit?: FilterValuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterValuesInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FilterValues to update in case it exists.
+     */
+    where: FilterValuesWhereUniqueInput
+    /**
+     * In case the FilterValues found by the `where` argument doesn't exist, create a new FilterValues with this data.
+     */
+    create: XOR<FilterValuesCreateInput, FilterValuesUncheckedCreateInput>
+    /**
+     * In case the FilterValues was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FilterValuesUpdateInput, FilterValuesUncheckedUpdateInput>
+  }
+
+  /**
+   * FilterValues delete
+   */
+  export type FilterValuesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterValues
+     */
+    select?: FilterValuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterValues
+     */
+    omit?: FilterValuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterValuesInclude<ExtArgs> | null
+    /**
+     * Filter which FilterValues to delete.
+     */
+    where: FilterValuesWhereUniqueInput
+  }
+
+  /**
+   * FilterValues deleteMany
+   */
+  export type FilterValuesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FilterValues to delete
+     */
+    where?: FilterValuesWhereInput
+    /**
+     * Limit how many FilterValues to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * FilterValues findRaw
+   */
+  export type FilterValuesFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * FilterValues aggregateRaw
+   */
+  export type FilterValuesAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * FilterValues without action
+   */
+  export type FilterValuesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterValues
+     */
+    select?: FilterValuesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterValues
+     */
+    omit?: FilterValuesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterValuesInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model FilterCategory
+   */
+
+  export type AggregateFilterCategory = {
+    _count: FilterCategoryCountAggregateOutputType | null
+    _min: FilterCategoryMinAggregateOutputType | null
+    _max: FilterCategoryMaxAggregateOutputType | null
+  }
+
+  export type FilterCategoryMinAggregateOutputType = {
+    id: string | null
+    categoryId: string | null
+    filterId: string | null
+  }
+
+  export type FilterCategoryMaxAggregateOutputType = {
+    id: string | null
+    categoryId: string | null
+    filterId: string | null
+  }
+
+  export type FilterCategoryCountAggregateOutputType = {
+    id: number
+    categoryId: number
+    filterId: number
+    _all: number
+  }
+
+
+  export type FilterCategoryMinAggregateInputType = {
+    id?: true
+    categoryId?: true
+    filterId?: true
+  }
+
+  export type FilterCategoryMaxAggregateInputType = {
+    id?: true
+    categoryId?: true
+    filterId?: true
+  }
+
+  export type FilterCategoryCountAggregateInputType = {
+    id?: true
+    categoryId?: true
+    filterId?: true
+    _all?: true
+  }
+
+  export type FilterCategoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FilterCategory to aggregate.
+     */
+    where?: FilterCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FilterCategories to fetch.
+     */
+    orderBy?: FilterCategoryOrderByWithRelationInput | FilterCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FilterCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FilterCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FilterCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FilterCategories
+    **/
+    _count?: true | FilterCategoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FilterCategoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FilterCategoryMaxAggregateInputType
+  }
+
+  export type GetFilterCategoryAggregateType<T extends FilterCategoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateFilterCategory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFilterCategory[P]>
+      : GetScalarType<T[P], AggregateFilterCategory[P]>
+  }
+
+
+
+
+  export type FilterCategoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FilterCategoryWhereInput
+    orderBy?: FilterCategoryOrderByWithAggregationInput | FilterCategoryOrderByWithAggregationInput[]
+    by: FilterCategoryScalarFieldEnum[] | FilterCategoryScalarFieldEnum
+    having?: FilterCategoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FilterCategoryCountAggregateInputType | true
+    _min?: FilterCategoryMinAggregateInputType
+    _max?: FilterCategoryMaxAggregateInputType
+  }
+
+  export type FilterCategoryGroupByOutputType = {
+    id: string
+    categoryId: string
+    filterId: string
+    _count: FilterCategoryCountAggregateOutputType | null
+    _min: FilterCategoryMinAggregateOutputType | null
+    _max: FilterCategoryMaxAggregateOutputType | null
+  }
+
+  type GetFilterCategoryGroupByPayload<T extends FilterCategoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FilterCategoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FilterCategoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FilterCategoryGroupByOutputType[P]>
+            : GetScalarType<T[P], FilterCategoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FilterCategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    categoryId?: boolean
+    filterId?: boolean
+    category?: boolean | CategoryDefaultArgs<ExtArgs>
+    filter?: boolean | FilterTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["filterCategory"]>
+
+
+
+  export type FilterCategorySelectScalar = {
+    id?: boolean
+    categoryId?: boolean
+    filterId?: boolean
+  }
+
+  export type FilterCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "categoryId" | "filterId", ExtArgs["result"]["filterCategory"]>
+  export type FilterCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    category?: boolean | CategoryDefaultArgs<ExtArgs>
+    filter?: boolean | FilterTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $FilterCategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FilterCategory"
+    objects: {
+      category: Prisma.$CategoryPayload<ExtArgs>
+      filter: Prisma.$FilterTypePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      categoryId: string
+      filterId: string
+    }, ExtArgs["result"]["filterCategory"]>
+    composites: {}
+  }
+
+  type FilterCategoryGetPayload<S extends boolean | null | undefined | FilterCategoryDefaultArgs> = $Result.GetResult<Prisma.$FilterCategoryPayload, S>
+
+  type FilterCategoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FilterCategoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FilterCategoryCountAggregateInputType | true
+    }
+
+  export interface FilterCategoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FilterCategory'], meta: { name: 'FilterCategory' } }
+    /**
+     * Find zero or one FilterCategory that matches the filter.
+     * @param {FilterCategoryFindUniqueArgs} args - Arguments to find a FilterCategory
+     * @example
+     * // Get one FilterCategory
+     * const filterCategory = await prisma.filterCategory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FilterCategoryFindUniqueArgs>(args: SelectSubset<T, FilterCategoryFindUniqueArgs<ExtArgs>>): Prisma__FilterCategoryClient<$Result.GetResult<Prisma.$FilterCategoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one FilterCategory that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FilterCategoryFindUniqueOrThrowArgs} args - Arguments to find a FilterCategory
+     * @example
+     * // Get one FilterCategory
+     * const filterCategory = await prisma.filterCategory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FilterCategoryFindUniqueOrThrowArgs>(args: SelectSubset<T, FilterCategoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FilterCategoryClient<$Result.GetResult<Prisma.$FilterCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FilterCategory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterCategoryFindFirstArgs} args - Arguments to find a FilterCategory
+     * @example
+     * // Get one FilterCategory
+     * const filterCategory = await prisma.filterCategory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FilterCategoryFindFirstArgs>(args?: SelectSubset<T, FilterCategoryFindFirstArgs<ExtArgs>>): Prisma__FilterCategoryClient<$Result.GetResult<Prisma.$FilterCategoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FilterCategory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterCategoryFindFirstOrThrowArgs} args - Arguments to find a FilterCategory
+     * @example
+     * // Get one FilterCategory
+     * const filterCategory = await prisma.filterCategory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FilterCategoryFindFirstOrThrowArgs>(args?: SelectSubset<T, FilterCategoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__FilterCategoryClient<$Result.GetResult<Prisma.$FilterCategoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FilterCategories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterCategoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FilterCategories
+     * const filterCategories = await prisma.filterCategory.findMany()
+     * 
+     * // Get first 10 FilterCategories
+     * const filterCategories = await prisma.filterCategory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const filterCategoryWithIdOnly = await prisma.filterCategory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FilterCategoryFindManyArgs>(args?: SelectSubset<T, FilterCategoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilterCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a FilterCategory.
+     * @param {FilterCategoryCreateArgs} args - Arguments to create a FilterCategory.
+     * @example
+     * // Create one FilterCategory
+     * const FilterCategory = await prisma.filterCategory.create({
+     *   data: {
+     *     // ... data to create a FilterCategory
+     *   }
+     * })
+     * 
+     */
+    create<T extends FilterCategoryCreateArgs>(args: SelectSubset<T, FilterCategoryCreateArgs<ExtArgs>>): Prisma__FilterCategoryClient<$Result.GetResult<Prisma.$FilterCategoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many FilterCategories.
+     * @param {FilterCategoryCreateManyArgs} args - Arguments to create many FilterCategories.
+     * @example
+     * // Create many FilterCategories
+     * const filterCategory = await prisma.filterCategory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FilterCategoryCreateManyArgs>(args?: SelectSubset<T, FilterCategoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FilterCategory.
+     * @param {FilterCategoryDeleteArgs} args - Arguments to delete one FilterCategory.
+     * @example
+     * // Delete one FilterCategory
+     * const FilterCategory = await prisma.filterCategory.delete({
+     *   where: {
+     *     // ... filter to delete one FilterCategory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FilterCategoryDeleteArgs>(args: SelectSubset<T, FilterCategoryDeleteArgs<ExtArgs>>): Prisma__FilterCategoryClient<$Result.GetResult<Prisma.$FilterCategoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one FilterCategory.
+     * @param {FilterCategoryUpdateArgs} args - Arguments to update one FilterCategory.
+     * @example
+     * // Update one FilterCategory
+     * const filterCategory = await prisma.filterCategory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FilterCategoryUpdateArgs>(args: SelectSubset<T, FilterCategoryUpdateArgs<ExtArgs>>): Prisma__FilterCategoryClient<$Result.GetResult<Prisma.$FilterCategoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more FilterCategories.
+     * @param {FilterCategoryDeleteManyArgs} args - Arguments to filter FilterCategories to delete.
+     * @example
+     * // Delete a few FilterCategories
+     * const { count } = await prisma.filterCategory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FilterCategoryDeleteManyArgs>(args?: SelectSubset<T, FilterCategoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FilterCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterCategoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FilterCategories
+     * const filterCategory = await prisma.filterCategory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FilterCategoryUpdateManyArgs>(args: SelectSubset<T, FilterCategoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FilterCategory.
+     * @param {FilterCategoryUpsertArgs} args - Arguments to update or create a FilterCategory.
+     * @example
+     * // Update or create a FilterCategory
+     * const filterCategory = await prisma.filterCategory.upsert({
+     *   create: {
+     *     // ... data to create a FilterCategory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FilterCategory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FilterCategoryUpsertArgs>(args: SelectSubset<T, FilterCategoryUpsertArgs<ExtArgs>>): Prisma__FilterCategoryClient<$Result.GetResult<Prisma.$FilterCategoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FilterCategories that matches the filter.
+     * @param {FilterCategoryFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const filterCategory = await prisma.filterCategory.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: FilterCategoryFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a FilterCategory.
+     * @param {FilterCategoryAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const filterCategory = await prisma.filterCategory.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: FilterCategoryAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of FilterCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterCategoryCountArgs} args - Arguments to filter FilterCategories to count.
+     * @example
+     * // Count the number of FilterCategories
+     * const count = await prisma.filterCategory.count({
+     *   where: {
+     *     // ... the filter for the FilterCategories we want to count
+     *   }
+     * })
+    **/
+    count<T extends FilterCategoryCountArgs>(
+      args?: Subset<T, FilterCategoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FilterCategoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FilterCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterCategoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FilterCategoryAggregateArgs>(args: Subset<T, FilterCategoryAggregateArgs>): Prisma.PrismaPromise<GetFilterCategoryAggregateType<T>>
+
+    /**
+     * Group by FilterCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FilterCategoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FilterCategoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FilterCategoryGroupByArgs['orderBy'] }
+        : { orderBy?: FilterCategoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FilterCategoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFilterCategoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FilterCategory model
+   */
+  readonly fields: FilterCategoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FilterCategory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FilterCategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    category<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    filter<T extends FilterTypeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FilterTypeDefaultArgs<ExtArgs>>): Prisma__FilterTypeClient<$Result.GetResult<Prisma.$FilterTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FilterCategory model
+   */
+  interface FilterCategoryFieldRefs {
+    readonly id: FieldRef<"FilterCategory", 'String'>
+    readonly categoryId: FieldRef<"FilterCategory", 'String'>
+    readonly filterId: FieldRef<"FilterCategory", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FilterCategory findUnique
+   */
+  export type FilterCategoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterCategory
+     */
+    select?: FilterCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterCategory
+     */
+    omit?: FilterCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which FilterCategory to fetch.
+     */
+    where: FilterCategoryWhereUniqueInput
+  }
+
+  /**
+   * FilterCategory findUniqueOrThrow
+   */
+  export type FilterCategoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterCategory
+     */
+    select?: FilterCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterCategory
+     */
+    omit?: FilterCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which FilterCategory to fetch.
+     */
+    where: FilterCategoryWhereUniqueInput
+  }
+
+  /**
+   * FilterCategory findFirst
+   */
+  export type FilterCategoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterCategory
+     */
+    select?: FilterCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterCategory
+     */
+    omit?: FilterCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which FilterCategory to fetch.
+     */
+    where?: FilterCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FilterCategories to fetch.
+     */
+    orderBy?: FilterCategoryOrderByWithRelationInput | FilterCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FilterCategories.
+     */
+    cursor?: FilterCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FilterCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FilterCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FilterCategories.
+     */
+    distinct?: FilterCategoryScalarFieldEnum | FilterCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * FilterCategory findFirstOrThrow
+   */
+  export type FilterCategoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterCategory
+     */
+    select?: FilterCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterCategory
+     */
+    omit?: FilterCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which FilterCategory to fetch.
+     */
+    where?: FilterCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FilterCategories to fetch.
+     */
+    orderBy?: FilterCategoryOrderByWithRelationInput | FilterCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FilterCategories.
+     */
+    cursor?: FilterCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FilterCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FilterCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FilterCategories.
+     */
+    distinct?: FilterCategoryScalarFieldEnum | FilterCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * FilterCategory findMany
+   */
+  export type FilterCategoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterCategory
+     */
+    select?: FilterCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterCategory
+     */
+    omit?: FilterCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which FilterCategories to fetch.
+     */
+    where?: FilterCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FilterCategories to fetch.
+     */
+    orderBy?: FilterCategoryOrderByWithRelationInput | FilterCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FilterCategories.
+     */
+    cursor?: FilterCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FilterCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FilterCategories.
+     */
+    skip?: number
+    distinct?: FilterCategoryScalarFieldEnum | FilterCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * FilterCategory create
+   */
+  export type FilterCategoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterCategory
+     */
+    select?: FilterCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterCategory
+     */
+    omit?: FilterCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterCategoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FilterCategory.
+     */
+    data: XOR<FilterCategoryCreateInput, FilterCategoryUncheckedCreateInput>
+  }
+
+  /**
+   * FilterCategory createMany
+   */
+  export type FilterCategoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FilterCategories.
+     */
+    data: FilterCategoryCreateManyInput | FilterCategoryCreateManyInput[]
+  }
+
+  /**
+   * FilterCategory update
+   */
+  export type FilterCategoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterCategory
+     */
+    select?: FilterCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterCategory
+     */
+    omit?: FilterCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterCategoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FilterCategory.
+     */
+    data: XOR<FilterCategoryUpdateInput, FilterCategoryUncheckedUpdateInput>
+    /**
+     * Choose, which FilterCategory to update.
+     */
+    where: FilterCategoryWhereUniqueInput
+  }
+
+  /**
+   * FilterCategory updateMany
+   */
+  export type FilterCategoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FilterCategories.
+     */
+    data: XOR<FilterCategoryUpdateManyMutationInput, FilterCategoryUncheckedUpdateManyInput>
+    /**
+     * Filter which FilterCategories to update
+     */
+    where?: FilterCategoryWhereInput
+    /**
+     * Limit how many FilterCategories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FilterCategory upsert
+   */
+  export type FilterCategoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterCategory
+     */
+    select?: FilterCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterCategory
+     */
+    omit?: FilterCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterCategoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FilterCategory to update in case it exists.
+     */
+    where: FilterCategoryWhereUniqueInput
+    /**
+     * In case the FilterCategory found by the `where` argument doesn't exist, create a new FilterCategory with this data.
+     */
+    create: XOR<FilterCategoryCreateInput, FilterCategoryUncheckedCreateInput>
+    /**
+     * In case the FilterCategory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FilterCategoryUpdateInput, FilterCategoryUncheckedUpdateInput>
+  }
+
+  /**
+   * FilterCategory delete
+   */
+  export type FilterCategoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterCategory
+     */
+    select?: FilterCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterCategory
+     */
+    omit?: FilterCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterCategoryInclude<ExtArgs> | null
+    /**
+     * Filter which FilterCategory to delete.
+     */
+    where: FilterCategoryWhereUniqueInput
+  }
+
+  /**
+   * FilterCategory deleteMany
+   */
+  export type FilterCategoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FilterCategories to delete
+     */
+    where?: FilterCategoryWhereInput
+    /**
+     * Limit how many FilterCategories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * FilterCategory findRaw
+   */
+  export type FilterCategoryFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * FilterCategory aggregateRaw
+   */
+  export type FilterCategoryAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * FilterCategory without action
+   */
+  export type FilterCategoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FilterCategory
+     */
+    select?: FilterCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FilterCategory
+     */
+    omit?: FilterCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FilterCategoryInclude<ExtArgs> | null
   }
 
 
@@ -6515,11 +10933,47 @@ export namespace Prisma {
 
   export const BrandScalarFieldEnum: {
     id: 'id',
-    name: 'name',
-    categoryId: 'categoryId'
+    name: 'name'
   };
 
   export type BrandScalarFieldEnum = (typeof BrandScalarFieldEnum)[keyof typeof BrandScalarFieldEnum]
+
+
+  export const BrandCategoryScalarFieldEnum: {
+    id: 'id',
+    brandId: 'brandId',
+    categoryId: 'categoryId'
+  };
+
+  export type BrandCategoryScalarFieldEnum = (typeof BrandCategoryScalarFieldEnum)[keyof typeof BrandCategoryScalarFieldEnum]
+
+
+  export const FilterTypeScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    inputType: 'inputType',
+    type: 'type'
+  };
+
+  export type FilterTypeScalarFieldEnum = (typeof FilterTypeScalarFieldEnum)[keyof typeof FilterTypeScalarFieldEnum]
+
+
+  export const FilterValuesScalarFieldEnum: {
+    id: 'id',
+    value: 'value',
+    filterId: 'filterId'
+  };
+
+  export type FilterValuesScalarFieldEnum = (typeof FilterValuesScalarFieldEnum)[keyof typeof FilterValuesScalarFieldEnum]
+
+
+  export const FilterCategoryScalarFieldEnum: {
+    id: 'id',
+    categoryId: 'categoryId',
+    filterId: 'filterId'
+  };
+
+  export type FilterCategoryScalarFieldEnum = (typeof FilterCategoryScalarFieldEnum)[keyof typeof FilterCategoryScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -6596,6 +11050,34 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'InputType'
+   */
+  export type EnumInputTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InputType'>
+    
+
+
+  /**
+   * Reference to a field of type 'InputType[]'
+   */
+  export type ListEnumInputTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InputType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'TypeOfFilter'
+   */
+  export type EnumTypeOfFilterFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TypeOfFilter'>
+    
+
+
+  /**
+   * Reference to a field of type 'TypeOfFilter[]'
+   */
+  export type ListEnumTypeOfFilterFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TypeOfFilter[]'>
     
   /**
    * Deep Input Types
@@ -6787,7 +11269,8 @@ export namespace Prisma {
     title?: StringFilter<"Category"> | string
     children?: IntFilter<"Category"> | number
     product?: ProductListRelationFilter
-    brand?: BrandListRelationFilter
+    brand?: BrandCategoryListRelationFilter
+    filter?: FilterCategoryListRelationFilter
   }
 
   export type CategoryOrderByWithRelationInput = {
@@ -6797,7 +11280,8 @@ export namespace Prisma {
     title?: SortOrder
     children?: SortOrder
     product?: ProductOrderByRelationAggregateInput
-    brand?: BrandOrderByRelationAggregateInput
+    brand?: BrandCategoryOrderByRelationAggregateInput
+    filter?: FilterCategoryOrderByRelationAggregateInput
   }
 
   export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -6810,7 +11294,8 @@ export namespace Prisma {
     icon?: StringNullableFilter<"Category"> | string | null
     children?: IntFilter<"Category"> | number
     product?: ProductListRelationFilter
-    brand?: BrandListRelationFilter
+    brand?: BrandCategoryListRelationFilter
+    filter?: FilterCategoryListRelationFilter
   }, "id" | "title">
 
   export type CategoryOrderByWithAggregationInput = {
@@ -6893,15 +11378,13 @@ export namespace Prisma {
     NOT?: BrandWhereInput | BrandWhereInput[]
     id?: StringFilter<"Brand"> | string
     name?: StringFilter<"Brand"> | string
-    categoryId?: StringFilter<"Brand"> | string
-    category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
+    categories?: BrandCategoryListRelationFilter
   }
 
   export type BrandOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    categoryId?: SortOrder
-    category?: CategoryOrderByWithRelationInput
+    categories?: BrandCategoryOrderByRelationAggregateInput
   }
 
   export type BrandWhereUniqueInput = Prisma.AtLeast<{
@@ -6910,14 +11393,12 @@ export namespace Prisma {
     AND?: BrandWhereInput | BrandWhereInput[]
     OR?: BrandWhereInput[]
     NOT?: BrandWhereInput | BrandWhereInput[]
-    categoryId?: StringFilter<"Brand"> | string
-    category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
+    categories?: BrandCategoryListRelationFilter
   }, "id" | "name">
 
   export type BrandOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    categoryId?: SortOrder
     _count?: BrandCountOrderByAggregateInput
     _max?: BrandMaxOrderByAggregateInput
     _min?: BrandMinOrderByAggregateInput
@@ -6929,7 +11410,203 @@ export namespace Prisma {
     NOT?: BrandScalarWhereWithAggregatesInput | BrandScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Brand"> | string
     name?: StringWithAggregatesFilter<"Brand"> | string
-    categoryId?: StringWithAggregatesFilter<"Brand"> | string
+  }
+
+  export type BrandCategoryWhereInput = {
+    AND?: BrandCategoryWhereInput | BrandCategoryWhereInput[]
+    OR?: BrandCategoryWhereInput[]
+    NOT?: BrandCategoryWhereInput | BrandCategoryWhereInput[]
+    id?: StringFilter<"BrandCategory"> | string
+    brandId?: StringFilter<"BrandCategory"> | string
+    categoryId?: StringFilter<"BrandCategory"> | string
+    brand?: XOR<BrandScalarRelationFilter, BrandWhereInput>
+    category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
+  }
+
+  export type BrandCategoryOrderByWithRelationInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    categoryId?: SortOrder
+    brand?: BrandOrderByWithRelationInput
+    category?: CategoryOrderByWithRelationInput
+  }
+
+  export type BrandCategoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    brandId_categoryId?: BrandCategoryBrandIdCategoryIdCompoundUniqueInput
+    AND?: BrandCategoryWhereInput | BrandCategoryWhereInput[]
+    OR?: BrandCategoryWhereInput[]
+    NOT?: BrandCategoryWhereInput | BrandCategoryWhereInput[]
+    brandId?: StringFilter<"BrandCategory"> | string
+    categoryId?: StringFilter<"BrandCategory"> | string
+    brand?: XOR<BrandScalarRelationFilter, BrandWhereInput>
+    category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
+  }, "id" | "brandId_categoryId">
+
+  export type BrandCategoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    categoryId?: SortOrder
+    _count?: BrandCategoryCountOrderByAggregateInput
+    _max?: BrandCategoryMaxOrderByAggregateInput
+    _min?: BrandCategoryMinOrderByAggregateInput
+  }
+
+  export type BrandCategoryScalarWhereWithAggregatesInput = {
+    AND?: BrandCategoryScalarWhereWithAggregatesInput | BrandCategoryScalarWhereWithAggregatesInput[]
+    OR?: BrandCategoryScalarWhereWithAggregatesInput[]
+    NOT?: BrandCategoryScalarWhereWithAggregatesInput | BrandCategoryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"BrandCategory"> | string
+    brandId?: StringWithAggregatesFilter<"BrandCategory"> | string
+    categoryId?: StringWithAggregatesFilter<"BrandCategory"> | string
+  }
+
+  export type FilterTypeWhereInput = {
+    AND?: FilterTypeWhereInput | FilterTypeWhereInput[]
+    OR?: FilterTypeWhereInput[]
+    NOT?: FilterTypeWhereInput | FilterTypeWhereInput[]
+    id?: StringFilter<"FilterType"> | string
+    title?: StringFilter<"FilterType"> | string
+    inputType?: EnumInputTypeFilter<"FilterType"> | $Enums.InputType
+    type?: EnumTypeOfFilterFilter<"FilterType"> | $Enums.TypeOfFilter
+    filterCategory?: FilterCategoryListRelationFilter
+    values?: FilterValuesListRelationFilter
+  }
+
+  export type FilterTypeOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    inputType?: SortOrder
+    type?: SortOrder
+    filterCategory?: FilterCategoryOrderByRelationAggregateInput
+    values?: FilterValuesOrderByRelationAggregateInput
+  }
+
+  export type FilterTypeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    title?: string
+    AND?: FilterTypeWhereInput | FilterTypeWhereInput[]
+    OR?: FilterTypeWhereInput[]
+    NOT?: FilterTypeWhereInput | FilterTypeWhereInput[]
+    inputType?: EnumInputTypeFilter<"FilterType"> | $Enums.InputType
+    type?: EnumTypeOfFilterFilter<"FilterType"> | $Enums.TypeOfFilter
+    filterCategory?: FilterCategoryListRelationFilter
+    values?: FilterValuesListRelationFilter
+  }, "id" | "title">
+
+  export type FilterTypeOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    inputType?: SortOrder
+    type?: SortOrder
+    _count?: FilterTypeCountOrderByAggregateInput
+    _max?: FilterTypeMaxOrderByAggregateInput
+    _min?: FilterTypeMinOrderByAggregateInput
+  }
+
+  export type FilterTypeScalarWhereWithAggregatesInput = {
+    AND?: FilterTypeScalarWhereWithAggregatesInput | FilterTypeScalarWhereWithAggregatesInput[]
+    OR?: FilterTypeScalarWhereWithAggregatesInput[]
+    NOT?: FilterTypeScalarWhereWithAggregatesInput | FilterTypeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"FilterType"> | string
+    title?: StringWithAggregatesFilter<"FilterType"> | string
+    inputType?: EnumInputTypeWithAggregatesFilter<"FilterType"> | $Enums.InputType
+    type?: EnumTypeOfFilterWithAggregatesFilter<"FilterType"> | $Enums.TypeOfFilter
+  }
+
+  export type FilterValuesWhereInput = {
+    AND?: FilterValuesWhereInput | FilterValuesWhereInput[]
+    OR?: FilterValuesWhereInput[]
+    NOT?: FilterValuesWhereInput | FilterValuesWhereInput[]
+    id?: StringFilter<"FilterValues"> | string
+    value?: StringFilter<"FilterValues"> | string
+    filterId?: StringFilter<"FilterValues"> | string
+    filter?: XOR<FilterTypeScalarRelationFilter, FilterTypeWhereInput>
+  }
+
+  export type FilterValuesOrderByWithRelationInput = {
+    id?: SortOrder
+    value?: SortOrder
+    filterId?: SortOrder
+    filter?: FilterTypeOrderByWithRelationInput
+  }
+
+  export type FilterValuesWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    value_filterId?: FilterValuesValueFilterIdCompoundUniqueInput
+    AND?: FilterValuesWhereInput | FilterValuesWhereInput[]
+    OR?: FilterValuesWhereInput[]
+    NOT?: FilterValuesWhereInput | FilterValuesWhereInput[]
+    value?: StringFilter<"FilterValues"> | string
+    filterId?: StringFilter<"FilterValues"> | string
+    filter?: XOR<FilterTypeScalarRelationFilter, FilterTypeWhereInput>
+  }, "id" | "value_filterId">
+
+  export type FilterValuesOrderByWithAggregationInput = {
+    id?: SortOrder
+    value?: SortOrder
+    filterId?: SortOrder
+    _count?: FilterValuesCountOrderByAggregateInput
+    _max?: FilterValuesMaxOrderByAggregateInput
+    _min?: FilterValuesMinOrderByAggregateInput
+  }
+
+  export type FilterValuesScalarWhereWithAggregatesInput = {
+    AND?: FilterValuesScalarWhereWithAggregatesInput | FilterValuesScalarWhereWithAggregatesInput[]
+    OR?: FilterValuesScalarWhereWithAggregatesInput[]
+    NOT?: FilterValuesScalarWhereWithAggregatesInput | FilterValuesScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"FilterValues"> | string
+    value?: StringWithAggregatesFilter<"FilterValues"> | string
+    filterId?: StringWithAggregatesFilter<"FilterValues"> | string
+  }
+
+  export type FilterCategoryWhereInput = {
+    AND?: FilterCategoryWhereInput | FilterCategoryWhereInput[]
+    OR?: FilterCategoryWhereInput[]
+    NOT?: FilterCategoryWhereInput | FilterCategoryWhereInput[]
+    id?: StringFilter<"FilterCategory"> | string
+    categoryId?: StringFilter<"FilterCategory"> | string
+    filterId?: StringFilter<"FilterCategory"> | string
+    category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
+    filter?: XOR<FilterTypeScalarRelationFilter, FilterTypeWhereInput>
+  }
+
+  export type FilterCategoryOrderByWithRelationInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    filterId?: SortOrder
+    category?: CategoryOrderByWithRelationInput
+    filter?: FilterTypeOrderByWithRelationInput
+  }
+
+  export type FilterCategoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    categoryId_filterId?: FilterCategoryCategoryIdFilterIdCompoundUniqueInput
+    AND?: FilterCategoryWhereInput | FilterCategoryWhereInput[]
+    OR?: FilterCategoryWhereInput[]
+    NOT?: FilterCategoryWhereInput | FilterCategoryWhereInput[]
+    categoryId?: StringFilter<"FilterCategory"> | string
+    filterId?: StringFilter<"FilterCategory"> | string
+    category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
+    filter?: XOR<FilterTypeScalarRelationFilter, FilterTypeWhereInput>
+  }, "id" | "categoryId_filterId">
+
+  export type FilterCategoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    filterId?: SortOrder
+    _count?: FilterCategoryCountOrderByAggregateInput
+    _max?: FilterCategoryMaxOrderByAggregateInput
+    _min?: FilterCategoryMinOrderByAggregateInput
+  }
+
+  export type FilterCategoryScalarWhereWithAggregatesInput = {
+    AND?: FilterCategoryScalarWhereWithAggregatesInput | FilterCategoryScalarWhereWithAggregatesInput[]
+    OR?: FilterCategoryScalarWhereWithAggregatesInput[]
+    NOT?: FilterCategoryScalarWhereWithAggregatesInput | FilterCategoryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"FilterCategory"> | string
+    categoryId?: StringWithAggregatesFilter<"FilterCategory"> | string
+    filterId?: StringWithAggregatesFilter<"FilterCategory"> | string
   }
 
   export type CommentsCreateInput = {
@@ -7126,7 +11803,8 @@ export namespace Prisma {
     title: string
     children?: number
     product?: ProductCreateNestedManyWithoutCategoryInput
-    brand?: BrandCreateNestedManyWithoutCategoryInput
+    brand?: BrandCategoryCreateNestedManyWithoutCategoryInput
+    filter?: FilterCategoryCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUncheckedCreateInput = {
@@ -7136,7 +11814,8 @@ export namespace Prisma {
     title: string
     children?: number
     product?: ProductUncheckedCreateNestedManyWithoutCategoryInput
-    brand?: BrandUncheckedCreateNestedManyWithoutCategoryInput
+    brand?: BrandCategoryUncheckedCreateNestedManyWithoutCategoryInput
+    filter?: FilterCategoryUncheckedCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUpdateInput = {
@@ -7145,7 +11824,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     children?: IntFieldUpdateOperationsInput | number
     product?: ProductUpdateManyWithoutCategoryNestedInput
-    brand?: BrandUpdateManyWithoutCategoryNestedInput
+    brand?: BrandCategoryUpdateManyWithoutCategoryNestedInput
+    filter?: FilterCategoryUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryUncheckedUpdateInput = {
@@ -7154,7 +11834,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     children?: IntFieldUpdateOperationsInput | number
     product?: ProductUncheckedUpdateManyWithoutCategoryNestedInput
-    brand?: BrandUncheckedUpdateManyWithoutCategoryNestedInput
+    brand?: BrandCategoryUncheckedUpdateManyWithoutCategoryNestedInput
+    filter?: FilterCategoryUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryCreateManyInput = {
@@ -7226,29 +11907,28 @@ export namespace Prisma {
   export type BrandCreateInput = {
     id?: string
     name: string
-    category: CategoryCreateNestedOneWithoutBrandInput
+    categories?: BrandCategoryCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUncheckedCreateInput = {
     id?: string
     name: string
-    categoryId: string
+    categories?: BrandCategoryUncheckedCreateNestedManyWithoutBrandInput
   }
 
   export type BrandUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    category?: CategoryUpdateOneRequiredWithoutBrandNestedInput
+    categories?: BrandCategoryUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandUncheckedUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    categoryId?: StringFieldUpdateOperationsInput | string
+    categories?: BrandCategoryUncheckedUpdateManyWithoutBrandNestedInput
   }
 
   export type BrandCreateManyInput = {
     id?: string
     name: string
-    categoryId: string
   }
 
   export type BrandUpdateManyMutationInput = {
@@ -7257,7 +11937,170 @@ export namespace Prisma {
 
   export type BrandUncheckedUpdateManyInput = {
     name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BrandCategoryCreateInput = {
+    id?: string
+    brand: BrandCreateNestedOneWithoutCategoriesInput
+    category: CategoryCreateNestedOneWithoutBrandInput
+  }
+
+  export type BrandCategoryUncheckedCreateInput = {
+    id?: string
+    brandId: string
+    categoryId: string
+  }
+
+  export type BrandCategoryUpdateInput = {
+    brand?: BrandUpdateOneRequiredWithoutCategoriesNestedInput
+    category?: CategoryUpdateOneRequiredWithoutBrandNestedInput
+  }
+
+  export type BrandCategoryUncheckedUpdateInput = {
+    brandId?: StringFieldUpdateOperationsInput | string
     categoryId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BrandCategoryCreateManyInput = {
+    id?: string
+    brandId: string
+    categoryId: string
+  }
+
+  export type BrandCategoryUpdateManyMutationInput = {
+
+  }
+
+  export type BrandCategoryUncheckedUpdateManyInput = {
+    brandId?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FilterTypeCreateInput = {
+    id?: string
+    title: string
+    inputType: $Enums.InputType
+    type?: $Enums.TypeOfFilter
+    filterCategory?: FilterCategoryCreateNestedManyWithoutFilterInput
+    values?: FilterValuesCreateNestedManyWithoutFilterInput
+  }
+
+  export type FilterTypeUncheckedCreateInput = {
+    id?: string
+    title: string
+    inputType: $Enums.InputType
+    type?: $Enums.TypeOfFilter
+    filterCategory?: FilterCategoryUncheckedCreateNestedManyWithoutFilterInput
+    values?: FilterValuesUncheckedCreateNestedManyWithoutFilterInput
+  }
+
+  export type FilterTypeUpdateInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    inputType?: EnumInputTypeFieldUpdateOperationsInput | $Enums.InputType
+    type?: EnumTypeOfFilterFieldUpdateOperationsInput | $Enums.TypeOfFilter
+    filterCategory?: FilterCategoryUpdateManyWithoutFilterNestedInput
+    values?: FilterValuesUpdateManyWithoutFilterNestedInput
+  }
+
+  export type FilterTypeUncheckedUpdateInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    inputType?: EnumInputTypeFieldUpdateOperationsInput | $Enums.InputType
+    type?: EnumTypeOfFilterFieldUpdateOperationsInput | $Enums.TypeOfFilter
+    filterCategory?: FilterCategoryUncheckedUpdateManyWithoutFilterNestedInput
+    values?: FilterValuesUncheckedUpdateManyWithoutFilterNestedInput
+  }
+
+  export type FilterTypeCreateManyInput = {
+    id?: string
+    title: string
+    inputType: $Enums.InputType
+    type?: $Enums.TypeOfFilter
+  }
+
+  export type FilterTypeUpdateManyMutationInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    inputType?: EnumInputTypeFieldUpdateOperationsInput | $Enums.InputType
+    type?: EnumTypeOfFilterFieldUpdateOperationsInput | $Enums.TypeOfFilter
+  }
+
+  export type FilterTypeUncheckedUpdateManyInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    inputType?: EnumInputTypeFieldUpdateOperationsInput | $Enums.InputType
+    type?: EnumTypeOfFilterFieldUpdateOperationsInput | $Enums.TypeOfFilter
+  }
+
+  export type FilterValuesCreateInput = {
+    id?: string
+    value: string
+    filter: FilterTypeCreateNestedOneWithoutValuesInput
+  }
+
+  export type FilterValuesUncheckedCreateInput = {
+    id?: string
+    value: string
+    filterId: string
+  }
+
+  export type FilterValuesUpdateInput = {
+    value?: StringFieldUpdateOperationsInput | string
+    filter?: FilterTypeUpdateOneRequiredWithoutValuesNestedInput
+  }
+
+  export type FilterValuesUncheckedUpdateInput = {
+    value?: StringFieldUpdateOperationsInput | string
+    filterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FilterValuesCreateManyInput = {
+    id?: string
+    value: string
+    filterId: string
+  }
+
+  export type FilterValuesUpdateManyMutationInput = {
+    value?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FilterValuesUncheckedUpdateManyInput = {
+    value?: StringFieldUpdateOperationsInput | string
+    filterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FilterCategoryCreateInput = {
+    id?: string
+    category: CategoryCreateNestedOneWithoutFilterInput
+    filter: FilterTypeCreateNestedOneWithoutFilterCategoryInput
+  }
+
+  export type FilterCategoryUncheckedCreateInput = {
+    id?: string
+    categoryId: string
+    filterId: string
+  }
+
+  export type FilterCategoryUpdateInput = {
+    category?: CategoryUpdateOneRequiredWithoutFilterNestedInput
+    filter?: FilterTypeUpdateOneRequiredWithoutFilterCategoryNestedInput
+  }
+
+  export type FilterCategoryUncheckedUpdateInput = {
+    categoryId?: StringFieldUpdateOperationsInput | string
+    filterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FilterCategoryCreateManyInput = {
+    id?: string
+    categoryId: string
+    filterId: string
+  }
+
+  export type FilterCategoryUpdateManyMutationInput = {
+
+  }
+
+  export type FilterCategoryUncheckedUpdateManyInput = {
+    categoryId?: StringFieldUpdateOperationsInput | string
+    filterId?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -7544,17 +12387,27 @@ export namespace Prisma {
     none?: ProductWhereInput
   }
 
-  export type BrandListRelationFilter = {
-    every?: BrandWhereInput
-    some?: BrandWhereInput
-    none?: BrandWhereInput
+  export type BrandCategoryListRelationFilter = {
+    every?: BrandCategoryWhereInput
+    some?: BrandCategoryWhereInput
+    none?: BrandCategoryWhereInput
+  }
+
+  export type FilterCategoryListRelationFilter = {
+    every?: FilterCategoryWhereInput
+    some?: FilterCategoryWhereInput
+    none?: FilterCategoryWhereInput
   }
 
   export type ProductOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type BrandOrderByRelationAggregateInput = {
+  export type BrandCategoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FilterCategoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -7614,19 +12467,160 @@ export namespace Prisma {
   export type BrandCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    categoryId?: SortOrder
   }
 
   export type BrandMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    categoryId?: SortOrder
   }
 
   export type BrandMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+  }
+
+  export type BrandScalarRelationFilter = {
+    is?: BrandWhereInput
+    isNot?: BrandWhereInput
+  }
+
+  export type BrandCategoryBrandIdCategoryIdCompoundUniqueInput = {
+    brandId: string
+    categoryId: string
+  }
+
+  export type BrandCategoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
     categoryId?: SortOrder
+  }
+
+  export type BrandCategoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    categoryId?: SortOrder
+  }
+
+  export type BrandCategoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    categoryId?: SortOrder
+  }
+
+  export type EnumInputTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.InputType | EnumInputTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.InputType[] | ListEnumInputTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InputType[] | ListEnumInputTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumInputTypeFilter<$PrismaModel> | $Enums.InputType
+  }
+
+  export type EnumTypeOfFilterFilter<$PrismaModel = never> = {
+    equals?: $Enums.TypeOfFilter | EnumTypeOfFilterFieldRefInput<$PrismaModel>
+    in?: $Enums.TypeOfFilter[] | ListEnumTypeOfFilterFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TypeOfFilter[] | ListEnumTypeOfFilterFieldRefInput<$PrismaModel>
+    not?: NestedEnumTypeOfFilterFilter<$PrismaModel> | $Enums.TypeOfFilter
+  }
+
+  export type FilterValuesListRelationFilter = {
+    every?: FilterValuesWhereInput
+    some?: FilterValuesWhereInput
+    none?: FilterValuesWhereInput
+  }
+
+  export type FilterValuesOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FilterTypeCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    inputType?: SortOrder
+    type?: SortOrder
+  }
+
+  export type FilterTypeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    inputType?: SortOrder
+    type?: SortOrder
+  }
+
+  export type FilterTypeMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    inputType?: SortOrder
+    type?: SortOrder
+  }
+
+  export type EnumInputTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InputType | EnumInputTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.InputType[] | ListEnumInputTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InputType[] | ListEnumInputTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumInputTypeWithAggregatesFilter<$PrismaModel> | $Enums.InputType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumInputTypeFilter<$PrismaModel>
+    _max?: NestedEnumInputTypeFilter<$PrismaModel>
+  }
+
+  export type EnumTypeOfFilterWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TypeOfFilter | EnumTypeOfFilterFieldRefInput<$PrismaModel>
+    in?: $Enums.TypeOfFilter[] | ListEnumTypeOfFilterFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TypeOfFilter[] | ListEnumTypeOfFilterFieldRefInput<$PrismaModel>
+    not?: NestedEnumTypeOfFilterWithAggregatesFilter<$PrismaModel> | $Enums.TypeOfFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTypeOfFilterFilter<$PrismaModel>
+    _max?: NestedEnumTypeOfFilterFilter<$PrismaModel>
+  }
+
+  export type FilterTypeScalarRelationFilter = {
+    is?: FilterTypeWhereInput
+    isNot?: FilterTypeWhereInput
+  }
+
+  export type FilterValuesValueFilterIdCompoundUniqueInput = {
+    value: string
+    filterId: string
+  }
+
+  export type FilterValuesCountOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+    filterId?: SortOrder
+  }
+
+  export type FilterValuesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+    filterId?: SortOrder
+  }
+
+  export type FilterValuesMinOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+    filterId?: SortOrder
+  }
+
+  export type FilterCategoryCategoryIdFilterIdCompoundUniqueInput = {
+    categoryId: string
+    filterId: string
+  }
+
+  export type FilterCategoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    filterId?: SortOrder
+  }
+
+  export type FilterCategoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    filterId?: SortOrder
+  }
+
+  export type FilterCategoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    filterId?: SortOrder
   }
 
   export type ProductCreateNestedOneWithoutCommentsInput = {
@@ -7804,11 +12798,18 @@ export namespace Prisma {
     connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
   }
 
-  export type BrandCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<BrandCreateWithoutCategoryInput, BrandUncheckedCreateWithoutCategoryInput> | BrandCreateWithoutCategoryInput[] | BrandUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: BrandCreateOrConnectWithoutCategoryInput | BrandCreateOrConnectWithoutCategoryInput[]
-    createMany?: BrandCreateManyCategoryInputEnvelope
-    connect?: BrandWhereUniqueInput | BrandWhereUniqueInput[]
+  export type BrandCategoryCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<BrandCategoryCreateWithoutCategoryInput, BrandCategoryUncheckedCreateWithoutCategoryInput> | BrandCategoryCreateWithoutCategoryInput[] | BrandCategoryUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: BrandCategoryCreateOrConnectWithoutCategoryInput | BrandCategoryCreateOrConnectWithoutCategoryInput[]
+    createMany?: BrandCategoryCreateManyCategoryInputEnvelope
+    connect?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+  }
+
+  export type FilterCategoryCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<FilterCategoryCreateWithoutCategoryInput, FilterCategoryUncheckedCreateWithoutCategoryInput> | FilterCategoryCreateWithoutCategoryInput[] | FilterCategoryUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: FilterCategoryCreateOrConnectWithoutCategoryInput | FilterCategoryCreateOrConnectWithoutCategoryInput[]
+    createMany?: FilterCategoryCreateManyCategoryInputEnvelope
+    connect?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
   }
 
   export type ProductUncheckedCreateNestedManyWithoutCategoryInput = {
@@ -7818,11 +12819,18 @@ export namespace Prisma {
     connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
   }
 
-  export type BrandUncheckedCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<BrandCreateWithoutCategoryInput, BrandUncheckedCreateWithoutCategoryInput> | BrandCreateWithoutCategoryInput[] | BrandUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: BrandCreateOrConnectWithoutCategoryInput | BrandCreateOrConnectWithoutCategoryInput[]
-    createMany?: BrandCreateManyCategoryInputEnvelope
-    connect?: BrandWhereUniqueInput | BrandWhereUniqueInput[]
+  export type BrandCategoryUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<BrandCategoryCreateWithoutCategoryInput, BrandCategoryUncheckedCreateWithoutCategoryInput> | BrandCategoryCreateWithoutCategoryInput[] | BrandCategoryUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: BrandCategoryCreateOrConnectWithoutCategoryInput | BrandCategoryCreateOrConnectWithoutCategoryInput[]
+    createMany?: BrandCategoryCreateManyCategoryInputEnvelope
+    connect?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+  }
+
+  export type FilterCategoryUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<FilterCategoryCreateWithoutCategoryInput, FilterCategoryUncheckedCreateWithoutCategoryInput> | FilterCategoryCreateWithoutCategoryInput[] | FilterCategoryUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: FilterCategoryCreateOrConnectWithoutCategoryInput | FilterCategoryCreateOrConnectWithoutCategoryInput[]
+    createMany?: FilterCategoryCreateManyCategoryInputEnvelope
+    connect?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
   }
 
   export type ProductUpdateManyWithoutCategoryNestedInput = {
@@ -7839,18 +12847,32 @@ export namespace Prisma {
     deleteMany?: ProductScalarWhereInput | ProductScalarWhereInput[]
   }
 
-  export type BrandUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<BrandCreateWithoutCategoryInput, BrandUncheckedCreateWithoutCategoryInput> | BrandCreateWithoutCategoryInput[] | BrandUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: BrandCreateOrConnectWithoutCategoryInput | BrandCreateOrConnectWithoutCategoryInput[]
-    upsert?: BrandUpsertWithWhereUniqueWithoutCategoryInput | BrandUpsertWithWhereUniqueWithoutCategoryInput[]
-    createMany?: BrandCreateManyCategoryInputEnvelope
-    set?: BrandWhereUniqueInput | BrandWhereUniqueInput[]
-    disconnect?: BrandWhereUniqueInput | BrandWhereUniqueInput[]
-    delete?: BrandWhereUniqueInput | BrandWhereUniqueInput[]
-    connect?: BrandWhereUniqueInput | BrandWhereUniqueInput[]
-    update?: BrandUpdateWithWhereUniqueWithoutCategoryInput | BrandUpdateWithWhereUniqueWithoutCategoryInput[]
-    updateMany?: BrandUpdateManyWithWhereWithoutCategoryInput | BrandUpdateManyWithWhereWithoutCategoryInput[]
-    deleteMany?: BrandScalarWhereInput | BrandScalarWhereInput[]
+  export type BrandCategoryUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<BrandCategoryCreateWithoutCategoryInput, BrandCategoryUncheckedCreateWithoutCategoryInput> | BrandCategoryCreateWithoutCategoryInput[] | BrandCategoryUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: BrandCategoryCreateOrConnectWithoutCategoryInput | BrandCategoryCreateOrConnectWithoutCategoryInput[]
+    upsert?: BrandCategoryUpsertWithWhereUniqueWithoutCategoryInput | BrandCategoryUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: BrandCategoryCreateManyCategoryInputEnvelope
+    set?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+    disconnect?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+    delete?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+    connect?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+    update?: BrandCategoryUpdateWithWhereUniqueWithoutCategoryInput | BrandCategoryUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: BrandCategoryUpdateManyWithWhereWithoutCategoryInput | BrandCategoryUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: BrandCategoryScalarWhereInput | BrandCategoryScalarWhereInput[]
+  }
+
+  export type FilterCategoryUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<FilterCategoryCreateWithoutCategoryInput, FilterCategoryUncheckedCreateWithoutCategoryInput> | FilterCategoryCreateWithoutCategoryInput[] | FilterCategoryUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: FilterCategoryCreateOrConnectWithoutCategoryInput | FilterCategoryCreateOrConnectWithoutCategoryInput[]
+    upsert?: FilterCategoryUpsertWithWhereUniqueWithoutCategoryInput | FilterCategoryUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: FilterCategoryCreateManyCategoryInputEnvelope
+    set?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+    disconnect?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+    delete?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+    connect?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+    update?: FilterCategoryUpdateWithWhereUniqueWithoutCategoryInput | FilterCategoryUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: FilterCategoryUpdateManyWithWhereWithoutCategoryInput | FilterCategoryUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: FilterCategoryScalarWhereInput | FilterCategoryScalarWhereInput[]
   }
 
   export type ProductUncheckedUpdateManyWithoutCategoryNestedInput = {
@@ -7867,18 +12889,32 @@ export namespace Prisma {
     deleteMany?: ProductScalarWhereInput | ProductScalarWhereInput[]
   }
 
-  export type BrandUncheckedUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<BrandCreateWithoutCategoryInput, BrandUncheckedCreateWithoutCategoryInput> | BrandCreateWithoutCategoryInput[] | BrandUncheckedCreateWithoutCategoryInput[]
-    connectOrCreate?: BrandCreateOrConnectWithoutCategoryInput | BrandCreateOrConnectWithoutCategoryInput[]
-    upsert?: BrandUpsertWithWhereUniqueWithoutCategoryInput | BrandUpsertWithWhereUniqueWithoutCategoryInput[]
-    createMany?: BrandCreateManyCategoryInputEnvelope
-    set?: BrandWhereUniqueInput | BrandWhereUniqueInput[]
-    disconnect?: BrandWhereUniqueInput | BrandWhereUniqueInput[]
-    delete?: BrandWhereUniqueInput | BrandWhereUniqueInput[]
-    connect?: BrandWhereUniqueInput | BrandWhereUniqueInput[]
-    update?: BrandUpdateWithWhereUniqueWithoutCategoryInput | BrandUpdateWithWhereUniqueWithoutCategoryInput[]
-    updateMany?: BrandUpdateManyWithWhereWithoutCategoryInput | BrandUpdateManyWithWhereWithoutCategoryInput[]
-    deleteMany?: BrandScalarWhereInput | BrandScalarWhereInput[]
+  export type BrandCategoryUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<BrandCategoryCreateWithoutCategoryInput, BrandCategoryUncheckedCreateWithoutCategoryInput> | BrandCategoryCreateWithoutCategoryInput[] | BrandCategoryUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: BrandCategoryCreateOrConnectWithoutCategoryInput | BrandCategoryCreateOrConnectWithoutCategoryInput[]
+    upsert?: BrandCategoryUpsertWithWhereUniqueWithoutCategoryInput | BrandCategoryUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: BrandCategoryCreateManyCategoryInputEnvelope
+    set?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+    disconnect?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+    delete?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+    connect?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+    update?: BrandCategoryUpdateWithWhereUniqueWithoutCategoryInput | BrandCategoryUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: BrandCategoryUpdateManyWithWhereWithoutCategoryInput | BrandCategoryUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: BrandCategoryScalarWhereInput | BrandCategoryScalarWhereInput[]
+  }
+
+  export type FilterCategoryUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<FilterCategoryCreateWithoutCategoryInput, FilterCategoryUncheckedCreateWithoutCategoryInput> | FilterCategoryCreateWithoutCategoryInput[] | FilterCategoryUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: FilterCategoryCreateOrConnectWithoutCategoryInput | FilterCategoryCreateOrConnectWithoutCategoryInput[]
+    upsert?: FilterCategoryUpsertWithWhereUniqueWithoutCategoryInput | FilterCategoryUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: FilterCategoryCreateManyCategoryInputEnvelope
+    set?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+    disconnect?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+    delete?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+    connect?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+    update?: FilterCategoryUpdateWithWhereUniqueWithoutCategoryInput | FilterCategoryUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: FilterCategoryUpdateManyWithWhereWithoutCategoryInput | FilterCategoryUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: FilterCategoryScalarWhereInput | FilterCategoryScalarWhereInput[]
   }
 
   export type ProductCreateNestedOneWithoutLikesInput = {
@@ -7895,10 +12931,66 @@ export namespace Prisma {
     update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutLikesInput, ProductUpdateWithoutLikesInput>, ProductUncheckedUpdateWithoutLikesInput>
   }
 
+  export type BrandCategoryCreateNestedManyWithoutBrandInput = {
+    create?: XOR<BrandCategoryCreateWithoutBrandInput, BrandCategoryUncheckedCreateWithoutBrandInput> | BrandCategoryCreateWithoutBrandInput[] | BrandCategoryUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: BrandCategoryCreateOrConnectWithoutBrandInput | BrandCategoryCreateOrConnectWithoutBrandInput[]
+    createMany?: BrandCategoryCreateManyBrandInputEnvelope
+    connect?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+  }
+
+  export type BrandCategoryUncheckedCreateNestedManyWithoutBrandInput = {
+    create?: XOR<BrandCategoryCreateWithoutBrandInput, BrandCategoryUncheckedCreateWithoutBrandInput> | BrandCategoryCreateWithoutBrandInput[] | BrandCategoryUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: BrandCategoryCreateOrConnectWithoutBrandInput | BrandCategoryCreateOrConnectWithoutBrandInput[]
+    createMany?: BrandCategoryCreateManyBrandInputEnvelope
+    connect?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+  }
+
+  export type BrandCategoryUpdateManyWithoutBrandNestedInput = {
+    create?: XOR<BrandCategoryCreateWithoutBrandInput, BrandCategoryUncheckedCreateWithoutBrandInput> | BrandCategoryCreateWithoutBrandInput[] | BrandCategoryUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: BrandCategoryCreateOrConnectWithoutBrandInput | BrandCategoryCreateOrConnectWithoutBrandInput[]
+    upsert?: BrandCategoryUpsertWithWhereUniqueWithoutBrandInput | BrandCategoryUpsertWithWhereUniqueWithoutBrandInput[]
+    createMany?: BrandCategoryCreateManyBrandInputEnvelope
+    set?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+    disconnect?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+    delete?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+    connect?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+    update?: BrandCategoryUpdateWithWhereUniqueWithoutBrandInput | BrandCategoryUpdateWithWhereUniqueWithoutBrandInput[]
+    updateMany?: BrandCategoryUpdateManyWithWhereWithoutBrandInput | BrandCategoryUpdateManyWithWhereWithoutBrandInput[]
+    deleteMany?: BrandCategoryScalarWhereInput | BrandCategoryScalarWhereInput[]
+  }
+
+  export type BrandCategoryUncheckedUpdateManyWithoutBrandNestedInput = {
+    create?: XOR<BrandCategoryCreateWithoutBrandInput, BrandCategoryUncheckedCreateWithoutBrandInput> | BrandCategoryCreateWithoutBrandInput[] | BrandCategoryUncheckedCreateWithoutBrandInput[]
+    connectOrCreate?: BrandCategoryCreateOrConnectWithoutBrandInput | BrandCategoryCreateOrConnectWithoutBrandInput[]
+    upsert?: BrandCategoryUpsertWithWhereUniqueWithoutBrandInput | BrandCategoryUpsertWithWhereUniqueWithoutBrandInput[]
+    createMany?: BrandCategoryCreateManyBrandInputEnvelope
+    set?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+    disconnect?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+    delete?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+    connect?: BrandCategoryWhereUniqueInput | BrandCategoryWhereUniqueInput[]
+    update?: BrandCategoryUpdateWithWhereUniqueWithoutBrandInput | BrandCategoryUpdateWithWhereUniqueWithoutBrandInput[]
+    updateMany?: BrandCategoryUpdateManyWithWhereWithoutBrandInput | BrandCategoryUpdateManyWithWhereWithoutBrandInput[]
+    deleteMany?: BrandCategoryScalarWhereInput | BrandCategoryScalarWhereInput[]
+  }
+
+  export type BrandCreateNestedOneWithoutCategoriesInput = {
+    create?: XOR<BrandCreateWithoutCategoriesInput, BrandUncheckedCreateWithoutCategoriesInput>
+    connectOrCreate?: BrandCreateOrConnectWithoutCategoriesInput
+    connect?: BrandWhereUniqueInput
+  }
+
   export type CategoryCreateNestedOneWithoutBrandInput = {
     create?: XOR<CategoryCreateWithoutBrandInput, CategoryUncheckedCreateWithoutBrandInput>
     connectOrCreate?: CategoryCreateOrConnectWithoutBrandInput
     connect?: CategoryWhereUniqueInput
+  }
+
+  export type BrandUpdateOneRequiredWithoutCategoriesNestedInput = {
+    create?: XOR<BrandCreateWithoutCategoriesInput, BrandUncheckedCreateWithoutCategoriesInput>
+    connectOrCreate?: BrandCreateOrConnectWithoutCategoriesInput
+    upsert?: BrandUpsertWithoutCategoriesInput
+    connect?: BrandWhereUniqueInput
+    update?: XOR<XOR<BrandUpdateToOneWithWhereWithoutCategoriesInput, BrandUpdateWithoutCategoriesInput>, BrandUncheckedUpdateWithoutCategoriesInput>
   }
 
   export type CategoryUpdateOneRequiredWithoutBrandNestedInput = {
@@ -7907,6 +12999,140 @@ export namespace Prisma {
     upsert?: CategoryUpsertWithoutBrandInput
     connect?: CategoryWhereUniqueInput
     update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutBrandInput, CategoryUpdateWithoutBrandInput>, CategoryUncheckedUpdateWithoutBrandInput>
+  }
+
+  export type FilterCategoryCreateNestedManyWithoutFilterInput = {
+    create?: XOR<FilterCategoryCreateWithoutFilterInput, FilterCategoryUncheckedCreateWithoutFilterInput> | FilterCategoryCreateWithoutFilterInput[] | FilterCategoryUncheckedCreateWithoutFilterInput[]
+    connectOrCreate?: FilterCategoryCreateOrConnectWithoutFilterInput | FilterCategoryCreateOrConnectWithoutFilterInput[]
+    createMany?: FilterCategoryCreateManyFilterInputEnvelope
+    connect?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+  }
+
+  export type FilterValuesCreateNestedManyWithoutFilterInput = {
+    create?: XOR<FilterValuesCreateWithoutFilterInput, FilterValuesUncheckedCreateWithoutFilterInput> | FilterValuesCreateWithoutFilterInput[] | FilterValuesUncheckedCreateWithoutFilterInput[]
+    connectOrCreate?: FilterValuesCreateOrConnectWithoutFilterInput | FilterValuesCreateOrConnectWithoutFilterInput[]
+    createMany?: FilterValuesCreateManyFilterInputEnvelope
+    connect?: FilterValuesWhereUniqueInput | FilterValuesWhereUniqueInput[]
+  }
+
+  export type FilterCategoryUncheckedCreateNestedManyWithoutFilterInput = {
+    create?: XOR<FilterCategoryCreateWithoutFilterInput, FilterCategoryUncheckedCreateWithoutFilterInput> | FilterCategoryCreateWithoutFilterInput[] | FilterCategoryUncheckedCreateWithoutFilterInput[]
+    connectOrCreate?: FilterCategoryCreateOrConnectWithoutFilterInput | FilterCategoryCreateOrConnectWithoutFilterInput[]
+    createMany?: FilterCategoryCreateManyFilterInputEnvelope
+    connect?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+  }
+
+  export type FilterValuesUncheckedCreateNestedManyWithoutFilterInput = {
+    create?: XOR<FilterValuesCreateWithoutFilterInput, FilterValuesUncheckedCreateWithoutFilterInput> | FilterValuesCreateWithoutFilterInput[] | FilterValuesUncheckedCreateWithoutFilterInput[]
+    connectOrCreate?: FilterValuesCreateOrConnectWithoutFilterInput | FilterValuesCreateOrConnectWithoutFilterInput[]
+    createMany?: FilterValuesCreateManyFilterInputEnvelope
+    connect?: FilterValuesWhereUniqueInput | FilterValuesWhereUniqueInput[]
+  }
+
+  export type EnumInputTypeFieldUpdateOperationsInput = {
+    set?: $Enums.InputType
+  }
+
+  export type EnumTypeOfFilterFieldUpdateOperationsInput = {
+    set?: $Enums.TypeOfFilter
+  }
+
+  export type FilterCategoryUpdateManyWithoutFilterNestedInput = {
+    create?: XOR<FilterCategoryCreateWithoutFilterInput, FilterCategoryUncheckedCreateWithoutFilterInput> | FilterCategoryCreateWithoutFilterInput[] | FilterCategoryUncheckedCreateWithoutFilterInput[]
+    connectOrCreate?: FilterCategoryCreateOrConnectWithoutFilterInput | FilterCategoryCreateOrConnectWithoutFilterInput[]
+    upsert?: FilterCategoryUpsertWithWhereUniqueWithoutFilterInput | FilterCategoryUpsertWithWhereUniqueWithoutFilterInput[]
+    createMany?: FilterCategoryCreateManyFilterInputEnvelope
+    set?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+    disconnect?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+    delete?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+    connect?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+    update?: FilterCategoryUpdateWithWhereUniqueWithoutFilterInput | FilterCategoryUpdateWithWhereUniqueWithoutFilterInput[]
+    updateMany?: FilterCategoryUpdateManyWithWhereWithoutFilterInput | FilterCategoryUpdateManyWithWhereWithoutFilterInput[]
+    deleteMany?: FilterCategoryScalarWhereInput | FilterCategoryScalarWhereInput[]
+  }
+
+  export type FilterValuesUpdateManyWithoutFilterNestedInput = {
+    create?: XOR<FilterValuesCreateWithoutFilterInput, FilterValuesUncheckedCreateWithoutFilterInput> | FilterValuesCreateWithoutFilterInput[] | FilterValuesUncheckedCreateWithoutFilterInput[]
+    connectOrCreate?: FilterValuesCreateOrConnectWithoutFilterInput | FilterValuesCreateOrConnectWithoutFilterInput[]
+    upsert?: FilterValuesUpsertWithWhereUniqueWithoutFilterInput | FilterValuesUpsertWithWhereUniqueWithoutFilterInput[]
+    createMany?: FilterValuesCreateManyFilterInputEnvelope
+    set?: FilterValuesWhereUniqueInput | FilterValuesWhereUniqueInput[]
+    disconnect?: FilterValuesWhereUniqueInput | FilterValuesWhereUniqueInput[]
+    delete?: FilterValuesWhereUniqueInput | FilterValuesWhereUniqueInput[]
+    connect?: FilterValuesWhereUniqueInput | FilterValuesWhereUniqueInput[]
+    update?: FilterValuesUpdateWithWhereUniqueWithoutFilterInput | FilterValuesUpdateWithWhereUniqueWithoutFilterInput[]
+    updateMany?: FilterValuesUpdateManyWithWhereWithoutFilterInput | FilterValuesUpdateManyWithWhereWithoutFilterInput[]
+    deleteMany?: FilterValuesScalarWhereInput | FilterValuesScalarWhereInput[]
+  }
+
+  export type FilterCategoryUncheckedUpdateManyWithoutFilterNestedInput = {
+    create?: XOR<FilterCategoryCreateWithoutFilterInput, FilterCategoryUncheckedCreateWithoutFilterInput> | FilterCategoryCreateWithoutFilterInput[] | FilterCategoryUncheckedCreateWithoutFilterInput[]
+    connectOrCreate?: FilterCategoryCreateOrConnectWithoutFilterInput | FilterCategoryCreateOrConnectWithoutFilterInput[]
+    upsert?: FilterCategoryUpsertWithWhereUniqueWithoutFilterInput | FilterCategoryUpsertWithWhereUniqueWithoutFilterInput[]
+    createMany?: FilterCategoryCreateManyFilterInputEnvelope
+    set?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+    disconnect?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+    delete?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+    connect?: FilterCategoryWhereUniqueInput | FilterCategoryWhereUniqueInput[]
+    update?: FilterCategoryUpdateWithWhereUniqueWithoutFilterInput | FilterCategoryUpdateWithWhereUniqueWithoutFilterInput[]
+    updateMany?: FilterCategoryUpdateManyWithWhereWithoutFilterInput | FilterCategoryUpdateManyWithWhereWithoutFilterInput[]
+    deleteMany?: FilterCategoryScalarWhereInput | FilterCategoryScalarWhereInput[]
+  }
+
+  export type FilterValuesUncheckedUpdateManyWithoutFilterNestedInput = {
+    create?: XOR<FilterValuesCreateWithoutFilterInput, FilterValuesUncheckedCreateWithoutFilterInput> | FilterValuesCreateWithoutFilterInput[] | FilterValuesUncheckedCreateWithoutFilterInput[]
+    connectOrCreate?: FilterValuesCreateOrConnectWithoutFilterInput | FilterValuesCreateOrConnectWithoutFilterInput[]
+    upsert?: FilterValuesUpsertWithWhereUniqueWithoutFilterInput | FilterValuesUpsertWithWhereUniqueWithoutFilterInput[]
+    createMany?: FilterValuesCreateManyFilterInputEnvelope
+    set?: FilterValuesWhereUniqueInput | FilterValuesWhereUniqueInput[]
+    disconnect?: FilterValuesWhereUniqueInput | FilterValuesWhereUniqueInput[]
+    delete?: FilterValuesWhereUniqueInput | FilterValuesWhereUniqueInput[]
+    connect?: FilterValuesWhereUniqueInput | FilterValuesWhereUniqueInput[]
+    update?: FilterValuesUpdateWithWhereUniqueWithoutFilterInput | FilterValuesUpdateWithWhereUniqueWithoutFilterInput[]
+    updateMany?: FilterValuesUpdateManyWithWhereWithoutFilterInput | FilterValuesUpdateManyWithWhereWithoutFilterInput[]
+    deleteMany?: FilterValuesScalarWhereInput | FilterValuesScalarWhereInput[]
+  }
+
+  export type FilterTypeCreateNestedOneWithoutValuesInput = {
+    create?: XOR<FilterTypeCreateWithoutValuesInput, FilterTypeUncheckedCreateWithoutValuesInput>
+    connectOrCreate?: FilterTypeCreateOrConnectWithoutValuesInput
+    connect?: FilterTypeWhereUniqueInput
+  }
+
+  export type FilterTypeUpdateOneRequiredWithoutValuesNestedInput = {
+    create?: XOR<FilterTypeCreateWithoutValuesInput, FilterTypeUncheckedCreateWithoutValuesInput>
+    connectOrCreate?: FilterTypeCreateOrConnectWithoutValuesInput
+    upsert?: FilterTypeUpsertWithoutValuesInput
+    connect?: FilterTypeWhereUniqueInput
+    update?: XOR<XOR<FilterTypeUpdateToOneWithWhereWithoutValuesInput, FilterTypeUpdateWithoutValuesInput>, FilterTypeUncheckedUpdateWithoutValuesInput>
+  }
+
+  export type CategoryCreateNestedOneWithoutFilterInput = {
+    create?: XOR<CategoryCreateWithoutFilterInput, CategoryUncheckedCreateWithoutFilterInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutFilterInput
+    connect?: CategoryWhereUniqueInput
+  }
+
+  export type FilterTypeCreateNestedOneWithoutFilterCategoryInput = {
+    create?: XOR<FilterTypeCreateWithoutFilterCategoryInput, FilterTypeUncheckedCreateWithoutFilterCategoryInput>
+    connectOrCreate?: FilterTypeCreateOrConnectWithoutFilterCategoryInput
+    connect?: FilterTypeWhereUniqueInput
+  }
+
+  export type CategoryUpdateOneRequiredWithoutFilterNestedInput = {
+    create?: XOR<CategoryCreateWithoutFilterInput, CategoryUncheckedCreateWithoutFilterInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutFilterInput
+    upsert?: CategoryUpsertWithoutFilterInput
+    connect?: CategoryWhereUniqueInput
+    update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutFilterInput, CategoryUpdateWithoutFilterInput>, CategoryUncheckedUpdateWithoutFilterInput>
+  }
+
+  export type FilterTypeUpdateOneRequiredWithoutFilterCategoryNestedInput = {
+    create?: XOR<FilterTypeCreateWithoutFilterCategoryInput, FilterTypeUncheckedCreateWithoutFilterCategoryInput>
+    connectOrCreate?: FilterTypeCreateOrConnectWithoutFilterCategoryInput
+    upsert?: FilterTypeUpsertWithoutFilterCategoryInput
+    connect?: FilterTypeWhereUniqueInput
+    update?: XOR<XOR<FilterTypeUpdateToOneWithWhereWithoutFilterCategoryInput, FilterTypeUpdateWithoutFilterCategoryInput>, FilterTypeUncheckedUpdateWithoutFilterCategoryInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -8064,6 +13290,40 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type NestedEnumInputTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.InputType | EnumInputTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.InputType[] | ListEnumInputTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InputType[] | ListEnumInputTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumInputTypeFilter<$PrismaModel> | $Enums.InputType
+  }
+
+  export type NestedEnumTypeOfFilterFilter<$PrismaModel = never> = {
+    equals?: $Enums.TypeOfFilter | EnumTypeOfFilterFieldRefInput<$PrismaModel>
+    in?: $Enums.TypeOfFilter[] | ListEnumTypeOfFilterFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TypeOfFilter[] | ListEnumTypeOfFilterFieldRefInput<$PrismaModel>
+    not?: NestedEnumTypeOfFilterFilter<$PrismaModel> | $Enums.TypeOfFilter
+  }
+
+  export type NestedEnumInputTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InputType | EnumInputTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.InputType[] | ListEnumInputTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InputType[] | ListEnumInputTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumInputTypeWithAggregatesFilter<$PrismaModel> | $Enums.InputType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumInputTypeFilter<$PrismaModel>
+    _max?: NestedEnumInputTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTypeOfFilterWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TypeOfFilter | EnumTypeOfFilterFieldRefInput<$PrismaModel>
+    in?: $Enums.TypeOfFilter[] | ListEnumTypeOfFilterFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TypeOfFilter[] | ListEnumTypeOfFilterFieldRefInput<$PrismaModel>
+    not?: NestedEnumTypeOfFilterWithAggregatesFilter<$PrismaModel> | $Enums.TypeOfFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTypeOfFilterFilter<$PrismaModel>
+    _max?: NestedEnumTypeOfFilterFilter<$PrismaModel>
+  }
+
   export type ProductCreateWithoutCommentsInput = {
     id?: string
     product_name: string
@@ -8200,7 +13460,8 @@ export namespace Prisma {
     icon?: string | null
     title: string
     children?: number
-    brand?: BrandCreateNestedManyWithoutCategoryInput
+    brand?: BrandCategoryCreateNestedManyWithoutCategoryInput
+    filter?: FilterCategoryCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUncheckedCreateWithoutProductInput = {
@@ -8209,7 +13470,8 @@ export namespace Prisma {
     icon?: string | null
     title: string
     children?: number
-    brand?: BrandUncheckedCreateNestedManyWithoutCategoryInput
+    brand?: BrandCategoryUncheckedCreateNestedManyWithoutCategoryInput
+    filter?: FilterCategoryUncheckedCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryCreateOrConnectWithoutProductInput = {
@@ -8290,7 +13552,8 @@ export namespace Prisma {
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     children?: IntFieldUpdateOperationsInput | number
-    brand?: BrandUpdateManyWithoutCategoryNestedInput
+    brand?: BrandCategoryUpdateManyWithoutCategoryNestedInput
+    filter?: FilterCategoryUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryUncheckedUpdateWithoutProductInput = {
@@ -8298,7 +13561,8 @@ export namespace Prisma {
     icon?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     children?: IntFieldUpdateOperationsInput | number
-    brand?: BrandUncheckedUpdateManyWithoutCategoryNestedInput
+    brand?: BrandCategoryUncheckedUpdateManyWithoutCategoryNestedInput
+    filter?: FilterCategoryUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
   export type ProductCreateWithoutCategoryInput = {
@@ -8342,23 +13606,42 @@ export namespace Prisma {
     data: ProductCreateManyCategoryInput | ProductCreateManyCategoryInput[]
   }
 
-  export type BrandCreateWithoutCategoryInput = {
+  export type BrandCategoryCreateWithoutCategoryInput = {
     id?: string
-    name: string
+    brand: BrandCreateNestedOneWithoutCategoriesInput
   }
 
-  export type BrandUncheckedCreateWithoutCategoryInput = {
+  export type BrandCategoryUncheckedCreateWithoutCategoryInput = {
     id?: string
-    name: string
+    brandId: string
   }
 
-  export type BrandCreateOrConnectWithoutCategoryInput = {
-    where: BrandWhereUniqueInput
-    create: XOR<BrandCreateWithoutCategoryInput, BrandUncheckedCreateWithoutCategoryInput>
+  export type BrandCategoryCreateOrConnectWithoutCategoryInput = {
+    where: BrandCategoryWhereUniqueInput
+    create: XOR<BrandCategoryCreateWithoutCategoryInput, BrandCategoryUncheckedCreateWithoutCategoryInput>
   }
 
-  export type BrandCreateManyCategoryInputEnvelope = {
-    data: BrandCreateManyCategoryInput | BrandCreateManyCategoryInput[]
+  export type BrandCategoryCreateManyCategoryInputEnvelope = {
+    data: BrandCategoryCreateManyCategoryInput | BrandCategoryCreateManyCategoryInput[]
+  }
+
+  export type FilterCategoryCreateWithoutCategoryInput = {
+    id?: string
+    filter: FilterTypeCreateNestedOneWithoutFilterCategoryInput
+  }
+
+  export type FilterCategoryUncheckedCreateWithoutCategoryInput = {
+    id?: string
+    filterId: string
+  }
+
+  export type FilterCategoryCreateOrConnectWithoutCategoryInput = {
+    where: FilterCategoryWhereUniqueInput
+    create: XOR<FilterCategoryCreateWithoutCategoryInput, FilterCategoryUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type FilterCategoryCreateManyCategoryInputEnvelope = {
+    data: FilterCategoryCreateManyCategoryInput | FilterCategoryCreateManyCategoryInput[]
   }
 
   export type ProductUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -8395,29 +13678,54 @@ export namespace Prisma {
     categoryId?: StringFilter<"Product"> | string
   }
 
-  export type BrandUpsertWithWhereUniqueWithoutCategoryInput = {
-    where: BrandWhereUniqueInput
-    update: XOR<BrandUpdateWithoutCategoryInput, BrandUncheckedUpdateWithoutCategoryInput>
-    create: XOR<BrandCreateWithoutCategoryInput, BrandUncheckedCreateWithoutCategoryInput>
+  export type BrandCategoryUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: BrandCategoryWhereUniqueInput
+    update: XOR<BrandCategoryUpdateWithoutCategoryInput, BrandCategoryUncheckedUpdateWithoutCategoryInput>
+    create: XOR<BrandCategoryCreateWithoutCategoryInput, BrandCategoryUncheckedCreateWithoutCategoryInput>
   }
 
-  export type BrandUpdateWithWhereUniqueWithoutCategoryInput = {
-    where: BrandWhereUniqueInput
-    data: XOR<BrandUpdateWithoutCategoryInput, BrandUncheckedUpdateWithoutCategoryInput>
+  export type BrandCategoryUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: BrandCategoryWhereUniqueInput
+    data: XOR<BrandCategoryUpdateWithoutCategoryInput, BrandCategoryUncheckedUpdateWithoutCategoryInput>
   }
 
-  export type BrandUpdateManyWithWhereWithoutCategoryInput = {
-    where: BrandScalarWhereInput
-    data: XOR<BrandUpdateManyMutationInput, BrandUncheckedUpdateManyWithoutCategoryInput>
+  export type BrandCategoryUpdateManyWithWhereWithoutCategoryInput = {
+    where: BrandCategoryScalarWhereInput
+    data: XOR<BrandCategoryUpdateManyMutationInput, BrandCategoryUncheckedUpdateManyWithoutCategoryInput>
   }
 
-  export type BrandScalarWhereInput = {
-    AND?: BrandScalarWhereInput | BrandScalarWhereInput[]
-    OR?: BrandScalarWhereInput[]
-    NOT?: BrandScalarWhereInput | BrandScalarWhereInput[]
-    id?: StringFilter<"Brand"> | string
-    name?: StringFilter<"Brand"> | string
-    categoryId?: StringFilter<"Brand"> | string
+  export type BrandCategoryScalarWhereInput = {
+    AND?: BrandCategoryScalarWhereInput | BrandCategoryScalarWhereInput[]
+    OR?: BrandCategoryScalarWhereInput[]
+    NOT?: BrandCategoryScalarWhereInput | BrandCategoryScalarWhereInput[]
+    id?: StringFilter<"BrandCategory"> | string
+    brandId?: StringFilter<"BrandCategory"> | string
+    categoryId?: StringFilter<"BrandCategory"> | string
+  }
+
+  export type FilterCategoryUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: FilterCategoryWhereUniqueInput
+    update: XOR<FilterCategoryUpdateWithoutCategoryInput, FilterCategoryUncheckedUpdateWithoutCategoryInput>
+    create: XOR<FilterCategoryCreateWithoutCategoryInput, FilterCategoryUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type FilterCategoryUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: FilterCategoryWhereUniqueInput
+    data: XOR<FilterCategoryUpdateWithoutCategoryInput, FilterCategoryUncheckedUpdateWithoutCategoryInput>
+  }
+
+  export type FilterCategoryUpdateManyWithWhereWithoutCategoryInput = {
+    where: FilterCategoryScalarWhereInput
+    data: XOR<FilterCategoryUpdateManyMutationInput, FilterCategoryUncheckedUpdateManyWithoutCategoryInput>
+  }
+
+  export type FilterCategoryScalarWhereInput = {
+    AND?: FilterCategoryScalarWhereInput | FilterCategoryScalarWhereInput[]
+    OR?: FilterCategoryScalarWhereInput[]
+    NOT?: FilterCategoryScalarWhereInput | FilterCategoryScalarWhereInput[]
+    id?: StringFilter<"FilterCategory"> | string
+    categoryId?: StringFilter<"FilterCategory"> | string
+    filterId?: StringFilter<"FilterCategory"> | string
   }
 
   export type ProductCreateWithoutLikesInput = {
@@ -8498,6 +13806,56 @@ export namespace Prisma {
     comments?: CommentsUncheckedUpdateManyWithoutProductNestedInput
   }
 
+  export type BrandCategoryCreateWithoutBrandInput = {
+    id?: string
+    category: CategoryCreateNestedOneWithoutBrandInput
+  }
+
+  export type BrandCategoryUncheckedCreateWithoutBrandInput = {
+    id?: string
+    categoryId: string
+  }
+
+  export type BrandCategoryCreateOrConnectWithoutBrandInput = {
+    where: BrandCategoryWhereUniqueInput
+    create: XOR<BrandCategoryCreateWithoutBrandInput, BrandCategoryUncheckedCreateWithoutBrandInput>
+  }
+
+  export type BrandCategoryCreateManyBrandInputEnvelope = {
+    data: BrandCategoryCreateManyBrandInput | BrandCategoryCreateManyBrandInput[]
+  }
+
+  export type BrandCategoryUpsertWithWhereUniqueWithoutBrandInput = {
+    where: BrandCategoryWhereUniqueInput
+    update: XOR<BrandCategoryUpdateWithoutBrandInput, BrandCategoryUncheckedUpdateWithoutBrandInput>
+    create: XOR<BrandCategoryCreateWithoutBrandInput, BrandCategoryUncheckedCreateWithoutBrandInput>
+  }
+
+  export type BrandCategoryUpdateWithWhereUniqueWithoutBrandInput = {
+    where: BrandCategoryWhereUniqueInput
+    data: XOR<BrandCategoryUpdateWithoutBrandInput, BrandCategoryUncheckedUpdateWithoutBrandInput>
+  }
+
+  export type BrandCategoryUpdateManyWithWhereWithoutBrandInput = {
+    where: BrandCategoryScalarWhereInput
+    data: XOR<BrandCategoryUpdateManyMutationInput, BrandCategoryUncheckedUpdateManyWithoutBrandInput>
+  }
+
+  export type BrandCreateWithoutCategoriesInput = {
+    id?: string
+    name: string
+  }
+
+  export type BrandUncheckedCreateWithoutCategoriesInput = {
+    id?: string
+    name: string
+  }
+
+  export type BrandCreateOrConnectWithoutCategoriesInput = {
+    where: BrandWhereUniqueInput
+    create: XOR<BrandCreateWithoutCategoriesInput, BrandUncheckedCreateWithoutCategoriesInput>
+  }
+
   export type CategoryCreateWithoutBrandInput = {
     id?: string
     parentId?: string | null
@@ -8505,6 +13863,7 @@ export namespace Prisma {
     title: string
     children?: number
     product?: ProductCreateNestedManyWithoutCategoryInput
+    filter?: FilterCategoryCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUncheckedCreateWithoutBrandInput = {
@@ -8514,11 +13873,31 @@ export namespace Prisma {
     title: string
     children?: number
     product?: ProductUncheckedCreateNestedManyWithoutCategoryInput
+    filter?: FilterCategoryUncheckedCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryCreateOrConnectWithoutBrandInput = {
     where: CategoryWhereUniqueInput
     create: XOR<CategoryCreateWithoutBrandInput, CategoryUncheckedCreateWithoutBrandInput>
+  }
+
+  export type BrandUpsertWithoutCategoriesInput = {
+    update: XOR<BrandUpdateWithoutCategoriesInput, BrandUncheckedUpdateWithoutCategoriesInput>
+    create: XOR<BrandCreateWithoutCategoriesInput, BrandUncheckedCreateWithoutCategoriesInput>
+    where?: BrandWhereInput
+  }
+
+  export type BrandUpdateToOneWithWhereWithoutCategoriesInput = {
+    where?: BrandWhereInput
+    data: XOR<BrandUpdateWithoutCategoriesInput, BrandUncheckedUpdateWithoutCategoriesInput>
+  }
+
+  export type BrandUpdateWithoutCategoriesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BrandUncheckedUpdateWithoutCategoriesInput = {
+    name?: StringFieldUpdateOperationsInput | string
   }
 
   export type CategoryUpsertWithoutBrandInput = {
@@ -8538,6 +13917,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     children?: IntFieldUpdateOperationsInput | number
     product?: ProductUpdateManyWithoutCategoryNestedInput
+    filter?: FilterCategoryUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryUncheckedUpdateWithoutBrandInput = {
@@ -8546,6 +13926,232 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     children?: IntFieldUpdateOperationsInput | number
     product?: ProductUncheckedUpdateManyWithoutCategoryNestedInput
+    filter?: FilterCategoryUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type FilterCategoryCreateWithoutFilterInput = {
+    id?: string
+    category: CategoryCreateNestedOneWithoutFilterInput
+  }
+
+  export type FilterCategoryUncheckedCreateWithoutFilterInput = {
+    id?: string
+    categoryId: string
+  }
+
+  export type FilterCategoryCreateOrConnectWithoutFilterInput = {
+    where: FilterCategoryWhereUniqueInput
+    create: XOR<FilterCategoryCreateWithoutFilterInput, FilterCategoryUncheckedCreateWithoutFilterInput>
+  }
+
+  export type FilterCategoryCreateManyFilterInputEnvelope = {
+    data: FilterCategoryCreateManyFilterInput | FilterCategoryCreateManyFilterInput[]
+  }
+
+  export type FilterValuesCreateWithoutFilterInput = {
+    id?: string
+    value: string
+  }
+
+  export type FilterValuesUncheckedCreateWithoutFilterInput = {
+    id?: string
+    value: string
+  }
+
+  export type FilterValuesCreateOrConnectWithoutFilterInput = {
+    where: FilterValuesWhereUniqueInput
+    create: XOR<FilterValuesCreateWithoutFilterInput, FilterValuesUncheckedCreateWithoutFilterInput>
+  }
+
+  export type FilterValuesCreateManyFilterInputEnvelope = {
+    data: FilterValuesCreateManyFilterInput | FilterValuesCreateManyFilterInput[]
+  }
+
+  export type FilterCategoryUpsertWithWhereUniqueWithoutFilterInput = {
+    where: FilterCategoryWhereUniqueInput
+    update: XOR<FilterCategoryUpdateWithoutFilterInput, FilterCategoryUncheckedUpdateWithoutFilterInput>
+    create: XOR<FilterCategoryCreateWithoutFilterInput, FilterCategoryUncheckedCreateWithoutFilterInput>
+  }
+
+  export type FilterCategoryUpdateWithWhereUniqueWithoutFilterInput = {
+    where: FilterCategoryWhereUniqueInput
+    data: XOR<FilterCategoryUpdateWithoutFilterInput, FilterCategoryUncheckedUpdateWithoutFilterInput>
+  }
+
+  export type FilterCategoryUpdateManyWithWhereWithoutFilterInput = {
+    where: FilterCategoryScalarWhereInput
+    data: XOR<FilterCategoryUpdateManyMutationInput, FilterCategoryUncheckedUpdateManyWithoutFilterInput>
+  }
+
+  export type FilterValuesUpsertWithWhereUniqueWithoutFilterInput = {
+    where: FilterValuesWhereUniqueInput
+    update: XOR<FilterValuesUpdateWithoutFilterInput, FilterValuesUncheckedUpdateWithoutFilterInput>
+    create: XOR<FilterValuesCreateWithoutFilterInput, FilterValuesUncheckedCreateWithoutFilterInput>
+  }
+
+  export type FilterValuesUpdateWithWhereUniqueWithoutFilterInput = {
+    where: FilterValuesWhereUniqueInput
+    data: XOR<FilterValuesUpdateWithoutFilterInput, FilterValuesUncheckedUpdateWithoutFilterInput>
+  }
+
+  export type FilterValuesUpdateManyWithWhereWithoutFilterInput = {
+    where: FilterValuesScalarWhereInput
+    data: XOR<FilterValuesUpdateManyMutationInput, FilterValuesUncheckedUpdateManyWithoutFilterInput>
+  }
+
+  export type FilterValuesScalarWhereInput = {
+    AND?: FilterValuesScalarWhereInput | FilterValuesScalarWhereInput[]
+    OR?: FilterValuesScalarWhereInput[]
+    NOT?: FilterValuesScalarWhereInput | FilterValuesScalarWhereInput[]
+    id?: StringFilter<"FilterValues"> | string
+    value?: StringFilter<"FilterValues"> | string
+    filterId?: StringFilter<"FilterValues"> | string
+  }
+
+  export type FilterTypeCreateWithoutValuesInput = {
+    id?: string
+    title: string
+    inputType: $Enums.InputType
+    type?: $Enums.TypeOfFilter
+    filterCategory?: FilterCategoryCreateNestedManyWithoutFilterInput
+  }
+
+  export type FilterTypeUncheckedCreateWithoutValuesInput = {
+    id?: string
+    title: string
+    inputType: $Enums.InputType
+    type?: $Enums.TypeOfFilter
+    filterCategory?: FilterCategoryUncheckedCreateNestedManyWithoutFilterInput
+  }
+
+  export type FilterTypeCreateOrConnectWithoutValuesInput = {
+    where: FilterTypeWhereUniqueInput
+    create: XOR<FilterTypeCreateWithoutValuesInput, FilterTypeUncheckedCreateWithoutValuesInput>
+  }
+
+  export type FilterTypeUpsertWithoutValuesInput = {
+    update: XOR<FilterTypeUpdateWithoutValuesInput, FilterTypeUncheckedUpdateWithoutValuesInput>
+    create: XOR<FilterTypeCreateWithoutValuesInput, FilterTypeUncheckedCreateWithoutValuesInput>
+    where?: FilterTypeWhereInput
+  }
+
+  export type FilterTypeUpdateToOneWithWhereWithoutValuesInput = {
+    where?: FilterTypeWhereInput
+    data: XOR<FilterTypeUpdateWithoutValuesInput, FilterTypeUncheckedUpdateWithoutValuesInput>
+  }
+
+  export type FilterTypeUpdateWithoutValuesInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    inputType?: EnumInputTypeFieldUpdateOperationsInput | $Enums.InputType
+    type?: EnumTypeOfFilterFieldUpdateOperationsInput | $Enums.TypeOfFilter
+    filterCategory?: FilterCategoryUpdateManyWithoutFilterNestedInput
+  }
+
+  export type FilterTypeUncheckedUpdateWithoutValuesInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    inputType?: EnumInputTypeFieldUpdateOperationsInput | $Enums.InputType
+    type?: EnumTypeOfFilterFieldUpdateOperationsInput | $Enums.TypeOfFilter
+    filterCategory?: FilterCategoryUncheckedUpdateManyWithoutFilterNestedInput
+  }
+
+  export type CategoryCreateWithoutFilterInput = {
+    id?: string
+    parentId?: string | null
+    icon?: string | null
+    title: string
+    children?: number
+    product?: ProductCreateNestedManyWithoutCategoryInput
+    brand?: BrandCategoryCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoryUncheckedCreateWithoutFilterInput = {
+    id?: string
+    parentId?: string | null
+    icon?: string | null
+    title: string
+    children?: number
+    product?: ProductUncheckedCreateNestedManyWithoutCategoryInput
+    brand?: BrandCategoryUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoryCreateOrConnectWithoutFilterInput = {
+    where: CategoryWhereUniqueInput
+    create: XOR<CategoryCreateWithoutFilterInput, CategoryUncheckedCreateWithoutFilterInput>
+  }
+
+  export type FilterTypeCreateWithoutFilterCategoryInput = {
+    id?: string
+    title: string
+    inputType: $Enums.InputType
+    type?: $Enums.TypeOfFilter
+    values?: FilterValuesCreateNestedManyWithoutFilterInput
+  }
+
+  export type FilterTypeUncheckedCreateWithoutFilterCategoryInput = {
+    id?: string
+    title: string
+    inputType: $Enums.InputType
+    type?: $Enums.TypeOfFilter
+    values?: FilterValuesUncheckedCreateNestedManyWithoutFilterInput
+  }
+
+  export type FilterTypeCreateOrConnectWithoutFilterCategoryInput = {
+    where: FilterTypeWhereUniqueInput
+    create: XOR<FilterTypeCreateWithoutFilterCategoryInput, FilterTypeUncheckedCreateWithoutFilterCategoryInput>
+  }
+
+  export type CategoryUpsertWithoutFilterInput = {
+    update: XOR<CategoryUpdateWithoutFilterInput, CategoryUncheckedUpdateWithoutFilterInput>
+    create: XOR<CategoryCreateWithoutFilterInput, CategoryUncheckedCreateWithoutFilterInput>
+    where?: CategoryWhereInput
+  }
+
+  export type CategoryUpdateToOneWithWhereWithoutFilterInput = {
+    where?: CategoryWhereInput
+    data: XOR<CategoryUpdateWithoutFilterInput, CategoryUncheckedUpdateWithoutFilterInput>
+  }
+
+  export type CategoryUpdateWithoutFilterInput = {
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    children?: IntFieldUpdateOperationsInput | number
+    product?: ProductUpdateManyWithoutCategoryNestedInput
+    brand?: BrandCategoryUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoryUncheckedUpdateWithoutFilterInput = {
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    children?: IntFieldUpdateOperationsInput | number
+    product?: ProductUncheckedUpdateManyWithoutCategoryNestedInput
+    brand?: BrandCategoryUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type FilterTypeUpsertWithoutFilterCategoryInput = {
+    update: XOR<FilterTypeUpdateWithoutFilterCategoryInput, FilterTypeUncheckedUpdateWithoutFilterCategoryInput>
+    create: XOR<FilterTypeCreateWithoutFilterCategoryInput, FilterTypeUncheckedCreateWithoutFilterCategoryInput>
+    where?: FilterTypeWhereInput
+  }
+
+  export type FilterTypeUpdateToOneWithWhereWithoutFilterCategoryInput = {
+    where?: FilterTypeWhereInput
+    data: XOR<FilterTypeUpdateWithoutFilterCategoryInput, FilterTypeUncheckedUpdateWithoutFilterCategoryInput>
+  }
+
+  export type FilterTypeUpdateWithoutFilterCategoryInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    inputType?: EnumInputTypeFieldUpdateOperationsInput | $Enums.InputType
+    type?: EnumTypeOfFilterFieldUpdateOperationsInput | $Enums.TypeOfFilter
+    values?: FilterValuesUpdateManyWithoutFilterNestedInput
+  }
+
+  export type FilterTypeUncheckedUpdateWithoutFilterCategoryInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    inputType?: EnumInputTypeFieldUpdateOperationsInput | $Enums.InputType
+    type?: EnumTypeOfFilterFieldUpdateOperationsInput | $Enums.TypeOfFilter
+    values?: FilterValuesUncheckedUpdateManyWithoutFilterNestedInput
   }
 
   export type CommentsCreateManyProductInput = {
@@ -8624,9 +14230,14 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type BrandCreateManyCategoryInput = {
+  export type BrandCategoryCreateManyCategoryInput = {
     id?: string
-    name: string
+    brandId: string
+  }
+
+  export type FilterCategoryCreateManyCategoryInput = {
+    id?: string
+    filterId: string
   }
 
   export type ProductUpdateWithoutCategoryInput = {
@@ -8672,16 +14283,79 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type BrandUpdateWithoutCategoryInput = {
-    name?: StringFieldUpdateOperationsInput | string
+  export type BrandCategoryUpdateWithoutCategoryInput = {
+    brand?: BrandUpdateOneRequiredWithoutCategoriesNestedInput
   }
 
-  export type BrandUncheckedUpdateWithoutCategoryInput = {
-    name?: StringFieldUpdateOperationsInput | string
+  export type BrandCategoryUncheckedUpdateWithoutCategoryInput = {
+    brandId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type BrandUncheckedUpdateManyWithoutCategoryInput = {
-    name?: StringFieldUpdateOperationsInput | string
+  export type BrandCategoryUncheckedUpdateManyWithoutCategoryInput = {
+    brandId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FilterCategoryUpdateWithoutCategoryInput = {
+    filter?: FilterTypeUpdateOneRequiredWithoutFilterCategoryNestedInput
+  }
+
+  export type FilterCategoryUncheckedUpdateWithoutCategoryInput = {
+    filterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FilterCategoryUncheckedUpdateManyWithoutCategoryInput = {
+    filterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BrandCategoryCreateManyBrandInput = {
+    id?: string
+    categoryId: string
+  }
+
+  export type BrandCategoryUpdateWithoutBrandInput = {
+    category?: CategoryUpdateOneRequiredWithoutBrandNestedInput
+  }
+
+  export type BrandCategoryUncheckedUpdateWithoutBrandInput = {
+    categoryId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BrandCategoryUncheckedUpdateManyWithoutBrandInput = {
+    categoryId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FilterCategoryCreateManyFilterInput = {
+    id?: string
+    categoryId: string
+  }
+
+  export type FilterValuesCreateManyFilterInput = {
+    id?: string
+    value: string
+  }
+
+  export type FilterCategoryUpdateWithoutFilterInput = {
+    category?: CategoryUpdateOneRequiredWithoutFilterNestedInput
+  }
+
+  export type FilterCategoryUncheckedUpdateWithoutFilterInput = {
+    categoryId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FilterCategoryUncheckedUpdateManyWithoutFilterInput = {
+    categoryId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FilterValuesUpdateWithoutFilterInput = {
+    value?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FilterValuesUncheckedUpdateWithoutFilterInput = {
+    value?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FilterValuesUncheckedUpdateManyWithoutFilterInput = {
+    value?: StringFieldUpdateOperationsInput | string
   }
 
 

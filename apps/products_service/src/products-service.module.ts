@@ -10,6 +10,7 @@ import { SearchModule } from "./search/search.module";
 import { CloudinaryModule } from "./cloudinary/cloudinary.module";
 import { BrandModule } from "./brand/brand.module";
 import { RmqModule, RmqService } from "libs/common/src";
+import { FiltersModule } from "./filters/filters.module";
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { RmqModule, RmqService } from "libs/common/src";
     SearchModule,
     CloudinaryModule,
     BrandModule,
+    FiltersModule,
   ],
   controllers: [],
   providers: [PrismaService, RmqService],

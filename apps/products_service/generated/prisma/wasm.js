@@ -157,8 +157,32 @@ exports.Prisma.LikedProductScalarFieldEnum = {
 
 exports.Prisma.BrandScalarFieldEnum = {
   id: 'id',
-  name: 'name',
+  name: 'name'
+};
+
+exports.Prisma.BrandCategoryScalarFieldEnum = {
+  id: 'id',
+  brandId: 'brandId',
   categoryId: 'categoryId'
+};
+
+exports.Prisma.FilterTypeScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  inputType: 'inputType',
+  type: 'type'
+};
+
+exports.Prisma.FilterValuesScalarFieldEnum = {
+  id: 'id',
+  value: 'value',
+  filterId: 'filterId'
+};
+
+exports.Prisma.FilterCategoryScalarFieldEnum = {
+  id: 'id',
+  categoryId: 'categoryId',
+  filterId: 'filterId'
 };
 
 exports.Prisma.SortOrder = {
@@ -170,14 +194,27 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+exports.InputType = exports.$Enums.InputType = {
+  CHECKBOX: 'CHECKBOX',
+  SELECT: 'SELECT',
+  RANGE: 'RANGE'
+};
 
+exports.TypeOfFilter = exports.$Enums.TypeOfFilter = {
+  GENERAL: 'GENERAL',
+  SPECIFIC: 'SPECIFIC'
+};
 
 exports.Prisma.ModelName = {
   Comments: 'Comments',
   Product: 'Product',
   Category: 'Category',
   LikedProduct: 'LikedProduct',
-  Brand: 'Brand'
+  Brand: 'Brand',
+  BrandCategory: 'BrandCategory',
+  FilterType: 'FilterType',
+  FilterValues: 'FilterValues',
+  FilterCategory: 'FilterCategory'
 };
 
 /**

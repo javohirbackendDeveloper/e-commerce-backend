@@ -54,13 +54,14 @@ model Product {
 // CATEGORY PART
 
 model Category {
-  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  id       String           @id @default(auto()) @map("_id") @db.ObjectId
   parentId String?
   icon     String?
-  title    String    @unique
-  children Int       @default(0)
+  title    String           @unique
+  children Int              @default(0)
   product  Product[]
-  brand    Brand[]
+  brand    BrandCategory[]
+  filter   FilterCategory[]
 }
 
 // LIKED PRODUCTS
@@ -76,8 +77,61 @@ model LikedProduct {
 // brand model 
 
 model Brand {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  name       String   @unique
-  categoryId String   @db.ObjectId
-  category   Category @relation(fields: [categoryId], references: [id])
+  id         String          @id @default(auto()) @map("_id") @db.ObjectId
+  name       String          @unique
+  categories BrandCategory[]
+}
+
+model BrandCategory {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  brandId    String @db.ObjectId
+  categoryId String @db.ObjectId
+
+  brand    Brand    @relation(fields: [brandId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@unique([brandId, categoryId])
+}
+
+// filters model
+
+enum InputType {
+  CHECKBOX
+  SELECT
+  RANGE
+}
+
+enum TypeOfFilter {
+  GENERAL
+  SPECIFIC
+}
+
+model FilterType {
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  title          String           @unique
+  inputType      InputType
+  type           TypeOfFilter     @default(GENERAL)
+  filterCategory FilterCategory[]
+  values         FilterValues[]
+}
+
+model FilterValues {
+  id       String     @id @default(auto()) @map("_id") @db.ObjectId
+  value    String
+  filterId String     @db.ObjectId
+  filter   FilterType @relation(fields: [filterId], references: [id])
+
+  @@unique([value, filterId])
+}
+
+model FilterCategory {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  categoryId String @db.ObjectId
+  filterId   String @db.ObjectId
+
+  category Category   @relation(fields: [categoryId], references: [id])
+  filter   FilterType @relation(fields: [filterId], references: [id])
+
+  @@unique([categoryId, filterId])
 }

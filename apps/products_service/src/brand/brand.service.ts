@@ -1,9 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { CreateBrandDto } from "./dto/create-brand.dto";
+import { CreateBrandWithCategoryDto } from "./dto/create-brand.dto";
 import { UpdateBrandDto } from "./dto/update-brand.dto";
 import { CategoryService } from "../category/category.service";
 import { PrismaService } from "apps/products_service/prisma/prisma.service";
 import { Brand } from "@prisma/client";
+import {
+  BrandType,
+  ReturnCreatedBrandCategory,
+  ReturnFindAll,
+} from "./dto/return.dto";
 
 @Injectable()
 export class BrandService {
@@ -12,45 +17,41 @@ export class BrandService {
     private readonly prismaService: PrismaService
   ) {}
 
-  async create(createBrandDto: CreateBrandDto) {
+  async createBrandWithCategory(
+    dto: CreateBrandWithCategoryDto
+  ): Promise<ReturnCreatedBrandCategory> {
     try {
-      const { categoryId, name } = createBrandDto;
+      const { name, categoryId } = dto;
 
-      const category = await this.categoryService.findOne(categoryId as string);
-
-      if (!category) {
-        throw new HttpException(
-          "This category not found",
-          HttpStatus.NOT_FOUND
-        );
-      }
-
-      if (category?.children) {
-        throw new HttpException(
-          "This category has inline children, please select it",
-          HttpStatus.BAD_REQUEST
-        );
-      }
-
-      const existBrandName = await this.prismaService.brand.findUnique({
+      const existBrand = await this.prismaService.brand.findUnique({
         where: { name },
       });
 
-      if (existBrandName) {
+      if (existBrand) {
         throw new HttpException(
-          "This brand name already exist",
+          "This brand name already exists",
           HttpStatus.BAD_REQUEST
         );
       }
+
+      // 2. Brand yaratish
       const brand = await this.prismaService.brand.create({
-        data: {
-          name,
-          categoryId,
-        },
+        data: { name },
       });
 
-      return brand;
+      const createdRelations = await this.createBrandCategory(
+        categoryId,
+        brand as Brand
+      );
+
+      return {
+        message: "Brand muvaffaqiyatli yaratildi",
+        brand,
+        createdRelations,
+      };
     } catch (err) {
+      console.log(err);
+
       throw new HttpException(
         err.message || "Internal server error",
         err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
@@ -63,9 +64,12 @@ export class BrandService {
       const childrenCategories =
         await this.categoryService.getAllChildCategoryIds(id);
 
-      const brands = await this.prismaService.brand.findMany({
+      const brands = await this.prismaService.brandCategory.findMany({
         where: {
           categoryId: { in: childrenCategories },
+        },
+        include: {
+          brand: true,
         },
       });
 
@@ -90,14 +94,17 @@ export class BrandService {
     }
   }
 
-  async findAll(): Promise<Brand[]> {
+  async findAll() {
     try {
       const brands = await this.prismaService.brand.findMany({
         include: {
-          category: true,
+          categories: {
+            include: {
+              category: true,
+            },
+          },
         },
       });
-
       return brands;
     } catch (err) {
       throw new HttpException(
@@ -107,8 +114,45 @@ export class BrandService {
     }
   }
 
-  update(id: number, updateBrandDto: UpdateBrandDto) {
+  async update(
+    id: string,
+    updateBrandDto: UpdateBrandDto
+  ): Promise<ReturnCreatedBrandCategory> {
     try {
+      const { name, categoryId } = updateBrandDto;
+      const existBrand = await this.prismaService.brand.findUnique({
+        where: { id },
+      });
+
+      if (!existBrand) {
+        throw new HttpException(
+          "This brand not found with this id " + id,
+          HttpStatus.NOT_FOUND
+        );
+      }
+
+      const brand = await this.prismaService.brand.update({
+        where: { id },
+        data: {
+          name,
+        },
+      });
+      await this.prismaService.brandCategory.deleteMany({
+        where: {
+          brandId: id,
+        },
+      });
+
+      const createdRelations = await this.createBrandCategory(
+        categoryId,
+        brand as Brand
+      );
+
+      return {
+        message: "Brand muvaffaqiyatli yangilanti",
+        createdRelations,
+        brand,
+      };
     } catch (err) {
       throw new HttpException(
         err.message || "Internal server error",
@@ -117,8 +161,12 @@ export class BrandService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<BrandType> {
     try {
+      const brandCategory = await this.prismaService.brandCategory.deleteMany({
+        where: { brandId: id },
+      });
+
       const brand = await this.prismaService.brand.delete({
         where: { id },
       });
@@ -130,5 +178,27 @@ export class BrandService {
         err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
       );
     }
+  }
+
+  async createBrandCategory(categoryId: string[], brand: Brand) {
+    const createdRelations = [];
+
+    for (const cat of categoryId) {
+      const existRelation = await this.prismaService.brandCategory.findFirst({
+        where: { brandId: brand.id, categoryId: cat },
+      });
+
+      if (!existRelation) {
+        const relation = await this.prismaService.brandCategory.create({
+          data: {
+            brandId: brand.id,
+            categoryId: cat,
+          },
+        });
+        createdRelations.push(relation);
+      }
+    }
+
+    return createdRelations;
   }
 }

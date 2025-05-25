@@ -1,11 +1,11 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsMongoId, IsNotEmpty, IsString } from "class-validator";
 
-export class CreateBrandDto {
+export class CreateBrandWithCategoryDto {
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @IsString()
+  @IsMongoId({ each: true })
   @IsNotEmpty()
-  categoryId: string;
+  categoryId: string[];
 }
