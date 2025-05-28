@@ -4,6 +4,7 @@ import {
   IsMongoId,
   IsNotEmpty,
   IsNumber,
+  IsObject,
   IsOptional,
   IsString,
 } from "class-validator";
@@ -26,6 +27,11 @@ export class CreateProductDto {
   @IsNotEmpty()
   price: number;
 
+  @ApiProperty({ description: "old price of the product" })
+  @IsNumber()
+  @IsNotEmpty()
+  oldPrice: number;
+
   @ApiProperty({ description: "Quantity available" })
   @IsInt()
   @IsNotEmpty()
@@ -36,21 +42,35 @@ export class CreateProductDto {
     required: false,
     type: [String],
   })
-  @IsArray()
-  @IsOptional()
-  product_images?: string[];
-
   @ApiProperty({ description: "Mongo ID of the category" })
   @IsNotEmpty()
   @IsMongoId()
   categoryId: string;
 
-  @ApiProperty({ description: "Brand name" })
-  @IsString()
+  @ApiProperty({ description: "Brand id" })
+  @IsMongoId()
   @IsNotEmpty()
-  brand: string;
+  brandId: string;
 
   @ApiProperty({ description: "Available colors", type: [String] })
   @IsArray()
   color: string[];
+
+  @ApiProperty({
+    description: "Image urls , that are already uploaded to the cloudinary",
+    type: [String],
+  })
+  @IsArray()
+  product_images: string[];
+
+  @ApiProperty({
+    description: "Dynamic filters",
+    example: {
+      xotira: "128GB",
+      ekran: "6.1 inch",
+    },
+    type: Object,
+  })
+  @IsObject()
+  filters: Record<string, string>;
 }

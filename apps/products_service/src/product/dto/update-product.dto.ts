@@ -4,6 +4,8 @@ import {
   IsArray,
   IsInt,
   IsMongoId,
+  IsNotEmpty,
+  IsObject,
   IsOptional,
   IsString,
 } from "class-validator";
@@ -19,6 +21,15 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
   @IsString()
   @IsOptional()
   description?: string;
+
+  @ApiPropertyOptional({
+    description: "Mahsulotning eski narxi",
+    type: Number,
+    example: 15000,
+  })
+  @IsInt()
+  @IsOptional()
+  oldPrice?: number;
 
   @ApiPropertyOptional({
     description: "Mahsulot narxi",
@@ -39,15 +50,6 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
   quantity?: number;
 
   @ApiPropertyOptional({
-    description: "Mahsulot suratlari ro'yxati",
-    type: [String],
-    example: ["img1.jpg", "img2.jpg"],
-  })
-  @IsArray()
-  @IsOptional()
-  product_images?: string[];
-
-  @ApiPropertyOptional({
     description: "Kategoriya ID si",
     type: String,
     example: "609e1297123abcd123456789",
@@ -61,9 +63,9 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
     type: String,
     example: "Nike",
   })
-  @IsString()
+  @IsMongoId()
   @IsOptional()
-  brand?: string;
+  brandId: string;
 
   @ApiPropertyOptional({
     description: "Mahsulot ranglari",
@@ -73,4 +75,16 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
   @IsArray()
   @IsOptional()
   color?: string[];
+
+  @ApiPropertyOptional({
+    description: "Dynamic filters",
+    example: {
+      xotira: "128GB",
+      ekran: "6.1 inch",
+    },
+    type: Object,
+  })
+  @IsOptional()
+  @IsObject()
+  filters?: Record<string, string>;
 }

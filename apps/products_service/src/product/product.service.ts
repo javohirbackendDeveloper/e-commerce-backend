@@ -9,32 +9,76 @@ import {
 import { CreateProductDto } from "./dto/create-product.dto";
 import { UpdateProductDto } from "./dto/update-product.dto";
 import { PrismaService } from "apps/products_service/prisma/prisma.service";
-import { Category, Product } from "apps/products_service/generated/prisma";
+import {
+  Category,
+  Prisma,
+  Product,
+  ProductImage,
+} from "apps/products_service/generated/prisma";
 import { ReturnData } from "./interface";
 import { CategoryService } from "../category/category.service";
 import { SearchService } from "../search/search.service";
+import { CloudinaryService } from "../cloudinary/cloudinary.service";
 
 @Injectable()
 export class ProductService {
   constructor(
     private readonly categoryService: CategoryService,
     private readonly prismaService: PrismaService,
-    private readonly searchService: SearchService
+    private readonly searchService: SearchService,
+    private readonly cloudinaryService: CloudinaryService
   ) {}
 
-  async create(
-    createProductDto: CreateProductDto
-  ): Promise<Product | ReturnData> {
+  // firstly images created, then product datas created
+
+  async createImage(files: Express.Multer.File[]) {
+    try {
+      if (!files || files.length === 0) {
+        throw new HttpException(
+          "Please upload at least 1 file",
+          HttpStatus.BAD_REQUEST
+        );
+      }
+
+      const uploadedFileUrls: string[] = [];
+
+      for (const img of files) {
+        const imageUrl = await this.cloudinaryService.uploadFile(
+          img,
+          "products"
+        );
+
+        if (imageUrl) {
+          uploadedFileUrls.push(imageUrl);
+        }
+      }
+
+      return {
+        message:
+          "Rasmlar muvaffaqiyatli yuklandi endi mahsulotini boshqa malumotlarini kiriting",
+        uploadedFileUrls,
+      };
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server err",
+        err.status || 500
+      );
+    }
+  }
+
+  async create(createProductDto: CreateProductDto): Promise<Product> {
     try {
       const {
         categoryId,
         product_name,
         description,
         price,
+        oldPrice,
         quantity,
-        product_images,
-        brand,
+        brandId,
         color,
+        filters,
+        product_images,
       } = createProductDto;
 
       const category = await this.prismaService.category.findUnique({
@@ -47,33 +91,51 @@ export class ProductService {
           HttpStatus.NOT_FOUND
         );
       } else if (category.children > 0) {
-        return { message: "Iltimos kategoriyani oxirigacha tanlang" };
+        throw new HttpException(
+          "Iltimos kategoriyani oxirigacha tanlang",
+          HttpStatus.BAD_REQUEST
+        );
       }
+
+      const productData: Prisma.ProductCreateInput = {
+        product_name,
+        description,
+        price,
+        quantity,
+        brand: {
+          connect: { id: brandId },
+        },
+        color,
+        filters,
+        oldPrice,
+        category: {
+          connect: { id: categoryId },
+        },
+      };
 
       const product = await this.prismaService.product.create({
         data: {
-          product_name,
-          description,
-          price,
-          quantity,
-          product_images,
-          brand,
-          color,
-          category: {
-            connect: {
-              id: categoryId,
-            },
-          },
+          ...productData,
         },
       });
+
+      const createdImages: ProductImage[] = [];
+      for (const image of product_images) {
+        const upload = await this.prismaService.productImage.create({
+          data: { productId: product.id, imageUrl: image },
+        });
+
+        createdImages.push(upload);
+      }
 
       // await this.searchService.addProductToIndex(product);
 
       return product;
-    } catch (error) {
-      console.log({ error });
-
-      throw new BadRequestException("Invalid product data");
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server err",
+        err.status || 500
+      );
     }
   }
 
@@ -86,14 +148,17 @@ export class ProductService {
         include: {
           category: true,
           comments: true,
+          product_images: true,
+          brand: true,
         },
       });
 
       return products;
-    } catch (error) {
-      console.log(error);
-
-      throw new InternalServerErrorException("Failed to fetch products");
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server err",
+        err.status || 500
+      );
     }
   }
 
@@ -108,41 +173,46 @@ export class ProductService {
       }
 
       return product;
-    } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw error;
-      }
-      throw new InternalServerErrorException("Failed to fetch product");
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server err",
+        err.status || 500
+      );
     }
   }
 
   async update(id: string, updateProductDto: UpdateProductDto) {
     try {
-      const { categoryId } = updateProductDto;
+      const { categoryId, brandId, ...others } = updateProductDto;
 
-      const category = await this.prismaService.category.findUnique({
-        where: { id: categoryId },
-      });
+      const updateData: any = {
+        ...others,
+      };
 
-      if (!category) {
-        throw new HttpException(
-          "This category not found with this id " + categoryId,
-          HttpStatus.NOT_FOUND
-        );
+      if (categoryId) {
+        updateData.category = {
+          connect: { id: categoryId },
+        };
+      }
+
+      if (brandId) {
+        updateData.brand = {
+          connect: { id: brandId },
+        };
       }
 
       const product = await this.prismaService.product.update({
         where: { id },
-        data: updateProductDto,
+        data: updateData,
       });
+      // await this.searchService.update(product);
 
-      this.searchService.update(product);
       return product;
-    } catch (error) {
-      if (error.code === "P2025") {
-        throw new NotFoundException(`Product with ID ${id} not found`);
-      }
-      throw new BadRequestException("Invalid update data");
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server err",
+        err.status || 500
+      );
     }
   }
 
@@ -158,20 +228,122 @@ export class ProductService {
           HttpStatus.NOT_FOUND
         );
       }
-      await this.searchService.delete(product);
+      // await this.searchService.delete(product);
+
+      await this.deleteProductImages(id);
+
       await this.prismaService.product.delete({ where: { id } });
+
       return {
         message: `Product with id ${id} deleted successfully`,
         success: true,
       };
-    } catch (error) {
-      if (error.code === "P2025") {
-        return {
-          message: `Product with id ${id} not found`,
-          success: false,
-        };
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server err",
+        err.status || 500
+      );
+    }
+  }
+
+  private async deleteProductImages(productId: string) {
+    try {
+      const productImages = await this.prismaService.productImage.findMany({
+        where: {
+          productId,
+        },
+        select: {
+          imageUrl: true,
+        },
+      });
+
+      if (productImages.length > 0) {
+        await this.prismaService.productImage.deleteMany({
+          where: { productId },
+        });
+        for (const img of productImages) {
+          await this.cloudinaryService.deleteImage(img.imageUrl);
+        }
       }
-      throw new InternalServerErrorException("Failed to delete product");
+
+      return productImages;
+    } catch (err) {
+      console.log("Error in delete product images function", err);
+
+      throw new HttpException(
+        err.message || "Internal server err",
+        err.status || 500
+      );
+    }
+  }
+
+  async deleteOneImage(imageId: string) {
+    try {
+      const image = await this.prismaService.productImage.findUnique({
+        where: { id: imageId },
+      });
+
+      if (!image) {
+        throw new HttpException(
+          "This product image not found with this id " + imageId,
+          HttpStatus.NOT_FOUND
+        );
+      }
+
+      const allImagesOfProduct = await this.prismaService.productImage.findMany(
+        {
+          where: { productId: image.productId },
+        }
+      );
+
+      if (allImagesOfProduct.length === 1) {
+        return { message: "Mahsulotda kamida 1 ta rasm bo'lishi shart" };
+      }
+
+      await this.prismaService.productImage.delete({
+        where: { id: imageId },
+      });
+      await this.cloudinaryService.deleteImage(image.imageUrl);
+
+      return image;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server err",
+        err.status || 500
+      );
+    }
+  }
+
+  async uploadOneImage(file: Express.Multer.File, productId: string) {
+    try {
+      const product = await this.prismaService.product.findUnique({
+        where: { id: productId },
+      });
+
+      if (!product) {
+        throw new HttpException(
+          "This product  not found with this id " + productId,
+          HttpStatus.NOT_FOUND
+        );
+      }
+
+      const imageUrl = await this.cloudinaryService.uploadFile(
+        file,
+        "products"
+      );
+      const image = await this.prismaService.productImage.create({
+        data: {
+          productId,
+          imageUrl,
+        },
+      });
+
+      return image;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server err",
+        err.status || 500
+      );
     }
   }
 
@@ -192,9 +364,14 @@ export class ProductService {
 
     const products = await this.prismaService.product.findMany({
       where: {
-        categoryId: {
-          in: allChildCategories.map((cat) => cat.id),
-        },
+        OR: [
+          {
+            categoryId: {
+              in: allChildCategories.map((cat) => cat.id),
+            },
+          },
+          { categoryId },
+        ],
       },
     });
 

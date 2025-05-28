@@ -1,5 +1,13 @@
-import { IsArray, IsNumber, IsOptional, IsString } from "class-validator";
+import {
+  IsArray,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from "class-validator";
 import { ApiPropertyOptional } from "@nestjs/swagger";
+import { ProductStatus } from "../enums";
+import { Transform } from "class-transformer";
 
 export class FilterQueryDto {
   @ApiPropertyOptional({
@@ -9,6 +17,7 @@ export class FilterQueryDto {
   })
   @IsArray()
   @IsOptional()
+  @Transform(({ value }) => (Array.isArray(value) ? value : [value]))
   color?: string[];
 
   @ApiPropertyOptional({
@@ -36,6 +45,7 @@ export class FilterQueryDto {
   })
   @IsArray()
   @IsOptional()
+  @Transform(({ value }) => (Array.isArray(value) ? value : [value]))
   brand?: string[];
 
   @ApiPropertyOptional({
@@ -46,4 +56,13 @@ export class FilterQueryDto {
   @IsString()
   @IsOptional()
   categoryId?: string;
+
+  @ApiPropertyOptional({
+    description: "Status of product",
+    type: String,
+    example: "Faol/Nofaol/Tugagan",
+  })
+  @IsEnum(ProductStatus)
+  @IsOptional()
+  product_status?: ProductStatus;
 }

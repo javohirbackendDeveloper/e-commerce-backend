@@ -116,52 +116,45 @@ export class ApiGatewayController {
       }
     }
 
-    // MULTIPART REQUEST (e.g. /products/category POST icon va title)
+    // MULTIPART REQUEST
     if (req.headers["content-type"]?.includes("multipart/form-data")) {
-      const chunks: Buffer[] = [];
-      req.on("data", (chunk) => chunks.push(chunk));
+      try {
+        const proxiedRequest = await this.httpService.axiosRef.request({
+          method,
+          url: `${target}${url}`,
+          headers: {
+            ...headers,
+            x_allowed_origin: process.env.API_GATEWAY_URL,
+            "content-type": req.headers["content-type"]!,
+          },
+          data: req,
+          responseType: "stream",
+        });
 
-      req.on("end", async () => {
-        const buffer = Buffer.concat(chunks);
-        try {
-          const response = await lastValueFrom(
-            this.httpService.request({
-              method,
-              url: `${target}${url}`,
-              data: buffer,
-              headers: {
-                ...headers,
-                x_allowed_origin: process.env.API_GATEWAY_URL,
-                "content-type": req.headers["content-type"]!,
-              },
-              responseType: "stream",
-            })
-          );
+        const response = await proxiedRequest;
 
-          res.setHeader(
-            "Content-Type",
-            response.headers["content-type"] || "application/json"
-          );
-          if (response.headers["set-cookie"]) {
-            res.setHeader("Set-Cookie", response.headers["set-cookie"]);
-          }
-
-          return response.data.pipe(res);
-        } catch (error) {
-          const status =
-            error.response?.status || HttpStatus.INTERNAL_SERVER_ERROR;
-          const message = error.response?.data?.message || "Internal error";
-          return res.status(status).json({
-            message,
-            status,
-          });
+        res.setHeader(
+          "Content-Type",
+          response.headers["content-type"] || "application/json"
+        );
+        if (response.headers["set-cookie"]) {
+          res.setHeader("Set-Cookie", response.headers["set-cookie"]);
         }
-      });
-      return;
+
+        return response.data.pipe(res);
+      } catch (error) {
+        console.log(error);
+
+        const status =
+          error.response?.status || HttpStatus.INTERNAL_SERVER_ERROR;
+        const message = error.response?.data?.message || "Internal error";
+        return res.status(status).json({ message, status });
+      }
     }
 
     // JSON va boshqa content-type uchun:
     const data = req.body;
+
     try {
       const response = await lastValueFrom(
         this.httpService.request({

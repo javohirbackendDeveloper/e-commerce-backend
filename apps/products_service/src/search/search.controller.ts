@@ -20,10 +20,10 @@ export class SearchController {
     return this.searchService.search(query);
   }
 
-  @Post("filter")
+  @Get("filter")
   @ApiOperation({ summary: "Filter products with various parameters" })
   @ApiBody({ type: FilterQueryDto })
-  async filterProducts(@Body() filter: FilterQueryDto) {
+  async filterProducts(@Query() filter: FilterQueryDto) {
     return this.searchService.filterProducts(filter);
   }
 }

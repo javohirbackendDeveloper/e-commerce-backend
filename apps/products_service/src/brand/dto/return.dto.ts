@@ -1,4 +1,3 @@
-import { Brand } from "@prisma/client";
 import { CreateBrandWithCategoryDto } from "./create-brand.dto";
 
 export type BrandType = {

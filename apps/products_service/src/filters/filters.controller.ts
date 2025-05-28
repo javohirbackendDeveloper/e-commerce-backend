@@ -11,6 +11,7 @@ import { FiltersService } from "./filters.service";
 import {
   CreateFilterValue,
   CreateGeneralFilterDto,
+  CreateSpecificFilterDto,
 } from "./dto/create-filter.dto";
 import { UpdateFilterDto } from "./dto/update-filter.dto";
 
@@ -46,10 +47,34 @@ export class FiltersController {
 
   // SPECIFIC FILTER PART
 
+  @Get("specific/:id")
+  getFiltersByCategoryId(@Param("id") categoryId: string) {
+    return this.filtersService.getFiltersByCategoryId(categoryId);
+  }
+
+  @Post("specific")
+  createSpecificFilter(@Body() createSpecificDto: CreateSpecificFilterDto) {
+    return this.filtersService.createSpecificFilter(createSpecificDto);
+  }
+  @Get("specific")
+  findAllSpecificFilters() {
+    return this.filtersService.findAllSpecific();
+  }
+
+  @Delete("specific/:id")
+  removeSpecific(@Param("id") id: string) {
+    return this.filtersService.removeSpecificFilter(id);
+  }
+
   // CREATE VALUE FOR FILTER
 
   @Post("value")
   createValue(@Body() createValueDto: CreateFilterValue) {
     return this.filtersService.createValue(createValueDto);
+  }
+
+  @Delete("value/:id")
+  removeValue(@Param("id") id: string) {
+    return this.filtersService.deleteValue(id);
   }
 }

@@ -129,15 +129,23 @@ exports.Prisma.ProductScalarFieldEnum = {
   id: 'id',
   product_name: 'product_name',
   description: 'description',
+  oldPrice: 'oldPrice',
   price: 'price',
   quantity: 'quantity',
   color: 'color',
-  brand: 'brand',
-  product_images: 'product_images',
+  filters: 'filters',
   ordered: 'ordered',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  categoryId: 'categoryId'
+  categoryId: 'categoryId',
+  brandId: 'brandId',
+  product_status: 'product_status'
+};
+
+exports.Prisma.ProductImageScalarFieldEnum = {
+  id: 'id',
+  imageUrl: 'imageUrl',
+  productId: 'productId'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {
@@ -194,6 +202,12 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+exports.ProductStatus = exports.$Enums.ProductStatus = {
+  FAOL: 'FAOL',
+  NOFAOL: 'NOFAOL',
+  TUGAGAN: 'TUGAGAN'
+};
+
 exports.InputType = exports.$Enums.InputType = {
   CHECKBOX: 'CHECKBOX',
   SELECT: 'SELECT',
@@ -208,6 +222,7 @@ exports.TypeOfFilter = exports.$Enums.TypeOfFilter = {
 exports.Prisma.ModelName = {
   Comments: 'Comments',
   Product: 'Product',
+  ProductImage: 'ProductImage',
   Category: 'Category',
   LikedProduct: 'LikedProduct',
   Brand: 'Brand',

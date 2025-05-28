@@ -27,8 +27,14 @@ async function bootstrap() {
 
   // global middlewares
   app.setGlobalPrefix("products");
-  app.useGlobalPipes(new ValidationPipe());
-  app.use(allowUrls);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: false,
+      transform: true,
+    })
+  );
+  // app.use(allowUrls);
 
   // microservice connecting
   const rmqService = app.get<RmqService>(RmqService);

@@ -8,12 +8,14 @@ import * as swaggerUi from "swagger-ui-express";
 async function bootstrap() {
   const app = await NestFactory.create(ApiGatewayModule);
   const PORT = process.env.PORT;
+
   app.use(cookieParser());
   app.use(express.json());
   app.enableCors({
     origin: "http://localhost:5173",
     credentials: true,
   });
+
   // SWAGGER CONFIGURATION
 
   const mergedSwagger = await getMergedSwaggerApis();

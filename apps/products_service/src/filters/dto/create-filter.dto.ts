@@ -41,3 +41,21 @@ export class CreateFilterValue {
   @IsNotEmpty()
   filterId: string;
 }
+
+export class CreateSpecificFilterDto {
+  @IsString()
+  @IsNotEmpty()
+  title: string;
+
+  @IsEnum(InputType)
+  @IsNotEmpty()
+  inputType: InputType;
+
+  @IsEnum(TypeOfFilter)
+  @IsNotEmpty()
+  type: TypeOfFilter;
+
+  @IsArray()
+  @IsNotEmpty()
+  categoryIds: string[];
+}

@@ -3,12 +3,12 @@ import { CreateBrandWithCategoryDto } from "./dto/create-brand.dto";
 import { UpdateBrandDto } from "./dto/update-brand.dto";
 import { CategoryService } from "../category/category.service";
 import { PrismaService } from "apps/products_service/prisma/prisma.service";
-import { Brand } from "@prisma/client";
 import {
   BrandType,
   ReturnCreatedBrandCategory,
   ReturnFindAll,
 } from "./dto/return.dto";
+import { Brand } from "apps/products_service/generated/prisma";
 
 @Injectable()
 export class BrandService {

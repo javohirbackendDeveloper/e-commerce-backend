@@ -23,7 +23,7 @@ export class CreateToken {
         `${this.role.toUpperCase()}_ACCESS_TOKEN_SECRET`
       ),
       {
-        expiresIn: "15m",
+        expiresIn: "2h",
       }
     );
 
@@ -48,7 +48,8 @@ export class CreateToken {
       httpOnly: true,
       secure: this.configService.get<string>("NODE_ENV") === "production",
       sameSite: "strict",
-      maxAge: 15 * 60 * 1000,
+      maxAge: 2 * 60 * 60 * 1000,
+      // maxAge: 15 * 60 * 1000,
     });
 
     if (createRefreshToken) {

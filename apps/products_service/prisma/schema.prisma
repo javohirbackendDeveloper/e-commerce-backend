@@ -29,29 +29,50 @@ model Comments{
    @@index([sent_person])
 }
 
+enum ProductStatus {
+  FAOL
+  NOFAOL
+  TUGAGAN
+}
+
 model Product {
  id String @id @default(auto()) @map("_id") @db.ObjectId
+
  product_name String 
  description String @default("")
+ oldPrice Float
  price Float 
+
  quantity Int
  color String[]
- brand String
- product_images String[] @default([])
+ product_images ProductImage[]
+ filters Json
+
  ordered String[] @default([])
  createdAt DateTime @default(now())
  updatedAt DateTime @updatedAt
+
  comments Comments[]
  likes LikedProduct[]
-categoryId String @db.ObjectId
+categoryId String @db.ObjectId 
  category Category @relation(fields: [categoryId] , references: [id])
  
+ brandId String @db.ObjectId
+ brand  Brand @relation(fields: [brandId] , references: [id])
+ 
+
+ product_status ProductStatus @default(FAOL)
  @@index([categoryId])
  @@index([product_name])
 }
 
 
-
+model ProductImage {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  imageUrl String
+  productId String @db.ObjectId
+  product Product @relation(fields: [productId] , references: [id])
+}
 
 
 
@@ -85,10 +106,13 @@ model LikedProduct {
 
 // brand model 
 
+
+
 model Brand {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String @unique
   categories BrandCategory[]
+  product Product[]
 }
 
 
@@ -102,6 +126,11 @@ model BrandCategory {
 
   @@unique([brandId , categoryId])
 }
+
+
+
+
+
 
 
 
@@ -130,7 +159,7 @@ model FilterType {
 
 model FilterValues {
   id String @id @default(auto()) @map("_id") @db.ObjectId
- value     String
+  value     String
   filterId  String      @db.ObjectId
   filter    FilterType  @relation(fields: [filterId], references: [id])
 

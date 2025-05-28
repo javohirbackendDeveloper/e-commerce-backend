@@ -6,6 +6,9 @@ import {
   Patch,
   Param,
   Delete,
+  UploadedFiles,
+  UseInterceptors,
+  UploadedFile,
 } from "@nestjs/common";
 import { ProductService } from "./product.service";
 import { CreateProductDto } from "./dto/create-product.dto";
@@ -17,18 +20,34 @@ import {
   ApiResponse,
   ApiBody,
   ApiParam,
+  ApiConsumes,
 } from "@nestjs/swagger";
+import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
 
 @ApiTags("products_service/product")
 @Controller("product")
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @Post("createImages")
+  @UseInterceptors(FilesInterceptor("product_images", 5))
+  @ApiOperation({ summary: "Create a new product" })
+  @ApiBody({ type: CreateProductDto })
+  @ApiResponse({ status: 201, description: "Product created successfully" })
+  createImages(@UploadedFiles() product_images: Express.Multer.File[]) {
+    return this.productService.createImage(product_images);
+  }
+
   @Post()
   @ApiOperation({ summary: "Create a new product" })
   @ApiBody({ type: CreateProductDto })
   @ApiResponse({ status: 201, description: "Product created successfully" })
-  create(@Body() createProductDto: CreateProductDto) {
+  create(
+    @Body()
+    createProductDto: CreateProductDto
+  ) {
+    console.log("Request came to create product api", createProductDto);
+
     return this.productService.create(createProductDto);
   }
 
@@ -70,6 +89,34 @@ export class ProductController {
   @ApiResponse({ status: 200, description: "Product deleted successfully" })
   remove(@Param("id") id: string) {
     return this.productService.remove(id);
+  }
+
+  @Delete("image/:id")
+  @ApiOperation({ summary: "Delete a product image by id" })
+  @ApiParam({ name: "id", description: "Product image ID" })
+  @ApiResponse({
+    status: 200,
+    description: "Product image deleted successfully",
+  })
+  deleteProductImage(@Param("id") id: string) {
+    return this.productService.deleteOneImage(id);
+  }
+
+  @Post("uploadImage")
+  @UseInterceptors(FileInterceptor("product_images"))
+  @ApiOperation({ summary: "Upload image for product" })
+  @ApiParam({ name: "id", description: "Product image url" })
+  @ApiResponse({
+    status: 200,
+    description: "Product image uploaded successfully",
+  })
+  uploadOneImage(
+    @UploadedFile() file: Express.Multer.File,
+    @Body("productId") productId: string
+  ) {
+    console.log({ file, productId });
+
+    return this.productService.uploadOneImage(file, productId);
   }
 
   // APIS WITH RABBITMQ

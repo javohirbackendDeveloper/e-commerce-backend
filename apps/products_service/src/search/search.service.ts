@@ -116,13 +116,21 @@ export class SearchService {
 
   async filterProducts(query: FilterQueryDto): Promise<Product[]> {
     try {
-      const { brand, color, endOfPrice, starterPrice, categoryId } = query;
+      const {
+        brand,
+        color,
+        endOfPrice,
+        starterPrice,
+        categoryId,
+        product_status,
+      } = query;
 
       let categoryProductIds: string[] = [];
 
       if (categoryId) {
         const productsByCategory =
           await this.productService.getAllProductsByCategory(categoryId);
+
         categoryProductIds = productsByCategory.map((p) => p.id);
       }
 
@@ -133,7 +141,7 @@ export class SearchService {
               ? [{ id: { in: categoryProductIds } }]
               : []),
 
-            ...(brand && brand.length > 0 ? [{ brand: { in: brand } }] : []),
+            ...(brand && brand.length > 0 ? [{ brandId: { in: brand } }] : []),
 
             ...(color && color.length > 0
               ? [{ color: { hasSome: color } }]
@@ -141,8 +149,19 @@ export class SearchService {
 
             ...(starterPrice ? [{ price: { gte: +starterPrice } }] : []),
 
+            ...(product_status ? [{ product_status }] : []),
+
             ...(endOfPrice ? [{ price: { lte: +endOfPrice } }] : []),
           ],
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        include: {
+          category: true,
+          comments: true,
+          product_images: true,
+          brand: true,
         },
       });
 
