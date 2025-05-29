@@ -4,6 +4,7 @@ import { UserModule } from "./user/user.module";
 import { AdminModule } from "./admin/admin.module";
 import { PunktAdminModule } from "./punkt-admin/punkt-admin.module";
 import { RmqService } from "libs/common/src";
+import { CloudinaryModule } from "./cloudinary/cloudinary.module";
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { RmqService } from "libs/common/src";
     UserModule,
     AdminModule,
     PunktAdminModule,
+    CloudinaryModule,
   ],
   controllers: [],
   providers: [RmqService],

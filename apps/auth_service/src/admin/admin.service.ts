@@ -9,10 +9,10 @@ import {
 
 import { PrismaService } from "apps/auth_service/prisma/prisma.service";
 import { compare, hash } from "bcryptjs";
-import { Prisma } from "apps/auth_service/generated/prisma";
+import { Admin, Prisma } from "apps/auth_service/generated/prisma";
 import { CreateToken } from "../token/createToken";
 import { ConfigService } from "@nestjs/config";
-import { Response } from "express";
+import { Request, Response } from "express";
 import { JwtService } from "@nestjs/jwt";
 import { AdminLoginDto, CreateAdminDto } from "./dto/createAdmin.dto";
 import {
@@ -21,6 +21,10 @@ import {
   ReturnLogoutDto,
   ReturnMessageDto,
 } from "./dto/return.dto";
+import { UpdateAdmin } from "./dto/update.dto";
+import { AdminRequest } from "./interface";
+import { CloudinaryService } from "../cloudinary/cloudinary.service";
+import { ChangePassword } from "./dto/changePassword.dto";
 
 @Injectable()
 export class AdminService {
@@ -29,7 +33,8 @@ export class AdminService {
   constructor(
     private readonly configService: ConfigService,
     private readonly prismaService: PrismaService,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly cloudinaryService: CloudinaryService
   ) {}
 
   async adminRegister(
@@ -211,5 +216,116 @@ export class AdminService {
     res.clearCookie("admin_refresh_token");
 
     return { message: "Successfully logged out" };
+  }
+
+  async updateAccount(req: AdminRequest, data: UpdateAdmin): Promise<Admin> {
+    try {
+      const existAdmin = req?.admin;
+
+      if (!existAdmin) {
+        throw new HttpException("This admin not found", HttpStatus.NOT_FOUND);
+      }
+      console.log({ data });
+
+      const admin = await this.prismaService.admin.update({
+        where: { id: existAdmin.id },
+        data: { ...data },
+      });
+
+      return admin;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async uploadProfileImage(
+    file: Express.Multer.File,
+    req: AdminRequest
+  ): Promise<Admin> {
+    try {
+      const existAdmin = req?.admin;
+
+      if (!existAdmin) {
+        throw new HttpException("This admin not found", HttpStatus.NOT_FOUND);
+      }
+
+      let imageUrl: string | null = null;
+      if (file) {
+        imageUrl = await this.cloudinaryService.uploadFile(file, "Admin");
+        console.log({ imageUrl });
+
+        const admin = await this.prismaService.admin.update({
+          where: { id: existAdmin.id },
+          data: { profileImg: imageUrl || "" },
+        });
+
+        return admin;
+      } else {
+        throw new HttpException(
+          "Please upload profile image",
+          HttpStatus.BAD_REQUEST
+        );
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async deleteProfileImage(req: AdminRequest): Promise<Admin> {
+    try {
+      const existAdmin = req?.admin;
+
+      if (!existAdmin) {
+        throw new HttpException("This admin not found", HttpStatus.NOT_FOUND);
+      }
+
+      const admin = await this.prismaService.admin.update({
+        where: { id: existAdmin.id },
+        data: { profileImg: "" },
+      });
+
+      await this.cloudinaryService.deleteImage(existAdmin.profileImg);
+
+      return admin;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async changePassword(
+    req: AdminRequest,
+    changePassword: ChangePassword
+  ): Promise<Admin> {
+    try {
+      const { currentPassword, newPassword } = changePassword;
+      const existAdmin = req?.admin;
+
+      if (!existAdmin) {
+        throw new HttpException("This admin not found", HttpStatus.NOT_FOUND);
+      }
+
+      const verifiedPassword = await compare(
+        currentPassword,
+        existAdmin.password
+      );
+
+      if (!verifiedPassword) {
+        throw new HttpException(
+          "You entered current password is wrong",
+          HttpStatus.BAD_REQUEST
+        );
+      }
+
+      const hashedPassword = await hash(newPassword, 10);
+
+      const admin = await this.prismaService.admin.update({
+        where: { id: existAdmin.id },
+        data: { password: hashedPassword },
+      });
+
+      return admin;
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 }

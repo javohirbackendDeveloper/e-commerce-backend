@@ -63,6 +63,16 @@ export type FilterValues = $Result.DefaultSelection<Prisma.$FilterValuesPayload>
  * 
  */
 export type FilterCategory = $Result.DefaultSelection<Prisma.$FilterCategoryPayload>
+/**
+ * Model Coupon
+ * 
+ */
+export type Coupon = $Result.DefaultSelection<Prisma.$CouponPayload>
+/**
+ * Model Poster
+ * 
+ */
+export type Poster = $Result.DefaultSelection<Prisma.$PosterPayload>
 
 /**
  * Enums
@@ -93,6 +103,14 @@ export const TypeOfFilter: {
 
 export type TypeOfFilter = (typeof TypeOfFilter)[keyof typeof TypeOfFilter]
 
+
+export const CouponStatus: {
+  FAOL: 'FAOL',
+  NOFAOL: 'NOFAOL'
+};
+
+export type CouponStatus = (typeof CouponStatus)[keyof typeof CouponStatus]
+
 }
 
 export type ProductStatus = $Enums.ProductStatus
@@ -106,6 +124,10 @@ export const InputType: typeof $Enums.InputType
 export type TypeOfFilter = $Enums.TypeOfFilter
 
 export const TypeOfFilter: typeof $Enums.TypeOfFilter
+
+export type CouponStatus = $Enums.CouponStatus
+
+export const CouponStatus: typeof $Enums.CouponStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -298,6 +320,26 @@ export class PrismaClient<
     * ```
     */
   get filterCategory(): Prisma.FilterCategoryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.coupon`: Exposes CRUD operations for the **Coupon** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Coupons
+    * const coupons = await prisma.coupon.findMany()
+    * ```
+    */
+  get coupon(): Prisma.CouponDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.poster`: Exposes CRUD operations for the **Poster** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Posters
+    * const posters = await prisma.poster.findMany()
+    * ```
+    */
+  get poster(): Prisma.PosterDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -356,8 +398,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.7.0
-   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+   * Prisma Client JS version: 6.8.2
+   * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
    */
   export type PrismaVersion = {
     client: string
@@ -747,7 +789,9 @@ export namespace Prisma {
     BrandCategory: 'BrandCategory',
     FilterType: 'FilterType',
     FilterValues: 'FilterValues',
-    FilterCategory: 'FilterCategory'
+    FilterCategory: 'FilterCategory',
+    Coupon: 'Coupon',
+    Poster: 'Poster'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -766,7 +810,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "comments" | "product" | "productImage" | "category" | "likedProduct" | "brand" | "brandCategory" | "filterType" | "filterValues" | "filterCategory"
+      modelProps: "comments" | "product" | "productImage" | "category" | "likedProduct" | "brand" | "brandCategory" | "filterType" | "filterValues" | "filterCategory" | "coupon" | "poster"
       txIsolationLevel: never
     }
     model: {
@@ -1510,6 +1554,154 @@ export namespace Prisma {
           }
         }
       }
+      Coupon: {
+        payload: Prisma.$CouponPayload<ExtArgs>
+        fields: Prisma.CouponFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CouponFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CouponPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CouponFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CouponPayload>
+          }
+          findFirst: {
+            args: Prisma.CouponFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CouponPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CouponFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CouponPayload>
+          }
+          findMany: {
+            args: Prisma.CouponFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CouponPayload>[]
+          }
+          create: {
+            args: Prisma.CouponCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CouponPayload>
+          }
+          createMany: {
+            args: Prisma.CouponCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.CouponDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CouponPayload>
+          }
+          update: {
+            args: Prisma.CouponUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CouponPayload>
+          }
+          deleteMany: {
+            args: Prisma.CouponDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CouponUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CouponUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CouponPayload>
+          }
+          aggregate: {
+            args: Prisma.CouponAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCoupon>
+          }
+          groupBy: {
+            args: Prisma.CouponGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CouponGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.CouponFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.CouponAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.CouponCountArgs<ExtArgs>
+            result: $Utils.Optional<CouponCountAggregateOutputType> | number
+          }
+        }
+      }
+      Poster: {
+        payload: Prisma.$PosterPayload<ExtArgs>
+        fields: Prisma.PosterFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PosterFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PosterPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PosterFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PosterPayload>
+          }
+          findFirst: {
+            args: Prisma.PosterFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PosterPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PosterFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PosterPayload>
+          }
+          findMany: {
+            args: Prisma.PosterFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PosterPayload>[]
+          }
+          create: {
+            args: Prisma.PosterCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PosterPayload>
+          }
+          createMany: {
+            args: Prisma.PosterCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.PosterDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PosterPayload>
+          }
+          update: {
+            args: Prisma.PosterUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PosterPayload>
+          }
+          deleteMany: {
+            args: Prisma.PosterDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PosterUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PosterUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PosterPayload>
+          }
+          aggregate: {
+            args: Prisma.PosterAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePoster>
+          }
+          groupBy: {
+            args: Prisma.PosterGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PosterGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.PosterFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.PosterAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.PosterCountArgs<ExtArgs>
+            result: $Utils.Optional<PosterCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1591,6 +1783,8 @@ export namespace Prisma {
     filterType?: FilterTypeOmit
     filterValues?: FilterValuesOmit
     filterCategory?: FilterCategoryOmit
+    coupon?: CouponOmit
+    poster?: PosterOmit
   }
 
   /* Types for Logging */
@@ -12039,6 +12233,1912 @@ export namespace Prisma {
 
 
   /**
+   * Model Coupon
+   */
+
+  export type AggregateCoupon = {
+    _count: CouponCountAggregateOutputType | null
+    _avg: CouponAvgAggregateOutputType | null
+    _sum: CouponSumAggregateOutputType | null
+    _min: CouponMinAggregateOutputType | null
+    _max: CouponMaxAggregateOutputType | null
+  }
+
+  export type CouponAvgAggregateOutputType = {
+    discount_value: number | null
+    min_order_amount: number | null
+    usage_limit: number | null
+  }
+
+  export type CouponSumAggregateOutputType = {
+    discount_value: number | null
+    min_order_amount: number | null
+    usage_limit: number | null
+  }
+
+  export type CouponMinAggregateOutputType = {
+    id: string | null
+    code: string | null
+    discount_value: number | null
+    min_order_amount: number | null
+    usage_limit: number | null
+    end_date: Date | null
+    status: $Enums.CouponStatus | null
+  }
+
+  export type CouponMaxAggregateOutputType = {
+    id: string | null
+    code: string | null
+    discount_value: number | null
+    min_order_amount: number | null
+    usage_limit: number | null
+    end_date: Date | null
+    status: $Enums.CouponStatus | null
+  }
+
+  export type CouponCountAggregateOutputType = {
+    id: number
+    code: number
+    discount_value: number
+    min_order_amount: number
+    usage_limit: number
+    end_date: number
+    status: number
+    _all: number
+  }
+
+
+  export type CouponAvgAggregateInputType = {
+    discount_value?: true
+    min_order_amount?: true
+    usage_limit?: true
+  }
+
+  export type CouponSumAggregateInputType = {
+    discount_value?: true
+    min_order_amount?: true
+    usage_limit?: true
+  }
+
+  export type CouponMinAggregateInputType = {
+    id?: true
+    code?: true
+    discount_value?: true
+    min_order_amount?: true
+    usage_limit?: true
+    end_date?: true
+    status?: true
+  }
+
+  export type CouponMaxAggregateInputType = {
+    id?: true
+    code?: true
+    discount_value?: true
+    min_order_amount?: true
+    usage_limit?: true
+    end_date?: true
+    status?: true
+  }
+
+  export type CouponCountAggregateInputType = {
+    id?: true
+    code?: true
+    discount_value?: true
+    min_order_amount?: true
+    usage_limit?: true
+    end_date?: true
+    status?: true
+    _all?: true
+  }
+
+  export type CouponAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Coupon to aggregate.
+     */
+    where?: CouponWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Coupons to fetch.
+     */
+    orderBy?: CouponOrderByWithRelationInput | CouponOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CouponWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Coupons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Coupons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Coupons
+    **/
+    _count?: true | CouponCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CouponAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CouponSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CouponMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CouponMaxAggregateInputType
+  }
+
+  export type GetCouponAggregateType<T extends CouponAggregateArgs> = {
+        [P in keyof T & keyof AggregateCoupon]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCoupon[P]>
+      : GetScalarType<T[P], AggregateCoupon[P]>
+  }
+
+
+
+
+  export type CouponGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CouponWhereInput
+    orderBy?: CouponOrderByWithAggregationInput | CouponOrderByWithAggregationInput[]
+    by: CouponScalarFieldEnum[] | CouponScalarFieldEnum
+    having?: CouponScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CouponCountAggregateInputType | true
+    _avg?: CouponAvgAggregateInputType
+    _sum?: CouponSumAggregateInputType
+    _min?: CouponMinAggregateInputType
+    _max?: CouponMaxAggregateInputType
+  }
+
+  export type CouponGroupByOutputType = {
+    id: string
+    code: string
+    discount_value: number
+    min_order_amount: number
+    usage_limit: number
+    end_date: Date
+    status: $Enums.CouponStatus
+    _count: CouponCountAggregateOutputType | null
+    _avg: CouponAvgAggregateOutputType | null
+    _sum: CouponSumAggregateOutputType | null
+    _min: CouponMinAggregateOutputType | null
+    _max: CouponMaxAggregateOutputType | null
+  }
+
+  type GetCouponGroupByPayload<T extends CouponGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CouponGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CouponGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CouponGroupByOutputType[P]>
+            : GetScalarType<T[P], CouponGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CouponSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    discount_value?: boolean
+    min_order_amount?: boolean
+    usage_limit?: boolean
+    end_date?: boolean
+    status?: boolean
+  }, ExtArgs["result"]["coupon"]>
+
+
+
+  export type CouponSelectScalar = {
+    id?: boolean
+    code?: boolean
+    discount_value?: boolean
+    min_order_amount?: boolean
+    usage_limit?: boolean
+    end_date?: boolean
+    status?: boolean
+  }
+
+  export type CouponOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "discount_value" | "min_order_amount" | "usage_limit" | "end_date" | "status", ExtArgs["result"]["coupon"]>
+
+  export type $CouponPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Coupon"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      code: string
+      discount_value: number
+      min_order_amount: number
+      usage_limit: number
+      end_date: Date
+      status: $Enums.CouponStatus
+    }, ExtArgs["result"]["coupon"]>
+    composites: {}
+  }
+
+  type CouponGetPayload<S extends boolean | null | undefined | CouponDefaultArgs> = $Result.GetResult<Prisma.$CouponPayload, S>
+
+  type CouponCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CouponFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CouponCountAggregateInputType | true
+    }
+
+  export interface CouponDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Coupon'], meta: { name: 'Coupon' } }
+    /**
+     * Find zero or one Coupon that matches the filter.
+     * @param {CouponFindUniqueArgs} args - Arguments to find a Coupon
+     * @example
+     * // Get one Coupon
+     * const coupon = await prisma.coupon.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CouponFindUniqueArgs>(args: SelectSubset<T, CouponFindUniqueArgs<ExtArgs>>): Prisma__CouponClient<$Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Coupon that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CouponFindUniqueOrThrowArgs} args - Arguments to find a Coupon
+     * @example
+     * // Get one Coupon
+     * const coupon = await prisma.coupon.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CouponFindUniqueOrThrowArgs>(args: SelectSubset<T, CouponFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CouponClient<$Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Coupon that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CouponFindFirstArgs} args - Arguments to find a Coupon
+     * @example
+     * // Get one Coupon
+     * const coupon = await prisma.coupon.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CouponFindFirstArgs>(args?: SelectSubset<T, CouponFindFirstArgs<ExtArgs>>): Prisma__CouponClient<$Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Coupon that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CouponFindFirstOrThrowArgs} args - Arguments to find a Coupon
+     * @example
+     * // Get one Coupon
+     * const coupon = await prisma.coupon.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CouponFindFirstOrThrowArgs>(args?: SelectSubset<T, CouponFindFirstOrThrowArgs<ExtArgs>>): Prisma__CouponClient<$Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Coupons that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CouponFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Coupons
+     * const coupons = await prisma.coupon.findMany()
+     * 
+     * // Get first 10 Coupons
+     * const coupons = await prisma.coupon.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const couponWithIdOnly = await prisma.coupon.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CouponFindManyArgs>(args?: SelectSubset<T, CouponFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Coupon.
+     * @param {CouponCreateArgs} args - Arguments to create a Coupon.
+     * @example
+     * // Create one Coupon
+     * const Coupon = await prisma.coupon.create({
+     *   data: {
+     *     // ... data to create a Coupon
+     *   }
+     * })
+     * 
+     */
+    create<T extends CouponCreateArgs>(args: SelectSubset<T, CouponCreateArgs<ExtArgs>>): Prisma__CouponClient<$Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Coupons.
+     * @param {CouponCreateManyArgs} args - Arguments to create many Coupons.
+     * @example
+     * // Create many Coupons
+     * const coupon = await prisma.coupon.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CouponCreateManyArgs>(args?: SelectSubset<T, CouponCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Coupon.
+     * @param {CouponDeleteArgs} args - Arguments to delete one Coupon.
+     * @example
+     * // Delete one Coupon
+     * const Coupon = await prisma.coupon.delete({
+     *   where: {
+     *     // ... filter to delete one Coupon
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CouponDeleteArgs>(args: SelectSubset<T, CouponDeleteArgs<ExtArgs>>): Prisma__CouponClient<$Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Coupon.
+     * @param {CouponUpdateArgs} args - Arguments to update one Coupon.
+     * @example
+     * // Update one Coupon
+     * const coupon = await prisma.coupon.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CouponUpdateArgs>(args: SelectSubset<T, CouponUpdateArgs<ExtArgs>>): Prisma__CouponClient<$Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Coupons.
+     * @param {CouponDeleteManyArgs} args - Arguments to filter Coupons to delete.
+     * @example
+     * // Delete a few Coupons
+     * const { count } = await prisma.coupon.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CouponDeleteManyArgs>(args?: SelectSubset<T, CouponDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Coupons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CouponUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Coupons
+     * const coupon = await prisma.coupon.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CouponUpdateManyArgs>(args: SelectSubset<T, CouponUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Coupon.
+     * @param {CouponUpsertArgs} args - Arguments to update or create a Coupon.
+     * @example
+     * // Update or create a Coupon
+     * const coupon = await prisma.coupon.upsert({
+     *   create: {
+     *     // ... data to create a Coupon
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Coupon we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CouponUpsertArgs>(args: SelectSubset<T, CouponUpsertArgs<ExtArgs>>): Prisma__CouponClient<$Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Coupons that matches the filter.
+     * @param {CouponFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const coupon = await prisma.coupon.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: CouponFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a Coupon.
+     * @param {CouponAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const coupon = await prisma.coupon.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: CouponAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of Coupons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CouponCountArgs} args - Arguments to filter Coupons to count.
+     * @example
+     * // Count the number of Coupons
+     * const count = await prisma.coupon.count({
+     *   where: {
+     *     // ... the filter for the Coupons we want to count
+     *   }
+     * })
+    **/
+    count<T extends CouponCountArgs>(
+      args?: Subset<T, CouponCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CouponCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Coupon.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CouponAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CouponAggregateArgs>(args: Subset<T, CouponAggregateArgs>): Prisma.PrismaPromise<GetCouponAggregateType<T>>
+
+    /**
+     * Group by Coupon.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CouponGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CouponGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CouponGroupByArgs['orderBy'] }
+        : { orderBy?: CouponGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CouponGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCouponGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Coupon model
+   */
+  readonly fields: CouponFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Coupon.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CouponClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Coupon model
+   */
+  interface CouponFieldRefs {
+    readonly id: FieldRef<"Coupon", 'String'>
+    readonly code: FieldRef<"Coupon", 'String'>
+    readonly discount_value: FieldRef<"Coupon", 'Float'>
+    readonly min_order_amount: FieldRef<"Coupon", 'Float'>
+    readonly usage_limit: FieldRef<"Coupon", 'Int'>
+    readonly end_date: FieldRef<"Coupon", 'DateTime'>
+    readonly status: FieldRef<"Coupon", 'CouponStatus'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Coupon findUnique
+   */
+  export type CouponFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Coupon
+     */
+    select?: CouponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Coupon
+     */
+    omit?: CouponOmit<ExtArgs> | null
+    /**
+     * Filter, which Coupon to fetch.
+     */
+    where: CouponWhereUniqueInput
+  }
+
+  /**
+   * Coupon findUniqueOrThrow
+   */
+  export type CouponFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Coupon
+     */
+    select?: CouponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Coupon
+     */
+    omit?: CouponOmit<ExtArgs> | null
+    /**
+     * Filter, which Coupon to fetch.
+     */
+    where: CouponWhereUniqueInput
+  }
+
+  /**
+   * Coupon findFirst
+   */
+  export type CouponFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Coupon
+     */
+    select?: CouponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Coupon
+     */
+    omit?: CouponOmit<ExtArgs> | null
+    /**
+     * Filter, which Coupon to fetch.
+     */
+    where?: CouponWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Coupons to fetch.
+     */
+    orderBy?: CouponOrderByWithRelationInput | CouponOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Coupons.
+     */
+    cursor?: CouponWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Coupons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Coupons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Coupons.
+     */
+    distinct?: CouponScalarFieldEnum | CouponScalarFieldEnum[]
+  }
+
+  /**
+   * Coupon findFirstOrThrow
+   */
+  export type CouponFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Coupon
+     */
+    select?: CouponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Coupon
+     */
+    omit?: CouponOmit<ExtArgs> | null
+    /**
+     * Filter, which Coupon to fetch.
+     */
+    where?: CouponWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Coupons to fetch.
+     */
+    orderBy?: CouponOrderByWithRelationInput | CouponOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Coupons.
+     */
+    cursor?: CouponWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Coupons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Coupons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Coupons.
+     */
+    distinct?: CouponScalarFieldEnum | CouponScalarFieldEnum[]
+  }
+
+  /**
+   * Coupon findMany
+   */
+  export type CouponFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Coupon
+     */
+    select?: CouponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Coupon
+     */
+    omit?: CouponOmit<ExtArgs> | null
+    /**
+     * Filter, which Coupons to fetch.
+     */
+    where?: CouponWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Coupons to fetch.
+     */
+    orderBy?: CouponOrderByWithRelationInput | CouponOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Coupons.
+     */
+    cursor?: CouponWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Coupons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Coupons.
+     */
+    skip?: number
+    distinct?: CouponScalarFieldEnum | CouponScalarFieldEnum[]
+  }
+
+  /**
+   * Coupon create
+   */
+  export type CouponCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Coupon
+     */
+    select?: CouponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Coupon
+     */
+    omit?: CouponOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Coupon.
+     */
+    data: XOR<CouponCreateInput, CouponUncheckedCreateInput>
+  }
+
+  /**
+   * Coupon createMany
+   */
+  export type CouponCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Coupons.
+     */
+    data: CouponCreateManyInput | CouponCreateManyInput[]
+  }
+
+  /**
+   * Coupon update
+   */
+  export type CouponUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Coupon
+     */
+    select?: CouponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Coupon
+     */
+    omit?: CouponOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Coupon.
+     */
+    data: XOR<CouponUpdateInput, CouponUncheckedUpdateInput>
+    /**
+     * Choose, which Coupon to update.
+     */
+    where: CouponWhereUniqueInput
+  }
+
+  /**
+   * Coupon updateMany
+   */
+  export type CouponUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Coupons.
+     */
+    data: XOR<CouponUpdateManyMutationInput, CouponUncheckedUpdateManyInput>
+    /**
+     * Filter which Coupons to update
+     */
+    where?: CouponWhereInput
+    /**
+     * Limit how many Coupons to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Coupon upsert
+   */
+  export type CouponUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Coupon
+     */
+    select?: CouponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Coupon
+     */
+    omit?: CouponOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Coupon to update in case it exists.
+     */
+    where: CouponWhereUniqueInput
+    /**
+     * In case the Coupon found by the `where` argument doesn't exist, create a new Coupon with this data.
+     */
+    create: XOR<CouponCreateInput, CouponUncheckedCreateInput>
+    /**
+     * In case the Coupon was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CouponUpdateInput, CouponUncheckedUpdateInput>
+  }
+
+  /**
+   * Coupon delete
+   */
+  export type CouponDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Coupon
+     */
+    select?: CouponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Coupon
+     */
+    omit?: CouponOmit<ExtArgs> | null
+    /**
+     * Filter which Coupon to delete.
+     */
+    where: CouponWhereUniqueInput
+  }
+
+  /**
+   * Coupon deleteMany
+   */
+  export type CouponDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Coupons to delete
+     */
+    where?: CouponWhereInput
+    /**
+     * Limit how many Coupons to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Coupon findRaw
+   */
+  export type CouponFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * Coupon aggregateRaw
+   */
+  export type CouponAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * Coupon without action
+   */
+  export type CouponDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Coupon
+     */
+    select?: CouponSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Coupon
+     */
+    omit?: CouponOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Poster
+   */
+
+  export type AggregatePoster = {
+    _count: PosterCountAggregateOutputType | null
+    _min: PosterMinAggregateOutputType | null
+    _max: PosterMaxAggregateOutputType | null
+  }
+
+  export type PosterMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    img: string | null
+  }
+
+  export type PosterMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    img: string | null
+  }
+
+  export type PosterCountAggregateOutputType = {
+    id: number
+    title: number
+    img: number
+    _all: number
+  }
+
+
+  export type PosterMinAggregateInputType = {
+    id?: true
+    title?: true
+    img?: true
+  }
+
+  export type PosterMaxAggregateInputType = {
+    id?: true
+    title?: true
+    img?: true
+  }
+
+  export type PosterCountAggregateInputType = {
+    id?: true
+    title?: true
+    img?: true
+    _all?: true
+  }
+
+  export type PosterAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Poster to aggregate.
+     */
+    where?: PosterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Posters to fetch.
+     */
+    orderBy?: PosterOrderByWithRelationInput | PosterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PosterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Posters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Posters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Posters
+    **/
+    _count?: true | PosterCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PosterMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PosterMaxAggregateInputType
+  }
+
+  export type GetPosterAggregateType<T extends PosterAggregateArgs> = {
+        [P in keyof T & keyof AggregatePoster]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePoster[P]>
+      : GetScalarType<T[P], AggregatePoster[P]>
+  }
+
+
+
+
+  export type PosterGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PosterWhereInput
+    orderBy?: PosterOrderByWithAggregationInput | PosterOrderByWithAggregationInput[]
+    by: PosterScalarFieldEnum[] | PosterScalarFieldEnum
+    having?: PosterScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PosterCountAggregateInputType | true
+    _min?: PosterMinAggregateInputType
+    _max?: PosterMaxAggregateInputType
+  }
+
+  export type PosterGroupByOutputType = {
+    id: string
+    title: string
+    img: string
+    _count: PosterCountAggregateOutputType | null
+    _min: PosterMinAggregateOutputType | null
+    _max: PosterMaxAggregateOutputType | null
+  }
+
+  type GetPosterGroupByPayload<T extends PosterGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PosterGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PosterGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PosterGroupByOutputType[P]>
+            : GetScalarType<T[P], PosterGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PosterSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    img?: boolean
+  }, ExtArgs["result"]["poster"]>
+
+
+
+  export type PosterSelectScalar = {
+    id?: boolean
+    title?: boolean
+    img?: boolean
+  }
+
+  export type PosterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "img", ExtArgs["result"]["poster"]>
+
+  export type $PosterPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Poster"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      img: string
+    }, ExtArgs["result"]["poster"]>
+    composites: {}
+  }
+
+  type PosterGetPayload<S extends boolean | null | undefined | PosterDefaultArgs> = $Result.GetResult<Prisma.$PosterPayload, S>
+
+  type PosterCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PosterFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PosterCountAggregateInputType | true
+    }
+
+  export interface PosterDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Poster'], meta: { name: 'Poster' } }
+    /**
+     * Find zero or one Poster that matches the filter.
+     * @param {PosterFindUniqueArgs} args - Arguments to find a Poster
+     * @example
+     * // Get one Poster
+     * const poster = await prisma.poster.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PosterFindUniqueArgs>(args: SelectSubset<T, PosterFindUniqueArgs<ExtArgs>>): Prisma__PosterClient<$Result.GetResult<Prisma.$PosterPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Poster that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PosterFindUniqueOrThrowArgs} args - Arguments to find a Poster
+     * @example
+     * // Get one Poster
+     * const poster = await prisma.poster.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PosterFindUniqueOrThrowArgs>(args: SelectSubset<T, PosterFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PosterClient<$Result.GetResult<Prisma.$PosterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Poster that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PosterFindFirstArgs} args - Arguments to find a Poster
+     * @example
+     * // Get one Poster
+     * const poster = await prisma.poster.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PosterFindFirstArgs>(args?: SelectSubset<T, PosterFindFirstArgs<ExtArgs>>): Prisma__PosterClient<$Result.GetResult<Prisma.$PosterPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Poster that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PosterFindFirstOrThrowArgs} args - Arguments to find a Poster
+     * @example
+     * // Get one Poster
+     * const poster = await prisma.poster.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PosterFindFirstOrThrowArgs>(args?: SelectSubset<T, PosterFindFirstOrThrowArgs<ExtArgs>>): Prisma__PosterClient<$Result.GetResult<Prisma.$PosterPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Posters that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PosterFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Posters
+     * const posters = await prisma.poster.findMany()
+     * 
+     * // Get first 10 Posters
+     * const posters = await prisma.poster.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const posterWithIdOnly = await prisma.poster.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PosterFindManyArgs>(args?: SelectSubset<T, PosterFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PosterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Poster.
+     * @param {PosterCreateArgs} args - Arguments to create a Poster.
+     * @example
+     * // Create one Poster
+     * const Poster = await prisma.poster.create({
+     *   data: {
+     *     // ... data to create a Poster
+     *   }
+     * })
+     * 
+     */
+    create<T extends PosterCreateArgs>(args: SelectSubset<T, PosterCreateArgs<ExtArgs>>): Prisma__PosterClient<$Result.GetResult<Prisma.$PosterPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Posters.
+     * @param {PosterCreateManyArgs} args - Arguments to create many Posters.
+     * @example
+     * // Create many Posters
+     * const poster = await prisma.poster.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PosterCreateManyArgs>(args?: SelectSubset<T, PosterCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Poster.
+     * @param {PosterDeleteArgs} args - Arguments to delete one Poster.
+     * @example
+     * // Delete one Poster
+     * const Poster = await prisma.poster.delete({
+     *   where: {
+     *     // ... filter to delete one Poster
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PosterDeleteArgs>(args: SelectSubset<T, PosterDeleteArgs<ExtArgs>>): Prisma__PosterClient<$Result.GetResult<Prisma.$PosterPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Poster.
+     * @param {PosterUpdateArgs} args - Arguments to update one Poster.
+     * @example
+     * // Update one Poster
+     * const poster = await prisma.poster.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PosterUpdateArgs>(args: SelectSubset<T, PosterUpdateArgs<ExtArgs>>): Prisma__PosterClient<$Result.GetResult<Prisma.$PosterPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Posters.
+     * @param {PosterDeleteManyArgs} args - Arguments to filter Posters to delete.
+     * @example
+     * // Delete a few Posters
+     * const { count } = await prisma.poster.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PosterDeleteManyArgs>(args?: SelectSubset<T, PosterDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Posters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PosterUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Posters
+     * const poster = await prisma.poster.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PosterUpdateManyArgs>(args: SelectSubset<T, PosterUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Poster.
+     * @param {PosterUpsertArgs} args - Arguments to update or create a Poster.
+     * @example
+     * // Update or create a Poster
+     * const poster = await prisma.poster.upsert({
+     *   create: {
+     *     // ... data to create a Poster
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Poster we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PosterUpsertArgs>(args: SelectSubset<T, PosterUpsertArgs<ExtArgs>>): Prisma__PosterClient<$Result.GetResult<Prisma.$PosterPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Posters that matches the filter.
+     * @param {PosterFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const poster = await prisma.poster.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: PosterFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a Poster.
+     * @param {PosterAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const poster = await prisma.poster.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: PosterAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of Posters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PosterCountArgs} args - Arguments to filter Posters to count.
+     * @example
+     * // Count the number of Posters
+     * const count = await prisma.poster.count({
+     *   where: {
+     *     // ... the filter for the Posters we want to count
+     *   }
+     * })
+    **/
+    count<T extends PosterCountArgs>(
+      args?: Subset<T, PosterCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PosterCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Poster.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PosterAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PosterAggregateArgs>(args: Subset<T, PosterAggregateArgs>): Prisma.PrismaPromise<GetPosterAggregateType<T>>
+
+    /**
+     * Group by Poster.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PosterGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PosterGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PosterGroupByArgs['orderBy'] }
+        : { orderBy?: PosterGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PosterGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPosterGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Poster model
+   */
+  readonly fields: PosterFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Poster.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PosterClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Poster model
+   */
+  interface PosterFieldRefs {
+    readonly id: FieldRef<"Poster", 'String'>
+    readonly title: FieldRef<"Poster", 'String'>
+    readonly img: FieldRef<"Poster", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Poster findUnique
+   */
+  export type PosterFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Poster
+     */
+    select?: PosterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Poster
+     */
+    omit?: PosterOmit<ExtArgs> | null
+    /**
+     * Filter, which Poster to fetch.
+     */
+    where: PosterWhereUniqueInput
+  }
+
+  /**
+   * Poster findUniqueOrThrow
+   */
+  export type PosterFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Poster
+     */
+    select?: PosterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Poster
+     */
+    omit?: PosterOmit<ExtArgs> | null
+    /**
+     * Filter, which Poster to fetch.
+     */
+    where: PosterWhereUniqueInput
+  }
+
+  /**
+   * Poster findFirst
+   */
+  export type PosterFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Poster
+     */
+    select?: PosterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Poster
+     */
+    omit?: PosterOmit<ExtArgs> | null
+    /**
+     * Filter, which Poster to fetch.
+     */
+    where?: PosterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Posters to fetch.
+     */
+    orderBy?: PosterOrderByWithRelationInput | PosterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Posters.
+     */
+    cursor?: PosterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Posters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Posters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Posters.
+     */
+    distinct?: PosterScalarFieldEnum | PosterScalarFieldEnum[]
+  }
+
+  /**
+   * Poster findFirstOrThrow
+   */
+  export type PosterFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Poster
+     */
+    select?: PosterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Poster
+     */
+    omit?: PosterOmit<ExtArgs> | null
+    /**
+     * Filter, which Poster to fetch.
+     */
+    where?: PosterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Posters to fetch.
+     */
+    orderBy?: PosterOrderByWithRelationInput | PosterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Posters.
+     */
+    cursor?: PosterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Posters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Posters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Posters.
+     */
+    distinct?: PosterScalarFieldEnum | PosterScalarFieldEnum[]
+  }
+
+  /**
+   * Poster findMany
+   */
+  export type PosterFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Poster
+     */
+    select?: PosterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Poster
+     */
+    omit?: PosterOmit<ExtArgs> | null
+    /**
+     * Filter, which Posters to fetch.
+     */
+    where?: PosterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Posters to fetch.
+     */
+    orderBy?: PosterOrderByWithRelationInput | PosterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Posters.
+     */
+    cursor?: PosterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Posters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Posters.
+     */
+    skip?: number
+    distinct?: PosterScalarFieldEnum | PosterScalarFieldEnum[]
+  }
+
+  /**
+   * Poster create
+   */
+  export type PosterCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Poster
+     */
+    select?: PosterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Poster
+     */
+    omit?: PosterOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Poster.
+     */
+    data: XOR<PosterCreateInput, PosterUncheckedCreateInput>
+  }
+
+  /**
+   * Poster createMany
+   */
+  export type PosterCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Posters.
+     */
+    data: PosterCreateManyInput | PosterCreateManyInput[]
+  }
+
+  /**
+   * Poster update
+   */
+  export type PosterUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Poster
+     */
+    select?: PosterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Poster
+     */
+    omit?: PosterOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Poster.
+     */
+    data: XOR<PosterUpdateInput, PosterUncheckedUpdateInput>
+    /**
+     * Choose, which Poster to update.
+     */
+    where: PosterWhereUniqueInput
+  }
+
+  /**
+   * Poster updateMany
+   */
+  export type PosterUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Posters.
+     */
+    data: XOR<PosterUpdateManyMutationInput, PosterUncheckedUpdateManyInput>
+    /**
+     * Filter which Posters to update
+     */
+    where?: PosterWhereInput
+    /**
+     * Limit how many Posters to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Poster upsert
+   */
+  export type PosterUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Poster
+     */
+    select?: PosterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Poster
+     */
+    omit?: PosterOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Poster to update in case it exists.
+     */
+    where: PosterWhereUniqueInput
+    /**
+     * In case the Poster found by the `where` argument doesn't exist, create a new Poster with this data.
+     */
+    create: XOR<PosterCreateInput, PosterUncheckedCreateInput>
+    /**
+     * In case the Poster was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PosterUpdateInput, PosterUncheckedUpdateInput>
+  }
+
+  /**
+   * Poster delete
+   */
+  export type PosterDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Poster
+     */
+    select?: PosterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Poster
+     */
+    omit?: PosterOmit<ExtArgs> | null
+    /**
+     * Filter which Poster to delete.
+     */
+    where: PosterWhereUniqueInput
+  }
+
+  /**
+   * Poster deleteMany
+   */
+  export type PosterDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Posters to delete
+     */
+    where?: PosterWhereInput
+    /**
+     * Limit how many Posters to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Poster findRaw
+   */
+  export type PosterFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * Poster aggregateRaw
+   */
+  export type PosterAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * Poster without action
+   */
+  export type PosterDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Poster
+     */
+    select?: PosterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Poster
+     */
+    omit?: PosterOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -12150,6 +14250,28 @@ export namespace Prisma {
   };
 
   export type FilterCategoryScalarFieldEnum = (typeof FilterCategoryScalarFieldEnum)[keyof typeof FilterCategoryScalarFieldEnum]
+
+
+  export const CouponScalarFieldEnum: {
+    id: 'id',
+    code: 'code',
+    discount_value: 'discount_value',
+    min_order_amount: 'min_order_amount',
+    usage_limit: 'usage_limit',
+    end_date: 'end_date',
+    status: 'status'
+  };
+
+  export type CouponScalarFieldEnum = (typeof CouponScalarFieldEnum)[keyof typeof CouponScalarFieldEnum]
+
+
+  export const PosterScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    img: 'img'
+  };
+
+  export type PosterScalarFieldEnum = (typeof PosterScalarFieldEnum)[keyof typeof PosterScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -12275,6 +14397,20 @@ export namespace Prisma {
    * Reference to a field of type 'TypeOfFilter[]'
    */
   export type ListEnumTypeOfFilterFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TypeOfFilter[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'CouponStatus'
+   */
+  export type EnumCouponStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CouponStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'CouponStatus[]'
+   */
+  export type ListEnumCouponStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CouponStatus[]'>
     
   /**
    * Deep Input Types
@@ -12870,6 +15006,112 @@ export namespace Prisma {
     filterId?: StringWithAggregatesFilter<"FilterCategory"> | string
   }
 
+  export type CouponWhereInput = {
+    AND?: CouponWhereInput | CouponWhereInput[]
+    OR?: CouponWhereInput[]
+    NOT?: CouponWhereInput | CouponWhereInput[]
+    id?: StringFilter<"Coupon"> | string
+    code?: StringFilter<"Coupon"> | string
+    discount_value?: FloatFilter<"Coupon"> | number
+    min_order_amount?: FloatFilter<"Coupon"> | number
+    usage_limit?: IntFilter<"Coupon"> | number
+    end_date?: DateTimeFilter<"Coupon"> | Date | string
+    status?: EnumCouponStatusFilter<"Coupon"> | $Enums.CouponStatus
+  }
+
+  export type CouponOrderByWithRelationInput = {
+    id?: SortOrder
+    code?: SortOrder
+    discount_value?: SortOrder
+    min_order_amount?: SortOrder
+    usage_limit?: SortOrder
+    end_date?: SortOrder
+    status?: SortOrder
+  }
+
+  export type CouponWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    code?: string
+    AND?: CouponWhereInput | CouponWhereInput[]
+    OR?: CouponWhereInput[]
+    NOT?: CouponWhereInput | CouponWhereInput[]
+    discount_value?: FloatFilter<"Coupon"> | number
+    min_order_amount?: FloatFilter<"Coupon"> | number
+    usage_limit?: IntFilter<"Coupon"> | number
+    end_date?: DateTimeFilter<"Coupon"> | Date | string
+    status?: EnumCouponStatusFilter<"Coupon"> | $Enums.CouponStatus
+  }, "id" | "code">
+
+  export type CouponOrderByWithAggregationInput = {
+    id?: SortOrder
+    code?: SortOrder
+    discount_value?: SortOrder
+    min_order_amount?: SortOrder
+    usage_limit?: SortOrder
+    end_date?: SortOrder
+    status?: SortOrder
+    _count?: CouponCountOrderByAggregateInput
+    _avg?: CouponAvgOrderByAggregateInput
+    _max?: CouponMaxOrderByAggregateInput
+    _min?: CouponMinOrderByAggregateInput
+    _sum?: CouponSumOrderByAggregateInput
+  }
+
+  export type CouponScalarWhereWithAggregatesInput = {
+    AND?: CouponScalarWhereWithAggregatesInput | CouponScalarWhereWithAggregatesInput[]
+    OR?: CouponScalarWhereWithAggregatesInput[]
+    NOT?: CouponScalarWhereWithAggregatesInput | CouponScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Coupon"> | string
+    code?: StringWithAggregatesFilter<"Coupon"> | string
+    discount_value?: FloatWithAggregatesFilter<"Coupon"> | number
+    min_order_amount?: FloatWithAggregatesFilter<"Coupon"> | number
+    usage_limit?: IntWithAggregatesFilter<"Coupon"> | number
+    end_date?: DateTimeWithAggregatesFilter<"Coupon"> | Date | string
+    status?: EnumCouponStatusWithAggregatesFilter<"Coupon"> | $Enums.CouponStatus
+  }
+
+  export type PosterWhereInput = {
+    AND?: PosterWhereInput | PosterWhereInput[]
+    OR?: PosterWhereInput[]
+    NOT?: PosterWhereInput | PosterWhereInput[]
+    id?: StringFilter<"Poster"> | string
+    title?: StringFilter<"Poster"> | string
+    img?: StringFilter<"Poster"> | string
+  }
+
+  export type PosterOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    img?: SortOrder
+  }
+
+  export type PosterWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PosterWhereInput | PosterWhereInput[]
+    OR?: PosterWhereInput[]
+    NOT?: PosterWhereInput | PosterWhereInput[]
+    title?: StringFilter<"Poster"> | string
+    img?: StringFilter<"Poster"> | string
+  }, "id">
+
+  export type PosterOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    img?: SortOrder
+    _count?: PosterCountOrderByAggregateInput
+    _max?: PosterMaxOrderByAggregateInput
+    _min?: PosterMinOrderByAggregateInput
+  }
+
+  export type PosterScalarWhereWithAggregatesInput = {
+    AND?: PosterScalarWhereWithAggregatesInput | PosterScalarWhereWithAggregatesInput[]
+    OR?: PosterScalarWhereWithAggregatesInput[]
+    NOT?: PosterScalarWhereWithAggregatesInput | PosterScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Poster"> | string
+    title?: StringWithAggregatesFilter<"Poster"> | string
+    img?: StringWithAggregatesFilter<"Poster"> | string
+  }
+
   export type CommentsCreateInput = {
     id?: string
     title: string
@@ -13420,6 +15662,110 @@ export namespace Prisma {
   export type FilterCategoryUncheckedUpdateManyInput = {
     categoryId?: StringFieldUpdateOperationsInput | string
     filterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CouponCreateInput = {
+    id?: string
+    code: string
+    discount_value: number
+    min_order_amount: number
+    usage_limit: number
+    end_date: Date | string
+    status?: $Enums.CouponStatus
+  }
+
+  export type CouponUncheckedCreateInput = {
+    id?: string
+    code: string
+    discount_value: number
+    min_order_amount: number
+    usage_limit: number
+    end_date: Date | string
+    status?: $Enums.CouponStatus
+  }
+
+  export type CouponUpdateInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    discount_value?: FloatFieldUpdateOperationsInput | number
+    min_order_amount?: FloatFieldUpdateOperationsInput | number
+    usage_limit?: IntFieldUpdateOperationsInput | number
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumCouponStatusFieldUpdateOperationsInput | $Enums.CouponStatus
+  }
+
+  export type CouponUncheckedUpdateInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    discount_value?: FloatFieldUpdateOperationsInput | number
+    min_order_amount?: FloatFieldUpdateOperationsInput | number
+    usage_limit?: IntFieldUpdateOperationsInput | number
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumCouponStatusFieldUpdateOperationsInput | $Enums.CouponStatus
+  }
+
+  export type CouponCreateManyInput = {
+    id?: string
+    code: string
+    discount_value: number
+    min_order_amount: number
+    usage_limit: number
+    end_date: Date | string
+    status?: $Enums.CouponStatus
+  }
+
+  export type CouponUpdateManyMutationInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    discount_value?: FloatFieldUpdateOperationsInput | number
+    min_order_amount?: FloatFieldUpdateOperationsInput | number
+    usage_limit?: IntFieldUpdateOperationsInput | number
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumCouponStatusFieldUpdateOperationsInput | $Enums.CouponStatus
+  }
+
+  export type CouponUncheckedUpdateManyInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    discount_value?: FloatFieldUpdateOperationsInput | number
+    min_order_amount?: FloatFieldUpdateOperationsInput | number
+    usage_limit?: IntFieldUpdateOperationsInput | number
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumCouponStatusFieldUpdateOperationsInput | $Enums.CouponStatus
+  }
+
+  export type PosterCreateInput = {
+    id?: string
+    title: string
+    img: string
+  }
+
+  export type PosterUncheckedCreateInput = {
+    id?: string
+    title: string
+    img: string
+  }
+
+  export type PosterUpdateInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    img?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PosterUncheckedUpdateInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    img?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PosterCreateManyInput = {
+    id?: string
+    title: string
+    img: string
+  }
+
+  export type PosterUpdateManyMutationInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    img?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PosterUncheckedUpdateManyInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    img?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -14018,6 +16364,83 @@ export namespace Prisma {
     id?: SortOrder
     categoryId?: SortOrder
     filterId?: SortOrder
+  }
+
+  export type EnumCouponStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.CouponStatus | EnumCouponStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CouponStatus[] | ListEnumCouponStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CouponStatus[] | ListEnumCouponStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCouponStatusFilter<$PrismaModel> | $Enums.CouponStatus
+  }
+
+  export type CouponCountOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    discount_value?: SortOrder
+    min_order_amount?: SortOrder
+    usage_limit?: SortOrder
+    end_date?: SortOrder
+    status?: SortOrder
+  }
+
+  export type CouponAvgOrderByAggregateInput = {
+    discount_value?: SortOrder
+    min_order_amount?: SortOrder
+    usage_limit?: SortOrder
+  }
+
+  export type CouponMaxOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    discount_value?: SortOrder
+    min_order_amount?: SortOrder
+    usage_limit?: SortOrder
+    end_date?: SortOrder
+    status?: SortOrder
+  }
+
+  export type CouponMinOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    discount_value?: SortOrder
+    min_order_amount?: SortOrder
+    usage_limit?: SortOrder
+    end_date?: SortOrder
+    status?: SortOrder
+  }
+
+  export type CouponSumOrderByAggregateInput = {
+    discount_value?: SortOrder
+    min_order_amount?: SortOrder
+    usage_limit?: SortOrder
+  }
+
+  export type EnumCouponStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CouponStatus | EnumCouponStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CouponStatus[] | ListEnumCouponStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CouponStatus[] | ListEnumCouponStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCouponStatusWithAggregatesFilter<$PrismaModel> | $Enums.CouponStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCouponStatusFilter<$PrismaModel>
+    _max?: NestedEnumCouponStatusFilter<$PrismaModel>
+  }
+
+  export type PosterCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    img?: SortOrder
+  }
+
+  export type PosterMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    img?: SortOrder
+  }
+
+  export type PosterMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    img?: SortOrder
   }
 
   export type ProductCreateNestedOneWithoutCommentsInput = {
@@ -14639,6 +17062,10 @@ export namespace Prisma {
     update?: XOR<XOR<FilterTypeUpdateToOneWithWhereWithoutFilterCategoryInput, FilterTypeUpdateWithoutFilterCategoryInput>, FilterTypeUncheckedUpdateWithoutFilterCategoryInput>
   }
 
+  export type EnumCouponStatusFieldUpdateOperationsInput = {
+    set?: $Enums.CouponStatus
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -14854,6 +17281,23 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTypeOfFilterFilter<$PrismaModel>
     _max?: NestedEnumTypeOfFilterFilter<$PrismaModel>
+  }
+
+  export type NestedEnumCouponStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.CouponStatus | EnumCouponStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CouponStatus[] | ListEnumCouponStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CouponStatus[] | ListEnumCouponStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCouponStatusFilter<$PrismaModel> | $Enums.CouponStatus
+  }
+
+  export type NestedEnumCouponStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CouponStatus | EnumCouponStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CouponStatus[] | ListEnumCouponStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CouponStatus[] | ListEnumCouponStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCouponStatusWithAggregatesFilter<$PrismaModel> | $Enums.CouponStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCouponStatusFilter<$PrismaModel>
+    _max?: NestedEnumCouponStatusFilter<$PrismaModel>
   }
 
   export type ProductCreateWithoutCommentsInput = {

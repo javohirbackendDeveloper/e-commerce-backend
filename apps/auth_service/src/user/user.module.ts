@@ -4,9 +4,16 @@ import { UserController } from "./user.controller";
 import { PrismaService } from "apps/auth_service/prisma/prisma.service";
 import { JwtService } from "@nestjs/jwt";
 import { AdminService } from "../admin/admin.service";
+import { CloudinaryService } from "../cloudinary/cloudinary.service";
 
 @Module({
   controllers: [UserController],
-  providers: [UserService, PrismaService, JwtService, AdminService],
+  providers: [
+    UserService,
+    PrismaService,
+    JwtService,
+    AdminService,
+    CloudinaryService,
+  ],
 })
 export class UserModule {}

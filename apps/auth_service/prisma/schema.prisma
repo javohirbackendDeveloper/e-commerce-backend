@@ -45,6 +45,7 @@ model Admin {
    last_name String?  
    phone_number String
    role Roles @default(Admin)
+   profileImg String?
 }
 
 model PunktAdmin {

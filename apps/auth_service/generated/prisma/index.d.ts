@@ -228,8 +228,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.7.0
-   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+   * Prisma Client JS version: 6.8.2
+   * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
    */
   export type PrismaVersion = {
     client: string
@@ -2019,6 +2019,7 @@ export namespace Prisma {
     last_name: string | null
     phone_number: string | null
     role: $Enums.Roles | null
+    profileImg: string | null
   }
 
   export type AdminMaxAggregateOutputType = {
@@ -2029,6 +2030,7 @@ export namespace Prisma {
     last_name: string | null
     phone_number: string | null
     role: $Enums.Roles | null
+    profileImg: string | null
   }
 
   export type AdminCountAggregateOutputType = {
@@ -2039,6 +2041,7 @@ export namespace Prisma {
     last_name: number
     phone_number: number
     role: number
+    profileImg: number
     _all: number
   }
 
@@ -2051,6 +2054,7 @@ export namespace Prisma {
     last_name?: true
     phone_number?: true
     role?: true
+    profileImg?: true
   }
 
   export type AdminMaxAggregateInputType = {
@@ -2061,6 +2065,7 @@ export namespace Prisma {
     last_name?: true
     phone_number?: true
     role?: true
+    profileImg?: true
   }
 
   export type AdminCountAggregateInputType = {
@@ -2071,6 +2076,7 @@ export namespace Prisma {
     last_name?: true
     phone_number?: true
     role?: true
+    profileImg?: true
     _all?: true
   }
 
@@ -2154,6 +2160,7 @@ export namespace Prisma {
     last_name: string | null
     phone_number: string
     role: $Enums.Roles
+    profileImg: string | null
     _count: AdminCountAggregateOutputType | null
     _min: AdminMinAggregateOutputType | null
     _max: AdminMaxAggregateOutputType | null
@@ -2181,6 +2188,7 @@ export namespace Prisma {
     last_name?: boolean
     phone_number?: boolean
     role?: boolean
+    profileImg?: boolean
   }, ExtArgs["result"]["admin"]>
 
 
@@ -2193,9 +2201,10 @@ export namespace Prisma {
     last_name?: boolean
     phone_number?: boolean
     role?: boolean
+    profileImg?: boolean
   }
 
-  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "password" | "first_name" | "last_name" | "phone_number" | "role", ExtArgs["result"]["admin"]>
+  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "password" | "first_name" | "last_name" | "phone_number" | "role" | "profileImg", ExtArgs["result"]["admin"]>
 
   export type $AdminPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Admin"
@@ -2208,6 +2217,7 @@ export namespace Prisma {
       last_name: string | null
       phone_number: string
       role: $Enums.Roles
+      profileImg: string | null
     }, ExtArgs["result"]["admin"]>
     composites: {}
   }
@@ -2607,6 +2617,7 @@ export namespace Prisma {
     readonly last_name: FieldRef<"Admin", 'String'>
     readonly phone_number: FieldRef<"Admin", 'String'>
     readonly role: FieldRef<"Admin", 'Roles'>
+    readonly profileImg: FieldRef<"Admin", 'String'>
   }
     
 
@@ -3946,7 +3957,8 @@ export namespace Prisma {
     first_name: 'first_name',
     last_name: 'last_name',
     phone_number: 'phone_number',
-    role: 'role'
+    role: 'role',
+    profileImg: 'profileImg'
   };
 
   export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
@@ -4115,6 +4127,7 @@ export namespace Prisma {
     last_name?: StringNullableFilter<"Admin"> | string | null
     phone_number?: StringFilter<"Admin"> | string
     role?: EnumRolesFilter<"Admin"> | $Enums.Roles
+    profileImg?: StringNullableFilter<"Admin"> | string | null
   }
 
   export type AdminOrderByWithRelationInput = {
@@ -4125,6 +4138,7 @@ export namespace Prisma {
     last_name?: SortOrder
     phone_number?: SortOrder
     role?: SortOrder
+    profileImg?: SortOrder
   }
 
   export type AdminWhereUniqueInput = Prisma.AtLeast<{
@@ -4138,6 +4152,7 @@ export namespace Prisma {
     last_name?: StringNullableFilter<"Admin"> | string | null
     phone_number?: StringFilter<"Admin"> | string
     role?: EnumRolesFilter<"Admin"> | $Enums.Roles
+    profileImg?: StringNullableFilter<"Admin"> | string | null
   }, "id" | "username">
 
   export type AdminOrderByWithAggregationInput = {
@@ -4148,6 +4163,7 @@ export namespace Prisma {
     last_name?: SortOrder
     phone_number?: SortOrder
     role?: SortOrder
+    profileImg?: SortOrder
     _count?: AdminCountOrderByAggregateInput
     _max?: AdminMaxOrderByAggregateInput
     _min?: AdminMinOrderByAggregateInput
@@ -4164,6 +4180,7 @@ export namespace Prisma {
     last_name?: StringNullableWithAggregatesFilter<"Admin"> | string | null
     phone_number?: StringWithAggregatesFilter<"Admin"> | string
     role?: EnumRolesWithAggregatesFilter<"Admin"> | $Enums.Roles
+    profileImg?: StringNullableWithAggregatesFilter<"Admin"> | string | null
   }
 
   export type PunktAdminWhereInput = {
@@ -4321,6 +4338,7 @@ export namespace Prisma {
     last_name?: string | null
     phone_number: string
     role?: $Enums.Roles
+    profileImg?: string | null
   }
 
   export type AdminUncheckedCreateInput = {
@@ -4331,6 +4349,7 @@ export namespace Prisma {
     last_name?: string | null
     phone_number: string
     role?: $Enums.Roles
+    profileImg?: string | null
   }
 
   export type AdminUpdateInput = {
@@ -4340,6 +4359,7 @@ export namespace Prisma {
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
     phone_number?: StringFieldUpdateOperationsInput | string
     role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
+    profileImg?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AdminUncheckedUpdateInput = {
@@ -4349,6 +4369,7 @@ export namespace Prisma {
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
     phone_number?: StringFieldUpdateOperationsInput | string
     role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
+    profileImg?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AdminCreateManyInput = {
@@ -4359,6 +4380,7 @@ export namespace Prisma {
     last_name?: string | null
     phone_number: string
     role?: $Enums.Roles
+    profileImg?: string | null
   }
 
   export type AdminUpdateManyMutationInput = {
@@ -4368,6 +4390,7 @@ export namespace Prisma {
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
     phone_number?: StringFieldUpdateOperationsInput | string
     role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
+    profileImg?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AdminUncheckedUpdateManyInput = {
@@ -4377,6 +4400,7 @@ export namespace Prisma {
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
     phone_number?: StringFieldUpdateOperationsInput | string
     role?: EnumRolesFieldUpdateOperationsInput | $Enums.Roles
+    profileImg?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PunktAdminCreateInput = {
@@ -4581,6 +4605,7 @@ export namespace Prisma {
     last_name?: SortOrder
     phone_number?: SortOrder
     role?: SortOrder
+    profileImg?: SortOrder
   }
 
   export type AdminMaxOrderByAggregateInput = {
@@ -4591,6 +4616,7 @@ export namespace Prisma {
     last_name?: SortOrder
     phone_number?: SortOrder
     role?: SortOrder
+    profileImg?: SortOrder
   }
 
   export type AdminMinOrderByAggregateInput = {
@@ -4601,6 +4627,7 @@ export namespace Prisma {
     last_name?: SortOrder
     phone_number?: SortOrder
     role?: SortOrder
+    profileImg?: SortOrder
   }
 
   export type PunktAdminCountOrderByAggregateInput = {

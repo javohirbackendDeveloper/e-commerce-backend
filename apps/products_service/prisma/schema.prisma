@@ -180,3 +180,33 @@ model FilterCategory{
 }
 
 
+
+
+
+// coupons part
+
+
+
+enum CouponStatus {
+  FAOL
+  NOFAOL
+}
+model Coupon {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    code String @unique
+    discount_value Float
+    min_order_amount Float
+    usage_limit Int
+    end_date DateTime
+    status CouponStatus @default(FAOL)
+}
+
+
+
+// Posters
+
+model Poster {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String 
+  img String
+}

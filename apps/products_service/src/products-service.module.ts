@@ -11,6 +11,8 @@ import { CloudinaryModule } from "./cloudinary/cloudinary.module";
 import { BrandModule } from "./brand/brand.module";
 import { RmqModule, RmqService } from "libs/common/src";
 import { FiltersModule } from "./filters/filters.module";
+import { CouponsModule } from './coupons/coupons.module';
+import { PosterModule } from './poster/poster.module';
 
 @Module({
   imports: [
@@ -32,6 +34,8 @@ import { FiltersModule } from "./filters/filters.module";
     CloudinaryModule,
     BrandModule,
     FiltersModule,
+    CouponsModule,
+    PosterModule,
   ],
   controllers: [],
   providers: [PrismaService, RmqService],

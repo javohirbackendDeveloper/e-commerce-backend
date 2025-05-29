@@ -5,10 +5,13 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  Patch,
   Post,
   Req,
   Res,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from "@nestjs/common";
 import { Request, Response } from "express";
 import { AdminService } from "./admin.service";
@@ -22,6 +25,10 @@ import {
 } from "@nestjs/swagger";
 import { ReturnAdminDto, ReturnLoginDto } from "./dto/return.dto";
 import { AdminGuard } from "../guards/admin-auth.guard";
+import { UpdateAdmin } from "./dto/update.dto";
+import { AdminRequest } from "./interface";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { ChangePassword } from "./dto/changePassword.dto";
 
 @ApiTags("auth_service/admin")
 @Controller("admin")
@@ -127,5 +134,62 @@ export class AdminController {
   async getAdminByToken(@Req() req: Request) {
     const admin = (req as any).admin;
     return admin;
+  }
+
+  @ApiOperation({ summary: "Update admin details" })
+  @ApiOkResponse({
+    description: "Admin data updated successfully",
+    type: UpdateAdmin,
+  })
+  @Patch("updateAdmin")
+  @UseGuards(AdminGuard)
+  @HttpCode(HttpStatus.OK)
+  async updateAdmin(@Req() req: AdminRequest, @Body() data: UpdateAdmin) {
+    return this.adminService.updateAccount(req, data);
+  }
+
+  @ApiOperation({ summary: "Update admin profile image" })
+  @ApiOkResponse({
+    description: "Admin data updated successfully",
+    type: UpdateAdmin,
+  })
+  @Patch("updateProfileImage")
+  @UseInterceptors(FileInterceptor("image"))
+  @UseGuards(AdminGuard)
+  @HttpCode(HttpStatus.OK)
+  async uploadProfileImage(
+    @Req() req: AdminRequest,
+    @UploadedFile() file: Express.Multer.File
+  ) {
+    console.log("Request came to here", file);
+
+    return this.adminService.uploadProfileImage(file, req);
+  }
+
+  @ApiOperation({ summary: "delete admin profile image" })
+  @ApiOkResponse({
+    description: "Admin data deleted successfully",
+    type: UpdateAdmin,
+  })
+  @Patch("deleteProfileImage")
+  @UseGuards(AdminGuard)
+  @HttpCode(HttpStatus.OK)
+  async deleteProfileImage(@Req() req: AdminRequest) {
+    return this.adminService.deleteProfileImage(req);
+  }
+
+  @ApiOperation({ summary: "delete admin profile image" })
+  @ApiOkResponse({
+    description: "Admin data deleted successfully",
+    type: UpdateAdmin,
+  })
+  @Patch("changePassword")
+  @UseGuards(AdminGuard)
+  @HttpCode(HttpStatus.OK)
+  async changePassword(
+    @Req() req: AdminRequest,
+    @Body() changePAsswordDto: ChangePassword
+  ) {
+    return this.adminService.changePassword(req, changePAsswordDto);
   }
 }
