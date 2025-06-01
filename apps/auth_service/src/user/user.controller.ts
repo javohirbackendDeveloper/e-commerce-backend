@@ -113,4 +113,22 @@ export class UserController {
   async logoutAdmin(@Res({ passthrough: true }) res: Response) {
     return this.userService.logoutAdmin(res);
   }
+
+  @ApiOperation({ summary: "Get user details by token" })
+  @ApiOkResponse({
+    description: "User data retrieved successfully",
+    type: ReturnUserDto,
+  })
+  @ApiBadRequestResponse({
+    description: "Invalid token or user not found",
+  })
+  @Get("getUserByToken")
+  @UseGuards(UserGuard)
+  @HttpCode(HttpStatus.OK)
+  async getUserByToken(@Req() req: Request) {
+    console.log();
+    
+    const user = (req as any).user;
+    return user;
+  }
 }

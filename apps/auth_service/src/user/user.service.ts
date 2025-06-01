@@ -11,11 +11,12 @@ import {
   ReturnLoginDto,
   ReturnLogoutDto,
   ReturnMessageDto,
+  ReturnRegisterDto,
   ReturnUserDto,
 } from "./dto/return.dto";
 import { PrismaService } from "apps/auth_service/prisma/prisma.service";
 import { compare, hash } from "bcryptjs";
-import { Prisma } from "apps/auth_service/generated/prisma";
+import { Prisma, User } from "apps/auth_service/generated/prisma";
 import { CreateToken } from "../token/createToken";
 import { ConfigService } from "@nestjs/config";
 import { Response } from "express";
@@ -31,7 +32,7 @@ export class UserService {
     private readonly jwtService: JwtService
   ) {}
 
-  async userRegister(createUserDto: CreateUserDto): Promise<ReturnMessageDto> {
+  async userRegister(createUserDto: CreateUserDto): Promise<ReturnRegisterDto> {
     try {
       const { password, phone_number, username } = createUserDto;
 
@@ -57,12 +58,8 @@ export class UserService {
           username: true,
         },
       });
-      return {
-        message: "Siz muvaffaqiyatli ro'yxatdan o'tdingiz",
-        success: true,
-        statusCode: 201,
-        data: createdUser,
-      };
+
+      return createdUser;
     } catch (error) {
       this.logger.error(`Registration failed : ${error.message}`, error.stack);
       if (error instanceof Prisma.PrismaClientKnownRequestError) {

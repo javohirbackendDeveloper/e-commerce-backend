@@ -22,6 +22,7 @@ export class UserGuard implements CanActivate {
       const user = await this.userService.getUser(decode.id);
       if (!user) return false;
 
+      req.user = user;
       return user.role === "User";
     }
 

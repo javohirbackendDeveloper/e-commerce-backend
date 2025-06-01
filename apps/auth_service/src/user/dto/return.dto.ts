@@ -79,3 +79,9 @@ export class ReturnLogoutDto {
   @IsString()
   message: string;
 }
+
+export class ReturnRegisterDto {
+  username: string;
+  phone_number: string;
+  id: string;
+}
