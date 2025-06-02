@@ -7,7 +7,7 @@ import {
   IsString,
 } from "class-validator";
 
-export class ReturnMessageDto {
+export class ReturnAdminMessageDto {
   @IsString()
   @IsNotEmpty()
   message: string;
@@ -24,7 +24,7 @@ export class ReturnMessageDto {
   data?: unknown;
 }
 
-export class ReturnLoginDto {
+export class ReturnAdminLoginDto {
   @ApiProperty({
     description: "It comes from loggen in admin",
     example: "Admin logged in successfully",
@@ -77,6 +77,6 @@ export class ReturnAdminDto {
   role: string;
 }
 
-export class ReturnLogoutDto {
+export class ReturnAdminLogoutDto {
   message: string;
 }

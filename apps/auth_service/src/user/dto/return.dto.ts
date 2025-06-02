@@ -7,7 +7,7 @@ import {
   IsString,
 } from "class-validator";
 
-export class ReturnMessageDto {
+export class ReturnUserMessageDto {
   @ApiProperty({ example: "Operation successful" })
   @IsString()
   @IsNotEmpty()
@@ -74,7 +74,7 @@ export class ReturnUserDto {
   role: string;
 }
 
-export class ReturnLogoutDto {
+export class ReturnUserLogoutDto {
   @ApiProperty({ example: "Successfully logged out" })
   @IsString()
   message: string;

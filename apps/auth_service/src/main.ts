@@ -9,21 +9,41 @@ import { RmqService } from "./rmq/rmq.service";
 import { allowUrls } from "./cors_for_backend/middleware";
 import {
   ReturnLoginUserDto,
-  ReturnLogoutDto,
   ReturnUserDto,
+  ReturnUserLogoutDto,
+  ReturnUserMessageDto,
 } from "./user/dto/return.dto";
-import { ReturnAdminDto, ReturnLoginDto } from "./admin/dto/return.dto";
+import {
+  ReturnAdminDto,
+  ReturnAdminLoginDto,
+  ReturnAdminLogoutDto,
+} from "./admin/dto/return.dto";
+import {
+  ReturnLoginDto,
+  ReturnPunktAdminDto,
+} from "./punkt-admin/dto/return.dto";
 
 async function bootstrap() {
   const app = await NestFactory.create(AuthServiceModule);
 
   // SWAGGER CONFIGURATION
   const extraModels = [
+    // user module
     ReturnUserDto,
     ReturnLoginUserDto,
-    ReturnLoginDto,
-    ReturnLogoutDto,
+    ReturnUserMessageDto,
+    ReturnUserLogoutDto,
+
+    // admin module
+    ReturnAdminLoginDto,
+    ReturnAdminLogoutDto,
     ReturnAdminDto,
+    ReturnAdminLogoutDto,
+
+    // punkt admin
+
+    ReturnPunktAdminDto,
+    ReturnLoginDto,
   ];
   const config = new DocumentBuilder()
     .setTitle("auth_service")
@@ -74,8 +94,8 @@ async function bootstrap() {
       "PORT is not defined. Make sure you're running in a proper environment."
     );
   }
-  await app.listen(PORT, () => {
-    console.log("auth_service is running at " + PORT);
+  await app.listen(PORT, "0.0.0.0", () => {
+    console.log("auth_service is running on the " + PORT);
   });
 }
 bootstrap();

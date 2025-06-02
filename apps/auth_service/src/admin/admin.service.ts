@@ -15,9 +15,9 @@ import { JwtService } from "@nestjs/jwt";
 import { AdminLoginDto, CreateAdminDto } from "./dto/createAdmin.dto";
 import {
   ReturnAdminDto,
-  ReturnLoginDto,
-  ReturnLogoutDto,
-  ReturnMessageDto,
+  ReturnAdminLoginDto,
+  ReturnAdminLogoutDto,
+  ReturnAdminMessageDto,
 } from "./dto/return.dto";
 import { UpdateAdmin } from "./dto/update.dto";
 import { AdminRequest } from "./interface";
@@ -39,7 +39,7 @@ export class AdminService {
 
   async adminRegister(
     createAdminDto: CreateAdminDto
-  ): Promise<ReturnMessageDto> {
+  ): Promise<ReturnAdminMessageDto> {
     try {
       const { password, phone_number, username } = createAdminDto;
 
@@ -91,7 +91,7 @@ export class AdminService {
   async login(
     adminLoginDto: AdminLoginDto,
     response: Response
-  ): Promise<ReturnLoginDto> {
+  ): Promise<ReturnAdminLoginDto> {
     try {
       const { password, username } = adminLoginDto;
 
@@ -211,7 +211,7 @@ export class AdminService {
     }
   }
 
-  async logoutAdmin(res: Response): Promise<ReturnLogoutDto> {
+  async logoutAdmin(res: Response): Promise<ReturnAdminLogoutDto> {
     res.clearCookie("admin_access_token");
     res.clearCookie("admin_refresh_token");
 

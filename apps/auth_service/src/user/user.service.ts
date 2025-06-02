@@ -9,10 +9,9 @@ import {
 import { CreateUserDto, UserLoginDto } from "./dto/createUser.dto";
 import {
   ReturnLoginUserDto,
-  ReturnLogoutDto,
-  ReturnMessageDto,
   ReturnRegisterDto,
   ReturnUserDto,
+  ReturnUserLogoutDto,
 } from "./dto/return.dto";
 import { compare, hash } from "bcryptjs";
 import { CreateToken } from "../token/createToken";
@@ -198,7 +197,7 @@ export class UserService {
     }
   }
 
-  async logoutAdmin(res: Response): Promise<ReturnLogoutDto> {
+  async logoutAdmin(res: Response): Promise<ReturnUserLogoutDto> {
     res.clearCookie("user_access_token");
     res.clearCookie("user_refresh_token");
 

@@ -23,7 +23,7 @@ import {
   ApiOperation,
   ApiTags,
 } from "@nestjs/swagger";
-import { ReturnAdminDto, ReturnLoginDto } from "./dto/return.dto";
+import { ReturnAdminDto, ReturnAdminLoginDto } from "./dto/return.dto";
 import { AdminGuard } from "../guards/admin-auth.guard";
 import { UpdateAdmin } from "./dto/update.dto";
 import { AdminRequest } from "./interface";
@@ -52,7 +52,7 @@ export class AdminController {
   @ApiOperation({ summary: "Login an existing admin" })
   @ApiOkResponse({
     description: "Admin successfully logged in. Token returned.",
-    type: ReturnLoginDto,
+    type: ReturnAdminLoginDto,
   })
   @ApiBadRequestResponse({
     description: "Invalid login credentials or bad payload",
@@ -96,7 +96,7 @@ export class AdminController {
   })
   @ApiOkResponse({
     description: "New access token generated",
-    type: ReturnLoginDto,
+    type: ReturnAdminLoginDto,
   })
   @ApiBadRequestResponse({
     description: "Refresh token missing or invalid",
