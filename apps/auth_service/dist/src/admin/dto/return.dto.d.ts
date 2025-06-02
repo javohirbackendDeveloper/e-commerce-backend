@@ -1,10 +1,10 @@
-export declare class ReturnMessageDto {
+export declare class ReturnAdminMessageDto {
     message: string;
     success?: boolean;
     statusCode?: number;
     data?: unknown;
 }
-export declare class ReturnLoginDto {
+export declare class ReturnAdminLoginDto {
     message?: string;
     accessToken: string;
     refreshToken: string;
@@ -18,6 +18,6 @@ export declare class ReturnAdminDto {
     phone_number: string;
     role: string;
 }
-export declare class ReturnLogoutDto {
+export declare class ReturnAdminLogoutDto {
     message: string;
 }

@@ -1,5 +1,5 @@
 import { CreateUserDto, UserLoginDto } from "./dto/createUser.dto";
-import { ReturnLoginUserDto, ReturnLogoutDto, ReturnRegisterDto, ReturnUserDto } from "./dto/return.dto";
+import { ReturnLoginUserDto, ReturnRegisterDto, ReturnUserDto, ReturnUserLogoutDto } from "./dto/return.dto";
 import { ConfigService } from "@nestjs/config";
 import { Response } from "express";
 import { JwtService } from "@nestjs/jwt";
@@ -19,5 +19,5 @@ export declare class UserService {
         refreshToken: any;
         message: string;
     }>;
-    logoutAdmin(res: Response): Promise<ReturnLogoutDto>;
+    logoutAdmin(res: Response): Promise<ReturnUserLogoutDto>;
 }

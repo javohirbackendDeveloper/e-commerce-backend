@@ -83,7 +83,7 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: "Login an existing admin" }),
     (0, swagger_1.ApiOkResponse)({
         description: "Admin successfully logged in. Token returned.",
-        type: return_dto_1.ReturnLoginDto,
+        type: return_dto_1.ReturnAdminLoginDto,
     }),
     (0, swagger_1.ApiBadRequestResponse)({
         description: "Invalid login credentials or bad payload",
@@ -130,7 +130,7 @@ __decorate([
     }),
     (0, swagger_1.ApiOkResponse)({
         description: "New access token generated",
-        type: return_dto_1.ReturnLoginDto,
+        type: return_dto_1.ReturnAdminLoginDto,
     }),
     (0, swagger_1.ApiBadRequestResponse)({
         description: "Refresh token missing or invalid",

@@ -1,4 +1,4 @@
-export declare class ReturnMessageDto {
+export declare class ReturnUserMessageDto {
     message: string;
     success?: boolean;
     statusCode?: number;
@@ -18,7 +18,7 @@ export declare class ReturnUserDto {
     phone_number: string;
     role: string;
 }
-export declare class ReturnLogoutDto {
+export declare class ReturnUserLogoutDto {
     message: string;
 }
 export declare class ReturnRegisterDto {

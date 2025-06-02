@@ -9,34 +9,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ReturnLogoutDto = exports.ReturnAdminDto = exports.ReturnLoginDto = exports.ReturnMessageDto = void 0;
+exports.ReturnAdminLogoutDto = exports.ReturnAdminDto = exports.ReturnAdminLoginDto = exports.ReturnAdminMessageDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-class ReturnMessageDto {
+class ReturnAdminMessageDto {
 }
-exports.ReturnMessageDto = ReturnMessageDto;
+exports.ReturnAdminMessageDto = ReturnAdminMessageDto;
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], ReturnMessageDto.prototype, "message", void 0);
+], ReturnAdminMessageDto.prototype, "message", void 0);
 __decorate([
     (0, class_validator_1.IsBoolean)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Boolean)
-], ReturnMessageDto.prototype, "success", void 0);
+], ReturnAdminMessageDto.prototype, "success", void 0);
 __decorate([
     (0, class_validator_1.IsInt)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
-], ReturnMessageDto.prototype, "statusCode", void 0);
+], ReturnAdminMessageDto.prototype, "statusCode", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Object)
-], ReturnMessageDto.prototype, "data", void 0);
-class ReturnLoginDto {
+], ReturnAdminMessageDto.prototype, "data", void 0);
+class ReturnAdminLoginDto {
 }
-exports.ReturnLoginDto = ReturnLoginDto;
+exports.ReturnAdminLoginDto = ReturnAdminLoginDto;
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: "It comes from loggen in admin",
@@ -45,7 +45,7 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], ReturnLoginDto.prototype, "message", void 0);
+], ReturnAdminLoginDto.prototype, "message", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: "Access token for authentication",
@@ -54,7 +54,7 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], ReturnLoginDto.prototype, "accessToken", void 0);
+], ReturnAdminLoginDto.prototype, "accessToken", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: "Refresh token for authentication",
@@ -63,7 +63,7 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], ReturnLoginDto.prototype, "refreshToken", void 0);
+], ReturnAdminLoginDto.prototype, "refreshToken", void 0);
 class ReturnAdminDto {
 }
 exports.ReturnAdminDto = ReturnAdminDto;
@@ -103,7 +103,7 @@ __decorate([
     (0, swagger_1.ApiProperty)({ description: "Role of admin", example: "Admin" }),
     __metadata("design:type", String)
 ], ReturnAdminDto.prototype, "role", void 0);
-class ReturnLogoutDto {
+class ReturnAdminLogoutDto {
 }
-exports.ReturnLogoutDto = ReturnLogoutDto;
+exports.ReturnAdminLogoutDto = ReturnAdminLogoutDto;
 //# sourceMappingURL=return.dto.js.map

@@ -9,35 +9,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ReturnRegisterDto = exports.ReturnLogoutDto = exports.ReturnUserDto = exports.ReturnLoginUserDto = exports.ReturnMessageDto = void 0;
+exports.ReturnRegisterDto = exports.ReturnUserLogoutDto = exports.ReturnUserDto = exports.ReturnLoginUserDto = exports.ReturnUserMessageDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-class ReturnMessageDto {
+class ReturnUserMessageDto {
 }
-exports.ReturnMessageDto = ReturnMessageDto;
+exports.ReturnUserMessageDto = ReturnUserMessageDto;
 __decorate([
     (0, swagger_1.ApiProperty)({ example: "Operation successful" }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], ReturnMessageDto.prototype, "message", void 0);
+], ReturnUserMessageDto.prototype, "message", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: true, required: false }),
     (0, class_validator_1.IsBoolean)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Boolean)
-], ReturnMessageDto.prototype, "success", void 0);
+], ReturnUserMessageDto.prototype, "success", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: 200, required: false }),
     (0, class_validator_1.IsInt)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
-], ReturnMessageDto.prototype, "statusCode", void 0);
+], ReturnUserMessageDto.prototype, "statusCode", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: { key: "value" }, required: false }),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Object)
-], ReturnMessageDto.prototype, "data", void 0);
+], ReturnUserMessageDto.prototype, "data", void 0);
 class ReturnLoginUserDto {
 }
 exports.ReturnLoginUserDto = ReturnLoginUserDto;
@@ -97,14 +97,14 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], ReturnUserDto.prototype, "role", void 0);
-class ReturnLogoutDto {
+class ReturnUserLogoutDto {
 }
-exports.ReturnLogoutDto = ReturnLogoutDto;
+exports.ReturnUserLogoutDto = ReturnUserLogoutDto;
 __decorate([
     (0, swagger_1.ApiProperty)({ example: "Successfully logged out" }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], ReturnLogoutDto.prototype, "message", void 0);
+], ReturnUserLogoutDto.prototype, "message", void 0);
 class ReturnRegisterDto {
 }
 exports.ReturnRegisterDto = ReturnRegisterDto;

@@ -2,7 +2,7 @@ import { ConfigService } from "@nestjs/config";
 import { Request, Response } from "express";
 import { JwtService } from "@nestjs/jwt";
 import { AdminLoginDto, CreateAdminDto } from "./dto/createAdmin.dto";
-import { ReturnAdminDto, ReturnLoginDto, ReturnLogoutDto, ReturnMessageDto } from "./dto/return.dto";
+import { ReturnAdminDto, ReturnAdminLoginDto, ReturnAdminLogoutDto, ReturnAdminMessageDto } from "./dto/return.dto";
 import { UpdateAdmin } from "./dto/update.dto";
 import { AdminRequest } from "./interface";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
@@ -16,8 +16,8 @@ export declare class AdminService {
     private readonly cloudinaryService;
     private readonly logger;
     constructor(configService: ConfigService, prismaService: PrismaService, jwtService: JwtService, cloudinaryService: CloudinaryService);
-    adminRegister(createAdminDto: CreateAdminDto): Promise<ReturnMessageDto>;
-    login(adminLoginDto: AdminLoginDto, response: Response): Promise<ReturnLoginDto>;
+    adminRegister(createAdminDto: CreateAdminDto): Promise<ReturnAdminMessageDto>;
+    login(adminLoginDto: AdminLoginDto, response: Response): Promise<ReturnAdminLoginDto>;
     getAdmin(id: string): Promise<ReturnAdminDto>;
     getAdmins(): Promise<ReturnAdminDto[]>;
     refreshToken(req: Request, res: Response): Promise<{
@@ -25,7 +25,7 @@ export declare class AdminService {
         refreshToken: any;
         message: string;
     }>;
-    logoutAdmin(res: Response): Promise<ReturnLogoutDto>;
+    logoutAdmin(res: Response): Promise<ReturnAdminLogoutDto>;
     updateAccount(req: AdminRequest, data: UpdateAdmin): Promise<Admin>;
     uploadProfileImage(file: Express.Multer.File, req: AdminRequest): Promise<Admin>;
     deleteProfileImage(req: AdminRequest): Promise<Admin>;

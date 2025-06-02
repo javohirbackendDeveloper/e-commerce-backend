@@ -14,6 +14,6 @@ export declare class UserController {
         refreshToken: any;
         message: string;
     }>;
-    logoutAdmin(res: Response): Promise<import("./dto/return.dto").ReturnLogoutDto>;
+    logoutAdmin(res: Response): Promise<import("./dto/return.dto").ReturnUserLogoutDto>;
     getUserByToken(req: Request): Promise<any>;
 }
