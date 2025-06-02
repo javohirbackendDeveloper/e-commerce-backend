@@ -87,7 +87,7 @@ async function bootstrap() {
   app.use(cookieParser());
 
   // Listening port
-  const PORT = process.env.PORT;
+  const PORT = process.env.PORT || 8080;
 
   if (!PORT) {
     throw new Error(
