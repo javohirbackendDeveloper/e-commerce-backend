@@ -20,42 +20,42 @@ export declare class AdminController {
     logoutAdmin(res: Response): Promise<import("./dto/return.dto").ReturnLogoutDto>;
     getAdminByToken(req: Request): Promise<any>;
     updateAdmin(req: AdminRequest, data: UpdateAdmin): Promise<{
-        id: string;
         username: string;
         password: string;
+        phone_number: string;
+        id: string;
         first_name: string | null;
         last_name: string | null;
-        phone_number: string;
         role: import("generated/prisma").$Enums.Roles;
         profileImg: string | null;
     }>;
     uploadProfileImage(req: AdminRequest, file: Express.Multer.File): Promise<{
-        id: string;
         username: string;
         password: string;
+        phone_number: string;
+        id: string;
         first_name: string | null;
         last_name: string | null;
-        phone_number: string;
         role: import("generated/prisma").$Enums.Roles;
         profileImg: string | null;
     }>;
     deleteProfileImage(req: AdminRequest): Promise<{
-        id: string;
         username: string;
         password: string;
+        phone_number: string;
+        id: string;
         first_name: string | null;
         last_name: string | null;
-        phone_number: string;
         role: import("generated/prisma").$Enums.Roles;
         profileImg: string | null;
     }>;
     changePassword(req: AdminRequest, changePAsswordDto: ChangePassword): Promise<{
-        id: string;
         username: string;
         password: string;
+        phone_number: string;
+        id: string;
         first_name: string | null;
         last_name: string | null;
-        phone_number: string;
         role: import("generated/prisma").$Enums.Roles;
         profileImg: string | null;
     }>;

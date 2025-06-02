@@ -17,8 +17,8 @@ async function bootstrap() {
     .setTitle("auth_service")
     .setVersion("1.0.0")
     .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("api", app, document);
+  const document = SwaggerModule.createDocument(app as any, config);
+  SwaggerModule.setup("api", app as any, document);
 
   app.use("/swagger-json", (_, res) => res.json(document));
 
