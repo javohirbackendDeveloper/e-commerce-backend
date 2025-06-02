@@ -7,17 +7,31 @@ import { RmqOptions } from "@nestjs/microservices";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { RmqService } from "./rmq/rmq.service";
 import { allowUrls } from "./cors_for_backend/middleware";
+import {
+  ReturnLoginUserDto,
+  ReturnLogoutDto,
+  ReturnUserDto,
+} from "./user/dto/return.dto";
+import { ReturnAdminDto, ReturnLoginDto } from "./admin/dto/return.dto";
 
 async function bootstrap() {
   const app = await NestFactory.create(AuthServiceModule);
 
   // SWAGGER CONFIGURATION
-
+  const extraModels = [
+    ReturnUserDto,
+    ReturnLoginUserDto,
+    ReturnLoginDto,
+    ReturnLogoutDto,
+    ReturnAdminDto,
+  ];
   const config = new DocumentBuilder()
     .setTitle("auth_service")
     .setVersion("1.0.0")
     .build();
-  const document = SwaggerModule.createDocument(app as any, config);
+  const document = SwaggerModule.createDocument(app as any, config, {
+    extraModels,
+  });
   SwaggerModule.setup("api", app as any, document);
 
   app.use("/swagger-json", (_, res) => res.json(document));
