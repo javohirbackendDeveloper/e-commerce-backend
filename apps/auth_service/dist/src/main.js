@@ -57,9 +57,9 @@ async function bootstrap() {
     }));
     app.useGlobalFilters(new all_exceptions_filters_1.AllExceptionsFilter());
     app.use(cookieParser());
-    const PORT = process.env.PORT || 8080;
-    await app.listen(PORT, "0.0.0.0", () => {
-        console.log("auth_service is running on the " + PORT);
+    const port = parseInt(process.env.PORT || "8080", 10);
+    await app.listen(port, "0.0.0.0", () => {
+        console.log("auth_service is running on the " + port);
     });
 }
 bootstrap();

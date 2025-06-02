@@ -56,11 +56,6 @@ async function bootstrap() {
 
   app.use("/swagger-json", (_, res) => res.json(document));
 
-  // Connecting to microservice
-  const rmqService = app.get<RmqService>(RmqService);
-  app.connectMicroservice<RmqOptions>(rmqService.getOptions("AUTH_SERVICE"));
-  await app.startAllMicroservices();
-
   // GLOBAL MIDDLEWARES
   app.use(allowUrls);
   app.setGlobalPrefix("auth");
@@ -86,11 +81,16 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter());
   app.use(cookieParser());
 
-  // Listening port
-  const port = parseInt(process.env.PORT || "8080", 10);
+  // running http server
 
-  await app.listen(port, "0.0.0.0", () => {
-    console.log("auth_service is running on the " + port);
+  const PORT = process.env.PORT || 8080;
+  await app.listen(PORT, () => {
+    console.log("auth_service is running on the " + PORT);
   });
+
+  // Connecting to microservice
+  const rmqService = app.get<RmqService>(RmqService);
+  app.connectMicroservice<RmqOptions>(rmqService.getOptions("AUTH_SERVICE"));
+  await app.startAllMicroservices();
 }
 bootstrap();
