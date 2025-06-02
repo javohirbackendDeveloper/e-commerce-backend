@@ -53,7 +53,13 @@ async function bootstrap() {
   app.use(cookieParser());
 
   // Listening port
-  const PORT = process.env.PORT || 3001;
+  const PORT = process.env.PORT;
+
+  if (!PORT) {
+    throw new Error(
+      "PORT is not defined. Make sure you're running in a proper environment."
+    );
+  }
   await app.listen(PORT, () => {
     console.log("auth_service is running at " + PORT);
   });
