@@ -18,7 +18,7 @@ const config_1 = require("@nestjs/config");
 const jwt_1 = require("@nestjs/jwt");
 const cloudinary_service_1 = require("../cloudinary/cloudinary.service");
 const prisma_service_1 = require("../../prisma/prisma.service");
-const prisma_1 = require("../../generated/prisma/index.js");
+const client_1 = require("@prisma/client");
 let AdminService = AdminService_1 = class AdminService {
     constructor(configService, prismaService, jwtService, cloudinaryService) {
         this.configService = configService;
@@ -55,7 +55,7 @@ let AdminService = AdminService_1 = class AdminService {
         }
         catch (error) {
             this.logger.error(`Registration failed : ${error.message}`, error.stack);
-            if (error instanceof prisma_1.Prisma.PrismaClientKnownRequestError) {
+            if (error instanceof client_1.Prisma.PrismaClientKnownRequestError) {
                 this.logger.error(`Prisma Error code :  ${error.code}`);
                 throw new common_1.ConflictException("Prisma Error");
             }
@@ -84,7 +84,7 @@ let AdminService = AdminService_1 = class AdminService {
         }
         catch (err) {
             this.logger.error(`Admin login failed : ${err.message} `, err.stack);
-            if (err instanceof prisma_1.Prisma.PrismaClientKnownRequestError) {
+            if (err instanceof client_1.Prisma.PrismaClientKnownRequestError) {
                 this.logger.error("Prisma error code " + err.code);
                 throw new common_1.ConflictException("Prisma error ");
             }

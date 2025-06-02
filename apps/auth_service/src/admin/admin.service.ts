@@ -24,7 +24,7 @@ import { AdminRequest } from "./interface";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
 import { ChangePassword } from "./dto/changePassword.dto";
 import { PrismaService } from "prisma/prisma.service";
-import { Prisma, Admin } from "generated/prisma";
+import { Admin, Prisma } from "@prisma/client";
 
 @Injectable()
 export class AdminService {

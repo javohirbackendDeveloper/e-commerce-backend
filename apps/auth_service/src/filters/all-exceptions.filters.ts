@@ -4,8 +4,8 @@ import {
   ExceptionFilter,
   HttpException,
 } from "@nestjs/common";
+import { Prisma } from "@prisma/client";
 import { Request, Response } from "express";
-import { Prisma } from "generated/prisma";
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {

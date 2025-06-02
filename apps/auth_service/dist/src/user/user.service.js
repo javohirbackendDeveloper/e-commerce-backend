@@ -16,8 +16,8 @@ const bcryptjs_1 = require("bcryptjs");
 const createToken_1 = require("../token/createToken");
 const config_1 = require("@nestjs/config");
 const jwt_1 = require("@nestjs/jwt");
+const client_1 = require("@prisma/client");
 const prisma_service_1 = require("../../prisma/prisma.service");
-const prisma_1 = require("../../generated/prisma/index.js");
 let UserService = UserService_1 = class UserService {
     constructor(configService, prismaService, jwtService) {
         this.configService = configService;
@@ -48,7 +48,7 @@ let UserService = UserService_1 = class UserService {
         }
         catch (error) {
             this.logger.error(`Registration failed : ${error.message}`, error.stack);
-            if (error instanceof prisma_1.Prisma.PrismaClientKnownRequestError) {
+            if (error instanceof client_1.Prisma.PrismaClientKnownRequestError) {
                 this.logger.error(`Prisma Error code :  ${error.code}`);
                 throw new common_1.ConflictException("Prisma Error");
             }
@@ -77,7 +77,7 @@ let UserService = UserService_1 = class UserService {
         }
         catch (err) {
             this.logger.error(`User login failed : ${err.message} `, err.stack);
-            if (err instanceof prisma_1.Prisma.PrismaClientKnownRequestError) {
+            if (err instanceof client_1.Prisma.PrismaClientKnownRequestError) {
                 this.logger.error("Prisma error code " + err.code);
                 throw new common_1.ConflictException("Prisma error ");
             }

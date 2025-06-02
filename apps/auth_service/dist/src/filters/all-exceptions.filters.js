@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AllExceptionsFilter = void 0;
 const common_1 = require("@nestjs/common");
-const prisma_1 = require("../../generated/prisma/index.js");
+const client_1 = require("@prisma/client");
 let AllExceptionsFilter = class AllExceptionsFilter {
     catch(exception, host) {
         const ctx = host.switchToHttp();
@@ -23,7 +23,7 @@ let AllExceptionsFilter = class AllExceptionsFilter {
             message = typeof response === "object" ? response["message"] : response;
             error = exception.name.replace("Exception", "");
         }
-        else if (exception instanceof prisma_1.Prisma.PrismaClientKnownRequestError) {
+        else if (exception instanceof client_1.Prisma.PrismaClientKnownRequestError) {
             status = this.handlePrismaError(exception);
             message = this.getErrorMessage(exception);
             error: "Database Error";

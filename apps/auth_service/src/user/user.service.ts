@@ -19,8 +19,8 @@ import { CreateToken } from "../token/createToken";
 import { ConfigService } from "@nestjs/config";
 import { Response } from "express";
 import { JwtService } from "@nestjs/jwt";
+import { Prisma } from "@prisma/client";
 import { PrismaService } from "prisma/prisma.service";
-import { Prisma } from "generated/prisma";
 @Injectable()
 export class UserService {
   private readonly logger = new Logger(UserService.name);

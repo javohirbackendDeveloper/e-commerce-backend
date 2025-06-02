@@ -20,7 +20,7 @@ import { compare, hash } from "bcryptjs";
 import { CreateToken } from "../token/createToken";
 import { Response } from "express";
 import { PrismaService } from "prisma/prisma.service";
-import { Prisma } from "generated/prisma";
+import { Prisma } from "@prisma/client";
 
 @Injectable()
 export class PunktAdminService {

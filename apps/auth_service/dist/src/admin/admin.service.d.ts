@@ -8,7 +8,7 @@ import { AdminRequest } from "./interface";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
 import { ChangePassword } from "./dto/changePassword.dto";
 import { PrismaService } from "prisma/prisma.service";
-import { Admin } from "generated/prisma";
+import { Admin } from "@prisma/client";
 export declare class AdminService {
     private readonly configService;
     private readonly prismaService;
