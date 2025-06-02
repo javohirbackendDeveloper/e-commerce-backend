@@ -73,9 +73,19 @@ export class BrandService {
         },
       });
 
-      return brands;
+      const uniqueBrands = [];
+      for (const brand of brands) {
+        const brandId = brand.brandId;
 
-      console.log({ childrenCategories });
+        const existBrand = uniqueBrands.find(
+          (item) => item.brandId === brandId
+        );
+
+        if (!existBrand) {
+          uniqueBrands.push(brand);
+        }
+      }
+      return uniqueBrands;
     } catch (err) {
       throw new HttpException(
         err.message || "Internal server error",

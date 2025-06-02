@@ -9,6 +9,7 @@ import {
   UploadedFiles,
   UseInterceptors,
   UploadedFile,
+  Query,
 } from "@nestjs/common";
 import { ProductService } from "./product.service";
 import { CreateProductDto } from "./dto/create-product.dto";
@@ -23,6 +24,8 @@ import {
   ApiConsumes,
 } from "@nestjs/swagger";
 import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
+import { FilterQueryDto } from "./dto/filterQuery.dto";
+import { Product } from "apps/products_service/generated/prisma";
 
 @ApiTags("products_service/product")
 @Controller("product")
@@ -54,8 +57,10 @@ export class ProductController {
   @Get()
   @ApiOperation({ summary: "Get all products" })
   @ApiResponse({ status: 200, description: "List of products" })
-  findAll() {
-    return this.productService.findAll();
+  findAll(@Query("limit") limit?: string, @Query("page") page?: string) {
+    const pageNumber = parseInt(page) || 1;
+    const limitNumber = parseInt(limit) || 10;
+    return this.productService.findAll(pageNumber, limitNumber);
   }
 
   @Get(":id")
@@ -70,8 +75,11 @@ export class ProductController {
   @ApiOperation({ summary: "Get products by category ID" })
   @ApiParam({ name: "categoryId", description: "Category ID" })
   @ApiResponse({ status: 200, description: "Products of category" })
-  getAllProductsByCategory(@Param("categoryId") categoryId: string) {
-    return this.productService.getAllProductsByCategory(categoryId);
+  getAllProductsByCategory(
+    @Param("categoryId") categoryId: string,
+    @Query() filter: FilterQueryDto
+  ) {
+    return this.productService.getAllProductsByCategory(categoryId, filter);
   }
 
   @Patch(":id")
@@ -119,11 +127,26 @@ export class ProductController {
     return this.productService.uploadOneImage(file, productId);
   }
 
+  @Get("/prices/getMinMaxPrices")
+  @ApiOperation({ summary: "Get min and max prices" })
+  getMinMaxPrices() {
+    return this.productService.getMinMaxPrices();
+  }
+
+  @Get("filter")
+  @ApiOperation({ summary: "Filter products with various parameters" })
+  @ApiBody({ type: FilterQueryDto })
+  async filterProducts(
+    @Query() filter: FilterQueryDto,
+    @Body() products: Product[]
+  ) {
+    return this.productService.filterProducts(products, filter);
+  }
+
   // APIS WITH RABBITMQ
 
   @MessagePattern("get_products")
   async getProductByIds(@Payload() productIds: string[]) {
-    console.log("Message came ", productIds);
     return this.productService.getProductsByIds(productIds);
   }
 

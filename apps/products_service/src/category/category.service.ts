@@ -7,6 +7,7 @@ import { UpdateCategoryDto } from "./dto/update-category.dto";
 import { PrismaService } from "apps/products_service/prisma/prisma.service";
 import { Category } from "apps/products_service/generated/prisma";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
+import { ReturnParentWithSubDto } from "./dto/return.dto";
 
 @Injectable()
 export class CategoryService {
@@ -141,6 +142,35 @@ export class CategoryService {
     }
   }
 
+  async findAllParentsWithSubCats(): Promise<ReturnParentWithSubDto[]> {
+    try {
+      const categories = await this.prismaService.category.findMany({
+        where: { parentId: "" },
+      });
+
+      const returntData = Promise.all(
+        categories.map(async (cat) => {
+          const subCategories = await this.getAllChildCategories(cat.id);
+          return {
+            id: cat.id,
+            parentId: cat.parentId,
+            icon: cat.icon,
+            title: cat.title,
+            children: cat.children,
+            subCategories,
+          };
+        })
+      );
+      return returntData;
+    } catch (error) {
+      console.log({ error });
+
+      throw new HttpException(
+        error.message || "Internal server error",
+        error.status || 500
+      );
+    }
+  }
   async findOne(id: string): Promise<Category> {
     try {
       const category = await this.prismaService.category.findUnique({
@@ -286,13 +316,33 @@ export class CategoryService {
 
   // getAll leaf categories
 
-  async getAllLeafCategories(): Promise<any[]> {
+  async getAllLeafCategories(): Promise<Category[]> {
     try {
       const categories = await this.prismaService.category.findMany({
         where: {
           children: {
             equals: 0,
           },
+        },
+      });
+
+      return categories;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  async getAllSecondCategories(): Promise<Category[]> {
+    try {
+      const parentCategoryIds = (await this.findAllParentCats()).map(
+        (cat) => cat.id
+      );
+      const categories = await this.prismaService.category.findMany({
+        where: {
+          parentId: { in: parentCategoryIds },
         },
       });
 

@@ -11,10 +11,14 @@ import {
   FilterValues,
 } from "apps/products_service/generated/prisma";
 import { ReturnSpecificFunction } from "./dto/return.dto";
+import { CategoryService } from "../category/category.service";
 
 @Injectable()
 export class FiltersService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly categoryService: CategoryService,
+    private readonly prismaService: PrismaService
+  ) {}
   // GENERAL FILTERS
 
   async create(
@@ -121,16 +125,20 @@ export class FiltersService {
 
   async getFiltersByCategoryId(categoryId: string) {
     try {
+      const childrenCategoryIds =
+        await this.categoryService.getAllChildCategoryIds(categoryId);
       const categoryFilters = await this.prismaService.filterCategory.findMany({
-        where: { categoryId },
+        where: {
+          categoryId: {
+            in: childrenCategoryIds,
+          },
+        },
         include: {
           filter: {
             include: { values: true },
           },
         },
       });
-
-      // console.log({ categoryFilters: categoryFilters[0].filter.values });
 
       const availableFilters = categoryFilters.filter(
         (item) => item.filter.values.length > 0

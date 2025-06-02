@@ -34,7 +34,7 @@ async function bootstrap() {
       transform: true,
     })
   );
-  // app.use(allowUrls);
+  app.use(allowUrls);
 
   // microservice connecting
   const rmqService = app.get<RmqService>(RmqService);

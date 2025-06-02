@@ -85,6 +85,17 @@ export class CategoryController {
     return this.categoryService.findAllParentCats();
   }
 
+  @Get("getParentsWithSub")
+  @ApiOperation({ summary: "Get all parent categories with second categories" })
+  @ApiResponse({
+    status: 200,
+    description: "Faqat ota va ikkinchi darajali kategoriyalar",
+    type: [CreateCategoryDto],
+  })
+  findAllParentsWithSubCats() {
+    return this.categoryService.findAllParentsWithSubCats();
+  }
+
   @Get(":id")
   @ApiOperation({ summary: "Get a single category by ID" })
   @ApiParam({ name: "id", description: "Kategoriya ID" })

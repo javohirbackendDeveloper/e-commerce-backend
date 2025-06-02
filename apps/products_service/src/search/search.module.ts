@@ -21,10 +21,11 @@ import { CloudinaryService } from "../cloudinary/cloudinary.service";
   ],
   exports: [],
 })
-export class SearchModule implements OnModuleInit {
-  constructor(private readonly searchService: SearchService) {}
+export class SearchModule {}
+// implements OnModuleInit {
+//   constructor(private readonly searchService: SearchService) {}
 
-  public async onModuleInit() {
-    await this.searchService.createindex();
-  }
-}
+// public async onModuleInit() {
+//   await this.searchService.createindex();
+// }
+// }

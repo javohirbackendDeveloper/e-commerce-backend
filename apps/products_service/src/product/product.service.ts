@@ -19,6 +19,8 @@ import { ReturnData } from "./interface";
 import { CategoryService } from "../category/category.service";
 import { SearchService } from "../search/search.service";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
+import { ReturnMinMaxDto } from "./dto/return.dto";
+import { FilterQueryDto } from "./dto/filterQuery.dto";
 
 @Injectable()
 export class ProductService {
@@ -139,9 +141,13 @@ export class ProductService {
     }
   }
 
-  async findAll(): Promise<Product[]> {
+  async findAll(page = 1, limit = 10): Promise<Product[]> {
     try {
+      const skip = (page - 1) * limit;
+
       const products = await this.prismaService.product.findMany({
+        skip,
+        take: limit,
         orderBy: {
           createdAt: "desc",
         },
@@ -156,7 +162,7 @@ export class ProductService {
       return products;
     } catch (err) {
       throw new HttpException(
-        err.message || "Internal server err",
+        err.message || "Internal server error",
         err.status || 500
       );
     }
@@ -354,27 +360,133 @@ export class ProductService {
           in: productIds,
         },
       },
+      include: {
+        product_images: true,
+      },
     });
     return products;
   }
 
-  async getAllProductsByCategory(categoryId: string): Promise<Product[]> {
-    const allChildCategories =
-      await this.categoryService.getAllChildCategories(categoryId);
+  async getAllChildCategoryIdsRecursive(categoryId: string): Promise<string[]> {
+    const visited: Set<string> = new Set();
+    const collect = async (id: string) => {
+      const children = await this.prismaService.category.findMany({
+        where: { parentId: id },
+        select: { id: true },
+      });
+
+      for (const child of children) {
+        if (!visited.has(child.id)) {
+          visited.add(child.id);
+          await collect(child.id);
+        }
+      }
+    };
+
+    await collect(categoryId);
+    return Array.from(visited);
+  }
+
+  async filterProducts(
+    products: Product[],
+    allFilters: FilterQueryDto
+  ): Promise<Product[]> {
+    const { brand, color, starterPrice, endOfPrice, product_status, filters } =
+      allFilters;
+
+    console.log({ allFilters });
+
+    const filtered = products.filter((product) => {
+      if (
+        brand &&
+        brand.length > 0 &&
+        !brand.includes((product as any).brand?.name)
+      ) {
+        return false;
+      }
+
+      if (color && color.length > 0) {
+        if (!product.color || !color.some((c) => product.color.includes(c)))
+          return false;
+      }
+
+      if (starterPrice && product.price < +starterPrice) return false;
+      if (endOfPrice && product.price > +endOfPrice) return false;
+      if (product_status && product.product_status !== product_status)
+        return false;
+
+      if (filters && Object.keys(filters).length > 0) {
+        for (const key in filters) {
+          const filterValue = filters[key];
+          if (
+            !product.filters ||
+            !product.filters.hasOwnProperty(key) ||
+            product.filters[key] !== filterValue
+          ) {
+            return false;
+          }
+        }
+      }
+
+      return true;
+    });
+
+    return filtered;
+  }
+
+  async getAllProductsByCategory(
+    categoryId: string,
+    filters: FilterQueryDto,
+    page = 1,
+    limit = 10
+  ): Promise<Product[]> {
+    const allChildCategoryIds =
+      await this.getAllChildCategoryIdsRecursive(categoryId);
+
+    const skip = (page - 1) * limit;
 
     const products = await this.prismaService.product.findMany({
+      skip,
+      take: limit * 3,
       where: {
-        OR: [
-          {
-            categoryId: {
-              in: allChildCategories.map((cat) => cat.id),
-            },
-          },
-          { categoryId },
-        ],
+        OR: [{ categoryId: { in: allChildCategoryIds } }, { categoryId }],
+      },
+      include: {
+        product_images: true,
+        brand: true,
+        category: true,
+        comments: true,
       },
     });
 
-    return products;
+    const filteredProducts = await this.filterProducts(products, filters);
+
+    const paginatedProducts = filteredProducts.slice(skip, skip + limit);
+
+    return paginatedProducts;
+  }
+
+  async getMinMaxPrices(): Promise<ReturnMinMaxDto> {
+    try {
+      const allProducts = await this.findAll();
+      let minPrice = allProducts.length > 0 ? allProducts[0].price : 0;
+      let maxPrice = 0;
+
+      allProducts.forEach((product) => {
+        if (product.price < minPrice) {
+          minPrice = product.price;
+        }
+        if (product.price > maxPrice) {
+          maxPrice = product.price;
+        }
+      });
+
+      return { minPrice, maxPrice };
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 }

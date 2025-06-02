@@ -2,12 +2,13 @@ import {
   IsArray,
   IsEnum,
   IsNumber,
+  IsObject,
   IsOptional,
   IsString,
 } from "class-validator";
 import { ApiPropertyOptional } from "@nestjs/swagger";
+import { Transform, Type } from "class-transformer";
 import { ProductStatus } from "../enums";
-import { Transform } from "class-transformer";
 
 export class FilterQueryDto {
   @ApiPropertyOptional({
@@ -25,6 +26,7 @@ export class FilterQueryDto {
     type: Number,
     example: 1000,
   })
+  @Type(() => Number)
   @IsNumber()
   @IsOptional()
   starterPrice?: number;
@@ -34,6 +36,7 @@ export class FilterQueryDto {
     type: Number,
     example: 5000,
   })
+  @Type(() => Number)
   @IsNumber()
   @IsOptional()
   endOfPrice?: number;
@@ -65,4 +68,19 @@ export class FilterQueryDto {
   @IsEnum(ProductStatus)
   @IsOptional()
   product_status?: ProductStatus;
+
+  @ApiPropertyOptional({
+    description: "filter of products",
+    type: String,
+    example: { Xotira: "32gb", Kamera: "12mp" },
+  })
+  @IsOptional()
+  @Transform(({ value }) => {
+    try {
+      return typeof value === "string" ? JSON.parse(value) : value;
+    } catch {
+      return {};
+    }
+  })
+  filters?: Record<string, string>;
 }

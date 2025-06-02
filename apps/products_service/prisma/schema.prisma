@@ -60,6 +60,7 @@ categoryId String @db.ObjectId
  brandId String @db.ObjectId
  brand  Brand @relation(fields: [brandId] , references: [id])
  
+ 
 
  product_status ProductStatus @default(FAOL)
  @@index([categoryId])
@@ -209,4 +210,8 @@ model Poster {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   title String 
   img String
+
+  sectionId String? @db.ObjectId
 }
+
+
