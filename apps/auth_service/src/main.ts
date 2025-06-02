@@ -87,10 +87,10 @@ async function bootstrap() {
   app.use(cookieParser());
 
   // Listening port
-  const PORT = process.env.PORT || 8080;
+  const port = parseInt(process.env.PORT || "8080", 10);
 
-  await app.listen(PORT, "0.0.0.0", () => {
-    console.log("auth_service is running on the " + PORT);
+  await app.listen(port, "0.0.0.0", () => {
+    console.log("auth_service is running on the " + port);
   });
 }
 bootstrap();
