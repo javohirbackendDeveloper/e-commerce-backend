@@ -3,8 +3,8 @@ import { ConfigModule } from "@nestjs/config";
 import { UserModule } from "./user/user.module";
 import { AdminModule } from "./admin/admin.module";
 import { PunktAdminModule } from "./punkt-admin/punkt-admin.module";
-import { RmqService } from "libs/common/src";
 import { CloudinaryModule } from "./cloudinary/cloudinary.module";
+import { RmqService } from "./rmq/rmq.service";
 
 @Module({
   imports: [

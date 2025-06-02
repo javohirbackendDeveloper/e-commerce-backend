@@ -1,5 +1,5 @@
-import { Admin } from "apps/auth_service/generated/prisma";
 import { Request } from "express";
+import { Admin } from "generated/prisma";
 
 export interface AdminRequest extends Request {
   admin: Admin;

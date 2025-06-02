@@ -14,14 +14,13 @@ import {
   ReturnRegisterDto,
   ReturnUserDto,
 } from "./dto/return.dto";
-import { PrismaService } from "apps/auth_service/prisma/prisma.service";
 import { compare, hash } from "bcryptjs";
-import { Prisma, User } from "apps/auth_service/generated/prisma";
 import { CreateToken } from "../token/createToken";
 import { ConfigService } from "@nestjs/config";
 import { Response } from "express";
 import { JwtService } from "@nestjs/jwt";
-
+import { PrismaService } from "prisma/prisma.service";
+import { Prisma } from "generated/prisma";
 @Injectable()
 export class UserService {
   private readonly logger = new Logger(UserService.name);

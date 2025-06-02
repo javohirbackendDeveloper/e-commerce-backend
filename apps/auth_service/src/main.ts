@@ -5,8 +5,8 @@ import * as cookieParser from "cookie-parser";
 import { AllExceptionsFilter } from "./filters/all-exceptions.filters";
 import { RmqOptions } from "@nestjs/microservices";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { RmqService } from "libs/common/src";
-import { allowUrls } from "libs/common/src/cors_for_backend/middleware";
+import { RmqService } from "./rmq/rmq.service";
+import { allowUrls } from "./cors_for_backend/middleware";
 
 async function bootstrap() {
   const app = await NestFactory.create(AuthServiceModule);

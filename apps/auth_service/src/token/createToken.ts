@@ -1,5 +1,5 @@
 import { ConfigService } from "@nestjs/config";
-import { Roles } from "apps/auth_service/constants/enum_roles";
+import { Roles } from "constants/enum_roles";
 import { Response } from "express";
 import * as jwt from "jsonwebtoken";
 

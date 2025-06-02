@@ -15,12 +15,12 @@ import {
   ReturnMessageDto,
 } from "./dto/return.dto";
 import { ConfigService } from "@nestjs/config";
-import { PrismaService } from "apps/auth_service/prisma/prisma.service";
 import { JwtService } from "@nestjs/jwt";
 import { compare, hash } from "bcryptjs";
-import { Prisma } from "apps/auth_service/generated/prisma";
 import { CreateToken } from "../token/createToken";
 import { Response } from "express";
+import { PrismaService } from "prisma/prisma.service";
+import { Prisma } from "generated/prisma";
 
 @Injectable()
 export class PunktAdminService {

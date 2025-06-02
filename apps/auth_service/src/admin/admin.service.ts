@@ -7,9 +7,7 @@ import {
   Logger,
 } from "@nestjs/common";
 
-import { PrismaService } from "apps/auth_service/prisma/prisma.service";
 import { compare, hash } from "bcryptjs";
-import { Admin, Prisma } from "apps/auth_service/generated/prisma";
 import { CreateToken } from "../token/createToken";
 import { ConfigService } from "@nestjs/config";
 import { Request, Response } from "express";
@@ -25,6 +23,8 @@ import { UpdateAdmin } from "./dto/update.dto";
 import { AdminRequest } from "./interface";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
 import { ChangePassword } from "./dto/changePassword.dto";
+import { PrismaService } from "prisma/prisma.service";
+import { Prisma, Admin } from "generated/prisma";
 
 @Injectable()
 export class AdminService {
