@@ -24,7 +24,7 @@ import {
   ApiUnauthorizedResponse,
   ApiResponse,
 } from "@nestjs/swagger";
-import { ReturnLoginDto, ReturnUserDto } from "./dto/return.dto";
+import { ReturnLoginUserDto, ReturnUserDto } from "./dto/return.dto";
 
 @ApiTags("auth_service/user")
 @Controller("user")
@@ -49,7 +49,7 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.ACCEPTED,
     description: "User successfully logged in",
-    type: ReturnLoginDto,
+    type: ReturnLoginUserDto,
   })
   @ApiBadRequestResponse({
     description: "Invalid login credentials or bad payload",
@@ -94,7 +94,7 @@ export class UserController {
   })
   @ApiOkResponse({
     description: "New access token generated",
-    type: ReturnLoginDto,
+    type: ReturnLoginUserDto,
   })
   @ApiBadRequestResponse({ description: "Invalid or missing refresh token" })
   @Post("refreshToken")
@@ -127,7 +127,7 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   async getUserByToken(@Req() req: Request) {
     console.log();
-    
+
     const user = (req as any).user;
     return user;
   }

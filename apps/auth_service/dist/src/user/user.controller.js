@@ -70,7 +70,7 @@ __decorate([
     (0, swagger_1.ApiResponse)({
         status: common_1.HttpStatus.ACCEPTED,
         description: "User successfully logged in",
-        type: return_dto_1.ReturnLoginDto,
+        type: return_dto_1.ReturnLoginUserDto,
     }),
     (0, swagger_1.ApiBadRequestResponse)({
         description: "Invalid login credentials or bad payload",
@@ -118,7 +118,7 @@ __decorate([
     }),
     (0, swagger_1.ApiOkResponse)({
         description: "New access token generated",
-        type: return_dto_1.ReturnLoginDto,
+        type: return_dto_1.ReturnLoginUserDto,
     }),
     (0, swagger_1.ApiBadRequestResponse)({ description: "Invalid or missing refresh token" }),
     (0, common_1.Post)("refreshToken"),

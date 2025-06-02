@@ -28,7 +28,6 @@ async function bootstrap() {
   await app.startAllMicroservices();
 
   // GLOBAL MIDDLEWARES
-
   app.use(allowUrls);
   app.setGlobalPrefix("auth");
   app.useGlobalPipes(

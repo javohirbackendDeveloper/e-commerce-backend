@@ -8,7 +8,7 @@ import {
 } from "@nestjs/common";
 import { CreateUserDto, UserLoginDto } from "./dto/createUser.dto";
 import {
-  ReturnLoginDto,
+  ReturnLoginUserDto,
   ReturnLogoutDto,
   ReturnMessageDto,
   ReturnRegisterDto,
@@ -79,7 +79,7 @@ export class UserService {
   async login(
     userLoginDto: UserLoginDto,
     response: Response
-  ): Promise<ReturnLoginDto> {
+  ): Promise<ReturnLoginUserDto> {
     try {
       const { password, username } = userLoginDto;
 

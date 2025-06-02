@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ReturnRegisterDto = exports.ReturnLogoutDto = exports.ReturnUserDto = exports.ReturnLoginDto = exports.ReturnMessageDto = void 0;
+exports.ReturnRegisterDto = exports.ReturnLogoutDto = exports.ReturnUserDto = exports.ReturnLoginUserDto = exports.ReturnMessageDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class ReturnMessageDto {
@@ -38,27 +38,27 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Object)
 ], ReturnMessageDto.prototype, "data", void 0);
-class ReturnLoginDto {
+class ReturnLoginUserDto {
 }
-exports.ReturnLoginDto = ReturnLoginDto;
+exports.ReturnLoginUserDto = ReturnLoginUserDto;
 __decorate([
     (0, swagger_1.ApiProperty)({ example: "Login successful", required: false }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], ReturnLoginDto.prototype, "message", void 0);
+], ReturnLoginUserDto.prototype, "message", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], ReturnLoginDto.prototype, "accessToken", void 0);
+], ReturnLoginUserDto.prototype, "accessToken", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: "dGhpcy1pcy1yZWZyZXNoLXRva2Vu..." }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], ReturnLoginDto.prototype, "refreshToken", void 0);
+], ReturnLoginUserDto.prototype, "refreshToken", void 0);
 class ReturnUserDto {
 }
 exports.ReturnUserDto = ReturnUserDto;

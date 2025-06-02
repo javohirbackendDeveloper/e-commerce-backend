@@ -4,7 +4,7 @@ export declare class ReturnMessageDto {
     statusCode?: number;
     data?: unknown;
 }
-export declare class ReturnLoginDto {
+export declare class ReturnLoginUserDto {
     message?: string;
     accessToken: string;
     refreshToken: string;

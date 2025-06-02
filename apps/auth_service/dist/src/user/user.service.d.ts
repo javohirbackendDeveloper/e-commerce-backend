@@ -1,5 +1,5 @@
 import { CreateUserDto, UserLoginDto } from "./dto/createUser.dto";
-import { ReturnLoginDto, ReturnLogoutDto, ReturnRegisterDto, ReturnUserDto } from "./dto/return.dto";
+import { ReturnLoginUserDto, ReturnLogoutDto, ReturnRegisterDto, ReturnUserDto } from "./dto/return.dto";
 import { ConfigService } from "@nestjs/config";
 import { Response } from "express";
 import { JwtService } from "@nestjs/jwt";
@@ -11,7 +11,7 @@ export declare class UserService {
     private readonly logger;
     constructor(configService: ConfigService, prismaService: PrismaService, jwtService: JwtService);
     userRegister(createUserDto: CreateUserDto): Promise<ReturnRegisterDto>;
-    login(userLoginDto: UserLoginDto, response: Response): Promise<ReturnLoginDto>;
+    login(userLoginDto: UserLoginDto, response: Response): Promise<ReturnLoginUserDto>;
     getUser(id: string): Promise<ReturnUserDto>;
     getUsers(): Promise<ReturnUserDto[]>;
     refreshToken(req: Request, res: Response): Promise<{

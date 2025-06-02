@@ -27,7 +27,7 @@ export class ReturnMessageDto {
   @IsOptional()
   data?: unknown;
 }
-export class ReturnLoginDto {
+export class ReturnLoginUserDto {
   @ApiProperty({ example: "Login successful", required: false })
   @IsString()
   @IsOptional()
