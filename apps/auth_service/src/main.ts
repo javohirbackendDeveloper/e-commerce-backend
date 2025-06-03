@@ -60,7 +60,7 @@ async function bootstrap() {
     extraModels,
     ignoreGlobalPrefix: false,
   });
-  SwaggerModule.setup("api", app, document);
+  SwaggerModule.setup("api-docs", app, document);
 
   app.use("/swagger-json", (_, res) => res.json(document));
 
