@@ -23,7 +23,7 @@ import {
   ApiParam,
   ApiQuery,
 } from "@nestjs/swagger";
-import { Prisma } from "apps/order_service/generated/prisma";
+import { Prisma } from "@prisma/client";
 
 @ApiTags("order_service/order")
 @Controller("order")

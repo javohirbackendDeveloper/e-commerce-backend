@@ -5,13 +5,13 @@ import { NestFactory } from "@nestjs/core";
 import { OrderServiceModule } from "./order-service.module";
 import { ClientProxy } from "@nestjs/microservices";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { allowUrls } from "libs/common/src/cors_for_backend/middleware";
-
+import { allowUrls } from "tezbuy_packages";
 async function bootstrap() {
   const app = await NestFactory.create(OrderServiceModule);
 
-  // SWAGGER CONFIGURATION
+  app.use(allowUrls);
 
+  // SWAGGER CONFIGURATION
   const config = new DocumentBuilder()
     .setTitle("order_service")
     .setVersion("1.0.0")
@@ -23,7 +23,6 @@ async function bootstrap() {
 
   // global middlewares
   app.useGlobalPipes(new ValidationPipe());
-  app.use(allowUrls);
   app.setGlobalPrefix("orders");
 
   // listening port

@@ -1,12 +1,18 @@
 import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { CreateCartDto } from "./dto/create-cart.dto";
 import { UpdateCartDto } from "./dto/update-cart.dto";
-import { Request } from "express";
+import { Request, Response } from "express";
 import { ClientProxy } from "@nestjs/microservices";
 import { firstValueFrom } from "rxjs";
-import { PrismaService } from "apps/order_service/prisma/prisma.service";
-import { CartItem } from "apps/order_service/generated/prisma";
+import { ReturnTotals } from "./dto/return.dto";
+import Stripe from "stripe";
+import { PrismaService } from "prisma/prisma.service";
+import { CartItem } from "@prisma/client";
 
+const stripe = new Stripe(
+  "sk_test_51Qg7BF097qSAwIsLIEx7f8HuBZdPToxhyOVQhRlw4MnAdBz3HJrpbzR8dDN93f6vgDWVdeSTHB4hChI5urFDqIeH00FbktL9xS"
+);
+// const stripe = new Stripe(process.env.STRIPE_SECRET);
 @Injectable()
 export class CartService {
   constructor(
@@ -29,8 +35,10 @@ export class CartService {
       const { productId, quantity } = createCartItemDto;
 
       const product = await firstValueFrom(
-        this.orderClient.send("get_cart_product", productId)
+        this.productClient.send("get_cart_product", productId)
       );
+
+      console.log({ product });
 
       if (!product) {
         throw new HttpException(
@@ -51,10 +59,16 @@ export class CartService {
       });
 
       if (existCartItem) {
-        throw new HttpException(
-          "This product already exist in your cart",
-          HttpStatus.BAD_REQUEST
-        );
+        const cart = await this.prismService.cartItem.update({
+          where: { id: existCartItem.id },
+          data: {
+            quantity: {
+              increment: quantity,
+            },
+          },
+        });
+
+        return cart;
       }
 
       const cartItem = await this.prismService.cartItem.create({
@@ -66,6 +80,40 @@ export class CartService {
       });
 
       return cartItem;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+  async getPriceQuantity(req: Request): Promise<ReturnTotals> {
+    try {
+      const userId = req.headers["x_user_id"];
+
+      const cartItems = await this.prismService.cartItem.findMany({
+        where: {
+          userId: userId as string,
+        },
+      });
+
+      let totalPrice = 0;
+      const totalQuantity = cartItems.length;
+
+      for (const cartProduct of cartItems) {
+        const product = await firstValueFrom(
+          this.productClient.send("get_cart_product", cartProduct.productId)
+        );
+
+        if (product && product.quantity >= cartProduct.quantity) {
+          totalPrice += Number(product.price * cartProduct.quantity);
+        }
+      }
+
+      return {
+        totalPrice,
+        totalQuantity,
+      };
     } catch (err) {
       throw new HttpException(
         err.message || "Internal server error",
@@ -90,23 +138,18 @@ export class CartService {
       });
 
       if (!cartItems) {
-        throw new HttpException(
-          "You don't have any product in your cart",
-          HttpStatus.NOT_FOUND
-        );
+        return { cartItemsWithProduct: [], grandPrice: [] };
       }
       const cartProductIds = cartItems.map((cart) => cart.productId);
 
       let allProducts = [];
+
       if (cartProductIds.length > 0) {
         allProducts = await firstValueFrom(
           this.productClient.send("get_products", cartProductIds)
         );
       } else {
-        throw new HttpException(
-          "You don't have any product in your cart",
-          HttpStatus.NOT_FOUND
-        );
+        return { cartItemsWithProduct: [], grandPrice: [] };
       }
 
       const productIndexMap = new Map(
@@ -120,7 +163,9 @@ export class CartService {
 
         return {
           ...item,
+          purchasedQuantity: item.quantity || 1,
           ...product,
+          cartId: item.id,
           total,
         };
       });
@@ -149,6 +194,8 @@ export class CartService {
     try {
       const userId = req.headers["x_user_id"];
 
+      const { quantity } = updateCartDto;
+
       if (!userId) {
         throw new HttpException(
           "Please login again to continue",
@@ -156,8 +203,8 @@ export class CartService {
         );
       }
 
-      const cartitem = await this.prismService.cartItem.findUnique({
-        where: { id },
+      const cartitem = await this.prismService.cartItem.findFirst({
+        where: { userId: userId as string, productId: id },
       });
 
       if (!cartitem) {
@@ -175,21 +222,30 @@ export class CartService {
       }
 
       const product = await firstValueFrom(
-        this.orderClient.send("get_cart_product", cartitem.productId)
+        this.productClient.send("get_cart_product", cartitem.productId)
       );
 
-      if (product.quantity < updateCartDto.quantity) {
+      if (product.quantity < quantity) {
         throw new HttpException(
           `There are only ${product.quantity} item from this product in warehouse`,
           HttpStatus.NOT_FOUND
         );
       }
+
+      const exist = await this.prismService.cartItem.findUnique({
+        where: { id: cartitem.id },
+      });
+      console.log({ exist });
+
       const cartItem = await this.prismService.cartItem.update({
-        where: { id },
+        where: { id: cartitem.id },
         data: {
-          ...updateCartDto,
+          quantity: {
+            increment: quantity,
+          },
         },
       });
+
       return cartItem;
     } catch (err) {
       throw new HttpException(
@@ -207,7 +263,14 @@ export class CartService {
         where: { id },
       });
 
-      if (cartitem.userId !== userId) {
+      if (!cartitem) {
+        throw new HttpException(
+          "This cart item not found with this id " + id,
+          HttpStatus.NOT_FOUND
+        );
+      }
+
+      if (cartitem?.userId !== userId) {
         throw new HttpException(
           "You cannot delete cart item of other people",
           HttpStatus.UNAUTHORIZED
@@ -218,6 +281,46 @@ export class CartService {
         where: { id },
       });
     } catch (err) {
+      console.log({ err });
+
+      throw new HttpException(
+        err.message || "Internal server error",
+        err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  // payment
+
+  async payment(req: Request, res: Response) {
+    try {
+      const userId = req.headers["x_user_id"];
+      const products = await this.findAll(req);
+
+      const lineItems = products.cartItemsWithProduct.map((product) => ({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: product.product_name,
+            images: [product.product_images[0]?.imageUrl],
+          },
+          unit_amount: Math.round((product.price / 12500) * 100),
+        },
+        quantity: product.purchasedQuantity,
+      }));
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items: lineItems,
+        mode: "payment",
+        success_url: "http://localhost:5173/success",
+        cancel_url: "http://localhost:5173/cancel",
+      });
+
+      res.json({ id: session.id });
+    } catch (err) {
+      console.log({ err });
+
       throw new HttpException(
         err.message || "Internal server error",
         err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR

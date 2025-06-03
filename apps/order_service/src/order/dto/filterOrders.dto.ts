@@ -1,7 +1,7 @@
-import { OrderStatus } from "apps/order_service/generated/prisma";
 import { IsEnum, IsOptional } from "class-validator";
 import { DeliverStatus } from "../enums/deliverType.enum";
 import { PaymentStatus } from "../enums/paymentStatus.enum";
+import { OrderStatus } from "../enums/orderStatus.enum";
 
 export class FilterOrdersDto {
   @IsEnum(OrderStatus)

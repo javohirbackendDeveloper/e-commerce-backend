@@ -11,9 +11,9 @@ import { Request } from "express";
 import { firstValueFrom } from "rxjs";
 import { ClientProxy } from "@nestjs/microservices";
 import { OrderStatus } from "./enums/orderStatus.enum";
-import { PrismaService } from "apps/order_service/prisma/prisma.service";
-import { Orders, Prisma } from "apps/order_service/generated/prisma";
 import { FilterOrdersDto } from "./dto/filterOrders.dto";
+import { PrismaService } from "prisma/prisma.service";
+import { Orders, Prisma } from "@prisma/client";
 
 @Injectable()
 export class OrderService {
@@ -84,7 +84,7 @@ export class OrderService {
       // GETTING CART PRODUCTS
       const cartProducts = await this.cartService.findAll(req);
 
-      if (!cartProducts?.cartItemsWithProduct.length) {
+      if (!cartProducts[0].cartItemsWithProduct.length) {
         throw new HttpException(
           "Please firstly add product to your cart",
           HttpStatus.NOT_FOUND
@@ -93,7 +93,7 @@ export class OrderService {
 
       // CHECKING PAYMENT TYPE
       if (paymenttype === PaymentStatus.Card) {
-        if (amount !== cartProducts.grandPrice) {
+        if (amount !== cartProducts[0].grandPrice) {
           throw new HttpException(
             "Please pay enough money",
             HttpStatus.CONFLICT
@@ -113,7 +113,7 @@ export class OrderService {
       let createData: any = {
         userId: userId as string,
         status: orderStatus,
-        totalPrice: cartProducts?.grandPrice,
+        totalPrice: cartProducts[0]?.grandPrice,
         deliveringType,
         paymenttype,
         locationText: recipient_locationText,

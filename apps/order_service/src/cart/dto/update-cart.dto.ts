@@ -12,6 +12,5 @@ export class UpdateCartDto extends PartialType(CreateCartDto) {
   })
   @IsNumber()
   @IsOptional()
-  @Min(1)
   quantity?: number;
 }

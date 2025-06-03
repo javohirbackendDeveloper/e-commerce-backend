@@ -7,11 +7,12 @@ import {
   Param,
   Body,
   Req,
+  Res,
 } from "@nestjs/common";
 import { CartService } from "./cart.service";
 import { CreateCartDto } from "./dto/create-cart.dto";
 import { UpdateCartDto } from "./dto/update-cart.dto";
-import { Request } from "express";
+import { Request, Response } from "express";
 import {
   ApiTags,
   ApiOperation,
@@ -34,9 +35,6 @@ export class CartController {
     summary: "Add item to cart",
     description: "Adds a new product to the user's cart",
   })
-  @ApiBody({
-    type: CreateCartDto,
-  })
   @ApiResponse({
     status: 201,
     description: "Product successfully added to cart",
@@ -48,6 +46,15 @@ export class CartController {
   })
   create(@Req() req: Request, @Body() createCartDto: CreateCartDto) {
     return this.cartService.create(createCartDto, req);
+  }
+
+  @Get("getPriceQuantity")
+  @ApiResponse({
+    status: 401,
+    description: "Unauthorized - authentication required",
+  })
+  getPriceQuantity(@Req() req: Request) {
+    return this.cartService.getPriceQuantity(req);
   }
 
   @Get()
@@ -113,5 +120,21 @@ export class CartController {
   @ApiResponse({ status: 404, description: "Cart item not found" })
   remove(@Req() req: Request, @Param("id") id: string) {
     return this.cartService.remove(id, req);
+  }
+
+  // stripe service for now
+
+  @Post("create-checkout-session")
+  @ApiOperation({
+    summary: "Pay for products to order",
+    description: "Paying for products",
+  })
+  @ApiResponse({ status: 200, description: "Payment successfully added" })
+  @ApiResponse({
+    status: 401,
+    description: "Unauthorized - authentication required",
+  })
+  payment(@Req() req: Request, @Res() res: Response) {
+    return this.cartService.payment(req, res);
   }
 }

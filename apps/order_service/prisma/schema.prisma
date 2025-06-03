@@ -6,7 +6,8 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
+    binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+
 }
 
 datasource db {
@@ -40,7 +41,6 @@ enum PaymentType  {
 model Orders {
   id                     String         @id @default(auto()) @map("_id") @db.ObjectId
   userId                 String
-  productIds             CartItem[]
   status                 OrderStatus    @default(Created)
   totalPrice             Float
   deliveringType         DeliveringType @default(Punkt)
@@ -72,9 +72,6 @@ model CartItem {
   quantity Int
   productId String
 
-
- orderId String?
- orders Orders? @relation(fields: [orderId] , references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

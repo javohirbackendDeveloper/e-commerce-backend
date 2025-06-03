@@ -1,6 +1,6 @@
 import { IsEnum, IsOptional, IsPhoneNumber, IsString } from "class-validator";
 import { UpdateOrderStatus } from "../enums/orderStatus.enum";
-import { OrderStatus } from "apps/order_service/generated/prisma";
+import { OrderStatus } from "@prisma/client";
 
 export class UpdateOrderDto {
   @IsString()
