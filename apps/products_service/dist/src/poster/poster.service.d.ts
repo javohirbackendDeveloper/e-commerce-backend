@@ -5,26 +5,26 @@ export declare class PosterService {
     private prisma;
     constructor(cloudinary: CloudinaryService, prisma: PrismaService);
     create(title: string, img: Express.Multer.File): Promise<{
-        id: string;
         title: string;
+        id: string;
         img: string;
         sectionId: string | null;
     }>;
     findAll(): Promise<{
-        id: string;
         title: string;
+        id: string;
         img: string;
         sectionId: string | null;
     }[]>;
     findOne(id: string): Promise<{
-        id: string;
         title: string;
+        id: string;
         img: string;
         sectionId: string | null;
     }>;
     remove(id: string): Promise<{
-        id: string;
         title: string;
+        id: string;
         img: string;
         sectionId: string | null;
     }>;

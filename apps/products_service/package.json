@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/main.js",
+    "start": "node dist/src/main.js",
     "build": "npx prisma generate && nest build",
-    "start:prod": "node dist/main.js",
+    "start:prod": "node dist/src/main.js",
     "start:dev": "nest start --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

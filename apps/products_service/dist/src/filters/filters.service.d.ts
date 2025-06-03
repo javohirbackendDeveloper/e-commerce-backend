@@ -18,14 +18,14 @@ export declare class FiltersService {
         }[];
         values: {
             id: string;
-            filterId: string;
             value: string;
+            filterId: string;
         }[];
     } & {
-        title: string;
-        inputType: import("generated/prisma").$Enums.InputType;
         type: import("generated/prisma").$Enums.TypeOfFilter;
+        title: string;
         id: string;
+        inputType: import("generated/prisma").$Enums.InputType;
     }>;
     update(id: string, updateFilterDto: UpdateFilterDto): Promise<FilterType>;
     remove(id: string): Promise<FilterType>;
@@ -33,14 +33,14 @@ export declare class FiltersService {
         filter: {
             values: {
                 id: string;
-                filterId: string;
                 value: string;
+                filterId: string;
             }[];
         } & {
-            title: string;
-            inputType: import("generated/prisma").$Enums.InputType;
             type: import("generated/prisma").$Enums.TypeOfFilter;
+            title: string;
             id: string;
+            inputType: import("generated/prisma").$Enums.InputType;
         };
     } & {
         id: string;

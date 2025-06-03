@@ -6,39 +6,39 @@ export declare class CategoryController {
     constructor(categoryService: CategoryService);
     create(file: Express.Multer.File, createCategoryDto: CreateCategoryDto): Promise<CreateCategoryDto>;
     createSubCategory(createSubCategoryDto: CreateSubCategoryDto): Promise<{
-        id: string;
-        parentId: string | null;
-        icon: string | null;
         title: string;
+        parentId: string | null;
+        id: string;
+        icon: string | null;
         children: number;
     }>;
     findAll(): Promise<{
-        id: string;
-        parentId: string | null;
-        icon: string | null;
         title: string;
+        parentId: string | null;
+        id: string;
+        icon: string | null;
         children: number;
     }[]>;
     getAllLeafCategories(): Promise<{
-        id: string;
-        parentId: string | null;
-        icon: string | null;
         title: string;
+        parentId: string | null;
+        id: string;
+        icon: string | null;
         children: number;
     }[]>;
     findAllParentCats(): Promise<{
-        id: string;
-        parentId: string | null;
-        icon: string | null;
         title: string;
+        parentId: string | null;
+        id: string;
+        icon: string | null;
         children: number;
     }[]>;
     findAllParentsWithSubCats(): Promise<import("./dto/return.dto").ReturnParentWithSubDto[]>;
     findOne(id: string): Promise<{
-        id: string;
-        parentId: string | null;
-        icon: string | null;
         title: string;
+        parentId: string | null;
+        id: string;
+        icon: string | null;
         children: number;
     }>;
     update(id: string, updateCategoryDto: UpdateCategoryDto, file: Express.Multer.File): Promise<CreateCategoryDto>;
@@ -46,10 +46,10 @@ export declare class CategoryController {
         message: string;
     }>;
     findAllChildCatsByParentid(id: string): Promise<{
-        id: string;
-        parentId: string | null;
-        icon: string | null;
         title: string;
+        parentId: string | null;
+        id: string;
+        icon: string | null;
         children: number;
     }[]>;
 }

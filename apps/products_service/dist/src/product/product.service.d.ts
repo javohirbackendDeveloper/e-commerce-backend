@@ -20,36 +20,36 @@ export declare class ProductService {
     create(createProductDto: CreateProductDto): Promise<Product>;
     findAll(page?: number, limit?: number): Promise<Product[]>;
     findOne(id: string): Promise<{
+        description: string;
         id: string;
+        product_name: string;
+        price: number;
+        oldPrice: number;
+        quantity: number;
         categoryId: string;
         brandId: string;
-        product_name: string;
-        description: string;
-        oldPrice: number;
-        price: number;
-        quantity: number;
         color: string[];
         filters: Prisma.JsonValue;
+        product_status: import("generated/prisma").$Enums.ProductStatus;
         ordered: string[];
         createdAt: Date;
         updatedAt: Date;
-        product_status: import("generated/prisma").$Enums.ProductStatus;
     }>;
     update(id: string, updateProductDto: UpdateProductDto): Promise<{
+        description: string;
         id: string;
+        product_name: string;
+        price: number;
+        oldPrice: number;
+        quantity: number;
         categoryId: string;
         brandId: string;
-        product_name: string;
-        description: string;
-        oldPrice: number;
-        price: number;
-        quantity: number;
         color: string[];
         filters: Prisma.JsonValue;
+        product_status: import("generated/prisma").$Enums.ProductStatus;
         ordered: string[];
         createdAt: Date;
         updatedAt: Date;
-        product_status: import("generated/prisma").$Enums.ProductStatus;
     }>;
     remove(id: string): Promise<{
         message: string;

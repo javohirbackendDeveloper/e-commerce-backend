@@ -14,20 +14,20 @@ export declare class LikedProductController {
     }>;
     findAll(req: Request): Promise<({
         product: {
+            description: string;
             id: string;
+            product_name: string;
+            price: number;
+            oldPrice: number;
+            quantity: number;
             categoryId: string;
             brandId: string;
-            product_name: string;
-            description: string;
-            oldPrice: number;
-            price: number;
-            quantity: number;
             color: string[];
             filters: import("generated/prisma/runtime/library").JsonValue;
+            product_status: import("generated/prisma").$Enums.ProductStatus;
             ordered: string[];
             createdAt: Date;
             updatedAt: Date;
-            product_status: import("generated/prisma").$Enums.ProductStatus;
         };
     } & {
         id: string;

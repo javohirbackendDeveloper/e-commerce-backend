@@ -9,10 +9,10 @@ export declare class CategoryService {
     private readonly cloudinaryService;
     constructor(prismaService: PrismaService, cloudinaryService: CloudinaryService);
     createSubCategory(createSubCategoryDto: CreateSubCategoryDto): Promise<{
-        id: string;
-        parentId: string | null;
-        icon: string | null;
         title: string;
+        parentId: string | null;
+        id: string;
+        icon: string | null;
         children: number;
     }>;
     create(createCategoryDto: CreateCategoryDto, file: Express.Multer.File): Promise<CreateCategoryDto>;
