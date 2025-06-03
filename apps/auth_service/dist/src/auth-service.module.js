@@ -13,7 +13,7 @@ const user_module_1 = require("./user/user.module");
 const admin_module_1 = require("./admin/admin.module");
 const punkt_admin_module_1 = require("./punkt-admin/punkt-admin.module");
 const cloudinary_module_1 = require("./cloudinary/cloudinary.module");
-const rmq_service_1 = require("./rmq/rmq.service");
+const tezbuy_packages_1 = require("tezbuy_packages");
 let AuthServiceModule = class AuthServiceModule {
 };
 exports.AuthServiceModule = AuthServiceModule;
@@ -30,7 +30,7 @@ exports.AuthServiceModule = AuthServiceModule = __decorate([
             cloudinary_module_1.CloudinaryModule,
         ],
         controllers: [],
-        providers: [rmq_service_1.RmqService],
+        providers: [tezbuy_packages_1.RmqService],
     })
 ], AuthServiceModule);
 //# sourceMappingURL=auth-service.module.js.map

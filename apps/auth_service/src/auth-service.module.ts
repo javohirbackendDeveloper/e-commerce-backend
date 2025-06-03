@@ -4,7 +4,7 @@ import { UserModule } from "./user/user.module";
 import { AdminModule } from "./admin/admin.module";
 import { PunktAdminModule } from "./punkt-admin/punkt-admin.module";
 import { CloudinaryModule } from "./cloudinary/cloudinary.module";
-import { RmqService } from "./rmq/rmq.service";
+import { RmqService } from "tezbuy_packages";
 
 @Module({
   imports: [

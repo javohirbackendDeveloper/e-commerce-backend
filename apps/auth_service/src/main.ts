@@ -5,8 +5,7 @@ import * as cookieParser from "cookie-parser";
 import { AllExceptionsFilter } from "./filters/all-exceptions.filters";
 import { RmqOptions } from "@nestjs/microservices";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { RmqService } from "./rmq/rmq.service";
-// import { allowUrls } from "./cors_for_backend/middleware";
+import { RmqService } from "tezbuy_packages";
 import {
   ReturnLoginUserDto,
   ReturnUserDto,
@@ -26,6 +25,8 @@ import { allowUrls } from "tezbuy_packages";
 
 async function bootstrap() {
   const app = await NestFactory.create(AuthServiceModule);
+
+  app.use(allowUrls);
 
   // SWAGGER CONFIGURATION
   const extraModels = [
@@ -58,7 +59,6 @@ async function bootstrap() {
   app.use("/swagger-json", (_, res) => res.json(document));
 
   // GLOBAL MIDDLEWARES
-  // app.use(allowUrls);
   app.setGlobalPrefix("auth");
   app.useGlobalPipes(
     new ValidationPipe({
@@ -84,7 +84,7 @@ async function bootstrap() {
 
   // running http server
 
-  const PORT = process.env.PORT || 4001;
+  const PORT = process.env.PORT || 8080;
   await app.listen(PORT, () => {
     console.log("auth_service is running on the " + PORT);
   });
