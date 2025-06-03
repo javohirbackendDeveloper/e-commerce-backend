@@ -10,6 +10,7 @@ async function bootstrap() {
   const app = await NestFactory.create(OrderServiceModule);
 
   app.use(allowUrls);
+  app.setGlobalPrefix("orders");
 
   // SWAGGER CONFIGURATION
   const config = new DocumentBuilder()
@@ -17,13 +18,12 @@ async function bootstrap() {
     .setVersion("1.0.0")
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("api", app, document);
 
+  SwaggerModule.setup("api-docs", app, document);
   app.use("/swagger-json", (_, res) => res.json(document));
 
   // global middlewares
   app.useGlobalPipes(new ValidationPipe());
-  app.setGlobalPrefix("orders");
 
   // listening port
   const configService = app.get(ConfigService);
