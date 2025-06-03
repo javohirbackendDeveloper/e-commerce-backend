@@ -8,8 +8,7 @@ import {
 import { ProductsServiceModule } from "./products-service.module";
 import { ValidationPipe } from "@nestjs/common";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { allowUrls } from "libs/common/src/cors_for_backend/middleware";
-import { RmqService } from "libs/common/src";
+import { allowUrls, RmqService } from "tezbuy_packages";
 
 async function bootstrap() {
   const app = await NestFactory.create(ProductsServiceModule);

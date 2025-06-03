@@ -4,8 +4,8 @@ import {
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
-import { PrismaService } from "apps/products_service/prisma/prisma.service";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
+import { PrismaService } from "prisma/prisma.service";
 
 @Injectable()
 export class PosterService {

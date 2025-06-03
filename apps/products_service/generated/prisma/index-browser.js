@@ -206,7 +206,8 @@ exports.Prisma.CouponScalarFieldEnum = {
 exports.Prisma.PosterScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  img: 'img'
+  img: 'img',
+  sectionId: 'sectionId'
 };
 
 exports.Prisma.SortOrder = {

@@ -183,4 +183,6 @@ model Poster {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   title String
   img   String
+
+  sectionId String? @db.ObjectId
 }

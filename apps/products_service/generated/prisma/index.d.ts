@@ -13242,18 +13242,21 @@ export namespace Prisma {
     id: string | null
     title: string | null
     img: string | null
+    sectionId: string | null
   }
 
   export type PosterMaxAggregateOutputType = {
     id: string | null
     title: string | null
     img: string | null
+    sectionId: string | null
   }
 
   export type PosterCountAggregateOutputType = {
     id: number
     title: number
     img: number
+    sectionId: number
     _all: number
   }
 
@@ -13262,18 +13265,21 @@ export namespace Prisma {
     id?: true
     title?: true
     img?: true
+    sectionId?: true
   }
 
   export type PosterMaxAggregateInputType = {
     id?: true
     title?: true
     img?: true
+    sectionId?: true
   }
 
   export type PosterCountAggregateInputType = {
     id?: true
     title?: true
     img?: true
+    sectionId?: true
     _all?: true
   }
 
@@ -13353,6 +13359,7 @@ export namespace Prisma {
     id: string
     title: string
     img: string
+    sectionId: string | null
     _count: PosterCountAggregateOutputType | null
     _min: PosterMinAggregateOutputType | null
     _max: PosterMaxAggregateOutputType | null
@@ -13376,6 +13383,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     img?: boolean
+    sectionId?: boolean
   }, ExtArgs["result"]["poster"]>
 
 
@@ -13384,9 +13392,10 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     img?: boolean
+    sectionId?: boolean
   }
 
-  export type PosterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "img", ExtArgs["result"]["poster"]>
+  export type PosterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "img" | "sectionId", ExtArgs["result"]["poster"]>
 
   export type $PosterPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Poster"
@@ -13395,6 +13404,7 @@ export namespace Prisma {
       id: string
       title: string
       img: string
+      sectionId: string | null
     }, ExtArgs["result"]["poster"]>
     composites: {}
   }
@@ -13790,6 +13800,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Poster", 'String'>
     readonly title: FieldRef<"Poster", 'String'>
     readonly img: FieldRef<"Poster", 'String'>
+    readonly sectionId: FieldRef<"Poster", 'String'>
   }
     
 
@@ -14268,7 +14279,8 @@ export namespace Prisma {
   export const PosterScalarFieldEnum: {
     id: 'id',
     title: 'title',
-    img: 'img'
+    img: 'img',
+    sectionId: 'sectionId'
   };
 
   export type PosterScalarFieldEnum = (typeof PosterScalarFieldEnum)[keyof typeof PosterScalarFieldEnum]
@@ -15077,12 +15089,14 @@ export namespace Prisma {
     id?: StringFilter<"Poster"> | string
     title?: StringFilter<"Poster"> | string
     img?: StringFilter<"Poster"> | string
+    sectionId?: StringNullableFilter<"Poster"> | string | null
   }
 
   export type PosterOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
     img?: SortOrder
+    sectionId?: SortOrder
   }
 
   export type PosterWhereUniqueInput = Prisma.AtLeast<{
@@ -15092,12 +15106,14 @@ export namespace Prisma {
     NOT?: PosterWhereInput | PosterWhereInput[]
     title?: StringFilter<"Poster"> | string
     img?: StringFilter<"Poster"> | string
+    sectionId?: StringNullableFilter<"Poster"> | string | null
   }, "id">
 
   export type PosterOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
     img?: SortOrder
+    sectionId?: SortOrder
     _count?: PosterCountOrderByAggregateInput
     _max?: PosterMaxOrderByAggregateInput
     _min?: PosterMinOrderByAggregateInput
@@ -15110,6 +15126,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Poster"> | string
     title?: StringWithAggregatesFilter<"Poster"> | string
     img?: StringWithAggregatesFilter<"Poster"> | string
+    sectionId?: StringNullableWithAggregatesFilter<"Poster"> | string | null
   }
 
   export type CommentsCreateInput = {
@@ -15734,38 +15751,45 @@ export namespace Prisma {
     id?: string
     title: string
     img: string
+    sectionId?: string | null
   }
 
   export type PosterUncheckedCreateInput = {
     id?: string
     title: string
     img: string
+    sectionId?: string | null
   }
 
   export type PosterUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     img?: StringFieldUpdateOperationsInput | string
+    sectionId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PosterUncheckedUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     img?: StringFieldUpdateOperationsInput | string
+    sectionId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PosterCreateManyInput = {
     id?: string
     title: string
     img: string
+    sectionId?: string | null
   }
 
   export type PosterUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     img?: StringFieldUpdateOperationsInput | string
+    sectionId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PosterUncheckedUpdateManyInput = {
     title?: StringFieldUpdateOperationsInput | string
     img?: StringFieldUpdateOperationsInput | string
+    sectionId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -16429,18 +16453,21 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     img?: SortOrder
+    sectionId?: SortOrder
   }
 
   export type PosterMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     img?: SortOrder
+    sectionId?: SortOrder
   }
 
   export type PosterMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     img?: SortOrder
+    sectionId?: SortOrder
   }
 
   export type ProductCreateNestedOneWithoutCommentsInput = {

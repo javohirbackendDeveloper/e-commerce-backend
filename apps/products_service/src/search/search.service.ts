@@ -7,9 +7,8 @@ import {
   Injectable,
 } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { Product } from "apps/products_service/generated/prisma";
-import { PrismaService } from "apps/products_service/prisma/prisma.service";
 import { ProductService } from "../product/product.service";
+import { PrismaService } from "prisma/prisma.service";
 
 // const client = new Client({
 //   node: "https://tezbuy-ea7cb8.es.eu-west-1.aws.elastic.cloud:443",

@@ -8,19 +8,15 @@ import {
 } from "@nestjs/common";
 import { CreateProductDto } from "./dto/create-product.dto";
 import { UpdateProductDto } from "./dto/update-product.dto";
-import { PrismaService } from "apps/products_service/prisma/prisma.service";
-import {
-  Category,
-  Prisma,
-  Product,
-  ProductImage,
-} from "apps/products_service/generated/prisma";
+
 import { ReturnData } from "./interface";
 import { CategoryService } from "../category/category.service";
 import { SearchService } from "../search/search.service";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
 import { ReturnMinMaxDto } from "./dto/return.dto";
 import { FilterQueryDto } from "./dto/filterQuery.dto";
+import { PrismaService } from "prisma/prisma.service";
+import { Prisma, Product, ProductImage } from "generated/prisma";
 
 @Injectable()
 export class ProductService {

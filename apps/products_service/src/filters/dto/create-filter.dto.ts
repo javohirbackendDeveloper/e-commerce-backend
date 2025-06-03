@@ -1,7 +1,4 @@
-import {
-  InputType,
-  TypeOfFilter,
-} from "apps/products_service/generated/prisma";
+import { InputType, TypeOfFilter } from "generated/prisma";
 import {
   IsArray,
   IsEnum,

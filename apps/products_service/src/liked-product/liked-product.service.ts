@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { CreateLikedProductDto } from "./dto/create-liked-product.dto";
-import { PrismaService } from "apps/products_service/prisma/prisma.service";
+import { PrismaService } from "prisma/prisma.service";
 import { Request } from "express";
 
 @Injectable()

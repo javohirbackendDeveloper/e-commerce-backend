@@ -1,4 +1,4 @@
-import { Category } from "apps/products_service/generated/prisma";
+import { Category } from "generated/prisma";
 
 class SubCategoryDto {
   id: string;

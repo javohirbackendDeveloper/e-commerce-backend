@@ -9,10 +9,10 @@ import { LikedProductModule } from "./liked-product/liked-product.module";
 import { SearchModule } from "./search/search.module";
 import { CloudinaryModule } from "./cloudinary/cloudinary.module";
 import { BrandModule } from "./brand/brand.module";
-import { RmqModule, RmqService } from "libs/common/src";
+import { RmqModule, RmqService } from "tezbuy_packages";
 import { FiltersModule } from "./filters/filters.module";
-import { CouponsModule } from './coupons/coupons.module';
-import { PosterModule } from './poster/poster.module';
+import { CouponsModule } from "./coupons/coupons.module";
+import { PosterModule } from "./poster/poster.module";
 
 @Module({
   imports: [
