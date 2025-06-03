@@ -109,6 +109,7 @@ let ApiGatewayController = class ApiGatewayController {
         }
         const headers = Object.assign({}, req.headers);
         delete headers["content-length"];
+        delete headers["host"];
         for (const role of enum_roles_1.Roles) {
             const token = req.cookies[`${role.toLowerCase()}_access_token`];
             if (token) {
@@ -148,11 +149,8 @@ let ApiGatewayController = class ApiGatewayController {
         }
         const data = req.body;
         try {
-            if (!target) {
-                console.error("Target URL topilmadi:", url);
-                return res
-                    .status(500)
-                    .json({ message: "Target service not configured" });
+            if (target.includes("api_gateway")) {
+                throw new Error("Loop detected: target is self");
             }
             const httpsAgent = new https.Agent({
                 rejectUnauthorized: false,
@@ -164,7 +162,6 @@ let ApiGatewayController = class ApiGatewayController {
                 headers: Object.assign(Object.assign({}, headers), { x_allowed_origin: process.env.API_GATEWAY_URL }),
                 httpsAgent,
             }));
-            console.log({ response });
             if (response.headers["set-cookie"]) {
                 res.setHeader("Set-Cookie", response.headers["set-cookie"]);
             }

@@ -99,7 +99,8 @@ export class ApiGatewayController {
 
     // HEADERS tayyorlash
     const headers = { ...req.headers };
-    delete headers["content-length"]; // content-length qayta hisoblanadi
+    delete headers["content-length"];
+    delete headers["host"];
 
     // USER INFO qo‘shish
     for (const role of Roles) {
@@ -158,11 +159,8 @@ export class ApiGatewayController {
     const data = req.body;
 
     try {
-      if (!target) {
-        console.error("Target URL topilmadi:", url);
-        return res
-          .status(500)
-          .json({ message: "Target service not configured" });
+      if (target.includes("api_gateway")) {
+        throw new Error("Loop detected: target is self");
       }
       const httpsAgent = new https.Agent({
         rejectUnauthorized: false,
