@@ -24,6 +24,12 @@ async function bootstrap() {
 
   app.use("/swagger-json", (_, res) => res.json(document));
 
+  // listening port
+  const PORT = process.env.PORT || 3003;
+  await app.listen(PORT, () => {
+    console.log(`Products service is running at ${PORT}`);
+  });
+
   // global middlewares
   app.setGlobalPrefix("products");
   app.useGlobalPipes(
@@ -41,11 +47,5 @@ async function bootstrap() {
     rmqService.getOptions("PRODUCTS_SERVICE")
   );
   await app.startAllMicroservices();
-
-  // listening port
-  const PORT = process.env.PORT || 3003;
-  await app.listen(PORT, () => {
-    console.log(`Products service is running at ${PORT}`);
-  });
 }
 bootstrap();
