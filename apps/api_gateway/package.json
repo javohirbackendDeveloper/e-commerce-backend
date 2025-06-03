@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/src/main.js",
+    "start": "node dist/main.js",
     "build": "nest build",
-    "start:prod": "node dist/src/main.js",
+    "start:prod": "node dist/main.js",
     "start:dev": "nest start --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

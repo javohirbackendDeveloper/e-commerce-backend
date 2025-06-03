@@ -13,7 +13,7 @@ const api_gateway_service_1 = require("./api-gateway.service");
 const config_1 = require("@nestjs/config");
 const axios_1 = require("@nestjs/axios");
 const services_1 = require("./constants/services");
-const src_1 = require("libs/common/src");
+const tezbuy_packages_1 = require("tezbuy_packages");
 let ApiGatewayModule = class ApiGatewayModule {
 };
 exports.ApiGatewayModule = ApiGatewayModule;
@@ -25,13 +25,13 @@ exports.ApiGatewayModule = ApiGatewayModule = __decorate([
                 envFilePath: "./apps/api_gateway/.env",
                 isGlobal: true,
             }),
-            src_1.RmqModule.register({
+            tezbuy_packages_1.RmqModule.register({
                 name: services_1.ORDER_SERVICE,
             }),
-            src_1.RmqModule.register({
+            tezbuy_packages_1.RmqModule.register({
                 name: services_1.PRODUCTS_SERVICE,
             }),
-            src_1.RmqModule.register({
+            tezbuy_packages_1.RmqModule.register({
                 name: services_1.AUTH_SERVICE,
             }),
         ],
