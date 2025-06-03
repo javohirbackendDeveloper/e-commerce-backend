@@ -8,108 +8,96 @@ import {
   Req,
   Query,
 } from "@nestjs/common";
+import { Request } from "express";
 import { OrderService } from "./order.service";
 import { CreateOrderDto } from "./dto/create-order.dto";
 import {
   UpdateOrderDto,
   UpdateOrderDtoForPunktAdmin,
 } from "./dto/update-order.dto";
-import { Request } from "express";
 import {
   ApiTags,
   ApiOperation,
-  ApiBody,
   ApiResponse,
-  ApiParam,
   ApiQuery,
+  ApiParam,
+  ApiBody,
 } from "@nestjs/swagger";
 import { Prisma } from "@prisma/client";
 
-@ApiTags("order_service/order")
+@ApiTags("Buyurtmalar")
 @Controller("order")
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
-  // USER APIS
+  // USER
 
   @Post("user")
-  @ApiOperation({ summary: "Foydalanuvchi tomonidan yangi buyurtma yaratish" })
+  @ApiOperation({ summary: "Yangi buyurtma yaratish (foydalanuvchi)" })
   @ApiBody({ type: CreateOrderDto })
-  @ApiResponse({
-    status: 201,
-    description: "Buyurtma muvaffaqiyatli yaratildi",
-  })
-  create(@Req() req: Request, @Body() createOrderDto: CreateOrderDto) {
-    return this.orderService.create(createOrderDto, req);
+  @ApiResponse({ status: 201, description: "Buyurtma yaratildi" })
+  create(@Req() req: Request, @Body() dto: CreateOrderDto) {
+    return this.orderService.create(dto, req);
   }
 
   @Get("user")
-  @ApiOperation({ summary: "Foydalanuvchining barcha buyurtmalari" })
-  @ApiQuery({ name: "status", required: false, description: "Buyurtma holati" })
-  @ApiQuery({ name: "punktId", required: false, description: "Punkt ID" })
-  @ApiResponse({ status: 200, description: "Buyurtmalar ro'yxati" })
-  getUserOrders(
-    @Query() filterQueries: Prisma.OrdersWhereInput,
-    @Req() req: Request
-  ) {
-    return this.orderService.getUserOrders(filterQueries, req);
+  @ApiOperation({ summary: "Foydalanuvchining buyurtmalari ro'yxati" })
+  @ApiQuery({ name: "status", required: false })
+  @ApiQuery({ name: "punktId", required: false })
+  @ApiResponse({ status: 200, description: "Buyurtmalar olindi" })
+  getUserOrders(@Query() query: Prisma.OrdersWhereInput, @Req() req: Request) {
+    return this.orderService.getUserOrders(query, req);
   }
 
   @Patch("user/:id")
-  @ApiOperation({ summary: "Foydalanuvchi o‘zining buyurtmasini yangilaydi" })
+  @ApiOperation({ summary: "Buyurtmani yangilash (foydalanuvchi)" })
   @ApiParam({ name: "id", description: "Buyurtma ID" })
   @ApiBody({ type: UpdateOrderDto })
   @ApiResponse({ status: 200, description: "Buyurtma yangilandi" })
   update(
     @Req() req: Request,
     @Param("id") id: string,
-    @Body() updateOrderDto: UpdateOrderDto
+    @Body() dto: UpdateOrderDto
   ) {
-    return this.orderService.update(id, updateOrderDto, req);
+    return this.orderService.update(id, dto, req);
   }
 
-  // PUNKT ADMIN APIS
+  // PUNKT ADMIN
 
   @Get("punkt")
-  @ApiOperation({ summary: "Punkt admin uchun buyurtmalar ro'yxati" })
+  @ApiOperation({ summary: "Punkt buyurtmalari (punkt admin)" })
   @ApiQuery({ name: "status", required: false })
   @ApiQuery({ name: "userId", required: false })
-  @ApiResponse({ status: 200, description: "Punktdagi buyurtmalar ro'yxati" })
+  @ApiResponse({ status: 200, description: "Punktdagi buyurtmalar olindi" })
   findPunktOrders(
-    @Query() filterQueries: Prisma.OrdersWhereInput,
+    @Query() query: Prisma.OrdersWhereInput,
     @Req() req: Request
   ) {
-    return this.orderService.getPunktOrders(filterQueries, req);
+    return this.orderService.getPunktOrders(query, req);
   }
 
   @Patch("punkt/:id")
-  @ApiOperation({ summary: "Punkt admin buyurtmani yangilaydi" })
+  @ApiOperation({ summary: "Buyurtmani yangilash (punkt admin)" })
   @ApiParam({ name: "id", description: "Buyurtma ID" })
   @ApiBody({ type: UpdateOrderDtoForPunktAdmin })
-  @ApiResponse({
-    status: 200,
-    description: "Buyurtma punkt admin tomonidan yangilandi",
-  })
+  @ApiResponse({ status: 200, description: "Buyurtma yangilandi" })
   updateForPunktAdmin(
     @Req() req: Request,
     @Param("id") id: string,
-    @Body() updateOrderDto: UpdateOrderDtoForPunktAdmin
+    @Body() dto: UpdateOrderDtoForPunktAdmin
   ) {
-    return this.orderService.updatOrdersForPunktAdmin(id, updateOrderDto, req);
+    return this.orderService.updatOrdersForPunktAdmin(id, dto, req);
   }
 
-  // ADMIN APIS
+  // ADMIN
 
   @Get("admin")
-  @ApiOperation({ summary: "Admin barcha buyurtmalarni ko‘radi" })
+  @ApiOperation({ summary: "Barcha buyurtmalar (admin)" })
   @ApiQuery({ name: "status", required: false })
   @ApiQuery({ name: "punktId", required: false })
   @ApiQuery({ name: "userId", required: false })
-  @ApiResponse({ status: 200, description: "Barcha buyurtmalar ro'yxati" })
-  getAllOrders(
-    @Query() filterQueries: Prisma.OrdersWhereInput,
-    @Req() req: Request
-  ) {
-    return this.orderService.getAllOrders(filterQueries);
+  @ApiResponse({ status: 200, description: "Buyurtmalar ro'yxati" })
+  getAllOrders(@Query() query: Prisma.OrdersWhereInput, @Req() req: Request) {
+    return this.orderService.getAllOrders(query);
   }
 }
