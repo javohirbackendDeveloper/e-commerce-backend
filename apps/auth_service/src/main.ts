@@ -27,6 +27,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AuthServiceModule);
 
   app.use(allowUrls);
+  app.setGlobalPrefix("auth");
 
   // SWAGGER CONFIGURATION
   const extraModels = [
@@ -53,13 +54,13 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app as any, config, {
     extraModels,
+    ignoreGlobalPrefix: false,
   });
   SwaggerModule.setup("api", app as any, document);
 
   app.use("/swagger-json", (_, res) => res.json(document));
 
   // GLOBAL MIDDLEWARES
-  app.setGlobalPrefix("auth");
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
