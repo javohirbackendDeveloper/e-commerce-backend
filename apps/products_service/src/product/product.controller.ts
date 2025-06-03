@@ -122,8 +122,6 @@ export class ProductController {
     @UploadedFile() file: Express.Multer.File,
     @Body("productId") productId: string
   ) {
-    console.log({ file, productId });
-
     return this.productService.uploadOneImage(file, productId);
   }
 
