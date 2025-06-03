@@ -8,7 +8,7 @@ import {
   ORDER_SERVICE,
   PRODUCTS_SERVICE,
 } from "./constants/services";
-import { RmqModule } from "libs/common/src";
+import { RmqModule } from "tezbuy_packages";
 
 @Module({
   imports: [
