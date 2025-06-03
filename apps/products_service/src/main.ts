@@ -1,4 +1,3 @@
-// apps/products_service/src/main.ts
 import { NestFactory } from "@nestjs/core";
 import {
   MicroserviceOptions,
@@ -13,25 +12,31 @@ import { allowUrls, RmqService } from "tezbuy_packages";
 async function bootstrap() {
   const app = await NestFactory.create(ProductsServiceModule);
 
-  // SWAGGER CONFIGURATION
+  app.setGlobalPrefix("products");
 
+  // Swagger configuration
   const config = new DocumentBuilder()
-    .setTitle("products_service")
+    .setTitle("Products Service API")
+    .setDescription("E-commerce platform products management API")
     .setVersion("1.0.0")
+    .addServer(
+      `http://localhost:${process.env.PORT || 3003}`,
+      "Local Development"
+    )
+    .addServer(
+      "https://tezbuy-products-service-backend.onrender.com",
+      "Production"
+    )
     .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("api", app, document);
 
-  app.use("/swagger-json", (_, res) => res.json(document));
-
-  // listening port
-  const PORT = process.env.PORT || 3003;
-  await app.listen(PORT, () => {
-    console.log(`Products service is running at ${PORT}`);
+  const document = SwaggerModule.createDocument(app, config, {
+    ignoreGlobalPrefix: false,
   });
 
-  // global middlewares
-  app.setGlobalPrefix("products");
+  SwaggerModule.setup("/api-docs", app, document);
+  app.use("/swagger-json", (_, res) => res.json(document));
+
+  //  Global Middlewares
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -41,11 +46,20 @@ async function bootstrap() {
   );
   app.use(allowUrls);
 
-  // microservice connecting
+  //  Microservice va HTTP Server
+  const PORT = process.env.PORT || 3003;
+  await app.listen(PORT, () => {
+    console.log(`Products service is running at ${PORT}`);
+    console.log(`Swagger UI: http://localhost:${PORT}/products/api-docs`);
+    console.log(`Swagger JSON: http://localhost:${PORT}/products/swagger-json`);
+  });
+
+  //  Microservice Connection
   const rmqService = app.get<RmqService>(RmqService);
   app.connectMicroservice<RmqOptions>(
     rmqService.getOptions("PRODUCTS_SERVICE")
   );
   await app.startAllMicroservices();
 }
+
 bootstrap();
