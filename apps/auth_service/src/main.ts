@@ -51,12 +51,17 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle("auth_service")
     .setVersion("1.0.0")
+    .addServer(
+      `http://localhost:${process.env.PORT || 8080}`,
+      "Local Development"
+    )
+    .addServer("https://e-commerce-backend-2-xcpq.onrender.com", "Production")
     .build();
-  const document = SwaggerModule.createDocument(app as any, config, {
+  const document = SwaggerModule.createDocument(app, config, {
     extraModels,
     ignoreGlobalPrefix: false,
   });
-  SwaggerModule.setup("api", app as any, document);
+  SwaggerModule.setup("api", app, document);
 
   app.use("/swagger-json", (_, res) => res.json(document));
 
