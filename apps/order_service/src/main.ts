@@ -17,7 +17,9 @@ async function bootstrap() {
     .setTitle("order_service")
     .setVersion("1.0.0")
     .build();
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, config, {
+    ignoreGlobalPrefix: false,
+  });
 
   SwaggerModule.setup("api-docs", app, document);
   app.use("/swagger-json", (_, res) => res.json(document));
