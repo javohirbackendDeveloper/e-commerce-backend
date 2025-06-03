@@ -33,10 +33,12 @@ async function bootstrap() {
     ignoreGlobalPrefix: false,
   });
 
-  SwaggerModule.setup("/api-docs", app, document);
+  SwaggerModule.setup("api-docs", app, document);
   app.use("/swagger-json", (_, res) => res.json(document));
 
   //  Global Middlewares
+  app.use(allowUrls);
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -44,7 +46,6 @@ async function bootstrap() {
       transform: true,
     })
   );
-  app.use(allowUrls);
 
   //  Microservice va HTTP Server
   const PORT = process.env.PORT || 3003;
