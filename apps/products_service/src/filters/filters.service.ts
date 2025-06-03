@@ -6,7 +6,7 @@ import {
 } from "./dto/create-filter.dto";
 import { UpdateFilterDto } from "./dto/update-filter.dto";
 import { PrismaService } from "prisma/prisma.service";
-import { FilterType, FilterValues } from "generated/prisma";
+import { FilterType, FilterValues } from "@prisma/client";
 import { ReturnSpecificFunction } from "./dto/return.dto";
 import { CategoryService } from "../category/category.service";
 

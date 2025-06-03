@@ -16,8 +16,7 @@ import { CloudinaryService } from "../cloudinary/cloudinary.service";
 import { ReturnMinMaxDto } from "./dto/return.dto";
 import { FilterQueryDto } from "./dto/filterQuery.dto";
 import { PrismaService } from "prisma/prisma.service";
-import { Prisma, Product, ProductImage } from "generated/prisma";
-
+import { Prisma, Product, ProductImage } from "@prisma/client";
 @Injectable()
 export class ProductService {
   constructor(

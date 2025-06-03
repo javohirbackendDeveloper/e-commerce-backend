@@ -1,4 +1,4 @@
-import { InputType, TypeOfFilter } from "generated/prisma";
+import { InputType, TypeOfFilter } from "@prisma/client";
 export declare class CreateGeneralFilterDto {
     title: string;
     inputType: InputType;

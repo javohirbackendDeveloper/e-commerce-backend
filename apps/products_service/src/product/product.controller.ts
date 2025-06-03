@@ -25,7 +25,7 @@ import {
 } from "@nestjs/swagger";
 import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
 import { FilterQueryDto } from "./dto/filterQuery.dto";
-import { Product } from "generated/prisma";
+import { Product } from "@prisma/client";
 
 @ApiTags("products_service/product")
 @Controller("product")

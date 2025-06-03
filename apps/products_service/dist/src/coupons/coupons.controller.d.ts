@@ -11,7 +11,7 @@ export declare class CouponsController {
         min_order_amount: number;
         usage_limit: number;
         end_date: Date;
-        status: import("generated/prisma").$Enums.CouponStatus;
+        status: import("@prisma/client").$Enums.CouponStatus;
     }>;
     findAll(): Promise<{
         id: string;
@@ -20,7 +20,7 @@ export declare class CouponsController {
         min_order_amount: number;
         usage_limit: number;
         end_date: Date;
-        status: import("generated/prisma").$Enums.CouponStatus;
+        status: import("@prisma/client").$Enums.CouponStatus;
     }[]>;
     findOne(id: string): Promise<{
         id: string;
@@ -29,7 +29,7 @@ export declare class CouponsController {
         min_order_amount: number;
         usage_limit: number;
         end_date: Date;
-        status: import("generated/prisma").$Enums.CouponStatus;
+        status: import("@prisma/client").$Enums.CouponStatus;
     }>;
     update(id: string, updateCouponDto: UpdateCouponDto): Promise<{
         id: string;
@@ -38,7 +38,7 @@ export declare class CouponsController {
         min_order_amount: number;
         usage_limit: number;
         end_date: Date;
-        status: import("generated/prisma").$Enums.CouponStatus;
+        status: import("@prisma/client").$Enums.CouponStatus;
     }>;
     remove(id: string): Promise<{
         id: string;
@@ -47,6 +47,6 @@ export declare class CouponsController {
         min_order_amount: number;
         usage_limit: number;
         end_date: Date;
-        status: import("generated/prisma").$Enums.CouponStatus;
+        status: import("@prisma/client").$Enums.CouponStatus;
     }>;
 }

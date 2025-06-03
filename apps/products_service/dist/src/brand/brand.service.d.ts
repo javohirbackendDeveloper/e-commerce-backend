@@ -3,7 +3,7 @@ import { UpdateBrandDto } from "./dto/update-brand.dto";
 import { CategoryService } from "../category/category.service";
 import { PrismaService } from "prisma/prisma.service";
 import { BrandType, ReturnCreatedBrandCategory } from "./dto/return.dto";
-import { Brand } from "generated/prisma";
+import { Brand } from "@prisma/client";
 export declare class BrandService {
     private readonly categoryService;
     private readonly prismaService;
@@ -14,16 +14,16 @@ export declare class BrandService {
     findAll(): Promise<({
         categories: ({
             category: {
-                title: string;
-                parentId: string | null;
                 id: string;
+                parentId: string | null;
                 icon: string | null;
+                title: string;
                 children: number;
             };
         } & {
             id: string;
-            categoryId: string;
             brandId: string;
+            categoryId: string;
         })[];
     } & {
         id: string;

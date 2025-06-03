@@ -13,7 +13,7 @@ exports.UpdateFilterDto = void 0;
 const mapped_types_1 = require("@nestjs/mapped-types");
 const create_filter_dto_1 = require("./create-filter.dto");
 const class_validator_1 = require("class-validator");
-const prisma_1 = require("../../../generated/prisma/index.js");
+const client_1 = require("@prisma/client");
 class UpdateFilterDto extends (0, mapped_types_1.PartialType)(create_filter_dto_1.CreateGeneralFilterDto) {
 }
 exports.UpdateFilterDto = UpdateFilterDto;
@@ -23,7 +23,7 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateFilterDto.prototype, "title", void 0);
 __decorate([
-    (0, class_validator_1.IsEnum)(prisma_1.InputType),
+    (0, class_validator_1.IsEnum)(client_1.InputType),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateFilterDto.prototype, "inputType", void 0);

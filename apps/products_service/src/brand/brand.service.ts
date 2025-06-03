@@ -8,7 +8,7 @@ import {
   ReturnCreatedBrandCategory,
   ReturnFindAll,
 } from "./dto/return.dto";
-import { Brand } from "generated/prisma";
+import { Brand } from "@prisma/client";
 
 @Injectable()
 export class BrandService {

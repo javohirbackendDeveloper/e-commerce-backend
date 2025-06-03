@@ -1,7 +1,7 @@
 import { CreateCategoryDto, CreateSubCategoryDto } from "./dto/create-category.dto";
 import { UpdateCategoryDto } from "./dto/update-category.dto";
 import { PrismaService } from "prisma/prisma.service";
-import { Category } from "generated/prisma";
+import { Category } from "@prisma/client";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
 import { ReturnParentWithSubDto } from "./dto/return.dto";
 export declare class CategoryService {
@@ -9,9 +9,9 @@ export declare class CategoryService {
     private readonly cloudinaryService;
     constructor(prismaService: PrismaService, cloudinaryService: CloudinaryService);
     createSubCategory(createSubCategoryDto: CreateSubCategoryDto): Promise<{
+        id: string;
         title: string;
         parentId: string | null;
-        id: string;
         icon: string | null;
         children: number;
     }>;

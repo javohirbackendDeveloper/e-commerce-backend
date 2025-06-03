@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateSpecificFilterDto = exports.CreateFilterValue = exports.CreateGeneralFilterDto = void 0;
-const prisma_1 = require("../../../generated/prisma/index.js");
+const client_1 = require("@prisma/client");
 const class_validator_1 = require("class-validator");
 class CreateGeneralFilterDto {
 }
@@ -21,12 +21,12 @@ __decorate([
     __metadata("design:type", String)
 ], CreateGeneralFilterDto.prototype, "title", void 0);
 __decorate([
-    (0, class_validator_1.IsEnum)(prisma_1.InputType),
+    (0, class_validator_1.IsEnum)(client_1.InputType),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateGeneralFilterDto.prototype, "inputType", void 0);
 __decorate([
-    (0, class_validator_1.IsEnum)(prisma_1.TypeOfFilter),
+    (0, class_validator_1.IsEnum)(client_1.TypeOfFilter),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateGeneralFilterDto.prototype, "type", void 0);
@@ -52,12 +52,12 @@ __decorate([
     __metadata("design:type", String)
 ], CreateSpecificFilterDto.prototype, "title", void 0);
 __decorate([
-    (0, class_validator_1.IsEnum)(prisma_1.InputType),
+    (0, class_validator_1.IsEnum)(client_1.InputType),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateSpecificFilterDto.prototype, "inputType", void 0);
 __decorate([
-    (0, class_validator_1.IsEnum)(prisma_1.TypeOfFilter),
+    (0, class_validator_1.IsEnum)(client_1.TypeOfFilter),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateSpecificFilterDto.prototype, "type", void 0);

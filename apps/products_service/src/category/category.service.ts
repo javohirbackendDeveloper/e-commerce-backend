@@ -5,7 +5,7 @@ import {
 } from "./dto/create-category.dto";
 import { UpdateCategoryDto } from "./dto/update-category.dto";
 import { PrismaService } from "prisma/prisma.service";
-import { Category } from "generated/prisma";
+import { Category } from "@prisma/client";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
 import { ReturnParentWithSubDto } from "./dto/return.dto";
 

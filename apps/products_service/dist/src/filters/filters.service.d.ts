@@ -1,7 +1,7 @@
 import { CreateFilterValue, CreateGeneralFilterDto, CreateSpecificFilterDto } from "./dto/create-filter.dto";
 import { UpdateFilterDto } from "./dto/update-filter.dto";
 import { PrismaService } from "prisma/prisma.service";
-import { FilterType, FilterValues } from "generated/prisma";
+import { FilterType, FilterValues } from "@prisma/client";
 import { ReturnSpecificFunction } from "./dto/return.dto";
 import { CategoryService } from "../category/category.service";
 export declare class FiltersService {
@@ -18,14 +18,14 @@ export declare class FiltersService {
         }[];
         values: {
             id: string;
-            value: string;
             filterId: string;
+            value: string;
         }[];
     } & {
-        type: import("generated/prisma").$Enums.TypeOfFilter;
-        title: string;
         id: string;
-        inputType: import("generated/prisma").$Enums.InputType;
+        title: string;
+        inputType: import("@prisma/client").$Enums.InputType;
+        type: import("@prisma/client").$Enums.TypeOfFilter;
     }>;
     update(id: string, updateFilterDto: UpdateFilterDto): Promise<FilterType>;
     remove(id: string): Promise<FilterType>;
@@ -33,14 +33,14 @@ export declare class FiltersService {
         filter: {
             values: {
                 id: string;
-                value: string;
                 filterId: string;
+                value: string;
             }[];
         } & {
-            type: import("generated/prisma").$Enums.TypeOfFilter;
-            title: string;
             id: string;
-            inputType: import("generated/prisma").$Enums.InputType;
+            title: string;
+            inputType: import("@prisma/client").$Enums.InputType;
+            type: import("@prisma/client").$Enums.TypeOfFilter;
         };
     } & {
         id: string;

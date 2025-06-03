@@ -1,4 +1,4 @@
-import { FilterCategory } from "generated/prisma";
+import { FilterCategory } from "@prisma/client";
 import { CreateGeneralFilterDto } from "./create-filter.dto";
 
 export class ReturnSpecificFunction {

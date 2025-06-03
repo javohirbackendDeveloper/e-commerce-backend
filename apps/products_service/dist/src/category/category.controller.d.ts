@@ -6,39 +6,39 @@ export declare class CategoryController {
     constructor(categoryService: CategoryService);
     create(file: Express.Multer.File, createCategoryDto: CreateCategoryDto): Promise<CreateCategoryDto>;
     createSubCategory(createSubCategoryDto: CreateSubCategoryDto): Promise<{
-        title: string;
-        parentId: string | null;
         id: string;
+        parentId: string | null;
         icon: string | null;
+        title: string;
         children: number;
     }>;
     findAll(): Promise<{
-        title: string;
-        parentId: string | null;
         id: string;
+        parentId: string | null;
         icon: string | null;
+        title: string;
         children: number;
     }[]>;
     getAllLeafCategories(): Promise<{
-        title: string;
-        parentId: string | null;
         id: string;
+        parentId: string | null;
         icon: string | null;
+        title: string;
         children: number;
     }[]>;
     findAllParentCats(): Promise<{
-        title: string;
-        parentId: string | null;
         id: string;
+        parentId: string | null;
         icon: string | null;
+        title: string;
         children: number;
     }[]>;
     findAllParentsWithSubCats(): Promise<import("./dto/return.dto").ReturnParentWithSubDto[]>;
     findOne(id: string): Promise<{
-        title: string;
-        parentId: string | null;
         id: string;
+        parentId: string | null;
         icon: string | null;
+        title: string;
         children: number;
     }>;
     update(id: string, updateCategoryDto: UpdateCategoryDto, file: Express.Multer.File): Promise<CreateCategoryDto>;
@@ -46,10 +46,10 @@ export declare class CategoryController {
         message: string;
     }>;
     findAllChildCatsByParentid(id: string): Promise<{
-        title: string;
-        parentId: string | null;
         id: string;
+        parentId: string | null;
         icon: string | null;
+        title: string;
         children: number;
     }[]>;
 }

@@ -9,16 +9,16 @@ export declare class BrandController {
     findAll(): Promise<({
         categories: ({
             category: {
-                title: string;
-                parentId: string | null;
                 id: string;
+                parentId: string | null;
                 icon: string | null;
+                title: string;
                 children: number;
             };
         } & {
             id: string;
-            categoryId: string;
             brandId: string;
+            categoryId: string;
         })[];
     } & {
         id: string;

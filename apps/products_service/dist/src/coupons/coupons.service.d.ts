@@ -1,7 +1,7 @@
 import { CreateCouponDto } from "./dto/create-coupon.dto";
 import { UpdateCouponDto } from "./dto/update-coupon.dto";
 import { PrismaService } from "prisma/prisma.service";
-import { Coupon } from "generated/prisma";
+import { Coupon } from "@prisma/client";
 export declare class CouponsService {
     private readonly prismaService;
     constructor(prismaService: PrismaService);

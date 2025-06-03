@@ -5,16 +5,16 @@ export declare class FiltersController {
     private readonly filtersService;
     constructor(filtersService: FiltersService);
     create(createGeneralFilterDto: CreateGeneralFilterDto): Promise<{
-        type: import("generated/prisma").$Enums.TypeOfFilter;
-        title: string;
         id: string;
-        inputType: import("generated/prisma").$Enums.InputType;
+        title: string;
+        type: import("@prisma/client").$Enums.TypeOfFilter;
+        inputType: import("@prisma/client").$Enums.InputType;
     }>;
     findAll(): Promise<{
-        type: import("generated/prisma").$Enums.TypeOfFilter;
-        title: string;
         id: string;
-        inputType: import("generated/prisma").$Enums.InputType;
+        title: string;
+        type: import("@prisma/client").$Enums.TypeOfFilter;
+        inputType: import("@prisma/client").$Enums.InputType;
     }[]>;
     findOne(id: string): Promise<{
         filterCategory: {
@@ -24,39 +24,39 @@ export declare class FiltersController {
         }[];
         values: {
             id: string;
-            value: string;
             filterId: string;
+            value: string;
         }[];
     } & {
-        type: import("generated/prisma").$Enums.TypeOfFilter;
-        title: string;
         id: string;
-        inputType: import("generated/prisma").$Enums.InputType;
+        title: string;
+        type: import("@prisma/client").$Enums.TypeOfFilter;
+        inputType: import("@prisma/client").$Enums.InputType;
     }>;
     update(id: string, updateFilterDto: UpdateFilterDto): Promise<{
-        type: import("generated/prisma").$Enums.TypeOfFilter;
-        title: string;
         id: string;
-        inputType: import("generated/prisma").$Enums.InputType;
+        title: string;
+        type: import("@prisma/client").$Enums.TypeOfFilter;
+        inputType: import("@prisma/client").$Enums.InputType;
     }>;
     remove(id: string): Promise<{
-        type: import("generated/prisma").$Enums.TypeOfFilter;
-        title: string;
         id: string;
-        inputType: import("generated/prisma").$Enums.InputType;
+        title: string;
+        type: import("@prisma/client").$Enums.TypeOfFilter;
+        inputType: import("@prisma/client").$Enums.InputType;
     }>;
     getFiltersByCategoryId(categoryId: string): Promise<({
         filter: {
             values: {
                 id: string;
-                value: string;
                 filterId: string;
+                value: string;
             }[];
         } & {
-            type: import("generated/prisma").$Enums.TypeOfFilter;
-            title: string;
             id: string;
-            inputType: import("generated/prisma").$Enums.InputType;
+            title: string;
+            type: import("@prisma/client").$Enums.TypeOfFilter;
+            inputType: import("@prisma/client").$Enums.InputType;
         };
     } & {
         id: string;
@@ -65,25 +65,25 @@ export declare class FiltersController {
     })[]>;
     createSpecificFilter(createSpecificDto: CreateSpecificFilterDto): Promise<import("./dto/return.dto").ReturnSpecificFunction>;
     findAllSpecificFilters(): Promise<{
-        type: import("generated/prisma").$Enums.TypeOfFilter;
-        title: string;
         id: string;
-        inputType: import("generated/prisma").$Enums.InputType;
+        title: string;
+        type: import("@prisma/client").$Enums.TypeOfFilter;
+        inputType: import("@prisma/client").$Enums.InputType;
     }[]>;
     removeSpecific(id: string): Promise<{
-        type: import("generated/prisma").$Enums.TypeOfFilter;
-        title: string;
         id: string;
-        inputType: import("generated/prisma").$Enums.InputType;
+        title: string;
+        type: import("@prisma/client").$Enums.TypeOfFilter;
+        inputType: import("@prisma/client").$Enums.InputType;
     }>;
     createValue(createValueDto: CreateFilterValue): Promise<{
         id: string;
-        value: string;
         filterId: string;
+        value: string;
     }[]>;
     removeValue(id: string): Promise<{
         id: string;
-        value: string;
         filterId: string;
+        value: string;
     }>;
 }

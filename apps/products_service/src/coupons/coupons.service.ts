@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { CreateCouponDto } from "./dto/create-coupon.dto";
 import { UpdateCouponDto } from "./dto/update-coupon.dto";
 import { PrismaService } from "prisma/prisma.service";
-import { Coupon } from "generated/prisma";
+import { Coupon } from "@prisma/client";
 
 @Injectable()
 export class CouponsService {
