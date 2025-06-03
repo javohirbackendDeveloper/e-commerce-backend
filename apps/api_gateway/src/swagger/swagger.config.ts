@@ -5,11 +5,11 @@ export const services = [
   },
   {
     name: "products_service",
-    url: "https://tezbuy-products-service-backend.onrender.com/products/swagger-json",
+    url: "https://tezbuy-products-service-backend.onrender.com/products/api-docs",
   },
   {
     name: "order_service",
-    url: "https://tezbuy-order-service-backend.onrender.com/order/swagger-json",
+    url: "https://tezbuy-order-service-backend.onrender.com/order/api-docs",
   },
   // {
   //   name: "punkt_service",
