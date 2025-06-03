@@ -164,7 +164,9 @@ export class ApiGatewayController {
           .status(500)
           .json({ message: "Target service not configured" });
       }
-
+      const httpsAgent = new https.Agent({
+        rejectUnauthorized: false,
+      });
       const response = await lastValueFrom(
         this.httpService.request({
           method,
@@ -174,6 +176,7 @@ export class ApiGatewayController {
             ...headers,
             x_allowed_origin: process.env.API_GATEWAY_URL,
           },
+          httpsAgent,
         })
       );
 
