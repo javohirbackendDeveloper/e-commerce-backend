@@ -6,7 +6,7 @@ import { AllExceptionsFilter } from "./filters/all-exceptions.filters";
 import { RmqOptions } from "@nestjs/microservices";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { RmqService } from "./rmq/rmq.service";
-import { allowUrls } from "./cors_for_backend/middleware";
+// import { allowUrls } from "./cors_for_backend/middleware";
 import {
   ReturnLoginUserDto,
   ReturnUserDto,
@@ -22,6 +22,7 @@ import {
   ReturnLoginDto,
   ReturnPunktAdminDto,
 } from "./punkt-admin/dto/return.dto";
+import { allowUrls } from "tezbuy_packages";
 
 async function bootstrap() {
   const app = await NestFactory.create(AuthServiceModule);
@@ -57,7 +58,7 @@ async function bootstrap() {
   app.use("/swagger-json", (_, res) => res.json(document));
 
   // GLOBAL MIDDLEWARES
-  app.use(allowUrls);
+  // app.use(allowUrls);
   app.setGlobalPrefix("auth");
   app.useGlobalPipes(
     new ValidationPipe({
@@ -83,7 +84,7 @@ async function bootstrap() {
 
   // running http server
 
-  const PORT = process.env.PORT || 8080;
+  const PORT = process.env.PORT || 4001;
   await app.listen(PORT, () => {
     console.log("auth_service is running on the " + PORT);
   });
