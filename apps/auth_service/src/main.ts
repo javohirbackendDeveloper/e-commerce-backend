@@ -26,7 +26,6 @@ import { allowUrls } from "tezbuy_packages";
 async function bootstrap() {
   const app = await NestFactory.create(AuthServiceModule);
 
-  app.use(allowUrls);
   app.setGlobalPrefix("auth");
 
   // SWAGGER CONFIGURATION
@@ -66,6 +65,7 @@ async function bootstrap() {
   app.use("/swagger-json", (_, res) => res.json(document));
 
   // GLOBAL MIDDLEWARES
+  app.use(allowUrls);
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
