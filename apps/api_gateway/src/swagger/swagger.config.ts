@@ -4,12 +4,12 @@ export const services = [
     url: "https://e-commerce-backend-2-xcpq.onrender.com/swagger-json",
   },
   {
-    name: "order_service",
-    url: "https://tezbuy-order-service-backend.onrender.com/swagger-json",
-  },
-  {
     name: "products_service",
     url: "https://tezbuy-products-service-backend.onrender.com/swagger-json",
+  },
+  {
+    name: "order_service",
+    url: "https://tezbuy-order-service-backend.onrender.com/swagger-json",
   },
   // {
   //   name: "punkt_service",
