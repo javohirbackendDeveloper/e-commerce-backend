@@ -12,6 +12,7 @@ import * as jwt from "jsonwebtoken";
 import { HttpService } from "@nestjs/axios";
 import { ConfigService } from "@nestjs/config";
 import { Roles } from "./constants/enum_roles";
+import * as https from "https";
 
 @Injectable()
 @Controller()
@@ -38,6 +39,7 @@ export class ApiGatewayController {
   @All("*")
   async proxy(@Req() req: Request, @Res() res: Response) {
     const url = req.url;
+
     const method = req.method;
     let isAuthorized = false;
     let target = "";
@@ -61,14 +63,14 @@ export class ApiGatewayController {
     } else if (url.startsWith("/orders")) {
       if (url.startsWith("/orders/order/user")) {
         isAuthorized = await this.validateToken(req, "User");
-        target = process.env.ORDER_SERVICE_URL;
       } else if (url.startsWith("/orders/order/punkt")) {
         isAuthorized = await this.validateToken(req, "PunktAdmin");
-        target = process.env.ORDER_SERVICE_URL;
       } else if (url.startsWith("/orders/order/admin")) {
         isAuthorized = await this.validateToken(req, "Admin");
-        target = process.env.ORDER_SERVICE_URL;
+      } else if (url.startsWith("/orders/cart")) {
+        isAuthorized = await this.validateToken(req, "User");
       }
+      target = process.env.ORDER_SERVICE_URL;
     } else if (url.startsWith("/auth")) {
       if (url.startsWith("/auth/punkt_admin/register")) {
         target = process.env.AUTH_SERVICE_URL;
@@ -156,6 +158,15 @@ export class ApiGatewayController {
     const data = req.body;
 
     try {
+      if (!target) {
+        console.error("Target URL topilmadi:", url);
+        return res
+          .status(500)
+          .json({ message: "Target service not configured" });
+      }
+      const httpsAgent = new https.Agent({
+        rejectUnauthorized: false,
+      });
       const response = await lastValueFrom(
         this.httpService.request({
           method,
@@ -165,14 +176,19 @@ export class ApiGatewayController {
             ...headers,
             x_allowed_origin: process.env.API_GATEWAY_URL,
           },
+          httpsAgent,
         })
       );
+
+      console.log({ response });
 
       if (response.headers["set-cookie"]) {
         res.setHeader("Set-Cookie", response.headers["set-cookie"]);
       }
       return res.status(response.status).json(response.data);
     } catch (error) {
+      console.log(error);
+
       const status = error.response?.status || HttpStatus.INTERNAL_SERVER_ERROR;
       const message = error.response?.data?.message || "Internal error";
       return res.status(status).json({

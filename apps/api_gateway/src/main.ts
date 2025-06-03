@@ -7,20 +7,21 @@ import * as swaggerUi from "swagger-ui-express";
 
 async function bootstrap() {
   const app = await NestFactory.create(ApiGatewayModule);
-  const PORT = process.env.PORT;
+  const PORT = process.env.PORT || 3000;
 
   app.use(cookieParser());
   app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
   app.enableCors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://localhost:5174"],
     credentials: true,
   });
 
   // SWAGGER CONFIGURATION
 
-  const mergedSwagger = await getMergedSwaggerApis();
+  // const mergedSwagger = await getMergedSwaggerApis();
 
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(mergedSwagger));
+  // app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(mergedSwagger));
 
   // LISTENING PORT
   await app.listen(PORT, () => {

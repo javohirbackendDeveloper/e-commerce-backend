@@ -1,7 +1,7 @@
 export const services = [
   {
     name: "auth_service",
-    url: "http://localhost:4001/swagger-json",
+    url: "https://e-commerce-backend-2-xcpq.onrender.com/swagger-json",
   },
   {
     name: "order_service",
