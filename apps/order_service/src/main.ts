@@ -16,6 +16,14 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle("order_service")
     .setVersion("1.0.0")
+    .addServer(
+      `http://localhost:${process.env.PORT || 3002}`,
+      "Local Development"
+    )
+    .addServer(
+      "https://tezbuy-order-service-backend.onrender.com",
+      "Production"
+    )
     .build();
   const document = SwaggerModule.createDocument(app, config, {
     ignoreGlobalPrefix: false,
@@ -25,7 +33,13 @@ async function bootstrap() {
   app.use("/swagger-json", (_, res) => res.json(document));
 
   // global middlewares
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: false,
+      transform: true,
+    })
+  );
 
   // listening port
   const configService = app.get(ConfigService);
