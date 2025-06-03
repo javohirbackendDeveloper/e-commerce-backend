@@ -9,7 +9,6 @@ import { allowUrls } from "tezbuy_packages";
 async function bootstrap() {
   const app = await NestFactory.create(OrderServiceModule);
 
-  app.use(allowUrls);
   app.setGlobalPrefix("orders");
 
   // SWAGGER CONFIGURATION
@@ -33,6 +32,7 @@ async function bootstrap() {
   app.use("/swagger-json", (_, res) => res.json(document));
 
   // global middlewares
+  app.use(allowUrls);
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
