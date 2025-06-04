@@ -10,11 +10,11 @@ import { CartService } from "../cart/cart.service";
 import { Request, Response } from "express";
 import { firstValueFrom } from "rxjs";
 import { ClientProxy } from "@nestjs/microservices";
-import { OrderStatus } from "./enums/orderStatus.enum";
-import { FilterOrdersDto } from "./dto/filterOrders.dto";
 import { PrismaService } from "prisma/prisma.service";
 import { Orders, Prisma } from "@prisma/client";
-import { GetOrdersByYear } from "./dto/getOrderByDate.dto";
+import { GetOrdersByMonth, GetOrdersByYear } from "./dto/getOrderByDate.dto";
+import { MonthlyDataDto } from "./dto/monthlyData.dto";
+import { months } from "src/constants/months";
 
 @Injectable()
 export class OrderService {
@@ -480,11 +480,61 @@ export class OrderService {
         },
       });
 
-      const sortedOrders = orders.sort(
-        (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      const monthlyDatas: MonthlyDataDto = {};
+
+      for (const order of orders) {
+        const valueCreatedMonth = months[new Date(order.createdAt).getMonth()];
+
+        if (monthlyDatas[valueCreatedMonth]) {
+          monthlyDatas[valueCreatedMonth] += 1;
+        } else {
+          monthlyDatas[valueCreatedMonth] = 1;
+        }
+      }
+      return monthlyDatas;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
       );
-      return sortedOrders;
+    }
+  }
+
+  async getMonthOrders(query: GetOrdersByMonth) {
+    try {
+      const { year, month } = query;
+
+      const monthIndex =
+        months.findIndex((item) => month.toString() === item) + 1;
+
+      const startDate = new Date(
+        `${year}-${monthIndex.toString().padStart(2, "0")}-01T00:00:00.000Z`
+      );
+      const endDate = new Date(
+        `${year}-${(monthIndex + 1).toString().padStart(2, "0")}-01T00:00:00.000Z`
+      );
+
+      const orders = await this.prismaService.orders.findMany({
+        where: {
+          createdAt: {
+            gte: startDate,
+            lte: endDate,
+          },
+        },
+      });
+
+      const dailyDatas: Record<string, number> = {};
+
+      for (const order of orders) {
+        const valueCreatedDay = new Date(order.createdAt).getDay();
+
+        if (dailyDatas[valueCreatedDay]) {
+          dailyDatas[valueCreatedDay] += 1;
+        } else {
+          dailyDatas[valueCreatedDay] = 1;
+        }
+      }
+      return dailyDatas;
     } catch (err) {
       throw new HttpException(
         err.message || "Internal server error",

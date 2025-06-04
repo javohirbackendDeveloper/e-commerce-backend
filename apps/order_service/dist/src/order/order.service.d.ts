@@ -1,11 +1,12 @@
 import { CreateOrderDto } from "./dto/create-order.dto";
 import { UpdateOrderDto, UpdateOrderDtoForPunktAdmin } from "./dto/update-order.dto";
 import { CartService } from "../cart/cart.service";
-import { Request } from "express";
+import { Request, Response } from "express";
 import { ClientProxy } from "@nestjs/microservices";
 import { PrismaService } from "prisma/prisma.service";
 import { Orders, Prisma } from "@prisma/client";
-import { GetOrdersByYear } from "./dto/getOrderByDate.dto";
+import { GetOrdersByMonth, GetOrdersByYear } from "./dto/getOrderByDate.dto";
+import { MonthlyDataDto } from "./dto/monthlyData.dto";
 export declare class OrderService {
     private readonly cartService;
     private readonly orderClient;
@@ -44,22 +45,7 @@ export declare class OrderService {
         createdAt: Date;
         updatedAt: Date;
     }[]>;
-    getYearOrders(query: GetOrdersByYear): Promise<{
-        id: string;
-        userId: string;
-        status: import("@prisma/client").$Enums.OrderStatus;
-        totalPrice: number;
-        deliveringType: import("@prisma/client").$Enums.DeliveringType;
-        paymenttype: import("@prisma/client").$Enums.PaymentType;
-        locationText: string;
-        locationLongitude: number | null;
-        locationLatitude: number | null;
-        punktId: string;
-        recipient_firstname: string;
-        recipient_lastname: string;
-        recipient_phone: string;
-        deliverTime: Date;
-        createdAt: Date;
-        updatedAt: Date;
-    }[]>;
+    getYearOrders(query: GetOrdersByYear): Promise<MonthlyDataDto>;
+    getMonthOrders(query: GetOrdersByMonth): Promise<Record<string, number>>;
+    keepHealthServer(res: Response): Promise<void>;
 }

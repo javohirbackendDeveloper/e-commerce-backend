@@ -43,8 +43,13 @@ let OrderController = class OrderController {
         return this.orderService.getAllOrders(query);
     }
     getYearOrders(query) {
-        console.log({ query });
         return this.orderService.getYearOrders(query);
+    }
+    getMonthOrders(query) {
+        return this.orderService.getMonthOrders(query);
+    }
+    async keepHealthServer(res) {
+        return this.orderService.keepHealthServer(res);
     }
 };
 exports.OrderController = OrderController;
@@ -132,6 +137,24 @@ __decorate([
     __metadata("design:paramtypes", [getOrderByDate_dto_1.GetOrdersByYear]),
     __metadata("design:returntype", void 0)
 ], OrderController.prototype, "getYearOrders", null);
+__decorate([
+    (0, common_1.Get)("admin/getMonthOrders"),
+    (0, swagger_1.ApiOperation)({ summary: "Bir oylik barcha buyurtmalar (admin)" }),
+    (0, swagger_1.ApiQuery)({ name: "month", required: true }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: "Bir oylik buyurtmalar soni" }),
+    __param(0, (0, common_1.Query)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [getOrderByDate_dto_1.GetOrdersByMonth]),
+    __metadata("design:returntype", void 0)
+], OrderController.prototype, "getMonthOrders", null);
+__decorate([
+    (0, common_1.Get)("keepHealthServer"),
+    (0, swagger_1.ApiOperation)({ summary: "Keep server from auto sleep" }),
+    __param(0, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "keepHealthServer", null);
 exports.OrderController = OrderController = __decorate([
     (0, swagger_1.ApiTags)("Buyurtmalar"),
     (0, common_1.Controller)("order"),

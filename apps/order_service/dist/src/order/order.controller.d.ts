@@ -1,9 +1,9 @@
-import { Request } from "express";
+import { Request, Response } from "express";
 import { OrderService } from "./order.service";
 import { CreateOrderDto } from "./dto/create-order.dto";
 import { UpdateOrderDto, UpdateOrderDtoForPunktAdmin } from "./dto/update-order.dto";
 import { Prisma } from "@prisma/client";
-import { GetOrdersByYear } from "./dto/getOrderByDate.dto";
+import { GetOrdersByMonth, GetOrdersByYear } from "./dto/getOrderByDate.dto";
 export declare class OrderController {
     private readonly orderService;
     constructor(orderService: OrderService);
@@ -115,22 +115,7 @@ export declare class OrderController {
         createdAt: Date;
         updatedAt: Date;
     }[]>;
-    getYearOrders(query: GetOrdersByYear): Promise<{
-        id: string;
-        userId: string;
-        status: import("@prisma/client").$Enums.OrderStatus;
-        totalPrice: number;
-        deliveringType: import("@prisma/client").$Enums.DeliveringType;
-        paymenttype: import("@prisma/client").$Enums.PaymentType;
-        locationText: string;
-        locationLongitude: number | null;
-        locationLatitude: number | null;
-        punktId: string;
-        recipient_firstname: string;
-        recipient_lastname: string;
-        recipient_phone: string;
-        deliverTime: Date;
-        createdAt: Date;
-        updatedAt: Date;
-    }[]>;
+    getYearOrders(query: GetOrdersByYear): Promise<import("./dto/monthlyData.dto").MonthlyDataDto>;
+    getMonthOrders(query: GetOrdersByMonth): Promise<Record<string, number>>;
+    keepHealthServer(res: Response): Promise<void>;
 }

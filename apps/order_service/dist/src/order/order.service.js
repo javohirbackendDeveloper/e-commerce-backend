@@ -20,6 +20,7 @@ const cart_service_1 = require("../cart/cart.service");
 const rxjs_1 = require("rxjs");
 const microservices_1 = require("@nestjs/microservices");
 const prisma_service_1 = require("../../prisma/prisma.service");
+const months_1 = require("../constants/months");
 let OrderService = class OrderService {
     constructor(cartService, orderClient, punktClient, staffClient, prismaService) {
         this.cartService = cartService;
@@ -54,7 +55,6 @@ let OrderService = class OrderService {
             if (!cartItemsWithProduct.length) {
                 throw new common_1.HttpException("Please firstly add product to your cart", common_1.HttpStatus.NOT_FOUND);
             }
-            console.log({ grandPrice });
             if (paymenttype === paymentStatus_enum_1.PaymentStatus.Card) {
                 if (amount !== grandPrice) {
                     throw new common_1.HttpException("Please pay enough money", common_1.HttpStatus.CONFLICT);
@@ -280,12 +280,54 @@ let OrderService = class OrderService {
                     },
                 },
             });
-            const sortedOrders = orders.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-            return sortedOrders;
+            const monthlyDatas = {};
+            for (const order of orders) {
+                const valueCreatedMonth = months_1.months[new Date(order.createdAt).getMonth()];
+                if (monthlyDatas[valueCreatedMonth]) {
+                    monthlyDatas[valueCreatedMonth] += 1;
+                }
+                else {
+                    monthlyDatas[valueCreatedMonth] = 1;
+                }
+            }
+            return monthlyDatas;
         }
         catch (err) {
             throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    async getMonthOrders(query) {
+        try {
+            const { year, month } = query;
+            const monthIndex = months_1.months.findIndex((item) => month.toString() === item) + 1;
+            const startDate = new Date(`${year}-${monthIndex.toString().padStart(2, "0")}-01T00:00:00.000Z`);
+            const endDate = new Date(`${year}-${(monthIndex + 1).toString().padStart(2, "0")}-01T00:00:00.000Z`);
+            const orders = await this.prismaService.orders.findMany({
+                where: {
+                    createdAt: {
+                        gte: startDate,
+                        lte: endDate,
+                    },
+                },
+            });
+            const dailyDatas = {};
+            for (const order of orders) {
+                const valueCreatedDay = new Date(order.createdAt).getDay();
+                if (dailyDatas[valueCreatedDay]) {
+                    dailyDatas[valueCreatedDay] += 1;
+                }
+                else {
+                    dailyDatas[valueCreatedDay] = 1;
+                }
+            }
+            return dailyDatas;
+        }
+        catch (err) {
+            throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async keepHealthServer(res) {
+        res.json({ message: "Hello world from order service" });
     }
 };
 exports.OrderService = OrderService;

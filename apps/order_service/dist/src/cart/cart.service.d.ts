@@ -11,10 +11,10 @@ export declare class CartService {
     private readonly productClient;
     constructor(prismService: PrismaService, orderClient: ClientProxy, productClient: ClientProxy);
     create(createCartItemDto: CreateCartDto, req: Request): Promise<{
+        productId: string;
+        quantity: number;
         id: string;
         userId: string;
-        quantity: number;
-        productId: string;
         createdAt: Date;
         updatedAt: Date;
     }>;
@@ -25,10 +25,10 @@ export declare class CartService {
     }>;
     update(id: string, updateCartDto: UpdateCartDto, req: Request): Promise<CartItem>;
     remove(id: string, req: Request): Promise<{
+        productId: string;
+        quantity: number;
         id: string;
         userId: string;
-        quantity: number;
-        productId: string;
         createdAt: Date;
         updatedAt: Date;
     }>;

@@ -9,9 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetOrdersByYear = void 0;
+exports.GetOrdersByMonth = exports.GetOrdersByYear = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
+const month_enum_1 = require("../enums/month.enum");
 class GetOrdersByYear {
 }
 exports.GetOrdersByYear = GetOrdersByYear;
@@ -25,4 +26,27 @@ __decorate([
     (0, class_validator_1.MinLength)(4),
     __metadata("design:type", String)
 ], GetOrdersByYear.prototype, "year", void 0);
+class GetOrdersByMonth {
+}
+exports.GetOrdersByMonth = GetOrdersByMonth;
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: "This is used to get orders by month",
+        example: "2025",
+    }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.MinLength)(4),
+    __metadata("design:type", String)
+], GetOrdersByMonth.prototype, "year", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: "This is used to get orders by month",
+        example: "fevral",
+    }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsEnum)(month_enum_1.MonthsEnum),
+    __metadata("design:type", Number)
+], GetOrdersByMonth.prototype, "month", void 0);
 //# sourceMappingURL=getOrderByDate.dto.js.map

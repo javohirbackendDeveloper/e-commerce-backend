@@ -25,7 +25,7 @@ import {
   ApiBody,
 } from "@nestjs/swagger";
 import { Prisma } from "@prisma/client";
-import { GetOrdersByYear } from "./dto/getOrderByDate.dto";
+import { GetOrdersByMonth, GetOrdersByYear } from "./dto/getOrderByDate.dto";
 
 @ApiTags("Buyurtmalar")
 @Controller("order")
@@ -108,9 +108,15 @@ export class OrderController {
   @ApiQuery({ name: "year", required: true })
   @ApiResponse({ status: 200, description: "Bir yillik buyurtmalar ro'yxati" })
   getYearOrders(@Query() query: GetOrdersByYear) {
-    console.log({ query });
-
     return this.orderService.getYearOrders(query);
+  }
+
+  @Get("admin/getMonthOrders")
+  @ApiOperation({ summary: "Bir oylik barcha buyurtmalar (admin)" })
+  @ApiQuery({ name: "month", required: true })
+  @ApiResponse({ status: 200, description: "Bir oylik buyurtmalar soni" })
+  getMonthOrders(@Query() query: GetOrdersByMonth) {
+    return this.orderService.getMonthOrders(query);
   }
 
   // api for auto sleep

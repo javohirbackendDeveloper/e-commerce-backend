@@ -6,10 +6,10 @@ export declare class CartController {
     private readonly cartService;
     constructor(cartService: CartService);
     create(req: Request, dto: CreateCartDto): Promise<{
+        productId: string;
+        quantity: number;
         id: string;
         userId: string;
-        quantity: number;
-        productId: string;
         createdAt: Date;
         updatedAt: Date;
     }>;
@@ -19,18 +19,18 @@ export declare class CartController {
         grandPrice: any;
     }>;
     update(req: Request, id: string, dto: UpdateCartDto): Promise<{
+        productId: string;
+        quantity: number;
         id: string;
         userId: string;
-        quantity: number;
-        productId: string;
         createdAt: Date;
         updatedAt: Date;
     }>;
     remove(req: Request, id: string): Promise<{
+        productId: string;
+        quantity: number;
         id: string;
         userId: string;
-        quantity: number;
-        productId: string;
         createdAt: Date;
         updatedAt: Date;
     }>;
