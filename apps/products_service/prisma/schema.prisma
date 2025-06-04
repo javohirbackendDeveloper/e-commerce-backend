@@ -65,7 +65,7 @@ categoryId String @db.ObjectId
  @@index([product_name])
 
 
-  createdAt DateTime @default(now())
+createdAt DateTime @default(now())
  updatedAt DateTime @updatedAt
 }
 

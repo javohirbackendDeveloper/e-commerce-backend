@@ -349,6 +349,9 @@ let ProductService = class ProductService {
             throw new common_1.HttpException(err.message || "Internal server error", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    async keepHealthServer(res) {
+        res.json({ message: "Hello world from products service" });
+    }
 };
 exports.ProductService = ProductService;
 exports.ProductService = ProductService = __decorate([

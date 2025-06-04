@@ -22,6 +22,7 @@ const tezbuy_packages_1 = require("tezbuy_packages");
 const filters_module_1 = require("./filters/filters.module");
 const coupons_module_1 = require("./coupons/coupons.module");
 const poster_module_1 = require("./poster/poster.module");
+const dashboard_module_1 = require("./dashboard/dashboard.module");
 let ProductsServiceModule = class ProductsServiceModule {
 };
 exports.ProductsServiceModule = ProductsServiceModule;
@@ -48,6 +49,7 @@ exports.ProductsServiceModule = ProductsServiceModule = __decorate([
             filters_module_1.FiltersModule,
             coupons_module_1.CouponsModule,
             poster_module_1.PosterModule,
+            dashboard_module_1.DashboardModule,
         ],
         controllers: [],
         providers: [prisma_service_1.PrismaService, tezbuy_packages_1.RmqService],

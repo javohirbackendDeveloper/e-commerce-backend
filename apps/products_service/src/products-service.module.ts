@@ -13,6 +13,7 @@ import { RmqModule, RmqService } from "tezbuy_packages";
 import { FiltersModule } from "./filters/filters.module";
 import { CouponsModule } from "./coupons/coupons.module";
 import { PosterModule } from "./poster/poster.module";
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { PosterModule } from "./poster/poster.module";
     FiltersModule,
     CouponsModule,
     PosterModule,
+    DashboardModule,
   ],
   controllers: [],
   providers: [PrismaService, RmqService],

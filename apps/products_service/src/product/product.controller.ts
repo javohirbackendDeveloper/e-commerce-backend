@@ -38,7 +38,6 @@ export class ProductController {
 
   @Get("keepHealthServer")
   @ApiOperation({ summary: "Keep server from auto sleep" })
-  @ApiBody({ type: FilterQueryDto })
   async keepHealthServer(@Res() res: Response) {
     return this.productService.keepHealthServer(res);
   }

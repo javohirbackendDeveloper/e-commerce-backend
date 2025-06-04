@@ -3,17 +3,19 @@ import { CreateProductDto } from "./dto/create-product.dto";
 import { UpdateProductDto } from "./dto/update-product.dto";
 import { FilterQueryDto } from "./dto/filterQuery.dto";
 import { Product } from "@prisma/client";
+import { Response } from "express";
 export declare class ProductController {
     private readonly productService;
     constructor(productService: ProductService);
+    keepHealthServer(res: Response): Promise<void>;
     createImages(product_images: Express.Multer.File[]): Promise<{
         message: string;
         uploadedFileUrls: string[];
     }>;
     create(createProductDto: CreateProductDto): Promise<{
-        description: string;
         id: string;
         product_name: string;
+        description: string;
         oldPrice: number;
         price: number;
         quantity: number;
@@ -27,9 +29,9 @@ export declare class ProductController {
         product_status: import("@prisma/client").$Enums.ProductStatus;
     }>;
     findAll(limit?: string, page?: string): Promise<{
-        description: string;
         id: string;
         product_name: string;
+        description: string;
         oldPrice: number;
         price: number;
         quantity: number;
@@ -43,9 +45,9 @@ export declare class ProductController {
         product_status: import("@prisma/client").$Enums.ProductStatus;
     }[]>;
     findOne(id: string): Promise<{
-        description: string;
         id: string;
         product_name: string;
+        description: string;
         oldPrice: number;
         price: number;
         quantity: number;
@@ -59,9 +61,9 @@ export declare class ProductController {
         product_status: import("@prisma/client").$Enums.ProductStatus;
     }>;
     getAllProductsByCategory(categoryId: string, filter: FilterQueryDto): Promise<{
-        description: string;
         id: string;
         product_name: string;
+        description: string;
         oldPrice: number;
         price: number;
         quantity: number;
@@ -75,9 +77,9 @@ export declare class ProductController {
         product_status: import("@prisma/client").$Enums.ProductStatus;
     }[]>;
     update(id: string, updateProductDto: UpdateProductDto): Promise<{
-        description: string;
         id: string;
         product_name: string;
+        description: string;
         oldPrice: number;
         price: number;
         quantity: number;
@@ -108,9 +110,9 @@ export declare class ProductController {
     }>;
     getMinMaxPrices(): Promise<import("./dto/return.dto").ReturnMinMaxDto>;
     filterProducts(filter: FilterQueryDto, products: Product[]): Promise<{
-        description: string;
         id: string;
         product_name: string;
+        description: string;
         oldPrice: number;
         price: number;
         quantity: number;
@@ -124,9 +126,9 @@ export declare class ProductController {
         product_status: import("@prisma/client").$Enums.ProductStatus;
     }[]>;
     getProductByIds(productIds: string[]): Promise<{
-        description: string;
         id: string;
         product_name: string;
+        description: string;
         oldPrice: number;
         price: number;
         quantity: number;
@@ -140,9 +142,9 @@ export declare class ProductController {
         product_status: import("@prisma/client").$Enums.ProductStatus;
     }[]>;
     getOneProductById(productId: string): Promise<{
-        description: string;
         id: string;
         product_name: string;
+        description: string;
         oldPrice: number;
         price: number;
         quantity: number;

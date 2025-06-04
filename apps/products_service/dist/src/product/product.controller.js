@@ -25,6 +25,9 @@ let ProductController = class ProductController {
     constructor(productService) {
         this.productService = productService;
     }
+    async keepHealthServer(res) {
+        return this.productService.keepHealthServer(res);
+    }
     createImages(product_images) {
         return this.productService.createImage(product_images);
     }
@@ -69,6 +72,14 @@ let ProductController = class ProductController {
     }
 };
 exports.ProductController = ProductController;
+__decorate([
+    (0, common_1.Get)("keepHealthServer"),
+    (0, swagger_1.ApiOperation)({ summary: "Keep server from auto sleep" }),
+    __param(0, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "keepHealthServer", null);
 __decorate([
     (0, common_1.Post)("createImages"),
     (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)("product_images", 5)),

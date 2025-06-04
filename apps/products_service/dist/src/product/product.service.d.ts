@@ -7,6 +7,7 @@ import { ReturnMinMaxDto } from "./dto/return.dto";
 import { FilterQueryDto } from "./dto/filterQuery.dto";
 import { PrismaService } from "prisma/prisma.service";
 import { Prisma, Product } from "@prisma/client";
+import { Response } from "express";
 export declare class ProductService {
     private readonly categoryService;
     private readonly prismaService;
@@ -20,9 +21,9 @@ export declare class ProductService {
     create(createProductDto: CreateProductDto): Promise<Product>;
     findAll(page?: number, limit?: number): Promise<Product[]>;
     findOne(id: string): Promise<{
-        description: string;
         id: string;
         product_name: string;
+        description: string;
         oldPrice: number;
         price: number;
         quantity: number;
@@ -36,9 +37,9 @@ export declare class ProductService {
         product_status: import("@prisma/client").$Enums.ProductStatus;
     }>;
     update(id: string, updateProductDto: UpdateProductDto): Promise<{
-        description: string;
         id: string;
         product_name: string;
+        description: string;
         oldPrice: number;
         price: number;
         quantity: number;
@@ -73,4 +74,5 @@ export declare class ProductService {
     filterProducts(products: Product[], allFilters: FilterQueryDto): Promise<Product[]>;
     getAllProductsByCategory(categoryId: string, filters: FilterQueryDto, page?: number, limit?: number): Promise<Product[]>;
     getMinMaxPrices(): Promise<ReturnMinMaxDto>;
+    keepHealthServer(res: Response): Promise<void>;
 }
