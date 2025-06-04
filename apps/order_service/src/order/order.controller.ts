@@ -114,7 +114,7 @@ export class OrderController {
   @Get("admin/getMonthOrders")
   @ApiOperation({ summary: "Bir oylik barcha buyurtmalar (admin)" })
   @ApiQuery({ name: "month", required: true })
-  @ApiResponse({ status: 200, description: "Bir oylik buyurtmalar soni" })
+  @ApiResponse({ status: 200, description: "Bir oylik buyurtmalar ro'yxati" })
   getMonthOrders(@Query() query: GetOrdersByMonth) {
     return this.orderService.getMonthOrders(query);
   }
