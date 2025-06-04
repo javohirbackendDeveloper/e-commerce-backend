@@ -1,11 +1,12 @@
 import { Controller, Get, Query } from "@nestjs/common";
 import { DashboardService } from "./dashboard.service";
-import { ApiOperation, ApiQuery, ApiResponse } from "@nestjs/swagger";
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import {
   GetProductsByMonth,
   GetProductsByYear,
 } from "./dto/getProductsByDate.dto";
 
+@ApiTags("products_service/dashboard")
 @Controller("dashboard")
 export class DashboardController {
   constructor(private readonly dashboardService: DashboardService) {}
