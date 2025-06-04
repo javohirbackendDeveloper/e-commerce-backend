@@ -34,6 +34,15 @@ import { Response } from "express";
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  // api for health server
+
+  @Get("keepHealthServer")
+  @ApiOperation({ summary: "Keep server from auto sleep" })
+  @ApiBody({ type: FilterQueryDto })
+  async keepHealthServer(@Res() res: Response) {
+    return this.productService.keepHealthServer(res);
+  }
+
   @Post("createImages")
   @UseInterceptors(FilesInterceptor("product_images", 5))
   @ApiOperation({ summary: "Create a new product" })
@@ -153,14 +162,5 @@ export class ProductController {
   @MessagePattern("get_cart_product")
   async getOneProductById(@Payload() productId: string) {
     return this.productService.findOne(productId);
-  }
-
-  // api for health server
-
-  @Get("keepHealthServer")
-  @ApiOperation({ summary: "Keep server from auto sleep" })
-  @ApiBody({ type: FilterQueryDto })
-  async keepHealthServer(@Res() res: Response) {
-    return this.productService.keepHealthServer(res);
   }
 }
