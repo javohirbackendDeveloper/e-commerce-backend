@@ -90,7 +90,7 @@ async function bootstrap() {
 
   // running http server
 
-  const PORT = process.env.PORT || 8080;
+  const PORT = process.env.PORT || 4001;
   await app.listen(PORT, () => {
     console.log("auth_service is running on the " + PORT);
   });

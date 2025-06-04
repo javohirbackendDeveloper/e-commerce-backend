@@ -13,7 +13,7 @@ const return_dto_3 = require("./punkt-admin/dto/return.dto");
 const tezbuy_packages_2 = require("tezbuy_packages");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(auth_service_module_1.AuthServiceModule);
-    app.use(tezbuy_packages_2.allowUrls);
+    app.setGlobalPrefix("auth");
     const extraModels = [
         return_dto_1.ReturnUserDto,
         return_dto_1.ReturnLoginUserDto,
@@ -29,13 +29,16 @@ async function bootstrap() {
     const config = new swagger_1.DocumentBuilder()
         .setTitle("auth_service")
         .setVersion("1.0.0")
+        .addServer(`http://localhost:${process.env.PORT || 8080}`, "Local Development")
+        .addServer("https://e-commerce-backend-2-xcpq.onrender.com", "Production")
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config, {
         extraModels,
+        ignoreGlobalPrefix: false,
     });
-    swagger_1.SwaggerModule.setup("api", app, document);
+    swagger_1.SwaggerModule.setup("api-docs", app, document);
     app.use("/swagger-json", (_, res) => res.json(document));
-    app.setGlobalPrefix("auth");
+    app.use(tezbuy_packages_2.allowUrls);
     app.useGlobalPipes(new common_1.ValidationPipe({
         transform: true,
         whitelist: true,
@@ -54,7 +57,7 @@ async function bootstrap() {
     }));
     app.useGlobalFilters(new all_exceptions_filters_1.AllExceptionsFilter());
     app.use(cookieParser());
-    const PORT = process.env.PORT || 8080;
+    const PORT = process.env.PORT || 4001;
     await app.listen(PORT, () => {
         console.log("auth_service is running on the " + PORT);
     });

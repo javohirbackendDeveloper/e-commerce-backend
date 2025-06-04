@@ -131,4 +131,12 @@ export class UserController {
     const user = (req as any).user;
     return user;
   }
+
+  // api for auto sleep
+
+  @Get("keepHealthServer")
+  @ApiOperation({ summary: "Keep server from auto sleep" })
+  async keepHealthServer(@Res() res: Response) {
+    return this.userService.keepHealthServer(res);
+  }
 }

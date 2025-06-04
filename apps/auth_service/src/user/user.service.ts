@@ -203,4 +203,9 @@ export class UserService {
 
     return { message: "Successfully logged out" };
   }
+
+  // api for keeping auto sleep
+  async keepHealthServer(res: Response) {
+    res.json({ message: "Hello world from auth service" });
+  }
 }

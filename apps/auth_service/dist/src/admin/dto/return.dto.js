@@ -16,21 +16,31 @@ class ReturnAdminMessageDto {
 }
 exports.ReturnAdminMessageDto = ReturnAdminMessageDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: "Response message",
+        example: "Operation successful",
+    }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], ReturnAdminMessageDto.prototype, "message", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        description: "Indicates if operation was successful",
+        example: true,
+    }),
     (0, class_validator_1.IsBoolean)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Boolean)
 ], ReturnAdminMessageDto.prototype, "success", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: "HTTP status code", example: 200 }),
     (0, class_validator_1.IsInt)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], ReturnAdminMessageDto.prototype, "statusCode", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: "Any additional data returned" }),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Object)
 ], ReturnAdminMessageDto.prototype, "data", void 0);
@@ -39,8 +49,9 @@ class ReturnAdminLoginDto {
 exports.ReturnAdminLoginDto = ReturnAdminLoginDto;
 __decorate([
     (0, swagger_1.ApiProperty)({
-        description: "It comes from loggen in admin",
+        description: "Login success message",
         example: "Admin logged in successfully",
+        required: false,
     }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
@@ -77,21 +88,18 @@ __decorate([
 ], ReturnAdminDto.prototype, "username", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        description: "Admin password",
-        example: "678787568797674566788",
+        description: "Admin password (hashed)",
+        example: "$2b$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36YpWqC5f08VklW5HgO3kOG",
     }),
     __metadata("design:type", String)
 ], ReturnAdminDto.prototype, "password", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)({ description: "Admin first_name", example: " Ronaldo" }),
+    (0, swagger_1.ApiPropertyOptional)({ description: "Admin first name", example: "Ronaldo" }),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], ReturnAdminDto.prototype, "first_name", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)({
-        description: "Admin last_name",
-        example: "Cristiano ",
-    }),
+    (0, swagger_1.ApiPropertyOptional)({ description: "Admin last name", example: "Cristiano" }),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], ReturnAdminDto.prototype, "last_name", void 0);
@@ -106,4 +114,11 @@ __decorate([
 class ReturnAdminLogoutDto {
 }
 exports.ReturnAdminLogoutDto = ReturnAdminLogoutDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: "Logout message",
+        example: "Logged out successfully",
+    }),
+    __metadata("design:type", String)
+], ReturnAdminLogoutDto.prototype, "message", void 0);
 //# sourceMappingURL=return.dto.js.map
