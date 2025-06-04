@@ -22,7 +22,7 @@ exports.ApiGatewayModule = ApiGatewayModule = __decorate([
         imports: [
             axios_1.HttpModule,
             config_1.ConfigModule.forRoot({
-                envFilePath: "./apps/api_gateway/.env",
+                envFilePath: "./.env",
                 isGlobal: true,
             }),
             tezbuy_packages_1.RmqModule.register({

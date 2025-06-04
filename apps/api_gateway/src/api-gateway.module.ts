@@ -14,7 +14,7 @@ import { RmqModule } from "tezbuy_packages";
   imports: [
     HttpModule,
     ConfigModule.forRoot({
-      envFilePath: "./apps/api_gateway/.env",
+      envFilePath: "./.env",
       isGlobal: true,
     }),
     RmqModule.register({

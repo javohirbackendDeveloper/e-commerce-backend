@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const express = require("express");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(api_gateway_module_1.ApiGatewayModule);
-    const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT || 4000;
     app.use(cookieParser());
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));

@@ -92,6 +92,7 @@ let ApiGatewayController = class ApiGatewayController {
         else if (url.startsWith("/punkts")) {
             target = process.env.PUNKT_SERVICE_URL;
             isAuthorized = await this.validateToken(req, "Admin");
+            console.log({ target, isAuthorized });
         }
         else if (url.startsWith("/staff")) {
             target = process.env.STAFF_SERVICE_URL;
@@ -149,9 +150,6 @@ let ApiGatewayController = class ApiGatewayController {
         }
         const data = req.body;
         try {
-            if (target.includes("api_gateway")) {
-                throw new Error("Loop detected: target is self");
-            }
             const httpsAgent = new https.Agent({
                 rejectUnauthorized: false,
             });
@@ -168,7 +166,6 @@ let ApiGatewayController = class ApiGatewayController {
             return res.status(response.status).json(response.data);
         }
         catch (error) {
-            console.log(error);
             const status = ((_e = error.response) === null || _e === void 0 ? void 0 : _e.status) || common_1.HttpStatus.INTERNAL_SERVER_ERROR;
             const message = ((_g = (_f = error.response) === null || _f === void 0 ? void 0 : _f.data) === null || _g === void 0 ? void 0 : _g.message) || "Internal error";
             return res.status(status).json({

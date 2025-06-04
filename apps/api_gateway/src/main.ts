@@ -7,7 +7,7 @@ import * as swaggerUi from "swagger-ui-express";
 
 async function bootstrap() {
   const app = await NestFactory.create(ApiGatewayModule);
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || 4000;
 
   app.use(cookieParser());
   app.use(express.json());
@@ -19,9 +19,9 @@ async function bootstrap() {
 
   // SWAGGER CONFIGURATION
 
-  const mergedSwagger = await getMergedSwaggerApis();
+  // const mergedSwagger = await getMergedSwaggerApis();
 
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(mergedSwagger));
+  // app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(mergedSwagger));
 
   // LISTENING PORT
   await app.listen(PORT, () => {

@@ -63,6 +63,8 @@ export class ApiGatewayController {
     } else if (url.startsWith("/orders")) {
       if (url.startsWith("/orders/order/user")) {
         isAuthorized = await this.validateToken(req, "User");
+      } else if (url.startsWith("/orders/order/keepHealthServer")) {
+        isAuthorized = true;
       } else if (url.startsWith("/orders/order/punkt")) {
         isAuthorized = await this.validateToken(req, "PunktAdmin");
       } else if (url.startsWith("/orders/order/admin")) {
@@ -159,9 +161,6 @@ export class ApiGatewayController {
     const data = req.body;
 
     try {
-      if (target.includes("api_gateway")) {
-        throw new Error("Loop detected: target is self");
-      }
       const httpsAgent = new https.Agent({
         rejectUnauthorized: false,
       });
@@ -183,8 +182,6 @@ export class ApiGatewayController {
       }
       return res.status(response.status).json(response.data);
     } catch (error) {
-      console.log(error);
-
       const status = error.response?.status || HttpStatus.INTERNAL_SERVER_ERROR;
       const message = error.response?.data?.message || "Internal error";
       return res.status(status).json({
