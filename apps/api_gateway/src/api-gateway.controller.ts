@@ -48,6 +48,8 @@ export class ApiGatewayController {
     if (url.startsWith("/products")) {
       if (method === "GET") {
         isAuthorized = true;
+      } else if (url.startsWith("/products/product/keepHealthServer")) {
+        isAuthorized = true;
       } else if (url.startsWith("/products/comment")) {
         isAuthorized =
           (await this.validateToken(req, "User")) ||
