@@ -7,13 +7,14 @@ import {
 import { DeliverStatus } from "./enums/deliverType.enum";
 import { PaymentStatus } from "./enums/paymentStatus.enum";
 import { CartService } from "../cart/cart.service";
-import { Request } from "express";
+import { Request, Response } from "express";
 import { firstValueFrom } from "rxjs";
 import { ClientProxy } from "@nestjs/microservices";
 import { OrderStatus } from "./enums/orderStatus.enum";
 import { FilterOrdersDto } from "./dto/filterOrders.dto";
 import { PrismaService } from "prisma/prisma.service";
 import { Orders, Prisma } from "@prisma/client";
+import { GetOrdersByYear } from "./dto/getOrderByDate.dto";
 
 @Injectable()
 export class OrderService {
@@ -53,15 +54,16 @@ export class OrderService {
       }
 
       //  CHECKING DELIVERY TYPE
+
       if (
-        (deliveringType === DeliverStatus.Courier && !locationLatitude) ||
-        !locationLongitude
+        deliveringType === "Courier" &&
+        (!locationLatitude || !locationLongitude)
       ) {
         throw new HttpException(
           "Please select your location for our couriers",
           HttpStatus.BAD_REQUEST
         );
-      } else if (deliveringType === DeliverStatus.Punkt) {
+      } else if (deliveringType === "Punkt") {
         if (!punktId) {
           throw new HttpException(
             "Punkt ID is required",
@@ -71,7 +73,6 @@ export class OrderService {
         const punkt = await firstValueFrom(
           this.punktClient.send("get_one_punkt", punktId)
         );
-        console.log({ punkt });
 
         if (!punkt) {
           throw new HttpException(
@@ -84,7 +85,8 @@ export class OrderService {
       // GETTING CART PRODUCTS
       const cartProducts = await this.cartService.findAll(req);
 
-      if (!cartProducts[0].cartItemsWithProduct.length) {
+      const { grandPrice, cartItemsWithProduct } = cartProducts;
+      if (!cartItemsWithProduct.length) {
         throw new HttpException(
           "Please firstly add product to your cart",
           HttpStatus.NOT_FOUND
@@ -93,7 +95,7 @@ export class OrderService {
 
       // CHECKING PAYMENT TYPE
       if (paymenttype === PaymentStatus.Card) {
-        if (amount !== cartProducts[0].grandPrice) {
+        if (amount !== grandPrice) {
           throw new HttpException(
             "Please pay enough money",
             HttpStatus.CONFLICT
@@ -113,7 +115,7 @@ export class OrderService {
       let createData: any = {
         userId: userId as string,
         status: orderStatus,
-        totalPrice: cartProducts[0]?.grandPrice,
+        totalPrice: grandPrice,
         deliveringType,
         paymenttype,
         locationText: recipient_locationText,
@@ -460,5 +462,39 @@ export class OrderService {
         err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
       );
     }
+  }
+
+  async getYearOrders(query: GetOrdersByYear) {
+    try {
+      const { year } = query;
+
+      const startDate = new Date(`${year}-01-01T00:00:00.000Z`);
+      const endDate = new Date(`${Number(year) + 1}-01-01T00:00:00.000Z`);
+
+      const orders = await this.prismaService.orders.findMany({
+        where: {
+          createdAt: {
+            gte: startDate,
+            lte: endDate,
+          },
+        },
+      });
+
+      const sortedOrders = orders.sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      );
+      return sortedOrders;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  // api for keeping auto sleep
+  async keepHealthServer(res: Response) {
+    res.json({ message: "Hello world from order service" });
   }
 }

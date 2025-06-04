@@ -1,16 +1,15 @@
+import { Request } from "express";
 import { OrderService } from "./order.service";
 import { CreateOrderDto } from "./dto/create-order.dto";
 import { UpdateOrderDto, UpdateOrderDtoForPunktAdmin } from "./dto/update-order.dto";
-import { Request } from "express";
 import { Prisma } from "@prisma/client";
+import { GetOrdersByYear } from "./dto/getOrderByDate.dto";
 export declare class OrderController {
     private readonly orderService;
     constructor(orderService: OrderService);
-    create(req: Request, createOrderDto: CreateOrderDto): Promise<{
+    create(req: Request, dto: CreateOrderDto): Promise<{
         id: string;
         userId: string;
-        createdAt: Date;
-        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -23,12 +22,12 @@ export declare class OrderController {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
-    getUserOrders(filterQueries: Prisma.OrdersWhereInput, req: Request): Promise<{
+    getUserOrders(query: Prisma.OrdersWhereInput, req: Request): Promise<{
         id: string;
         userId: string;
-        createdAt: Date;
-        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -41,12 +40,12 @@ export declare class OrderController {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
+        createdAt: Date;
+        updatedAt: Date;
     }[]>;
-    update(req: Request, id: string, updateOrderDto: UpdateOrderDto): Promise<{
+    update(req: Request, id: string, dto: UpdateOrderDto): Promise<{
         id: string;
         userId: string;
-        createdAt: Date;
-        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -59,12 +58,12 @@ export declare class OrderController {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
-    findPunktOrders(filterQueries: Prisma.OrdersWhereInput, req: Request): Promise<{
+    findPunktOrders(query: Prisma.OrdersWhereInput, req: Request): Promise<{
         id: string;
         userId: string;
-        createdAt: Date;
-        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -77,12 +76,12 @@ export declare class OrderController {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
+        createdAt: Date;
+        updatedAt: Date;
     }[]>;
-    updateForPunktAdmin(req: Request, id: string, updateOrderDto: UpdateOrderDtoForPunktAdmin): Promise<{
+    updateForPunktAdmin(req: Request, id: string, dto: UpdateOrderDtoForPunktAdmin): Promise<{
         id: string;
         userId: string;
-        createdAt: Date;
-        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -95,12 +94,12 @@ export declare class OrderController {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
-    getAllOrders(filterQueries: Prisma.OrdersWhereInput, req: Request): Promise<{
+    getAllOrders(query: Prisma.OrdersWhereInput, req: Request): Promise<{
         id: string;
         userId: string;
-        createdAt: Date;
-        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -113,5 +112,25 @@ export declare class OrderController {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
+        createdAt: Date;
+        updatedAt: Date;
+    }[]>;
+    getYearOrders(query: GetOrdersByYear): Promise<{
+        id: string;
+        userId: string;
+        status: import("@prisma/client").$Enums.OrderStatus;
+        totalPrice: number;
+        deliveringType: import("@prisma/client").$Enums.DeliveringType;
+        paymenttype: import("@prisma/client").$Enums.PaymentType;
+        locationText: string;
+        locationLongitude: number | null;
+        locationLatitude: number | null;
+        punktId: string;
+        recipient_firstname: string;
+        recipient_lastname: string;
+        recipient_phone: string;
+        deliverTime: Date;
+        createdAt: Date;
+        updatedAt: Date;
     }[]>;
 }

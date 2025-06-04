@@ -29,33 +29,34 @@ let OrderService = class OrderService {
         this.prismaService = prismaService;
     }
     async create(createOrderDto, req) {
-        var _a, _b;
+        var _a;
         try {
             const { deliveringType, paymenttype, locationLatitude, locationLongitude, recipient_locationText, punktId, recipient_firstname, recipient_lastname, recipient_phone, payment: { amount, card_number, payment_type }, } = createOrderDto;
             const userId = req.headers["x_user_id"];
             if (!userId) {
                 throw new common_1.HttpException("Please login again to continue", common_1.HttpStatus.UNAUTHORIZED);
             }
-            if ((deliveringType === deliverType_enum_1.DeliverStatus.Courier && !locationLatitude) ||
-                !locationLongitude) {
+            if (deliveringType === "Courier" &&
+                (!locationLatitude || !locationLongitude)) {
                 throw new common_1.HttpException("Please select your location for our couriers", common_1.HttpStatus.BAD_REQUEST);
             }
-            else if (deliveringType === deliverType_enum_1.DeliverStatus.Punkt) {
+            else if (deliveringType === "Punkt") {
                 if (!punktId) {
                     throw new common_1.HttpException("Punkt ID is required", common_1.HttpStatus.BAD_REQUEST);
                 }
                 const punkt = await (0, rxjs_1.firstValueFrom)(this.punktClient.send("get_one_punkt", punktId));
-                console.log({ punkt });
                 if (!punkt) {
                     throw new common_1.HttpException("This punkt not found with this id " + punktId, common_1.HttpStatus.NOT_FOUND);
                 }
             }
             const cartProducts = await this.cartService.findAll(req);
-            if (!cartProducts[0].cartItemsWithProduct.length) {
+            const { grandPrice, cartItemsWithProduct } = cartProducts;
+            if (!cartItemsWithProduct.length) {
                 throw new common_1.HttpException("Please firstly add product to your cart", common_1.HttpStatus.NOT_FOUND);
             }
+            console.log({ grandPrice });
             if (paymenttype === paymentStatus_enum_1.PaymentStatus.Card) {
-                if (amount !== cartProducts[0].grandPrice) {
+                if (amount !== grandPrice) {
                     throw new common_1.HttpException("Please pay enough money", common_1.HttpStatus.CONFLICT);
                 }
             }
@@ -65,7 +66,7 @@ let OrderService = class OrderService {
             let createData = {
                 userId: userId,
                 status: orderStatus,
-                totalPrice: (_a = cartProducts[0]) === null || _a === void 0 ? void 0 : _a.grandPrice,
+                totalPrice: grandPrice,
                 deliveringType,
                 paymenttype,
                 locationText: recipient_locationText,
@@ -78,7 +79,7 @@ let OrderService = class OrderService {
                 const theNearestPunkt = await this.getTheNearestPunkt(locationLongitude, locationLatitude);
                 createData.locationLongitude = locationLongitude;
                 createData.locationLatitude = locationLatitude;
-                createData.punktId = (_b = theNearestPunkt.nearestPunkt) === null || _b === void 0 ? void 0 : _b.id;
+                createData.punktId = (_a = theNearestPunkt.nearestPunkt) === null || _a === void 0 ? void 0 : _a.id;
             }
             else {
                 createData.punktId = punktId;
@@ -258,6 +259,26 @@ let OrderService = class OrderService {
             const existFilter = await this.existFilters(filterQueries);
             const orders = await this.prismaService.orders.findMany({
                 where: Object.assign({}, existFilter),
+            });
+            const sortedOrders = orders.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+            return sortedOrders;
+        }
+        catch (err) {
+            throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async getYearOrders(query) {
+        try {
+            const { year } = query;
+            const startDate = new Date(`${year}-01-01T00:00:00.000Z`);
+            const endDate = new Date(`${Number(year) + 1}-01-01T00:00:00.000Z`);
+            const orders = await this.prismaService.orders.findMany({
+                where: {
+                    createdAt: {
+                        gte: startDate,
+                        lte: endDate,
+                    },
+                },
             });
             const sortedOrders = orders.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
             return sortedOrders;

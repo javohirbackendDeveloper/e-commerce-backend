@@ -7,8 +7,9 @@ import {
   Param,
   Req,
   Query,
+  Res,
 } from "@nestjs/common";
-import { Request } from "express";
+import { Request, Response } from "express";
 import { OrderService } from "./order.service";
 import { CreateOrderDto } from "./dto/create-order.dto";
 import {
@@ -24,6 +25,7 @@ import {
   ApiBody,
 } from "@nestjs/swagger";
 import { Prisma } from "@prisma/client";
+import { GetOrdersByYear } from "./dto/getOrderByDate.dto";
 
 @ApiTags("Buyurtmalar")
 @Controller("order")
@@ -99,5 +101,23 @@ export class OrderController {
   @ApiResponse({ status: 200, description: "Buyurtmalar ro'yxati" })
   getAllOrders(@Query() query: Prisma.OrdersWhereInput, @Req() req: Request) {
     return this.orderService.getAllOrders(query);
+  }
+
+  @Get("admin/getYearOrders")
+  @ApiOperation({ summary: "Bir yillik barcha buyurtmalar (admin)" })
+  @ApiQuery({ name: "year", required: true })
+  @ApiResponse({ status: 200, description: "Bir yillik buyurtmalar ro'yxati" })
+  getYearOrders(@Query() query: GetOrdersByYear) {
+    console.log({ query });
+
+    return this.orderService.getYearOrders(query);
+  }
+
+  // api for auto sleep
+
+  @Get("keepHealthServer")
+  @ApiOperation({ summary: "Keep server from auto sleep" })
+  async keepHealthServer(@Res() res: Response) {
+    return this.orderService.keepHealthServer(res);
   }
 }

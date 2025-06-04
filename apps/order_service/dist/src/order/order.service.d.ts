@@ -5,6 +5,7 @@ import { Request } from "express";
 import { ClientProxy } from "@nestjs/microservices";
 import { PrismaService } from "prisma/prisma.service";
 import { Orders, Prisma } from "@prisma/client";
+import { GetOrdersByYear } from "./dto/getOrderByDate.dto";
 export declare class OrderService {
     private readonly cartService;
     private readonly orderClient;
@@ -28,8 +29,6 @@ export declare class OrderService {
     getAllOrders(filterQueries: Prisma.OrdersWhereInput): Promise<{
         id: string;
         userId: string;
-        createdAt: Date;
-        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -42,5 +41,25 @@ export declare class OrderService {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
+        createdAt: Date;
+        updatedAt: Date;
+    }[]>;
+    getYearOrders(query: GetOrdersByYear): Promise<{
+        id: string;
+        userId: string;
+        status: import("@prisma/client").$Enums.OrderStatus;
+        totalPrice: number;
+        deliveringType: import("@prisma/client").$Enums.DeliveringType;
+        paymenttype: import("@prisma/client").$Enums.PaymentType;
+        locationText: string;
+        locationLongitude: number | null;
+        locationLatitude: number | null;
+        punktId: string;
+        recipient_firstname: string;
+        recipient_lastname: string;
+        recipient_phone: string;
+        deliverTime: Date;
+        createdAt: Date;
+        updatedAt: Date;
     }[]>;
 }

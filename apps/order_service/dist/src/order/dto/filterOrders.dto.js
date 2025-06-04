@@ -14,20 +14,36 @@ const class_validator_1 = require("class-validator");
 const deliverType_enum_1 = require("../enums/deliverType.enum");
 const paymentStatus_enum_1 = require("../enums/paymentStatus.enum");
 const orderStatus_enum_1 = require("../enums/orderStatus.enum");
+const swagger_1 = require("@nestjs/swagger");
 class FilterOrdersDto {
 }
 exports.FilterOrdersDto = FilterOrdersDto;
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        enum: orderStatus_enum_1.OrderStatus,
+        description: "Buyurtma statusi (ixtiyoriy)",
+        example: orderStatus_enum_1.OrderStatus.AwaitingPayment,
+    }),
     (0, class_validator_1.IsEnum)(orderStatus_enum_1.OrderStatus),
     (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], FilterOrdersDto.prototype, "status", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        enum: deliverType_enum_1.DeliverStatus,
+        description: "Yetkazib berish turi (ixtiyoriy)",
+        example: deliverType_enum_1.DeliverStatus.Punkt,
+    }),
     (0, class_validator_1.IsEnum)(deliverType_enum_1.DeliverStatus),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], FilterOrdersDto.prototype, "deliveringType", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        enum: paymentStatus_enum_1.PaymentStatus,
+        description: "To‘lov statusi (ixtiyoriy)",
+        example: paymentStatus_enum_1.PaymentStatus.Delivered,
+    }),
     (0, class_validator_1.IsEnum)(paymentStatus_enum_1.PaymentStatus),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)

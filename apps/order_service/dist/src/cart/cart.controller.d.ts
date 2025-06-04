@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 export declare class CartController {
     private readonly cartService;
     constructor(cartService: CartService);
-    create(req: Request, createCartDto: CreateCartDto): Promise<{
+    create(req: Request, dto: CreateCartDto): Promise<{
         id: string;
         userId: string;
         quantity: number;
@@ -18,7 +18,7 @@ export declare class CartController {
         cartItemsWithProduct: any[];
         grandPrice: any;
     }>;
-    update(req: Request, id: string, updateCartDto: UpdateCartDto): Promise<{
+    update(req: Request, id: string, dto: UpdateCartDto): Promise<{
         id: string;
         userId: string;
         quantity: number;

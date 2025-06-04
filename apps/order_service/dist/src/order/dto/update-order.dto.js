@@ -11,40 +11,67 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateOrderDtoForPunktAdmin = exports.UpdateOrderDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 const orderStatus_enum_1 = require("../enums/orderStatus.enum");
 const client_1 = require("@prisma/client");
 class UpdateOrderDto {
 }
 exports.UpdateOrderDto = UpdateOrderDto;
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        description: "Oluvchining ismi",
+        example: "Ali",
+    }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateOrderDto.prototype, "recipient_firstname", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        description: "Oluvchining familiyasi",
+        example: "Valiyev",
+    }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateOrderDto.prototype, "recipient_lastname", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        description: "Oluvchining manzili (matn)",
+        example: "Toshkent, Chilonzor, 15-mavze",
+    }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateOrderDto.prototype, "recipient_locationText", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        description: "Oluvchining telefon raqami",
+        example: "+998901234567",
+    }),
     (0, class_validator_1.IsPhoneNumber)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateOrderDto.prototype, "recipient_phone", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        enum: orderStatus_enum_1.UpdateOrderStatus,
+        description: "Buyurtma statusi",
+        example: orderStatus_enum_1.UpdateOrderStatus.Cancelled,
+    }),
     (0, class_validator_1.IsEnum)(orderStatus_enum_1.UpdateOrderStatus),
     (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], UpdateOrderDto.prototype, "status", void 0);
 class UpdateOrderDtoForPunktAdmin {
 }
 exports.UpdateOrderDtoForPunktAdmin = UpdateOrderDtoForPunktAdmin;
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        enum: client_1.OrderStatus,
+        description: "Admin tomonidan o‘zgartiriladigan buyurtma statusi",
+        example: client_1.OrderStatus.Cancelled,
+    }),
     (0, class_validator_1.IsEnum)(client_1.OrderStatus),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)

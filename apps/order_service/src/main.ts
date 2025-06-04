@@ -43,7 +43,7 @@ async function bootstrap() {
 
   // listening port
   const configService = app.get(ConfigService);
-  const PORT = configService.get("PORT") || 3002;
+  const PORT = configService.get("PORT") || 4002;
   await app.listen(PORT, () => {
     console.log("Order service is running at " + PORT);
   });
