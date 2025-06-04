@@ -141,6 +141,9 @@ let UserService = UserService_1 = class UserService {
         res.clearCookie("user_refresh_token");
         return { message: "Successfully logged out" };
     }
+    async keepHealthServer(res) {
+        res.json({ message: "Hello world from auth service" });
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = UserService_1 = __decorate([

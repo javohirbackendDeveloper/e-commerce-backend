@@ -47,8 +47,9 @@ export class CreateToken {
     response.cookie(`${this.role.toLowerCase()}_access_token`, accessToken, {
       httpOnly: true,
       secure: this.configService.get<string>("NODE_ENV") === "production",
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 2 * 60 * 60 * 1000,
+
       // maxAge: 15 * 60 * 1000,
     });
 
@@ -59,7 +60,7 @@ export class CreateToken {
         {
           httpOnly: true,
           secure: this.configService.get<string>("NODE_ENV") === "production",
-          sameSite: "strict",
+          sameSite: "none",
           maxAge: 7 * 24 * 60 * 60 * 1000,
         }
       );

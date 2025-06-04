@@ -20,4 +20,5 @@ export declare class UserService {
         message: string;
     }>;
     logoutAdmin(res: Response): Promise<ReturnUserLogoutDto>;
+    keepHealthServer(res: Response): Promise<void>;
 }

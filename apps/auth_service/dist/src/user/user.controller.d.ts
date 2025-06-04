@@ -16,4 +16,5 @@ export declare class UserController {
     }>;
     logoutAdmin(res: Response): Promise<import("./dto/return.dto").ReturnUserLogoutDto>;
     getUserByToken(req: Request): Promise<any>;
+    keepHealthServer(res: Response): Promise<void>;
 }

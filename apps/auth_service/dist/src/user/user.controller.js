@@ -47,6 +47,9 @@ let UserController = class UserController {
         const user = req.user;
         return user;
     }
+    async keepHealthServer(res) {
+        return this.userService.keepHealthServer(res);
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -156,6 +159,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUserByToken", null);
+__decorate([
+    (0, common_1.Get)("keepHealthServer"),
+    (0, swagger_1.ApiOperation)({ summary: "Keep server from auto sleep" }),
+    __param(0, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "keepHealthServer", null);
 exports.UserController = UserController = __decorate([
     (0, swagger_1.ApiTags)("auth_service/user"),
     (0, common_1.Controller)("user"),

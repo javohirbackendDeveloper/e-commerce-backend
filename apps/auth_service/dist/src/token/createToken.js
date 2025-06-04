@@ -31,7 +31,7 @@ class CreateToken {
             response.cookie(`${this.role.toLowerCase()}_refresh_token`, refreshToken, {
                 httpOnly: true,
                 secure: this.configService.get("NODE_ENV") === "production",
-                sameSite: "strict",
+                sameSite: "none",
                 maxAge: 7 * 24 * 60 * 60 * 1000,
             });
         }
