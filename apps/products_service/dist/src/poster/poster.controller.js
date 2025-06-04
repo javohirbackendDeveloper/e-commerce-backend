@@ -15,7 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PosterController = void 0;
 const common_1 = require("@nestjs/common");
 const poster_service_1 = require("./poster.service");
-const platform_express_1 = require("@nestjs/platform-express");
+const swagger_1 = require("@nestjs/swagger");
+class CreatePosterDto {
+}
 let PosterController = class PosterController {
     constructor(posterService) {
         this.posterService = posterService;
@@ -36,21 +38,42 @@ let PosterController = class PosterController {
 exports.PosterController = PosterController;
 __decorate([
     (0, common_1.Post)(),
-    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)("img")),
+    (0, swagger_1.ApiOperation)({ summary: "Yangi poster yaratish" }),
+    (0, swagger_1.ApiConsumes)("multipart/form-data"),
+    (0, swagger_1.ApiBody)({
+        description: "Poster ma'lumotlari va rasm fayli",
+        schema: {
+            type: "object",
+            properties: {
+                title: { type: "string" },
+                img: {
+                    type: "string",
+                    format: "binary",
+                },
+            },
+            required: ["title", "img"],
+        },
+    }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: "Poster muvaffaqiyatli yaratildi" }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [CreatePosterDto, Object]),
     __metadata("design:returntype", void 0)
 ], PosterController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiOperation)({ summary: "Barcha posterlarni olish" }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: "Posterlar ro'yxati" }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], PosterController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(":id"),
+    (0, swagger_1.ApiOperation)({ summary: "ID bo'yicha posterni olish" }),
+    (0, swagger_1.ApiParam)({ name: "id", description: "Poster ID" }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: "Poster ma'lumotlari" }),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -58,12 +81,16 @@ __decorate([
 ], PosterController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Delete)(":id"),
+    (0, swagger_1.ApiOperation)({ summary: "Posterni o'chirish" }),
+    (0, swagger_1.ApiParam)({ name: "id", description: "Poster ID" }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: "Poster o'chirildi" }),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], PosterController.prototype, "remove", null);
 exports.PosterController = PosterController = __decorate([
+    (0, swagger_1.ApiTags)("poster"),
     (0, common_1.Controller)("poster"),
     __metadata("design:paramtypes", [poster_service_1.PosterService])
 ], PosterController);

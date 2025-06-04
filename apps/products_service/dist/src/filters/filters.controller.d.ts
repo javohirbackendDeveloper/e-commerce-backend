@@ -5,15 +5,15 @@ export declare class FiltersController {
     private readonly filtersService;
     constructor(filtersService: FiltersService);
     create(createGeneralFilterDto: CreateGeneralFilterDto): Promise<{
-        id: string;
-        title: string;
         type: import("@prisma/client").$Enums.TypeOfFilter;
+        title: string;
+        id: string;
         inputType: import("@prisma/client").$Enums.InputType;
     }>;
     findAll(): Promise<{
-        id: string;
-        title: string;
         type: import("@prisma/client").$Enums.TypeOfFilter;
+        title: string;
+        id: string;
         inputType: import("@prisma/client").$Enums.InputType;
     }[]>;
     findOne(id: string): Promise<{
@@ -24,38 +24,38 @@ export declare class FiltersController {
         }[];
         values: {
             id: string;
-            filterId: string;
             value: string;
+            filterId: string;
         }[];
     } & {
-        id: string;
-        title: string;
         type: import("@prisma/client").$Enums.TypeOfFilter;
+        title: string;
+        id: string;
         inputType: import("@prisma/client").$Enums.InputType;
     }>;
     update(id: string, updateFilterDto: UpdateFilterDto): Promise<{
-        id: string;
-        title: string;
         type: import("@prisma/client").$Enums.TypeOfFilter;
+        title: string;
+        id: string;
         inputType: import("@prisma/client").$Enums.InputType;
     }>;
     remove(id: string): Promise<{
-        id: string;
-        title: string;
         type: import("@prisma/client").$Enums.TypeOfFilter;
+        title: string;
+        id: string;
         inputType: import("@prisma/client").$Enums.InputType;
     }>;
     getFiltersByCategoryId(categoryId: string): Promise<({
         filter: {
             values: {
                 id: string;
-                filterId: string;
                 value: string;
+                filterId: string;
             }[];
         } & {
-            id: string;
-            title: string;
             type: import("@prisma/client").$Enums.TypeOfFilter;
+            title: string;
+            id: string;
             inputType: import("@prisma/client").$Enums.InputType;
         };
     } & {
@@ -65,25 +65,25 @@ export declare class FiltersController {
     })[]>;
     createSpecificFilter(createSpecificDto: CreateSpecificFilterDto): Promise<import("./dto/return.dto").ReturnSpecificFunction>;
     findAllSpecificFilters(): Promise<{
-        id: string;
-        title: string;
         type: import("@prisma/client").$Enums.TypeOfFilter;
+        title: string;
+        id: string;
         inputType: import("@prisma/client").$Enums.InputType;
     }[]>;
     removeSpecific(id: string): Promise<{
-        id: string;
-        title: string;
         type: import("@prisma/client").$Enums.TypeOfFilter;
+        title: string;
+        id: string;
         inputType: import("@prisma/client").$Enums.InputType;
     }>;
     createValue(createValueDto: CreateFilterValue): Promise<{
         id: string;
-        filterId: string;
         value: string;
+        filterId: string;
     }[]>;
     removeValue(id: string): Promise<{
         id: string;
-        filterId: string;
         value: string;
+        filterId: string;
     }>;
 }

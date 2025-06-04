@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCouponDto = exports.CouponStatus = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
+const swagger_1 = require("@nestjs/swagger");
 var CouponStatus;
 (function (CouponStatus) {
     CouponStatus["FAOL"] = "FAOL";
@@ -24,32 +25,60 @@ class CreateCouponDto {
 }
 exports.CreateCouponDto = CreateCouponDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: "Kupon kodi",
+        example: "SUMMER2025",
+    }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateCouponDto.prototype, "code", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: "Chegirma miqdori",
+        example: 15,
+        minimum: 0,
+    }),
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.Min)(0),
     __metadata("design:type", Number)
 ], CreateCouponDto.prototype, "discount_value", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: "Minimal buyurtma summasi uchun chegirma amal qiladi",
+        example: 100,
+        minimum: 0,
+    }),
     (0, class_validator_1.IsNumber)(),
     (0, class_transformer_1.Type)(() => Number),
     (0, class_validator_1.Min)(0),
     __metadata("design:type", Number)
 ], CreateCouponDto.prototype, "min_order_amount", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: "Kupondan foydalanish limitlari soni",
+        example: 10,
+        minimum: 1,
+    }),
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.Min)(1),
     __metadata("design:type", Number)
 ], CreateCouponDto.prototype, "usage_limit", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: "Kupon amal qilish muddati oxiri",
+        example: "2025-12-31T23:59:59Z",
+    }),
     (0, class_validator_1.IsDateString)(),
     __metadata("design:type", String)
 ], CreateCouponDto.prototype, "end_date", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        description: "Kupon holati",
+        enum: CouponStatus,
+        default: CouponStatus.FAOL,
+    }),
     (0, class_validator_1.IsEnum)(CouponStatus),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)

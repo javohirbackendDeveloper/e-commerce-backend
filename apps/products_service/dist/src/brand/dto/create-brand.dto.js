@@ -11,15 +11,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateBrandWithCategoryDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 class CreateBrandWithCategoryDto {
 }
 exports.CreateBrandWithCategoryDto = CreateBrandWithCategoryDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: "Brend nomi",
+        example: "Apple",
+    }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateBrandWithCategoryDto.prototype, "name", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: "Kategoriyalar ro‘yxati (MongoDB ID formatida)",
+        example: ["60c72b2f9b1d8c001c8f9c12", "60c72b3e9b1d8c001c8f9c13"],
+        type: [String],
+    }),
     (0, class_validator_1.IsMongoId)({ each: true }),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Array)

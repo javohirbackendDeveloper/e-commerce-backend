@@ -13,15 +13,22 @@ exports.UpdateBrandDto = void 0;
 const mapped_types_1 = require("@nestjs/mapped-types");
 const create_brand_dto_1 = require("./create-brand.dto");
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 class UpdateBrandDto extends (0, mapped_types_1.PartialType)(create_brand_dto_1.CreateBrandWithCategoryDto) {
 }
 exports.UpdateBrandDto = UpdateBrandDto;
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({ example: "Apple", description: "Brend nomi" }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateBrandDto.prototype, "name", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        type: [String],
+        example: ["60c72b2f9b1d8c001c8f9c14", "60c72b2f9b1d8c001c8f9c15"],
+        description: "Kategoriya ID larining ro'yxati",
+    }),
     (0, class_validator_1.IsMongoId)({ each: true }),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Array)

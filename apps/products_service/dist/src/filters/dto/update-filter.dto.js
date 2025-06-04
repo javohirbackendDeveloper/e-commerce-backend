@@ -14,15 +14,18 @@ const mapped_types_1 = require("@nestjs/mapped-types");
 const create_filter_dto_1 = require("./create-filter.dto");
 const class_validator_1 = require("class-validator");
 const client_1 = require("@prisma/client");
+const swagger_1 = require("@nestjs/swagger");
 class UpdateFilterDto extends (0, mapped_types_1.PartialType)(create_filter_dto_1.CreateGeneralFilterDto) {
 }
 exports.UpdateFilterDto = UpdateFilterDto;
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: "Filterning nomi", example: "Yangi nom" }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateFilterDto.prototype, "title", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({ enum: client_1.InputType, description: "Kiritish turi" }),
     (0, class_validator_1.IsEnum)(client_1.InputType),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)

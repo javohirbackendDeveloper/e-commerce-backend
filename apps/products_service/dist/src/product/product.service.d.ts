@@ -20,10 +20,9 @@ export declare class ProductService {
     create(createProductDto: CreateProductDto): Promise<Product>;
     findAll(page?: number, limit?: number): Promise<Product[]>;
     findOne(id: string): Promise<{
-        id: string;
-        categoryId: string;
-        product_name: string;
         description: string;
+        id: string;
+        product_name: string;
         oldPrice: number;
         price: number;
         quantity: number;
@@ -32,14 +31,14 @@ export declare class ProductService {
         ordered: string[];
         createdAt: Date;
         updatedAt: Date;
+        categoryId: string;
         brandId: string;
         product_status: import("@prisma/client").$Enums.ProductStatus;
     }>;
     update(id: string, updateProductDto: UpdateProductDto): Promise<{
-        id: string;
-        categoryId: string;
-        product_name: string;
         description: string;
+        id: string;
+        product_name: string;
         oldPrice: number;
         price: number;
         quantity: number;
@@ -48,6 +47,7 @@ export declare class ProductService {
         ordered: string[];
         createdAt: Date;
         updatedAt: Date;
+        categoryId: string;
         brandId: string;
         product_status: import("@prisma/client").$Enums.ProductStatus;
     }>;

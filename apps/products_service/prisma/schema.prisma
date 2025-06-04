@@ -48,8 +48,7 @@ model Product {
  filters Json
 
  ordered String[] @default([])
- createdAt DateTime @default(now())
- updatedAt DateTime @updatedAt
+
 
  comments Comments[]
  likes LikedProduct[]
@@ -64,6 +63,10 @@ categoryId String @db.ObjectId
  product_status ProductStatus @default(FAOL)
  @@index([categoryId])
  @@index([product_name])
+
+
+  createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
 }
 
 

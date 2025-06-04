@@ -53,7 +53,6 @@ let ProductController = class ProductController {
         return this.productService.deleteOneImage(id);
     }
     uploadOneImage(file, productId) {
-        console.log({ file, productId });
         return this.productService.uploadOneImage(file, productId);
     }
     getMinMaxPrices() {

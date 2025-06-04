@@ -14,16 +14,16 @@ export declare class BrandService {
     findAll(): Promise<({
         categories: ({
             category: {
+                title: string;
                 id: string;
                 parentId: string | null;
-                icon: string | null;
-                title: string;
                 children: number;
+                icon: string | null;
             };
         } & {
             id: string;
-            brandId: string;
             categoryId: string;
+            brandId: string;
         })[];
     } & {
         id: string;

@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const filters_service_1 = require("./filters.service");
 const create_filter_dto_1 = require("./dto/create-filter.dto");
 const update_filter_dto_1 = require("./dto/update-filter.dto");
+const swagger_1 = require("@nestjs/swagger");
 let FiltersController = class FiltersController {
     constructor(filtersService) {
         this.filtersService = filtersService;
@@ -58,6 +59,12 @@ let FiltersController = class FiltersController {
 exports.FiltersController = FiltersController;
 __decorate([
     (0, common_1.Post)("general"),
+    (0, swagger_1.ApiOperation)({ summary: "Create a general filter" }),
+    (0, swagger_1.ApiBody)({ type: create_filter_dto_1.CreateGeneralFilterDto }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        description: "General filter created successfully",
+    }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_filter_dto_1.CreateGeneralFilterDto]),
@@ -65,12 +72,17 @@ __decorate([
 ], FiltersController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)("general"),
+    (0, swagger_1.ApiOperation)({ summary: "Get all general filters" }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: "List of general filters" }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], FiltersController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)("general/:id"),
+    (0, swagger_1.ApiOperation)({ summary: "Get general filter by ID" }),
+    (0, swagger_1.ApiParam)({ name: "id", description: "General filter ID" }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: "General filter data" }),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -78,6 +90,13 @@ __decorate([
 ], FiltersController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)("general/:id"),
+    (0, swagger_1.ApiOperation)({ summary: "Update a general filter" }),
+    (0, swagger_1.ApiParam)({ name: "id", description: "General filter ID" }),
+    (0, swagger_1.ApiBody)({ type: update_filter_dto_1.UpdateFilterDto }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: "General filter updated successfully",
+    }),
     __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -86,6 +105,12 @@ __decorate([
 ], FiltersController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)("general/:id"),
+    (0, swagger_1.ApiOperation)({ summary: "Delete a general filter" }),
+    (0, swagger_1.ApiParam)({ name: "id", description: "General filter ID" }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: "General filter deleted successfully",
+    }),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -93,6 +118,9 @@ __decorate([
 ], FiltersController.prototype, "remove", null);
 __decorate([
     (0, common_1.Get)("specific/:id"),
+    (0, swagger_1.ApiOperation)({ summary: "Get specific filters by category ID" }),
+    (0, swagger_1.ApiParam)({ name: "id", description: "Category ID" }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: "List of specific filters" }),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -100,6 +128,12 @@ __decorate([
 ], FiltersController.prototype, "getFiltersByCategoryId", null);
 __decorate([
     (0, common_1.Post)("specific"),
+    (0, swagger_1.ApiOperation)({ summary: "Create a specific filter" }),
+    (0, swagger_1.ApiBody)({ type: create_filter_dto_1.CreateSpecificFilterDto }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        description: "Specific filter created successfully",
+    }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_filter_dto_1.CreateSpecificFilterDto]),
@@ -107,12 +141,20 @@ __decorate([
 ], FiltersController.prototype, "createSpecificFilter", null);
 __decorate([
     (0, common_1.Get)("specific"),
+    (0, swagger_1.ApiOperation)({ summary: "Get all specific filters" }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: "List of specific filters" }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], FiltersController.prototype, "findAllSpecificFilters", null);
 __decorate([
     (0, common_1.Delete)("specific/:id"),
+    (0, swagger_1.ApiOperation)({ summary: "Delete a specific filter" }),
+    (0, swagger_1.ApiParam)({ name: "id", description: "Specific filter ID" }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: "Specific filter deleted successfully",
+    }),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -120,6 +162,12 @@ __decorate([
 ], FiltersController.prototype, "removeSpecific", null);
 __decorate([
     (0, common_1.Post)("value"),
+    (0, swagger_1.ApiOperation)({ summary: "Create a value for a filter" }),
+    (0, swagger_1.ApiBody)({ type: create_filter_dto_1.CreateFilterValue }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        description: "Filter value created successfully",
+    }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_filter_dto_1.CreateFilterValue]),
@@ -127,12 +175,19 @@ __decorate([
 ], FiltersController.prototype, "createValue", null);
 __decorate([
     (0, common_1.Delete)("value/:id"),
+    (0, swagger_1.ApiOperation)({ summary: "Delete a filter value" }),
+    (0, swagger_1.ApiParam)({ name: "id", description: "Filter value ID" }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: "Filter value deleted successfully",
+    }),
     __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], FiltersController.prototype, "removeValue", null);
 exports.FiltersController = FiltersController = __decorate([
+    (0, swagger_1.ApiTags)("products_service/filters"),
     (0, common_1.Controller)("filters"),
     __metadata("design:paramtypes", [filters_service_1.FiltersService])
 ], FiltersController);

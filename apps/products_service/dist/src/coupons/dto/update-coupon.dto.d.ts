@@ -8,8 +8,8 @@ export declare class UpdateCouponDto extends UpdateCouponDto_base {
     code?: string;
     discount_value?: number;
     min_order_amount?: number;
-    usage_limit: number;
-    end_date: string;
+    usage_limit?: number;
+    end_date?: string;
     status?: CouponStatus;
 }
 export {};

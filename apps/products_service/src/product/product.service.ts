@@ -17,6 +17,7 @@ import { ReturnMinMaxDto } from "./dto/return.dto";
 import { FilterQueryDto } from "./dto/filterQuery.dto";
 import { PrismaService } from "prisma/prisma.service";
 import { Prisma, Product, ProductImage } from "@prisma/client";
+import { Response } from "express";
 @Injectable()
 export class ProductService {
   constructor(
@@ -483,5 +484,11 @@ export class ProductService {
         HttpStatus.INTERNAL_SERVER_ERROR
       );
     }
+  }
+
+  // healther api for server
+
+  async keepHealthServer(res: Response) {
+    res.json({ message: "Hello world from products service" });
   }
 }

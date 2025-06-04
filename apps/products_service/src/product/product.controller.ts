@@ -10,6 +10,7 @@ import {
   UseInterceptors,
   UploadedFile,
   Query,
+  Res,
 } from "@nestjs/common";
 import { ProductService } from "./product.service";
 import { CreateProductDto } from "./dto/create-product.dto";
@@ -26,6 +27,7 @@ import {
 import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
 import { FilterQueryDto } from "./dto/filterQuery.dto";
 import { Product } from "@prisma/client";
+import { Response } from "express";
 
 @ApiTags("products_service/product")
 @Controller("product")
@@ -151,5 +153,14 @@ export class ProductController {
   @MessagePattern("get_cart_product")
   async getOneProductById(@Payload() productId: string) {
     return this.productService.findOne(productId);
+  }
+
+  // api for health server
+
+  @Get("keepHealthServer")
+  @ApiOperation({ summary: "Keep server from auto sleep" })
+  @ApiBody({ type: FilterQueryDto })
+  async keepHealthServer(@Res() res: Response) {
+    return this.productService.keepHealthServer(res);
   }
 }
