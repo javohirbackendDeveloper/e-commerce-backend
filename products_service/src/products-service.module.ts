@@ -34,7 +34,7 @@ import * as redisStore from "cache-manager-ioredis-yet";
       nonBlocking: true,
       refreshThreshold: 5,
       store: redisStore,
-      url: "rediss://default:36324d3c8f944be898442b5fb132a650@gusc1-careful-oriole-30679.upstash.io:30679",
+      url: process.env.REDIS_URL,
       ttl: 60,
     }),
     CategoryModule,
