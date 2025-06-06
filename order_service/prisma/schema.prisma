@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+    binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+
+
+ enum OrderStatus {
+  Created                // Foydalanuvchi order bergan
+  AwaitingPayment  // To‘lov kutilmoqda (Yetkazib berganda to'lanadi)
+  Paid                     // To‘lov muvaffaqiyatli bo‘lgan
+  Processing         // Operator/kuryer tayinlanmoqda
+  Shipped                // Yetkazib berish yo‘lda
+  Delivered          // Mijozga yetkazildi
+  Cancelled         // Mijoz yoki tizim tomonidan bekor qilingan
+}
+
+enum DeliveringType {
+  Punkt
+  Courier
+}
+
+enum PaymentType  {
+  Card
+  Delivered
+}
+
+
+model Orders {
+  id                     String         @id @default(auto()) @map("_id") @db.ObjectId
+  userId                 String
+  status                 OrderStatus    @default(Created)
+  totalPrice             Float
+  deliveringType         DeliveringType @default(Punkt)
+  
+  paymenttype PaymentType
+
+  locationText           String        
+  locationLongitude      Float?         
+  locationLatitude       Float?
+  punktId                String     
+
+  recipient_firstname    String
+  recipient_lastname     String
+  recipient_phone        String
+  
+  deliverTime            DateTime 
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+}
+
+
+
+
+// CART MODEL
+
+model CartItem {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String
+  quantity Int
+  productId String
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
