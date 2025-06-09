@@ -14,12 +14,12 @@ const common_1 = require("@nestjs/common");
 const prom_client_1 = require("prom-client");
 let MetricsService = class MetricsService {
     constructor() {
-        const existMetric = prom_client_1.register.getSingleMetric("auth_service_http_requests_total");
+        const existMetric = prom_client_1.register.getSingleMetric("products_service_http_requests_total");
         this.httpRequestCounter = existMetric
             ? existMetric
             : new prom_client_1.Counter({
-                name: "auth_service_http_requests_total",
-                help: "Total number of auth service http requests",
+                name: "products_service_http_requests_total",
+                help: "Total number of products service http requests",
                 labelNames: ["method", "route", "status_code"],
             });
     }

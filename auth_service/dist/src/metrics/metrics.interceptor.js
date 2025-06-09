@@ -19,6 +19,8 @@ let MetricsInterceptor = class MetricsInterceptor {
     }
     intercept(context, next) {
         var _a;
+        console.log("MetricsService metodlari:", Object.keys(this.metricsService));
+        console.log("MetricsService instancemi?", this.metricsService instanceof metrics_service_1.MetricsService);
         const request = context.switchToHttp().getRequest();
         const method = request.method;
         const route = ((_a = request.route) === null || _a === void 0 ? void 0 : _a.path) || request.url;

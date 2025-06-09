@@ -63,6 +63,8 @@ export class AdminController {
     @Body() loginAdminDto: AdminLoginDto,
     @Res({ passthrough: true }) response: Response
   ) {
+    console.log({ loginAdminDto });
+
     return this.adminService.login(loginAdminDto, response);
   }
 

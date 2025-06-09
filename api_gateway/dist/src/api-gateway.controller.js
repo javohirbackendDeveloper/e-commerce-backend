@@ -71,6 +71,9 @@ let ApiGatewayController = class ApiGatewayController {
             if (url.startsWith("/orders/order/user")) {
                 isAuthorized = await this.validateToken(req, "User");
             }
+            else if (url.startsWith("/orders/metrics")) {
+                isAuthorized = true;
+            }
             else if (url.startsWith("/orders/order/keepHealthServer")) {
                 isAuthorized = true;
             }
@@ -108,7 +111,6 @@ let ApiGatewayController = class ApiGatewayController {
                 .status(common_1.HttpStatus.NOT_FOUND)
                 .json({ message: "Route not found" });
         }
-        console.log({ isAuthorized });
         if (!isAuthorized) {
             return res
                 .status(common_1.HttpStatus.UNAUTHORIZED)
@@ -159,6 +161,7 @@ let ApiGatewayController = class ApiGatewayController {
             const httpsAgent = new https.Agent({
                 rejectUnauthorized: false,
             });
+            console.log({ url: `${target}${url}` });
             const response = await (0, rxjs_1.lastValueFrom)(this.httpService.request({
                 method,
                 url: `${target}${url}`,

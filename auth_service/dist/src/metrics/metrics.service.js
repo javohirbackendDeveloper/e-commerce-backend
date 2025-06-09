@@ -23,11 +23,11 @@ let MetricsService = class MetricsService {
                 labelNames: ["method", "route", "status_code"],
             });
     }
-    incrementRequest(method, route, statuseCode) {
+    incrementRequest(method, route, statusCode) {
         this.httpRequestCounter.inc({
             method,
             route,
-            statuseCode,
+            status_code: statusCode,
         });
     }
 };

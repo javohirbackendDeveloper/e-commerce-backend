@@ -10,7 +10,6 @@ const return_dto_1 = require("./user/dto/return.dto");
 const return_dto_2 = require("./admin/dto/return.dto");
 const return_dto_3 = require("./punkt-admin/dto/return.dto");
 const tezbuy_packages_2 = require("tezbuy_packages");
-const metrics_interceptor_1 = require("./metrics/metrics.interceptor");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(auth_service_module_1.AuthServiceModule);
     app.setGlobalPrefix("auth");
@@ -56,7 +55,6 @@ async function bootstrap() {
         },
     }));
     app.use(cookieParser());
-    app.useGlobalInterceptors(new metrics_interceptor_1.MetricsInterceptor(app.get(metrics_interceptor_1.MetricsInterceptor)));
     const PORT = process.env.PORT || 4001;
     await app.listen(PORT, () => {
         console.log("auth_service is running on the " + PORT);

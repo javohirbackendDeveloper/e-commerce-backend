@@ -30,6 +30,7 @@ let AdminController = class AdminController {
         return this.adminService.adminRegister(createAdminDto);
     }
     async loginAdmin(loginAdminDto, response) {
+        console.log({ loginAdminDto });
         return this.adminService.login(loginAdminDto, response);
     }
     async getAdmin(id) {

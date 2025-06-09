@@ -24,12 +24,14 @@ export class ApiGatewayController {
 
   async validateToken(req: Request, role: string) {
     const token = req.cookies[`${role.toLowerCase()}_access_token`];
+
     if (!token) return false;
     try {
       const secret = this.configService.get<string>(
         `${role}_ACCESS_TOKEN_SECRET`
       );
       const decoded = jwt.verify(token, secret);
+
       return decoded?.role === role;
     } catch {
       return false;
@@ -65,6 +67,8 @@ export class ApiGatewayController {
     } else if (url.startsWith("/orders")) {
       if (url.startsWith("/orders/order/user")) {
         isAuthorized = await this.validateToken(req, "User");
+      } else if (url.startsWith("/orders/metrics")) {
+        isAuthorized = true;
       } else if (url.startsWith("/orders/order/keepHealthServer")) {
         isAuthorized = true;
       } else if (url.startsWith("/orders/order/punkt")) {
@@ -74,6 +78,7 @@ export class ApiGatewayController {
       } else if (url.startsWith("/orders/cart")) {
         isAuthorized = await this.validateToken(req, "User");
       }
+
       target = process.env.ORDER_SERVICE_URL;
     } else if (url.startsWith("/auth")) {
       if (url.startsWith("/auth/punkt_admin/register")) {
@@ -94,8 +99,6 @@ export class ApiGatewayController {
         .status(HttpStatus.NOT_FOUND)
         .json({ message: "Route not found" });
     }
-
-    console.log({ isAuthorized });
 
     if (!isAuthorized) {
       return res
@@ -168,6 +171,7 @@ export class ApiGatewayController {
       const httpsAgent = new https.Agent({
         rejectUnauthorized: false,
       });
+
       const response = await lastValueFrom(
         this.httpService.request({
           method,

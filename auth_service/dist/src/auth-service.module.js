@@ -15,7 +15,7 @@ const punkt_admin_module_1 = require("./punkt-admin/punkt-admin.module");
 const cloudinary_module_1 = require("./cloudinary/cloudinary.module");
 const tezbuy_packages_1 = require("tezbuy_packages");
 const metrics_module_1 = require("./metrics/metrics.module");
-const metrics_service_1 = require("./metrics/metrics.service");
+const core_1 = require("@nestjs/core");
 const metrics_interceptor_1 = require("./metrics/metrics.interceptor");
 let AuthServiceModule = class AuthServiceModule {
 };
@@ -27,14 +27,20 @@ exports.AuthServiceModule = AuthServiceModule = __decorate([
                 envFilePath: "./apps/auth_service/.env",
                 isGlobal: true,
             }),
+            metrics_module_1.MetricsModule,
             user_module_1.UserModule,
             admin_module_1.AdminModule,
             punkt_admin_module_1.PunktAdminModule,
             cloudinary_module_1.CloudinaryModule,
-            metrics_module_1.MetricsModule,
         ],
         controllers: [],
-        providers: [tezbuy_packages_1.RmqService, metrics_service_1.MetricsService, metrics_interceptor_1.MetricsInterceptor],
+        providers: [
+            tezbuy_packages_1.RmqService,
+            {
+                provide: core_1.APP_INTERCEPTOR,
+                useClass: metrics_interceptor_1.MetricsInterceptor,
+            },
+        ],
     })
 ], AuthServiceModule);
 //# sourceMappingURL=auth-service.module.js.map
