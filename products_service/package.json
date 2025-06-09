@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/src/main.js",
     "build": "npx prisma generate && nest build",
-    "start:prod": "node dist/src/main.js",
+    "start:prod": "pnpm run build && node dist/src/main.js",
     "start:dev": "nest start --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -50,6 +50,7 @@
     "openapi-merge": "^1.3.3",
     "passport": "^0.7.0",
     "prisma": "^6.8.2",
+    "prom-client": "^15.1.3",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "stripe": "^18.2.0",

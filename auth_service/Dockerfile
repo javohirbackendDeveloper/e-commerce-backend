@@ -1,6 +1,5 @@
 FROM node:19.6-alpine
 
-
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
@@ -11,13 +10,14 @@ COPY package.json pnpm-lock.yaml* ./
 
 RUN --mount=type=cache,target=/app/.pnpm \
   pnpm set cache /app/.pnpm && \
-  pnpm i --frozen-lockfile --prod
+  pnpm install --frozen-lockfile
+
+COPY . .
+
+RUN pnpm run build
 
 USER node
 
-COPY --chown=node:node . .
+EXPOSE 4001
 
-EXPOSE 4002
-
-CMD ["pnpm", "run", "start:prod"]
-
+CMD ["node", "dist/src/main.js"]

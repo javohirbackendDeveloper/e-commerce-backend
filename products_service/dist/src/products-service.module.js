@@ -25,6 +25,9 @@ const poster_module_1 = require("./poster/poster.module");
 const dashboard_module_1 = require("./dashboard/dashboard.module");
 const cache_manager_1 = require("@nestjs/cache-manager");
 const redisStore = require("cache-manager-ioredis-yet");
+const metrics_module_1 = require("./metrics/metrics.module");
+const core_1 = require("@nestjs/core");
+const metrics_interceptor_1 = require("./metrics/metrics.interceptor");
 let ProductsServiceModule = class ProductsServiceModule {
 };
 exports.ProductsServiceModule = ProductsServiceModule;
@@ -40,6 +43,7 @@ exports.ProductsServiceModule = ProductsServiceModule = __decorate([
                     RABBIT_MQ_URI: Joi.string().required(),
                 }),
             }),
+            metrics_module_1.MetricsModule,
             tezbuy_packages_1.RmqModule.register({ name: "ORDER_SERVICE" }),
             cache_manager_1.CacheModule.register({
                 isGlobal: true,
@@ -62,7 +66,14 @@ exports.ProductsServiceModule = ProductsServiceModule = __decorate([
             dashboard_module_1.DashboardModule,
         ],
         controllers: [],
-        providers: [prisma_service_1.PrismaService, tezbuy_packages_1.RmqService],
+        providers: [
+            prisma_service_1.PrismaService,
+            tezbuy_packages_1.RmqService,
+            {
+                provide: core_1.APP_INTERCEPTOR,
+                useClass: metrics_interceptor_1.MetricsInterceptor,
+            },
+        ],
     })
 ], ProductsServiceModule);
 //# sourceMappingURL=products-service.module.js.map

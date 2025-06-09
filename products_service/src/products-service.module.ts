@@ -16,6 +16,9 @@ import { PosterModule } from "./poster/poster.module";
 import { DashboardModule } from "./dashboard/dashboard.module";
 import { CacheModule } from "@nestjs/cache-manager";
 import * as redisStore from "cache-manager-ioredis-yet";
+import { MetricsModule } from "./metrics/metrics.module";
+import { APP_INTERCEPTOR } from "@nestjs/core";
+import { MetricsInterceptor } from "./metrics/metrics.interceptor";
 
 @Module({
   imports: [
@@ -28,6 +31,7 @@ import * as redisStore from "cache-manager-ioredis-yet";
         RABBIT_MQ_URI: Joi.string().required(),
       }),
     }),
+    MetricsModule,
     RmqModule.register({ name: "ORDER_SERVICE" }),
     CacheModule.register({
       isGlobal: true,
@@ -50,6 +54,13 @@ import * as redisStore from "cache-manager-ioredis-yet";
     DashboardModule,
   ],
   controllers: [],
-  providers: [PrismaService, RmqService],
+  providers: [
+    PrismaService,
+    RmqService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: MetricsInterceptor,
+    },
+  ],
 })
 export class ProductsServiceModule {}

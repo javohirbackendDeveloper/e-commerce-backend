@@ -4,13 +4,13 @@ const core_1 = require("@nestjs/core");
 const auth_service_module_1 = require("./auth-service.module");
 const common_1 = require("@nestjs/common");
 const cookieParser = require("cookie-parser");
-const all_exceptions_filters_1 = require("./filters/all-exceptions.filters");
 const swagger_1 = require("@nestjs/swagger");
 const tezbuy_packages_1 = require("tezbuy_packages");
 const return_dto_1 = require("./user/dto/return.dto");
 const return_dto_2 = require("./admin/dto/return.dto");
 const return_dto_3 = require("./punkt-admin/dto/return.dto");
 const tezbuy_packages_2 = require("tezbuy_packages");
+const metrics_interceptor_1 = require("./metrics/metrics.interceptor");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(auth_service_module_1.AuthServiceModule);
     app.setGlobalPrefix("auth");
@@ -55,8 +55,8 @@ async function bootstrap() {
             });
         },
     }));
-    app.useGlobalFilters(new all_exceptions_filters_1.AllExceptionsFilter());
     app.use(cookieParser());
+    app.useGlobalInterceptors(new metrics_interceptor_1.MetricsInterceptor(app.get(metrics_interceptor_1.MetricsInterceptor)));
     const PORT = process.env.PORT || 4001;
     await app.listen(PORT, () => {
         console.log("auth_service is running on the " + PORT);

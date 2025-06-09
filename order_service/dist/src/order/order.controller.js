@@ -141,7 +141,7 @@ __decorate([
     (0, common_1.Get)("admin/getMonthOrders"),
     (0, swagger_1.ApiOperation)({ summary: "Bir oylik barcha buyurtmalar (admin)" }),
     (0, swagger_1.ApiQuery)({ name: "month", required: true }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: "Bir oylik buyurtmalar soni" }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: "Bir oylik buyurtmalar ro'yxati" }),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [getOrderByDate_dto_1.GetOrdersByMonth]),

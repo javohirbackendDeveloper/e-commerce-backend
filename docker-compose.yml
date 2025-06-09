@@ -1,0 +1,57 @@
+services:
+  api_gateway:
+    build:
+      context: ./api_gateway
+      dockerfile: /Dockerfile
+    env_file:
+      - ./api_gateway/.env
+    depends_on:
+      - rabbit_mq
+    ports:
+      - "4000:4000"
+  auth_service:
+    build:
+      context: ./auth_service
+      dockerfile: Dockerfile
+    env_file:
+      - ./auth_service/.env
+    depends_on:
+      - rabbit_mq
+    ports:
+      - "4001:4001"
+  order_service:
+    build:
+      context: ./order_service
+      dockerfile: Dockerfile
+    env_file:
+      - ./order_service/.env
+    depends_on:
+      - rabbit_mq
+    ports:
+      - "4002:4002"
+  products_service:
+    build:
+      context: ./products_service
+      dockerfile: Dockerfile
+    env_file:
+      - ./products_service/.env
+    depends_on:
+      - rabbit_mq
+    ports:
+      - "4003:4003"
+  rabbit_mq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"

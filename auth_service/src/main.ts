@@ -2,7 +2,6 @@ import { NestFactory } from "@nestjs/core";
 import { AuthServiceModule } from "./auth-service.module";
 import { BadRequestException, ValidationPipe } from "@nestjs/common";
 import * as cookieParser from "cookie-parser";
-import { AllExceptionsFilter } from "./filters/all-exceptions.filters";
 import { RmqOptions } from "@nestjs/microservices";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { RmqService } from "tezbuy_packages";
@@ -85,7 +84,6 @@ async function bootstrap() {
       },
     })
   );
-  app.useGlobalFilters(new AllExceptionsFilter());
   app.use(cookieParser());
 
   // running http server
