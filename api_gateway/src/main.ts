@@ -25,7 +25,7 @@ async function bootstrap() {
 
   // LISTENING PORT
   await app.listen(PORT, () => {
-    console.log("api-gateway is running at " + PORT);
+    console.log("api-gateway is working at " + PORT);
   });
 }
 bootstrap();
