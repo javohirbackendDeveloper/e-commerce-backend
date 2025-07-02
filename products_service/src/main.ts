@@ -24,7 +24,7 @@ async function bootstrap() {
       "Local Development"
     )
     .addServer(
-      "https://tezbuy-products-service-backend.onrender.com",
+      "https://tezbuy-product-service-backend.onrender.com",
       "Production"
     )
     .build();
