@@ -47,7 +47,7 @@ async function bootstrap() {
   );
 
   //  Microservice va HTTP Server
-  const PORT = process.env.PORT || 3003;
+  const PORT = process.env.PORT || 4003;
   await app.listen(PORT, () => {
     console.log(`Products service is running at ${PORT}`);
     console.log(`Swagger UI: http://localhost:${PORT}/products/api-docs`);
