@@ -5,7 +5,7 @@ export const services = [
   },
   {
     name: "products_service",
-    url: "https://tezbuy-products-service-backend.onrender.com/swagger-json",
+    url: "https://tezbuy-product-service-backend.onrender.com/swagger-json",
   },
   {
     name: "order_service",
