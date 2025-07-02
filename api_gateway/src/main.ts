@@ -19,10 +19,10 @@ async function bootstrap() {
 
   // SWAGGER CONFIGURATION
 
-  if (process.env.NODE_ENV !== "production") {
-    const mergedSwagger = await getMergedSwaggerApis();
-    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(mergedSwagger));
-  }
+  // if (process.env.NODE_ENV !== "production") {
+  const mergedSwagger = await getMergedSwaggerApis();
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(mergedSwagger));
+  // }
 
   // LISTENING PORT
   await app.listen(PORT, () => {
