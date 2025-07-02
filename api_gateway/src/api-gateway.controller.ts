@@ -28,12 +28,15 @@ export class ApiGatewayController {
     if (!token) return false;
     try {
       const secret = this.configService.get<string>(
-        `${role}_ACCESS_TOKEN_SECRET`
+        `${role.toUpperCase()}_ACCESS_TOKEN_SECRET`
       );
+
       const decoded = jwt.verify(token, secret);
 
       return decoded?.role === role;
-    } catch {
+    } catch (err) {
+      console.log({ err });
+
       return false;
     }
   }
