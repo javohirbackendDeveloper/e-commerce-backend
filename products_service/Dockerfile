@@ -20,4 +20,4 @@ USER node
 
 EXPOSE 4003
 
-CMD ["node", "dist/src/main.js"]
+CMD ["node","--max-old-space-size=512", "dist/src/main.js"]
