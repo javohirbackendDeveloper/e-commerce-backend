@@ -120,9 +120,10 @@ export class ApiGatewayController {
       if (token) {
         try {
           const secret = this.configService.get<string>(
-            `${role}_ACCESS_TOKEN_SECRET`
+            `${role.toUpperCase()}_ACCESS_TOKEN_SECRET`
           );
           const decoded = jwt.verify(token, secret) as any;
+
           if (decoded?.id) {
             headers["x_user_id"] = decoded.id;
             headers["x_user_role"] = decoded.role;

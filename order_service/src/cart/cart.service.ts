@@ -38,8 +38,6 @@ export class CartService {
         this.productClient.send("get_cart_product", productId)
       );
 
-      console.log({ product });
-
       if (!product) {
         throw new HttpException(
           "This product not found with this id " + productId,
