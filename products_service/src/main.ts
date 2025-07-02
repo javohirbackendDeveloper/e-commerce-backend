@@ -15,28 +15,26 @@ async function bootstrap() {
   app.setGlobalPrefix("products");
 
   // Swagger configuration
-  if (process.env.NODE_ENV !== "production") {
-    const config = new DocumentBuilder()
-      .setTitle("Products Service API")
-      .setDescription("E-commerce platform products management API")
-      .setVersion("1.0.0")
-      .addServer(
-        `http://localhost:${process.env.PORT || 3003}`,
-        "Local Development"
-      )
-      .addServer(
-        "https://tezbuy-products-service-backend.onrender.com",
-        "Production"
-      )
-      .build();
+  const config = new DocumentBuilder()
+    .setTitle("Products Service API")
+    .setDescription("E-commerce platform products management API")
+    .setVersion("1.0.0")
+    .addServer(
+      `http://localhost:${process.env.PORT || 3003}`,
+      "Local Development"
+    )
+    .addServer(
+      "https://tezbuy-products-service-backend.onrender.com",
+      "Production"
+    )
+    .build();
 
-    const document = SwaggerModule.createDocument(app, config, {
-      ignoreGlobalPrefix: false,
-    });
+  const document = SwaggerModule.createDocument(app, config, {
+    ignoreGlobalPrefix: false,
+  });
 
-    SwaggerModule.setup("api-docs", app, document);
-    app.use("/swagger-json", (_, res) => res.json(document));
-  }
+  SwaggerModule.setup("api-docs", app, document);
+  app.use("/swagger-json", (_, res) => res.json(document));
 
   //  Global Middlewares
   app.use(allowUrls);
