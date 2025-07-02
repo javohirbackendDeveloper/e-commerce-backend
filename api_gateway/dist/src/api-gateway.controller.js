@@ -161,7 +161,6 @@ let ApiGatewayController = class ApiGatewayController {
             const httpsAgent = new https.Agent({
                 rejectUnauthorized: false,
             });
-            console.log({ url: `${target}${url}` });
             const response = await (0, rxjs_1.lastValueFrom)(this.httpService.request({
                 method,
                 url: `${target}${url}`,

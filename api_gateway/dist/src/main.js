@@ -19,7 +19,7 @@ async function bootstrap() {
     const mergedSwagger = await (0, swagger_merge_service_1.getMergedSwaggerApis)();
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(mergedSwagger));
     await app.listen(PORT, () => {
-        console.log("api-gateway is running at " + PORT);
+        console.log("api-gateway is working at " + PORT);
     });
 }
 bootstrap();
