@@ -30,11 +30,12 @@ let ApiGatewayController = class ApiGatewayController {
         if (!token)
             return false;
         try {
-            const secret = this.configService.get(`${role}_ACCESS_TOKEN_SECRET`);
+            const secret = this.configService.get(`${role.toUpperCase()}_ACCESS_TOKEN_SECRET`);
             const decoded = jwt.verify(token, secret);
             return (decoded === null || decoded === void 0 ? void 0 : decoded.role) === role;
         }
-        catch (_a) {
+        catch (err) {
+            console.log({ err });
             return false;
         }
     }
@@ -106,6 +107,10 @@ let ApiGatewayController = class ApiGatewayController {
             target = process.env.STAFF_SERVICE_URL;
             isAuthorized = await this.validateToken(req, "Admin");
         }
+        else if (url.startsWith("/punktbot")) {
+            target = process.env.PUNKTBOT_URL;
+            isAuthorized = true;
+        }
         else {
             return res
                 .status(common_1.HttpStatus.NOT_FOUND)
@@ -123,7 +128,7 @@ let ApiGatewayController = class ApiGatewayController {
             const token = req.cookies[`${role.toLowerCase()}_access_token`];
             if (token) {
                 try {
-                    const secret = this.configService.get(`${role}_ACCESS_TOKEN_SECRET`);
+                    const secret = this.configService.get(`${role.toUpperCase()}_ACCESS_TOKEN_SECRET`);
                     const decoded = jwt.verify(token, secret);
                     if (decoded === null || decoded === void 0 ? void 0 : decoded.id) {
                         headers["x_user_id"] = decoded.id;

@@ -97,6 +97,9 @@ export class ApiGatewayController {
     } else if (url.startsWith("/staff")) {
       target = process.env.STAFF_SERVICE_URL;
       isAuthorized = await this.validateToken(req, "Admin");
+    } else if (url.startsWith("/punktbot")) {
+      target = process.env.PUNKTBOT_URL;
+      isAuthorized = true;
     } else {
       return res
         .status(HttpStatus.NOT_FOUND)

@@ -26,7 +26,7 @@ exports.ApiGatewayModule = ApiGatewayModule = __decorate([
                 throttlers: [
                     {
                         ttl: 10000,
-                        limit: 4,
+                        limit: 30,
                     },
                 ],
             }),
