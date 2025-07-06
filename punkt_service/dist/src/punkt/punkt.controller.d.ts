@@ -1,0 +1,87 @@
+import { PunktService } from "./punkt.service";
+import { CreatePunktDto } from "./dto/create-punkt.dto";
+import { UpdatePunktDto } from "./dto/update-punkt.dto";
+export declare class PunktController {
+    private readonly punktService;
+    constructor(punktService: PunktService);
+    create(createPunktDto: CreatePunktDto): Promise<{
+        name: string;
+        id: string;
+        canTryOn: boolean;
+        isActive: boolean;
+        locationText: string;
+        locationLongitude: number;
+        locationLatitude: number;
+        region: string;
+        city: string;
+        punktAdminId: string;
+        couriers: string[];
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    findAll(): Promise<{
+        name: string;
+        id: string;
+        canTryOn: boolean;
+        isActive: boolean;
+        locationText: string;
+        locationLongitude: number;
+        locationLatitude: number;
+        region: string;
+        city: string;
+        punktAdminId: string;
+        couriers: string[];
+        createdAt: Date;
+        updatedAt: Date;
+    }[]>;
+    findOne(id: string): Promise<{
+        name: string;
+        id: string;
+        canTryOn: boolean;
+        isActive: boolean;
+        locationText: string;
+        locationLongitude: number;
+        locationLatitude: number;
+        region: string;
+        city: string;
+        punktAdminId: string;
+        couriers: string[];
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    update(id: string, updatePunktDto: UpdatePunktDto): string;
+    remove(id: string): string;
+    getOne(id: string): Promise<{
+        name: string;
+        id: string;
+        canTryOn: boolean;
+        isActive: boolean;
+        locationText: string;
+        locationLongitude: number;
+        locationLatitude: number;
+        region: string;
+        city: string;
+        punktAdminId: string;
+        couriers: string[];
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    getAll(): Promise<{
+        name: string;
+        id: string;
+        canTryOn: boolean;
+        isActive: boolean;
+        locationText: string;
+        locationLongitude: number;
+        locationLatitude: number;
+        region: string;
+        city: string;
+        punktAdminId: string;
+        couriers: string[];
+        createdAt: Date;
+        updatedAt: Date;
+    }[]>;
+    getAppliedPunkts(): Promise<any>;
+    getRepairingPunkts(): Promise<any>;
+    changeToRepair(punktId: string): Promise<void>;
+}

@@ -6,20 +6,40 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
+    binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+
 }
+
 
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
+enum Days {
+  DUSHANBA
+  SESHANBA
+  CHORSHANBA
+  PAYSHANBA
+  JUMA
+  SHANBA
+  YAKSHANBA
+}
+model WorkingHours {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  day Days
+  start_time String
+  end_time String
+
+  punktId String @db.ObjectId
+  punkt Punkt @relation(fields: [punktId] , references: [id])
+}
 
 model Punkt {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     // general info
-    workingHours Json
+    workingHours WorkingHours[]
     canTryOn Boolean    @default(false)
     name String
     isActive Boolean @default(true)
@@ -31,7 +51,7 @@ model Punkt {
     region String     
     city   String
 
-
+    
     // staff
     punktAdminId String
     couriers String[] 
@@ -41,3 +61,21 @@ model Punkt {
 
 }
 
+
+
+
+// locations model for punkts
+
+model Province {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String @unique
+  cities City[]
+}
+
+
+model City {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  parenProvinceId String @db.ObjectId
+  parentProvince Province @relation(fields: [parenProvinceId] , references: [id])
+}

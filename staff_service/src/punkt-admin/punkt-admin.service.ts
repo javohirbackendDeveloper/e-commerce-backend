@@ -1,15 +1,28 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { CreatePunktAdminDto } from "./dto/create-punkt-admin.dto";
 import { UpdatePunktAdminDto } from "./dto/update-punkt-admin.dto";
-import { PrismaService } from "apps/staff_service/prisma/prisma.service";
-import { PunktAdmin } from "apps/staff_service/generated/prisma";
+import { PrismaService } from "../../prisma/prisma.service";
+import { PunktAdmin } from "@prisma/client";
 
 @Injectable()
 export class PunktAdminService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(createPunktAdminDto: CreatePunktAdminDto) {
-    const {} = createPunktAdminDto;
+    const { username } = createPunktAdminDto;
+
+    console.log({ createPunktAdminDto });
+
+    const existUsername = await this.prismaService.punktAdmin.findUnique({
+      where: { username },
+    });
+
+    if (existUsername) {
+      throw new HttpException(
+        "This username already exist",
+        HttpStatus.CONFLICT
+      );
+    }
 
     const punktAdmin = await this.prismaService.punktAdmin.create({
       data: { ...createPunktAdminDto },

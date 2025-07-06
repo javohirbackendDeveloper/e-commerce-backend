@@ -76,4 +76,30 @@ export class PunktController {
     console.log("Message came to get_all_punkts");
     return this.punktService.findAll();
   }
+
+  // applied punkts
+
+  @Get("appliedPunkts/getAll")
+  @ApiOperation({ summary: "Get applied punkts" })
+  @ApiResponse({ status: 200, description: "Returns a multi punkts" })
+  getAppliedPunkts() {
+    return this.punktService.getAppliedPunkts();
+  }
+
+  @Get("repairingPunkts/getAll")
+  @ApiOperation({ summary: "Get repairing punkts" })
+  @ApiResponse({ status: 200, description: "Returns a multi punkts" })
+  getRepairingPunkts() {
+    return this.punktService.getRepairingPunkts();
+  }
+
+  @Patch("appliedPunkts/changeToRepair/:id")
+  @ApiOperation({ summary: "Change applied punkt to repairing" })
+  @ApiResponse({
+    status: 200,
+    description: "Change applied punkt to repairing",
+  })
+  changeToRepair(@Param("id") punktId: string) {
+    return this.punktService.changeToRepair(punktId);
+  }
 }

@@ -4,10 +4,12 @@ import { PunktController } from "./punkt.controller";
 import {
   ORDER_SERVICE,
   PUNKT_SERVICE,
+  PUNKTBOT,
   STAFF_SERVICE,
 } from "../constants/services";
-import { PrismaService } from "apps/punkt_service/prisma/prisma.service";
-import { RmqModule } from "libs/common/src";
+import { RmqModule } from "tezbuy_packages";
+import { PrismaService } from "prisma/prisma.service";
+import { HttpModule, HttpService } from "@nestjs/axios";
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { RmqModule } from "libs/common/src";
     }),
     RmqModule.register({ name: ORDER_SERVICE }),
     RmqModule.register({ name: STAFF_SERVICE }),
+    RmqModule.register({ name: PUNKTBOT }),
+    HttpModule,
   ],
   controllers: [PunktController],
   providers: [PunktService, PrismaService],

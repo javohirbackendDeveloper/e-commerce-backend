@@ -39,6 +39,36 @@ services:
       - rabbit_mq
     ports:
       - "4003:4003"
+  punkt_service:
+    build:
+      context: ./punkt_service
+      dockerfile: Dockerfile
+    env_file:
+      - ./punkt_service/.env
+    depends_on:
+      - rabbit_mq
+    ports:
+      - "4004:4004"
+  punktbot:
+    build:
+      context: ./punktBot
+      dockerfile: Dockerfile
+    env_file:
+      - ./punktBot/.env
+    depends_on:
+      - rabbit_mq
+    ports:
+      - "4005:4005"
+  staff_service:
+    build:
+      context: ./staff_service
+      dockerfile: Dockerfile
+    env_file:
+      - ./staff_service/.env
+    depends_on:
+      - rabbit_mq
+    ports:
+      - "4006:4006"
   rabbit_mq:
     image: rabbitmq:3-management
     ports:

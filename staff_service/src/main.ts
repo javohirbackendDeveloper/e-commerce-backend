@@ -1,12 +1,10 @@
-import { NestFactory } from "@nestjs/core";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { StaffServiceModule } from "./staff_service.module";
+import { NestFactory } from "@nestjs/core";
+import { ValidationPipe } from "@nestjs/common";
+import { allowUrls, RmqService } from "tezbuy_packages";
 import { ConfigService } from "@nestjs/config";
 import { RmqOptions } from "@nestjs/microservices";
-import { ValidationPipe } from "@nestjs/common";
-import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { allowUrls } from "libs/common/src/cors_for_backend/middleware";
-import { RmqService } from "libs/common/src";
-
 async function bootstrap() {
   const app = await NestFactory.create(StaffServiceModule);
 
@@ -26,16 +24,15 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.use(allowUrls);
 
+  // LISTENING PORT
+  const configService = app.get(ConfigService);
+  const PORT = configService.get("PORT") || 4006;
+  await app.listen(PORT, () => {
+    console.log("staff_service is running at " + PORT);
+  });
   // microservice connecting
   const rmqService = app.get<RmqService>(RmqService);
   app.connectMicroservice<RmqOptions>(rmqService.getOptions("STAFF_SERVICE"));
   await app.startAllMicroservices();
-
-  // LISTENING PORT
-  const configService = app.get(ConfigService);
-  const PORT = configService.get("PORT") || 3005;
-  await app.listen(PORT, () => {
-    console.log("staff_service is running at " + PORT);
-  });
 }
 bootstrap();

@@ -3,6 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 import { PrismaService } from "prisma/prisma.service";
 import { RmqModule, RmqService } from "tezbuy_packages";
 import { ApplyBotModule } from "./apply-bot/apply-bot.module";
+import { AppliesModule } from './applies/applies.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ApplyBotModule } from "./apply-bot/apply-bot.module";
       name: "PUNKT_SERVICE",
     }),
     ApplyBotModule,
+    AppliesModule,
   ],
   controllers: [],
   providers: [RmqService, PrismaService],

@@ -14,6 +14,10 @@ datasource db {
 }
 
 
+enum AppliedPunktEnum {
+  APPLIED
+  REPAIRING
+}
 model ApplyForPunkt {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String
@@ -23,6 +27,7 @@ model ApplyForPunkt {
   province String
   city String
   telegram_username String
+  status AppliedPunktEnum @default(APPLIED)
 }
 
 

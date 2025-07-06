@@ -12,6 +12,7 @@ const config_1 = require("@nestjs/config");
 const prisma_service_1 = require("../prisma/prisma.service");
 const tezbuy_packages_1 = require("tezbuy_packages");
 const apply_bot_module_1 = require("./apply-bot/apply-bot.module");
+const applies_module_1 = require("./applies/applies.module");
 let StaffServiceModule = class StaffServiceModule {
 };
 exports.StaffServiceModule = StaffServiceModule;
@@ -26,6 +27,7 @@ exports.StaffServiceModule = StaffServiceModule = __decorate([
                 name: "PUNKT_SERVICE",
             }),
             apply_bot_module_1.ApplyBotModule,
+            applies_module_1.AppliesModule,
         ],
         controllers: [],
         providers: [tezbuy_packages_1.RmqService, prisma_service_1.PrismaService],

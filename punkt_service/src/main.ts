@@ -4,8 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { ValidationPipe } from "@nestjs/common";
 import { RmqOptions } from "@nestjs/microservices";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { allowUrls } from "libs/common/src/cors_for_backend/middleware";
-import { RmqService } from "libs/common/src";
+import { allowUrls, RmqService } from "tezbuy_packages";
 
 async function bootstrap() {
   const app = await NestFactory.create(PunktServiceModule);
@@ -26,16 +25,15 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.use(allowUrls);
 
+  // LISTENING PORT
+  const configService = app.get(ConfigService);
+  const PORT = configService.get("PORT") || 4004;
+  await app.listen(PORT, () => {
+    console.log("punkt_service is running at " + PORT);
+  });
   // microservice connecting
   const rmqService = app.get<RmqService>(RmqService);
   app.connectMicroservice<RmqOptions>(rmqService.getOptions("PUNKT_SERVICE"));
   await app.startAllMicroservices();
-
-  // LISTENING PORT
-  const configService = app.get(ConfigService);
-  const PORT = configService.get("PORT") || 3004;
-  await app.listen(PORT, () => {
-    console.log("punkt_service is running at " + PORT);
-  });
 }
 bootstrap();

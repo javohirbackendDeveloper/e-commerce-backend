@@ -2,7 +2,9 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { PunktModule } from "./punkt/punkt.module";
 import { PUNKT_SERVICE } from "./constants/services";
-import { RmqService } from "libs/common/src";
+import { RmqService } from "tezbuy_packages";
+import { LocationModule } from "./location/location.module";
+import { HttpModule } from "@nestjs/axios";
 
 @Module({
   imports: [
@@ -12,6 +14,7 @@ import { RmqService } from "libs/common/src";
     }),
 
     PunktModule,
+    LocationModule,
   ],
   controllers: [],
   providers: [RmqService],

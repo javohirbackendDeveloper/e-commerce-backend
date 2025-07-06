@@ -1,0 +1,9 @@
+export declare enum Days {
+    DUSHANBA = "DUSHANBA",
+    SESHANBA = "SESHANBA",
+    CHORSHANBA = "CHORSHANBA",
+    PAYSHANBA = "PAYSHANBA",
+    JUMA = "JUMA",
+    SHANBA = "SHANBA",
+    YAKSHANBA = "YAKSHANBA"
+}
