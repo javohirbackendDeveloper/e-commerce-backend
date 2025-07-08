@@ -28,7 +28,7 @@ async function bootstrap() {
     const config = new swagger_1.DocumentBuilder()
         .setTitle("auth_service")
         .setVersion("1.0.0")
-        .addServer(`http://localhost:${process.env.PORT || 8080}`, "Local Development")
+        .addServer(`http://localhost:${process.env.PORT || 4001}`, "Local Development")
         .addServer("https://e-commerce-backend-2-xcpq.onrender.com", "Production")
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config, {

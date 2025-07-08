@@ -5,62 +5,84 @@ import { Request } from "express";
 export declare class CommentsController {
     private readonly commentsService;
     constructor(commentsService: CommentsService);
-    create(createCommentDto: CreateCommentDto, req: Request): Promise<{
-        title: string;
-        image: string | null;
+    create(data: CreateCommentDto, file: Express.Multer.File, req: Request): Promise<{
         id: string;
+        title: string;
+        sent_person: string;
+        image: string | null;
+        stars: number;
+        replyMessage: string | null;
         createdAt: Date;
         updatedAt: Date;
         productId: string;
-        sent_person: string;
-        stars: number;
-        replyMessage: string | null;
     }>;
-    findAll(): Promise<{
-        title: string;
-        image: string | null;
+    findAll(req: Request): Promise<{
         id: string;
+        title: string;
+        sent_person: string;
+        image: string | null;
+        stars: number;
+        replyMessage: string | null;
         createdAt: Date;
         updatedAt: Date;
         productId: string;
-        sent_person: string;
-        stars: number;
-        replyMessage: string | null;
     }[]>;
-    findOne(id: string): Promise<{
-        title: string;
-        image: string | null;
+    getPendingComments(req: Request): Promise<({
+        product_images: {
+            id: string;
+            productId: string;
+            imageUrl: string;
+        }[];
+    } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        productId: string;
+        product_name: string;
+        description: string;
+        oldPrice: number;
+        price: number;
+        quantity: number;
+        color: string[];
+        filters: import("@prisma/client/runtime/library").JsonValue;
+        ordered: string[];
+        categoryId: string;
+        brandId: string;
+        product_status: import("@prisma/client").$Enums.ProductStatus;
+    })[]>;
+    findOne(id: string): Promise<{
+        id: string;
+        title: string;
         sent_person: string;
+        image: string | null;
         stars: number;
         replyMessage: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+        productId: string;
     }>;
     update(id: string, updateCommentDto: UpdateCommentDto, req: Request): Promise<{
-        title: string;
-        image: string | null;
         id: string;
+        title: string;
+        sent_person: string;
+        image: string | null;
+        stars: number;
+        replyMessage: string | null;
         createdAt: Date;
         updatedAt: Date;
         productId: string;
-        sent_person: string;
-        stars: number;
-        replyMessage: string | null;
     } | {
         message: string;
     }>;
     remove(id: string, req: Request): Promise<{
-        title: string;
-        image: string | null;
         id: string;
+        title: string;
+        sent_person: string;
+        image: string | null;
+        stars: number;
+        replyMessage: string | null;
         createdAt: Date;
         updatedAt: Date;
         productId: string;
-        sent_person: string;
-        stars: number;
-        replyMessage: string | null;
     } | {
         message: string;
     }>;

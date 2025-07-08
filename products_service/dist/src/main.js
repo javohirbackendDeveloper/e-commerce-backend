@@ -13,7 +13,7 @@ async function bootstrap() {
         .setDescription("E-commerce platform products management API")
         .setVersion("1.0.0")
         .addServer(`http://localhost:${process.env.PORT || 3003}`, "Local Development")
-        .addServer("https://tezbuy-products-service-backend.onrender.com", "Production")
+        .addServer("https://tezbuy-product-service-backend.onrender.com", "Production")
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config, {
         ignoreGlobalPrefix: false,

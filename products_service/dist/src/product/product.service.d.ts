@@ -1,5 +1,5 @@
 import { CreateProductDto } from "./dto/create-product.dto";
-import { UpdateProductDto } from "./dto/update-product.dto";
+import { ReduceQuantity, UpdateProductDto } from "./dto/update-product.dto";
 import { CategoryService } from "../category/category.service";
 import { SearchService } from "../search/search.service";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
@@ -23,34 +23,34 @@ export declare class ProductService {
     create(createProductDto: CreateProductDto): Promise<Product>;
     findAll(page?: number, limit?: number): Promise<Product[]>;
     findOne(id: string): Promise<{
-        description: string;
         id: string;
         product_name: string;
-        price: number;
+        description: string;
         oldPrice: number;
+        price: number;
         quantity: number;
-        categoryId: string;
-        brandId: string;
         color: string[];
         filters: Prisma.JsonValue;
-        product_status: import("@prisma/client").$Enums.ProductStatus;
         ordered: string[];
+        categoryId: string;
+        brandId: string;
+        product_status: import("@prisma/client").$Enums.ProductStatus;
         createdAt: Date;
         updatedAt: Date;
     }>;
     update(id: string, updateProductDto: UpdateProductDto): Promise<{
-        description: string;
         id: string;
         product_name: string;
-        price: number;
+        description: string;
         oldPrice: number;
+        price: number;
         quantity: number;
-        categoryId: string;
-        brandId: string;
         color: string[];
         filters: Prisma.JsonValue;
-        product_status: import("@prisma/client").$Enums.ProductStatus;
         ordered: string[];
+        categoryId: string;
+        brandId: string;
+        product_status: import("@prisma/client").$Enums.ProductStatus;
         createdAt: Date;
         updatedAt: Date;
     }>;
@@ -77,4 +77,20 @@ export declare class ProductService {
     getAllProductsByCategory(categoryId: string, filters: FilterQueryDto, page?: number, limit?: number): Promise<Product[]>;
     getMinMaxPrices(): Promise<ReturnMinMaxDto>;
     keepHealthServer(res: Response): Promise<void>;
+    reduce_quantity(reduceDto: ReduceQuantity[]): Promise<{
+        id: string;
+        product_name: string;
+        description: string;
+        oldPrice: number;
+        price: number;
+        quantity: number;
+        color: string[];
+        filters: Prisma.JsonValue;
+        ordered: string[];
+        categoryId: string;
+        brandId: string;
+        product_status: import("@prisma/client").$Enums.ProductStatus;
+        createdAt: Date;
+        updatedAt: Date;
+    }[]>;
 }

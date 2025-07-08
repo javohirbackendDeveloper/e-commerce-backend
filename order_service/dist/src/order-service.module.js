@@ -13,9 +13,6 @@ const prisma_service_1 = require("../prisma/prisma.service");
 const cart_module_1 = require("./cart/cart.module");
 const order_module_1 = require("./order/order.module");
 const tezbuy_packages_1 = require("tezbuy_packages");
-const core_1 = require("@nestjs/core");
-const metrics_interceptor_1 = require("./metrics/metrics.interceptor");
-const metrics_module_1 = require("./metrics/metrics.module");
 let OrderServiceModule = class OrderServiceModule {
 };
 exports.OrderServiceModule = OrderServiceModule;
@@ -26,19 +23,11 @@ exports.OrderServiceModule = OrderServiceModule = __decorate([
                 envFilePath: "./apps/order_service/.env",
                 isGlobal: true,
             }),
-            metrics_module_1.MetricsModule,
             cart_module_1.CartModule,
             order_module_1.OrderModule,
         ],
         controllers: [],
-        providers: [
-            prisma_service_1.PrismaService,
-            tezbuy_packages_1.RmqService,
-            {
-                provide: core_1.APP_INTERCEPTOR,
-                useClass: metrics_interceptor_1.MetricsInterceptor,
-            },
-        ],
+        providers: [prisma_service_1.PrismaService, tezbuy_packages_1.RmqService],
     })
 ], OrderServiceModule);
 //# sourceMappingURL=order-service.module.js.map

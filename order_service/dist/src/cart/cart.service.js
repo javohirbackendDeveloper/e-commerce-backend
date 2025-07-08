@@ -33,7 +33,6 @@ let CartService = class CartService {
             }
             const { productId, quantity } = createCartItemDto;
             const product = await (0, rxjs_1.firstValueFrom)(this.productClient.send("get_cart_product", productId));
-            console.log({ product });
             if (!product) {
                 throw new common_1.HttpException("This product not found with this id " + productId, common_1.HttpStatus.NOT_FOUND);
             }
@@ -92,40 +91,6 @@ let CartService = class CartService {
             throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    async findAll(req) {
-        try {
-            const userId = req.headers["x_user_id"];
-            if (!userId) {
-                throw new common_1.HttpException("Please login again to continue", common_1.HttpStatus.UNAUTHORIZED);
-            }
-            const cartItems = await this.prismService.cartItem.findMany({
-                where: { userId: userId },
-            });
-            if (!cartItems) {
-                return { cartItemsWithProduct: [], grandPrice: [] };
-            }
-            const cartProductIds = cartItems.map((cart) => cart.productId);
-            let allProducts = [];
-            if (cartProductIds.length > 0) {
-                allProducts = await (0, rxjs_1.firstValueFrom)(this.productClient.send("get_products", cartProductIds));
-            }
-            else {
-                return { cartItemsWithProduct: [], grandPrice: [] };
-            }
-            const productIndexMap = new Map(allProducts.map((product) => [product.id, product]));
-            const cartItemsWithProduct = cartItems.map((item) => {
-                const product = productIndexMap.get(item.productId);
-                const total = product ? item.quantity * product.price : 0;
-                return Object.assign(Object.assign(Object.assign(Object.assign({}, item), { purchasedQuantity: item.quantity || 1 }), product), { cartId: item.id, total });
-            });
-            const grandPrice = cartItemsWithProduct.reduce((acc, item) => acc + (item.total || 0), 0);
-            return { cartItemsWithProduct, grandPrice };
-        }
-        catch (err) {
-            console.log(err);
-            throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
     async update(id, updateCartDto, req) {
         try {
             const userId = req.headers["x_user_id"];
@@ -179,6 +144,62 @@ let CartService = class CartService {
             return this.prismService.cartItem.delete({
                 where: { id },
             });
+        }
+        catch (err) {
+            console.log({ err });
+            throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async findAll(req) {
+        try {
+            const userId = req.headers["x_user_id"];
+            if (!userId) {
+                throw new common_1.HttpException("Please login again to continue", common_1.HttpStatus.UNAUTHORIZED);
+            }
+            const cartItems = await this.prismService.cartItem.findMany({
+                where: { userId: userId },
+            });
+            if (!cartItems) {
+                return { cartItemsWithProduct: [], grandPrice: [] };
+            }
+            const cartProductIds = cartItems.map((cart) => cart.productId);
+            let allProducts = [];
+            if (cartProductIds.length > 0) {
+                allProducts = await (0, rxjs_1.firstValueFrom)(this.productClient.send("get_products", cartProductIds));
+            }
+            else {
+                return { cartItemsWithProduct: [], grandPrice: [] };
+            }
+            const productIndexMap = new Map(allProducts.map((product) => [product.id, product]));
+            const cartItemsWithProduct = cartItems.map((item) => {
+                const product = productIndexMap.get(item.productId);
+                const total = product ? item.quantity * product.price : 0;
+                return Object.assign(Object.assign(Object.assign(Object.assign({}, item), { purchasedQuantity: item.quantity || 1 }), product), { cartId: item.id, total });
+            });
+            const grandPrice = cartItemsWithProduct.reduce((acc, item) => acc + (item.total || 0), 0);
+            return { cartItemsWithProduct, grandPrice };
+        }
+        catch (err) {
+            console.log(err);
+            throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async removeAll(req) {
+        try {
+            const userId = req.headers["x_user_id"];
+            const allCartProducts = await this.findAll(req);
+            const updatedProducts = allCartProducts.cartItemsWithProduct.map((product) => {
+                return {
+                    productId: product.productId,
+                    quantity: product.purchasedQuantity,
+                };
+            });
+            const deletedCartItems = await this.prismService.cartItem.deleteMany({
+                where: {
+                    userId: userId,
+                },
+            });
+            return deletedCartItems;
         }
         catch (err) {
             console.log({ err });

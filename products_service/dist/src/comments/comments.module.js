@@ -11,13 +11,16 @@ const common_1 = require("@nestjs/common");
 const comments_service_1 = require("./comments.service");
 const comments_controller_1 = require("./comments.controller");
 const prisma_service_1 = require("../../prisma/prisma.service");
+const tezbuy_packages_1 = require("tezbuy_packages");
+const cloudinary_service_1 = require("../cloudinary/cloudinary.service");
 let CommentsModule = class CommentsModule {
 };
 exports.CommentsModule = CommentsModule;
 exports.CommentsModule = CommentsModule = __decorate([
     (0, common_1.Module)({
+        imports: [tezbuy_packages_1.RmqModule.register({ name: "ORDER_SERVICE" })],
         controllers: [comments_controller_1.CommentsController],
-        providers: [comments_service_1.CommentsService, prisma_service_1.PrismaService],
+        providers: [comments_service_1.CommentsService, prisma_service_1.PrismaService, cloudinary_service_1.CloudinaryService],
     })
 ], CommentsModule);
 //# sourceMappingURL=comments.module.js.map

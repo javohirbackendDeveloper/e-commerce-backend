@@ -21,6 +21,8 @@ const rxjs_1 = require("rxjs");
 const microservices_1 = require("@nestjs/microservices");
 const prisma_service_1 = require("../../prisma/prisma.service");
 const months_1 = require("../constants/months");
+const helpers_1 = require("@turf/helpers");
+const boolean_point_in_polygon_1 = require("@turf/boolean-point-in-polygon");
 let OrderService = class OrderService {
     constructor(cartService, orderClient, punktClient, staffClient, prismaService) {
         this.cartService = cartService;
@@ -32,7 +34,7 @@ let OrderService = class OrderService {
     async create(createOrderDto, req) {
         var _a;
         try {
-            const { deliveringType, paymenttype, locationLatitude, locationLongitude, recipient_locationText, punktId, recipient_firstname, recipient_lastname, recipient_phone, payment: { amount, card_number, payment_type }, } = createOrderDto;
+            const { deliveringType, paymenttype, locationLatitude, locationLongitude, recipient_locationText, punktId, recipient_firstname, recipient_lastname, recipient_phone, } = createOrderDto;
             const userId = req.headers["x_user_id"];
             if (!userId) {
                 throw new common_1.HttpException("Please login again to continue", common_1.HttpStatus.UNAUTHORIZED);
@@ -54,11 +56,6 @@ let OrderService = class OrderService {
             const { grandPrice, cartItemsWithProduct } = cartProducts;
             if (!cartItemsWithProduct.length) {
                 throw new common_1.HttpException("Please firstly add product to your cart", common_1.HttpStatus.NOT_FOUND);
-            }
-            if (paymenttype === paymentStatus_enum_1.PaymentStatus.Card) {
-                if (amount !== grandPrice) {
-                    throw new common_1.HttpException("Please pay enough money", common_1.HttpStatus.CONFLICT);
-                }
             }
             const orderStatus = paymenttype === paymentStatus_enum_1.PaymentStatus.Card ? "Paid" : "AwaitingPayment";
             const deliverTime = new Date(Date.now() +
@@ -87,7 +84,34 @@ let OrderService = class OrderService {
             const order = await this.prismaService.orders.create({
                 data: Object.assign({}, createData),
             });
+            await this.createOrderItem(req, order.id);
+            const res = await this.cartService.removeAll(req);
+            console.log({ res });
             return order;
+        }
+        catch (err) {
+            throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async createOrderItem(req, orderId) {
+        try {
+            const cartProducts = await this.cartService.findAll(req);
+            const createdOrderItems = [];
+            for (const product of cartProducts.cartItemsWithProduct) {
+                const createdData = await this.prismaService.orderItem.create({
+                    data: {
+                        productId: product.productId,
+                        quantity: product.purchasedQuantity,
+                        userId: product.userId,
+                        orderId,
+                        price: product.price,
+                        product_image: product.product_images[0].imageUrl,
+                        product_name: product.product_name,
+                    },
+                });
+                createdOrderItems.push(createdData);
+            }
+            return createdOrderItems;
         }
         catch (err) {
             throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
@@ -123,6 +147,9 @@ let OrderService = class OrderService {
             const existFilter = await this.existFilters(filterQueries);
             const orders = await this.prismaService.orders.findMany({
                 where: Object.assign({ userId: userId }, existFilter),
+                include: {
+                    orderItems: {},
+                },
             });
             return orders;
         }
@@ -254,14 +281,61 @@ let OrderService = class OrderService {
     toRadians(degrees) {
         return degrees * (Math.PI / 180);
     }
+    async updatOrdersForAdmin(id, updateOrderDto) {
+        try {
+            const { status } = updateOrderDto;
+            const order = await this.prismaService.orders.findUnique({
+                where: { id },
+            });
+            if (!order) {
+                throw new common_1.HttpException("This order not found with this id", common_1.HttpStatus.NOT_FOUND);
+            }
+            const allowedOrderStatus = [
+                "Processing",
+                "Shipped",
+                "Delivered",
+                "Cancelled",
+            ];
+            if (!allowedOrderStatus.includes(status)) {
+                throw new common_1.HttpException("You cannot update this order to this status " + status, common_1.HttpStatus.BAD_REQUEST);
+            }
+            const updatedOrder = await this.prismaService.orders.update({
+                where: { id },
+                data: {
+                    status: status,
+                },
+            });
+            return updatedOrder;
+        }
+        catch (err) {
+            throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     async getAllOrders(filterQueries) {
         try {
             const existFilter = await this.existFilters(filterQueries);
             const orders = await this.prismaService.orders.findMany({
                 where: Object.assign({}, existFilter),
+                include: {
+                    orderItems: true,
+                },
             });
             const sortedOrders = orders.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
             return sortedOrders;
+        }
+        catch (err) {
+            throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async getOneOrder(orderId) {
+        try {
+            const orders = await this.prismaService.orders.findUnique({
+                where: { id: orderId },
+                include: {
+                    orderItems: true,
+                },
+            });
+            return orders;
         }
         catch (err) {
             throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
@@ -321,6 +395,73 @@ let OrderService = class OrderService {
                 }
             }
             return dailyDatas;
+        }
+        catch (err) {
+            throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async addDeliverLocation(deliverLocationDto) {
+        try {
+            const { coordinates } = deliverLocationDto;
+            const allLocations = (await this.prismaService.deliverExistLocations.findMany()).length;
+            const createdLocation = await this.prismaService.deliverExistLocations.create({
+                data: { coordinates, name: `${allLocations + 1}-hudud` },
+            });
+            return createdLocation;
+        }
+        catch (err) {
+            throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async getLocations() {
+        try {
+            const locations = await this.prismaService.deliverExistLocations.findMany();
+            return locations;
+        }
+        catch (err) {
+            throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async isExistInLocation(lat, lng) {
+        try {
+            const allLocations = await this.getLocations();
+            const userPoint = (0, helpers_1.point)([lng, lat]);
+            for (const location of allLocations) {
+                const cords = location.coordinates;
+                const polygon = cords;
+                const inside = (0, boolean_point_in_polygon_1.default)(userPoint, polygon);
+                if (inside) {
+                    return { exists: true, location: location.id };
+                }
+            }
+            return { exists: false, location: "" };
+        }
+        catch (err) {
+            throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async deleteLocation(id) {
+        try {
+            const deletedLocation = await this.prismaService.deliverExistLocations.delete({
+                where: {
+                    id,
+                },
+            });
+            return deletedLocation;
+        }
+        catch (err) {
+            throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async getOrderedProductIds(userId) {
+        try {
+            const userOrders = await this.prismaService.orders.findMany({
+                where: { userId, status: "Delivered" },
+                select: {
+                    orderItems: true,
+                },
+            });
+            return userOrders;
         }
         catch (err) {
             throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);

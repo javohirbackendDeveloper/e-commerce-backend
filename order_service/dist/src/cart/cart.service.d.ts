@@ -11,26 +11,27 @@ export declare class CartService {
     private readonly productClient;
     constructor(prismService: PrismaService, orderClient: ClientProxy, productClient: ClientProxy);
     create(createCartItemDto: CreateCartDto, req: Request): Promise<{
-        productId: string;
-        quantity: number;
         id: string;
         userId: string;
+        quantity: number;
+        productId: string;
         createdAt: Date;
         updatedAt: Date;
     }>;
     getPriceQuantity(req: Request): Promise<ReturnTotals>;
+    update(id: string, updateCartDto: UpdateCartDto, req: Request): Promise<CartItem>;
+    remove(id: string, req: Request): Promise<{
+        id: string;
+        userId: string;
+        quantity: number;
+        productId: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
     findAll(req: Request): Promise<{
         cartItemsWithProduct: any[];
         grandPrice: any;
     }>;
-    update(id: string, updateCartDto: UpdateCartDto, req: Request): Promise<CartItem>;
-    remove(id: string, req: Request): Promise<{
-        productId: string;
-        quantity: number;
-        id: string;
-        userId: string;
-        createdAt: Date;
-        updatedAt: Date;
-    }>;
+    removeAll(req: Request): Promise<import("@prisma/client").Prisma.BatchPayload>;
     payment(req: Request, res: Response): Promise<void>;
 }

@@ -8,6 +8,7 @@ import {
   Req,
   Query,
   Res,
+  Delete,
 } from "@nestjs/common";
 import { Request, Response } from "express";
 import { OrderService } from "./order.service";
@@ -26,6 +27,8 @@ import {
 } from "@nestjs/swagger";
 import { Prisma } from "@prisma/client";
 import { GetOrdersByMonth, GetOrdersByYear } from "./dto/getOrderByDate.dto";
+import { DeliverLocationDto } from "./dto/add-deliverDto";
+import { MessagePattern, Payload } from "@nestjs/microservices";
 
 @ApiTags("Buyurtmalar")
 @Controller("order")
@@ -62,6 +65,15 @@ export class OrderController {
     @Body() dto: UpdateOrderDto
   ) {
     return this.orderService.update(id, dto, req);
+  }
+
+  @Get("user/isExistLocation")
+  @ApiOperation({ summary: "Barcha qo'shilgan hududlarni olish" })
+  @ApiResponse({ status: 200, description: "Qo'shilgan hududlar" })
+  isExistLocation(@Query("lat") lat: string, @Query("lng") lng: string) {
+    const latitude = Number(lat);
+    const langitude = Number(lng);
+    return this.orderService.isExistInLocation(latitude, langitude);
   }
 
   // PUNKT ADMIN
@@ -119,6 +131,55 @@ export class OrderController {
     return this.orderService.getMonthOrders(query);
   }
 
+  @Get("admin/createDeliverLocation")
+  @ApiOperation({ summary: "Barcha qo'shilgan hududlarni olish" })
+  @ApiResponse({ status: 200, description: "Qo'shilgan hududlar" })
+  getLocations() {
+    return this.orderService.getLocations();
+  }
+
+  @Post("admin/createDeliverLocation")
+  @ApiOperation({ summary: "Qaysi hududlarga yetkazishni belgilash" })
+  @ApiResponse({ status: 200, description: "created delivering location" })
+  createDeliverLocation(@Body() createDeliverLocationDto: DeliverLocationDto) {
+    return this.orderService.addDeliverLocation(createDeliverLocationDto);
+  }
+  @Patch("admin/changeOrderStatus/:id")
+  @ApiOperation({ summary: "Buyurtmani yangilash (admin)" })
+  @ApiParam({ name: "id", description: "Buyurtma ID" })
+  @ApiBody({ type: UpdateOrderDtoForPunktAdmin })
+  @ApiResponse({ status: 200, description: "Buyurtma yangilandi" })
+  updateForAdmin(
+    @Param("id") id: string,
+    @Body() dto: UpdateOrderDtoForPunktAdmin
+  ) {
+    return this.orderService.updatOrdersForAdmin(id, dto);
+  }
+  @Delete("admin/deleteLocation/:id")
+  @ApiOperation({ summary: "Hududni o'chirish" })
+  @ApiResponse({ status: 200, description: "Deleted location" })
+  deleteLocation(@Param("id") id: string) {
+    return this.orderService.deleteLocation(id);
+  }
+
+  @Get("admin/:id")
+  @ApiOperation({ summary: "Bitta buyurtma (admin)" })
+  @ApiQuery({ name: "status", required: false })
+  @ApiQuery({ name: "punktId", required: false })
+  @ApiQuery({ name: "userId", required: false })
+  @ApiResponse({ status: 200, description: "Buyurtmalar ro'yxati" })
+  getOneOrder(@Param("id") id: string) {
+    return this.orderService.getOneOrder(id);
+  }
+
+  // apis for rabbitmq
+
+  @MessagePattern("get_ordered_products")
+  async get_ordered_products(@Payload() userId: string) {
+    console.log("Request came to order service");
+
+    return this.orderService.getOrderedProductIds(userId);
+  }
   // api for auto sleep
 
   @Get("keepHealthServer")

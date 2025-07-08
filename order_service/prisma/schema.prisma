@@ -47,7 +47,7 @@ model Orders {
   
   paymenttype PaymentType
 
-  locationText           String        
+  locationText           String?        
   locationLongitude      Float?         
   locationLatitude       Float?
   punktId                String     
@@ -59,6 +59,8 @@ model Orders {
   deliverTime            DateTime 
   createdAt              DateTime       @default(now())
   updatedAt              DateTime       @updatedAt
+
+  orderItems OrderItem[]
 }
 
 
@@ -75,4 +77,33 @@ model CartItem {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// ORDER ITEM MODEL
+
+model OrderItem {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String
+  quantity Int
+  productId String
+  product_name String
+  product_image String
+  price Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orderId String @db.ObjectId
+  order Orders @relation(fields: [orderId] , references: [id])
+}
+
+
+
+model DeliverExistLocations{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  coordinates Json
+
+  createdAt DateTime @default(now())
+
 }

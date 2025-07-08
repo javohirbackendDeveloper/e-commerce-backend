@@ -394,6 +394,24 @@ let ProductService = class ProductService {
     async keepHealthServer(res) {
         res.json({ message: "Hello world from products service" });
     }
+    async reduce_quantity(reduceDto) {
+        try {
+            const updatedProducts = await Promise.all(reduceDto.map((product) => {
+                return this.prismaService.product.update({
+                    where: { id: product.productId },
+                    data: {
+                        quantity: {
+                            decrement: product.quantity,
+                        },
+                    },
+                });
+            }));
+            return updatedProducts;
+        }
+        catch (err) {
+            throw new common_1.HttpException(err.message || "Internal server error", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 };
 exports.ProductService = ProductService;
 exports.ProductService = ProductService = __decorate([

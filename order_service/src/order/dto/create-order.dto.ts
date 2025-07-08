@@ -17,32 +17,6 @@ import { PlasticCard } from "../enums/plastic_card.enum";
 import { Type } from "class-transformer";
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
-class PaymentDto {
-  @ApiProperty({ example: 50000, description: "To'lov miqdori" })
-  @IsNumber()
-  @IsNotEmpty()
-  amount: number;
-
-  @ApiProperty({
-    enum: PlasticCard,
-    example: PlasticCard.Click,
-    description: "Plastik karta turi",
-  })
-  @IsEnum(PlasticCard)
-  @IsNotEmpty()
-  payment_type: string;
-
-  @ApiProperty({
-    example: "8600123412341234",
-    description: "16 raqamli karta raqami",
-  })
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(16)
-  @MaxLength(16)
-  card_number: string;
-}
-
 export class CreateOrderDto {
   @ApiProperty({
     enum: PaymentStatus,
@@ -104,8 +78,8 @@ export class CreateOrderDto {
     description: "Qabul qiluvchining manzili",
   })
   @IsString()
-  @IsNotEmpty()
-  recipient_locationText: string;
+  @IsOptional()
+  recipient_locationText?: string;
 
   @ApiProperty({
     example: "+998901234567",
@@ -114,10 +88,4 @@ export class CreateOrderDto {
   @IsPhoneNumber()
   @IsNotEmpty()
   recipient_phone: string;
-
-  @ApiPropertyOptional({ type: PaymentDto, description: "To'lov ma'lumotlari" })
-  @IsOptional()
-  @ValidateNested()
-  @Type(() => PaymentDto)
-  payment?: PaymentDto;
 }

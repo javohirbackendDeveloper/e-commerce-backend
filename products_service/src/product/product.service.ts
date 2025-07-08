@@ -8,7 +8,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { CreateProductDto } from "./dto/create-product.dto";
-import { UpdateProductDto } from "./dto/update-product.dto";
+import { ReduceQuantity, UpdateProductDto } from "./dto/update-product.dto";
 
 import { ReturnData } from "./interface";
 import { CategoryService } from "../category/category.service";
@@ -562,5 +562,29 @@ export class ProductService {
 
   async keepHealthServer(res: Response) {
     res.json({ message: "Hello world from products service" });
+  }
+
+  async reduce_quantity(reduceDto: ReduceQuantity[]) {
+    try {
+      const updatedProducts = await Promise.all(
+        reduceDto.map((product) => {
+          return this.prismaService.product.update({
+            where: { id: product.productId },
+            data: {
+              quantity: {
+                decrement: product.quantity,
+              },
+            },
+          });
+        })
+      );
+
+      return updatedProducts;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 }

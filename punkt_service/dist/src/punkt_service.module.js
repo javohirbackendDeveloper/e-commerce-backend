@@ -12,6 +12,7 @@ const config_1 = require("@nestjs/config");
 const punkt_module_1 = require("./punkt/punkt.module");
 const tezbuy_packages_1 = require("tezbuy_packages");
 const location_module_1 = require("./location/location.module");
+const user_punkt_module_1 = require("./user_punkt/user_punkt.module");
 let PunktServiceModule = class PunktServiceModule {
 };
 exports.PunktServiceModule = PunktServiceModule;
@@ -24,6 +25,7 @@ exports.PunktServiceModule = PunktServiceModule = __decorate([
             }),
             punkt_module_1.PunktModule,
             location_module_1.LocationModule,
+            user_punkt_module_1.UserPunktModule,
         ],
         controllers: [],
         providers: [tezbuy_packages_1.RmqService],

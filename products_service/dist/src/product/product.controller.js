@@ -64,6 +64,9 @@ let ProductController = class ProductController {
     async filterProducts(filter, products) {
         return this.productService.filterProducts(products, filter);
     }
+    async reduce_products_quantity(updatedProducts) {
+        return this.productService.reduce_quantity(updatedProducts);
+    }
     async getProductByIds(productIds) {
         return this.productService.getProductsByIds(productIds);
     }
@@ -199,6 +202,13 @@ __decorate([
     __metadata("design:paramtypes", [filterQuery_dto_1.FilterQueryDto, Array]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "filterProducts", null);
+__decorate([
+    (0, microservices_1.MessagePattern)("reduce_quantity"),
+    __param(0, (0, microservices_1.Payload)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Array]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "reduce_products_quantity", null);
 __decorate([
     (0, microservices_1.MessagePattern)("get_products"),
     __param(0, (0, microservices_1.Payload)()),

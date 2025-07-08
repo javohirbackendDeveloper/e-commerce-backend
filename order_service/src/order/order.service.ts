@@ -11,10 +11,14 @@ import { Request, Response } from "express";
 import { firstValueFrom } from "rxjs";
 import { ClientProxy } from "@nestjs/microservices";
 import { PrismaService } from "prisma/prisma.service";
-import { Orders, Prisma } from "@prisma/client";
+import { OrderItem, Orders, OrderStatus, Prisma } from "@prisma/client";
 import { GetOrdersByMonth, GetOrdersByYear } from "./dto/getOrderByDate.dto";
 import { MonthlyDataDto } from "./dto/monthlyData.dto";
 import { months } from "src/constants/months";
+import { DeliverLocationDto } from "./dto/add-deliverDto";
+import { point } from "@turf/helpers";
+import { Feature, Point, Polygon } from "geojson";
+import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 
 @Injectable()
 export class OrderService {
@@ -40,7 +44,6 @@ export class OrderService {
         recipient_firstname,
         recipient_lastname,
         recipient_phone,
-        payment: { amount, card_number, payment_type },
       } = createOrderDto;
 
       // CHECKING USER
@@ -70,6 +73,7 @@ export class OrderService {
             HttpStatus.BAD_REQUEST
           );
         }
+
         const punkt = await firstValueFrom(
           this.punktClient.send("get_one_punkt", punktId)
         );
@@ -91,16 +95,6 @@ export class OrderService {
           "Please firstly add product to your cart",
           HttpStatus.NOT_FOUND
         );
-      }
-
-      // CHECKING PAYMENT TYPE
-      if (paymenttype === PaymentStatus.Card) {
-        if (amount !== grandPrice) {
-          throw new HttpException(
-            "Please pay enough money",
-            HttpStatus.CONFLICT
-          );
-        }
       }
 
       // preparing order data to add
@@ -144,8 +138,41 @@ export class OrderService {
         },
       });
 
+      await this.createOrderItem(req, order.id);
+      const res = await this.cartService.removeAll(req);
+
+      console.log({ res });
+
       // There must be reporter that reports to get_punkt_orders api of punkt_service when created new order
       return order;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  async createOrderItem(req: Request, orderId: string): Promise<OrderItem[]> {
+    try {
+      const cartProducts = await this.cartService.findAll(req);
+      const createdOrderItems = [];
+      for (const product of cartProducts.cartItemsWithProduct) {
+        const createdData = await this.prismaService.orderItem.create({
+          data: {
+            productId: product.productId,
+            quantity: product.purchasedQuantity,
+            userId: product.userId,
+            orderId,
+            price: product.price,
+            product_image: product.product_images[0].imageUrl,
+            product_name: product.product_name,
+          },
+        });
+        createdOrderItems.push(createdData);
+      }
+
+      return createdOrderItems;
     } catch (err) {
       throw new HttpException(
         err.message || "Internal server error",
@@ -206,6 +233,9 @@ export class OrderService {
 
       const orders = await this.prismaService.orders.findMany({
         where: { userId: userId as string, ...existFilter },
+        include: {
+          orderItems: {},
+        },
       });
 
       return orders;
@@ -444,11 +474,61 @@ export class OrderService {
 
   // APIS FOR ADMINS
 
+  async updatOrdersForAdmin(
+    id: string,
+    updateOrderDto: UpdateOrderDtoForPunktAdmin
+  ): Promise<Orders> {
+    try {
+      const { status } = updateOrderDto;
+
+      const order = await this.prismaService.orders.findUnique({
+        where: { id },
+      });
+
+      if (!order) {
+        throw new HttpException(
+          "This order not found with this id",
+          HttpStatus.NOT_FOUND
+        );
+      }
+
+      const allowedOrderStatus = [
+        "Processing",
+        "Shipped",
+        "Delivered",
+        "Cancelled",
+      ];
+
+      if (!allowedOrderStatus.includes(status)) {
+        throw new HttpException(
+          "You cannot update this order to this status " + status,
+          HttpStatus.BAD_REQUEST
+        );
+      }
+
+      const updatedOrder = await this.prismaService.orders.update({
+        where: { id },
+        data: {
+          status: status as OrderStatus,
+        },
+      });
+
+      return updatedOrder;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
   async getAllOrders(filterQueries: Prisma.OrdersWhereInput) {
     try {
       const existFilter = await this.existFilters(filterQueries);
       const orders = await this.prismaService.orders.findMany({
         where: { ...existFilter },
+        include: {
+          orderItems: true,
+        },
       });
 
       const sortedOrders = orders.sort(
@@ -456,6 +536,24 @@ export class OrderService {
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
       );
       return sortedOrders;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  async getOneOrder(orderId: string) {
+    try {
+      const orders = await this.prismaService.orders.findUnique({
+        where: { id: orderId },
+        include: {
+          orderItems: true,
+        },
+      });
+
+      return orders;
     } catch (err) {
       throw new HttpException(
         err.message || "Internal server error",
@@ -543,6 +641,103 @@ export class OrderService {
     }
   }
 
+  async addDeliverLocation(deliverLocationDto: DeliverLocationDto) {
+    try {
+      const { coordinates } = deliverLocationDto;
+
+      const allLocations = (
+        await this.prismaService.deliverExistLocations.findMany()
+      ).length;
+      const createdLocation =
+        await this.prismaService.deliverExistLocations.create({
+          data: { coordinates, name: `${allLocations + 1}-hudud` },
+        });
+
+      return createdLocation;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  async getLocations() {
+    try {
+      const locations =
+        await this.prismaService.deliverExistLocations.findMany();
+
+      return locations;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  async isExistInLocation(lat: number, lng: number) {
+    try {
+      const allLocations = await this.getLocations();
+
+      const userPoint = point([lng, lat]);
+      for (const location of allLocations) {
+        const cords = location.coordinates;
+
+        const polygon: Polygon = cords;
+
+        const inside = booleanPointInPolygon(userPoint, polygon);
+        if (inside) {
+          return { exists: true, location: location.id };
+        }
+      }
+
+      return { exists: false, location: "" };
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  async deleteLocation(id: string) {
+    try {
+      const deletedLocation =
+        await this.prismaService.deliverExistLocations.delete({
+          where: {
+            id,
+          },
+        });
+
+      return deletedLocation;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  // apis for rabbitmq
+
+  async getOrderedProductIds(userId: string) {
+    try {
+      const userOrders = await this.prismaService.orders.findMany({
+        where: { userId, status: "Delivered" },
+        select: {
+          orderItems: true,
+        },
+      });
+
+      return userOrders;
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        err.statusCode || HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
   // api for keeping auto sleep
   async keepHealthServer(res: Response) {
     res.json({ message: "Hello world from order service" });

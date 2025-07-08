@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateProductDto = void 0;
+exports.ReduceQuantity = exports.UpdateProductDto = void 0;
 const mapped_types_1 = require("@nestjs/mapped-types");
 const create_product_dto_1 = require("./create-product.dto");
 const class_validator_1 = require("class-validator");
@@ -102,4 +102,7 @@ __decorate([
     (0, class_validator_1.IsObject)(),
     __metadata("design:type", Object)
 ], UpdateProductDto.prototype, "filters", void 0);
+class ReduceQuantity {
+}
+exports.ReduceQuantity = ReduceQuantity;
 //# sourceMappingURL=update-product.dto.js.map

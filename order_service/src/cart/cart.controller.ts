@@ -70,6 +70,16 @@ export class CartController {
     return this.cartService.update(id, dto, req);
   }
 
+  @Delete("removeAll")
+  @ApiOperation({ summary: "Delete a cart items" })
+  @ApiParam({ name: "id", description: "Cart items ID" })
+  @ApiResponse({ status: 200, description: "Cart items removed" })
+  @ApiResponse({ status: 401, description: "Unauthorized" })
+  @ApiResponse({ status: 404, description: "Item not found" })
+  removeAll(@Req() req: Request) {
+    return this.cartService.removeAll(req);
+  }
+
   @Delete(":id")
   @ApiOperation({ summary: "Delete a cart item" })
   @ApiParam({ name: "id", description: "Cart item ID" })

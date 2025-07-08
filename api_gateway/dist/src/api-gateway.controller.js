@@ -100,8 +100,14 @@ let ApiGatewayController = class ApiGatewayController {
             }
         }
         else if (url.startsWith("/punkts")) {
-            target = process.env.PUNKT_SERVICE_URL;
-            isAuthorized = await this.validateToken(req, "Admin");
+            if (url.startsWith("/punkts/user-punkt")) {
+                target = process.env.PUNKT_SERVICE_URL;
+                isAuthorized = await this.validateToken(req, "User");
+            }
+            else {
+                target = process.env.PUNKT_SERVICE_URL;
+                isAuthorized = await this.validateToken(req, "Admin");
+            }
         }
         else if (url.startsWith("/staff")) {
             target = process.env.STAFF_SERVICE_URL;

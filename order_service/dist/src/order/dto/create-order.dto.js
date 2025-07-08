@@ -13,38 +13,7 @@ exports.CreateOrderDto = void 0;
 const class_validator_1 = require("class-validator");
 const deliverType_enum_1 = require("../enums/deliverType.enum");
 const paymentStatus_enum_1 = require("../enums/paymentStatus.enum");
-const plastic_card_enum_1 = require("../enums/plastic_card.enum");
-const class_transformer_1 = require("class-transformer");
 const swagger_1 = require("@nestjs/swagger");
-class PaymentDto {
-}
-__decorate([
-    (0, swagger_1.ApiProperty)({ example: 50000, description: "To'lov miqdori" }),
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Number)
-], PaymentDto.prototype, "amount", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({
-        enum: plastic_card_enum_1.PlasticCard,
-        example: plastic_card_enum_1.PlasticCard.Click,
-        description: "Plastik karta turi",
-    }),
-    (0, class_validator_1.IsEnum)(plastic_card_enum_1.PlasticCard),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], PaymentDto.prototype, "payment_type", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({
-        example: "8600123412341234",
-        description: "16 raqamli karta raqami",
-    }),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.MinLength)(16),
-    (0, class_validator_1.MaxLength)(16),
-    __metadata("design:type", String)
-], PaymentDto.prototype, "card_number", void 0);
 class CreateOrderDto {
 }
 exports.CreateOrderDto = CreateOrderDto;
@@ -116,7 +85,7 @@ __decorate([
         description: "Qabul qiluvchining manzili",
     }),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateOrderDto.prototype, "recipient_locationText", void 0);
 __decorate([
@@ -128,11 +97,4 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateOrderDto.prototype, "recipient_phone", void 0);
-__decorate([
-    (0, swagger_1.ApiPropertyOptional)({ type: PaymentDto, description: "To'lov ma'lumotlari" }),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.ValidateNested)(),
-    (0, class_transformer_1.Type)(() => PaymentDto),
-    __metadata("design:type", PaymentDto)
-], CreateOrderDto.prototype, "payment", void 0);
 //# sourceMappingURL=create-order.dto.js.map

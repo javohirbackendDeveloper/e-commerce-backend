@@ -5,6 +5,7 @@ import { PUNKT_SERVICE } from "./constants/services";
 import { RmqService } from "tezbuy_packages";
 import { LocationModule } from "./location/location.module";
 import { HttpModule } from "@nestjs/axios";
+import { UserPunktModule } from './user_punkt/user_punkt.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { HttpModule } from "@nestjs/axios";
 
     PunktModule,
     LocationModule,
+    UserPunktModule,
   ],
   controllers: [],
   providers: [RmqService],

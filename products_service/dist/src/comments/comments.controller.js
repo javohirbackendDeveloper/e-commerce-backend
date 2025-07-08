@@ -18,15 +18,19 @@ const comments_service_1 = require("./comments.service");
 const create_comment_dto_1 = require("./dto/create-comment.dto");
 const update_comment_dto_1 = require("./dto/update-comment.dto");
 const swagger_1 = require("@nestjs/swagger");
+const platform_express_1 = require("@nestjs/platform-express");
 let CommentsController = class CommentsController {
     constructor(commentsService) {
         this.commentsService = commentsService;
     }
-    create(createCommentDto, req) {
-        return this.commentsService.create(createCommentDto, req);
+    create(data, file, req) {
+        return this.commentsService.create(data, file, req);
     }
-    findAll() {
-        return this.commentsService.findAll();
+    findAll(req) {
+        return this.commentsService.findAll(req);
+    }
+    getPendingComments(req) {
+        return this.commentsService.getPendingComments(req);
     }
     findOne(id) {
         return this.commentsService.findOne(id);
@@ -41,23 +45,39 @@ let CommentsController = class CommentsController {
 exports.CommentsController = CommentsController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)("image")),
+    (0, swagger_1.ApiConsumes)("multipart/form-data"),
     (0, swagger_1.ApiOperation)({ summary: "Yangi kommentariya yaratish" }),
     (0, swagger_1.ApiBody)({ type: create_comment_dto_1.CreateCommentDto }),
     (0, swagger_1.ApiResponse)({ status: 201, description: "Kommentariya yaratildi" }),
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Req)()),
+    __param(1, (0, common_1.UploadedFile)()),
+    __param(2, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_comment_dto_1.CreateCommentDto, Object]),
+    __metadata("design:paramtypes", [create_comment_dto_1.CreateCommentDto, Object, Object]),
     __metadata("design:returntype", void 0)
 ], CommentsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
     (0, swagger_1.ApiOperation)({ summary: "Barcha kommentariyalarni olish" }),
     (0, swagger_1.ApiResponse)({ status: 200, description: "Kommentariyalar ro'yxati" }),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], CommentsController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)("getPendingComments"),
+    (0, swagger_1.ApiOperation)({ summary: "Barcha kutayotgan kommentariyalarni olish" }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: "Kutayotgan kommentariyalar ro'yxati",
+    }),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], CommentsController.prototype, "getPendingComments", null);
 __decorate([
     (0, common_1.Get)(":id"),
     (0, swagger_1.ApiOperation)({ summary: "ID bo'yicha kommentariyani olish" }),

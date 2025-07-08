@@ -4,6 +4,7 @@ import { CreateOrderDto } from "./dto/create-order.dto";
 import { UpdateOrderDto, UpdateOrderDtoForPunktAdmin } from "./dto/update-order.dto";
 import { Prisma } from "@prisma/client";
 import { GetOrdersByMonth, GetOrdersByYear } from "./dto/getOrderByDate.dto";
+import { DeliverLocationDto } from "./dto/add-deliverDto";
 export declare class OrderController {
     private readonly orderService;
     constructor(orderService: OrderService);
@@ -14,7 +15,7 @@ export declare class OrderController {
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
         paymenttype: import("@prisma/client").$Enums.PaymentType;
-        locationText: string;
+        locationText: string | null;
         locationLongitude: number | null;
         locationLatitude: number | null;
         punktId: string;
@@ -32,7 +33,7 @@ export declare class OrderController {
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
         paymenttype: import("@prisma/client").$Enums.PaymentType;
-        locationText: string;
+        locationText: string | null;
         locationLongitude: number | null;
         locationLatitude: number | null;
         punktId: string;
@@ -50,7 +51,7 @@ export declare class OrderController {
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
         paymenttype: import("@prisma/client").$Enums.PaymentType;
-        locationText: string;
+        locationText: string | null;
         locationLongitude: number | null;
         locationLatitude: number | null;
         punktId: string;
@@ -61,6 +62,10 @@ export declare class OrderController {
         createdAt: Date;
         updatedAt: Date;
     }>;
+    isExistLocation(lat: string, lng: string): Promise<{
+        exists: boolean;
+        location: string;
+    }>;
     findPunktOrders(query: Prisma.OrdersWhereInput, req: Request): Promise<{
         id: string;
         userId: string;
@@ -68,7 +73,7 @@ export declare class OrderController {
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
         paymenttype: import("@prisma/client").$Enums.PaymentType;
-        locationText: string;
+        locationText: string | null;
         locationLongitude: number | null;
         locationLatitude: number | null;
         punktId: string;
@@ -86,7 +91,7 @@ export declare class OrderController {
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
         paymenttype: import("@prisma/client").$Enums.PaymentType;
-        locationText: string;
+        locationText: string | null;
         locationLongitude: number | null;
         locationLatitude: number | null;
         punktId: string;
@@ -97,14 +102,27 @@ export declare class OrderController {
         createdAt: Date;
         updatedAt: Date;
     }>;
-    getAllOrders(query: Prisma.OrdersWhereInput, req: Request): Promise<{
+    getAllOrders(query: Prisma.OrdersWhereInput, req: Request): Promise<({
+        orderItems: {
+            id: string;
+            userId: string;
+            createdAt: Date;
+            updatedAt: Date;
+            quantity: number;
+            productId: string;
+            product_name: string;
+            product_image: string;
+            price: number;
+            orderId: string;
+        }[];
+    } & {
         id: string;
         userId: string;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
         paymenttype: import("@prisma/client").$Enums.PaymentType;
-        locationText: string;
+        locationText: string | null;
         locationLongitude: number | null;
         locationLatitude: number | null;
         punktId: string;
@@ -114,8 +132,89 @@ export declare class OrderController {
         deliverTime: Date;
         createdAt: Date;
         updatedAt: Date;
-    }[]>;
+    })[]>;
     getYearOrders(query: GetOrdersByYear): Promise<import("./dto/monthlyData.dto").MonthlyDataDto>;
     getMonthOrders(query: GetOrdersByMonth): Promise<Record<string, number>>;
+    getLocations(): Promise<{
+        id: string;
+        createdAt: Date;
+        name: string;
+        coordinates: Prisma.JsonValue;
+    }[]>;
+    createDeliverLocation(createDeliverLocationDto: DeliverLocationDto): Promise<{
+        id: string;
+        createdAt: Date;
+        name: string;
+        coordinates: Prisma.JsonValue;
+    }>;
+    updateForAdmin(id: string, dto: UpdateOrderDtoForPunktAdmin): Promise<{
+        id: string;
+        userId: string;
+        status: import("@prisma/client").$Enums.OrderStatus;
+        totalPrice: number;
+        deliveringType: import("@prisma/client").$Enums.DeliveringType;
+        paymenttype: import("@prisma/client").$Enums.PaymentType;
+        locationText: string | null;
+        locationLongitude: number | null;
+        locationLatitude: number | null;
+        punktId: string;
+        recipient_firstname: string;
+        recipient_lastname: string;
+        recipient_phone: string;
+        deliverTime: Date;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    deleteLocation(id: string): Promise<{
+        id: string;
+        createdAt: Date;
+        name: string;
+        coordinates: Prisma.JsonValue;
+    }>;
+    getOneOrder(id: string): Promise<{
+        orderItems: {
+            id: string;
+            userId: string;
+            createdAt: Date;
+            updatedAt: Date;
+            quantity: number;
+            productId: string;
+            product_name: string;
+            product_image: string;
+            price: number;
+            orderId: string;
+        }[];
+    } & {
+        id: string;
+        userId: string;
+        status: import("@prisma/client").$Enums.OrderStatus;
+        totalPrice: number;
+        deliveringType: import("@prisma/client").$Enums.DeliveringType;
+        paymenttype: import("@prisma/client").$Enums.PaymentType;
+        locationText: string | null;
+        locationLongitude: number | null;
+        locationLatitude: number | null;
+        punktId: string;
+        recipient_firstname: string;
+        recipient_lastname: string;
+        recipient_phone: string;
+        deliverTime: Date;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    get_ordered_products(userId: string): Promise<{
+        orderItems: {
+            id: string;
+            userId: string;
+            createdAt: Date;
+            updatedAt: Date;
+            quantity: number;
+            productId: string;
+            product_name: string;
+            product_image: string;
+            price: number;
+            orderId: string;
+        }[];
+    }[]>;
     keepHealthServer(res: Response): Promise<void>;
 }

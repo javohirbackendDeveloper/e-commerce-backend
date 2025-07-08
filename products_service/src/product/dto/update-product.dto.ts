@@ -88,3 +88,8 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
   @IsObject()
   filters?: Record<string, string>;
 }
+
+export class ReduceQuantity {
+  quantity: number;
+  productId: string;
+}

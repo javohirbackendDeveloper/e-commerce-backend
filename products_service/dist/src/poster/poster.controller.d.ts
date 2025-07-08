@@ -6,26 +6,26 @@ export declare class PosterController {
     private readonly posterService;
     constructor(posterService: PosterService);
     create(data: CreatePosterDto, file: Express.Multer.File): Promise<{
-        title: string;
         id: string;
+        title: string;
         img: string;
         sectionId: string | null;
     }>;
     findAll(): Promise<{
-        title: string;
         id: string;
+        title: string;
         img: string;
         sectionId: string | null;
     }[]>;
     findOne(id: string): Promise<{
-        title: string;
         id: string;
+        title: string;
         img: string;
         sectionId: string | null;
     }>;
     remove(id: string): Promise<{
-        title: string;
         id: string;
+        title: string;
         img: string;
         sectionId: string | null;
     }>;

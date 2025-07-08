@@ -29,11 +29,6 @@ __decorate([
         example: "https://example.com/image.png",
         description: "Rasm manzili",
     }),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], CreateCommentDto.prototype, "image", void 0);
-__decorate([
     (0, swagger_1.ApiProperty)({
         example: "60d21b4667d0d8992e610c85",
         description: "Mahsulot IDsi (MongoDB ObjectId)",

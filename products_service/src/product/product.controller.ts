@@ -14,8 +14,14 @@ import {
 } from "@nestjs/common";
 import { ProductService } from "./product.service";
 import { CreateProductDto } from "./dto/create-product.dto";
-import { UpdateProductDto } from "./dto/update-product.dto";
-import { EventPattern, MessagePattern, Payload } from "@nestjs/microservices";
+import { ReduceQuantity, UpdateProductDto } from "./dto/update-product.dto";
+import {
+  Ctx,
+  EventPattern,
+  MessagePattern,
+  Payload,
+  RmqContext,
+} from "@nestjs/microservices";
 import {
   ApiTags,
   ApiOperation,
@@ -153,6 +159,13 @@ export class ProductController {
   }
 
   // APIS WITH RABBITMQ
+
+  @MessagePattern("reduce_quantity")
+  async reduce_products_quantity(@Payload() updatedProducts: ReduceQuantity[]) {
+    // console.log("request came to reduce quantity", updatedProducts);
+
+    return this.productService.reduce_quantity(updatedProducts);
+  }
 
   @MessagePattern("get_products")
   async getProductByIds(@Payload() productIds: string[]) {

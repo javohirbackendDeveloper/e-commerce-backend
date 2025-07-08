@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   Req,
+  UploadedFile,
+  UseInterceptors,
 } from "@nestjs/common";
 import { CommentsService } from "./comments.service";
 import { CreateCommentDto } from "./dto/create-comment.dto";
@@ -18,7 +20,9 @@ import {
   ApiResponse,
   ApiBody,
   ApiParam,
+  ApiConsumes,
 } from "@nestjs/swagger";
+import { FileInterceptor } from "@nestjs/platform-express";
 
 @ApiTags("products_service/comments")
 @Controller("comments")
@@ -26,18 +30,33 @@ export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Post()
+  @UseInterceptors(FileInterceptor("image"))
+  @ApiConsumes("multipart/form-data")
   @ApiOperation({ summary: "Yangi kommentariya yaratish" })
   @ApiBody({ type: CreateCommentDto })
   @ApiResponse({ status: 201, description: "Kommentariya yaratildi" })
-  create(@Body() createCommentDto: CreateCommentDto, @Req() req: Request) {
-    return this.commentsService.create(createCommentDto, req);
+  create(
+    @Body() data: CreateCommentDto,
+    @UploadedFile() file: Express.Multer.File,
+    @Req() req: Request
+  ) {
+    return this.commentsService.create(data, file, req);
   }
 
   @Get()
   @ApiOperation({ summary: "Barcha kommentariyalarni olish" })
   @ApiResponse({ status: 200, description: "Kommentariyalar ro'yxati" })
-  findAll() {
-    return this.commentsService.findAll();
+  findAll(@Req() req: Request) {
+    return this.commentsService.findAll(req);
+  }
+  @Get("getPendingComments")
+  @ApiOperation({ summary: "Barcha kutayotgan kommentariyalarni olish" })
+  @ApiResponse({
+    status: 200,
+    description: "Kutayotgan kommentariyalar ro'yxati",
+  })
+  getPendingComments(@Req() req: Request) {
+    return this.commentsService.getPendingComments(req);
   }
 
   @Get(":id")

@@ -34,6 +34,9 @@ let CartController = class CartController {
     update(req, id, dto) {
         return this.cartService.update(id, dto, req);
     }
+    removeAll(req) {
+        return this.cartService.removeAll(req);
+    }
     remove(req, id) {
         return this.cartService.remove(id, req);
     }
@@ -91,6 +94,18 @@ __decorate([
     __metadata("design:paramtypes", [Object, String, update_cart_dto_1.UpdateCartDto]),
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "update", null);
+__decorate([
+    (0, common_1.Delete)("removeAll"),
+    (0, swagger_1.ApiOperation)({ summary: "Delete a cart items" }),
+    (0, swagger_1.ApiParam)({ name: "id", description: "Cart items ID" }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: "Cart items removed" }),
+    (0, swagger_1.ApiResponse)({ status: 401, description: "Unauthorized" }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: "Item not found" }),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], CartController.prototype, "removeAll", null);
 __decorate([
     (0, common_1.Delete)(":id"),
     (0, swagger_1.ApiOperation)({ summary: "Delete a cart item" }),

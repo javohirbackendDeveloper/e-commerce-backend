@@ -52,7 +52,11 @@ let LikedProductService = class LikedProductService {
             where: { userId: userId },
             orderBy: { createdAt: "desc" },
             include: {
-                product: true,
+                product: {
+                    include: {
+                        product_images: true,
+                    },
+                },
             },
         });
     }

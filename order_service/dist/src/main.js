@@ -9,6 +9,10 @@ const tezbuy_packages_1 = require("tezbuy_packages");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(order_service_module_1.OrderServiceModule);
     app.setGlobalPrefix("orders");
+    app.enableCors({
+        origin: ["http://localhost:5173", "http://localhost:5174"],
+        credentials: true,
+    });
     const config = new swagger_1.DocumentBuilder()
         .setTitle("order_service")
         .setVersion("1.0.0")
@@ -31,6 +35,9 @@ async function bootstrap() {
     await app.listen(PORT, () => {
         console.log("Order service is running at " + PORT);
     });
+    const rmqService = app.get(tezbuy_packages_1.RmqService);
+    app.connectMicroservice(rmqService.getOptions("ORDER_SERVICE"));
+    await app.startAllMicroservices();
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

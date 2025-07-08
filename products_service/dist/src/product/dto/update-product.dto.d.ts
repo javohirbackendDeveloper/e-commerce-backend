@@ -11,4 +11,8 @@ export declare class UpdateProductDto extends UpdateProductDto_base {
     color?: string[];
     filters?: Record<string, string>;
 }
+export declare class ReduceQuantity {
+    quantity: number;
+    productId: string;
+}
 export {};

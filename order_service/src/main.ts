@@ -3,13 +3,18 @@ import { ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { OrderServiceModule } from "./order-service.module";
-import { ClientProxy } from "@nestjs/microservices";
+import { ClientProxy, RmqOptions } from "@nestjs/microservices";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { allowUrls } from "tezbuy_packages";
+import { allowUrls, RmqService } from "tezbuy_packages";
 async function bootstrap() {
   const app = await NestFactory.create(OrderServiceModule);
 
   app.setGlobalPrefix("orders");
+
+  app.enableCors({
+    origin: ["http://localhost:5173", "http://localhost:5174"],
+    credentials: true,
+  });
 
   // SWAGGER CONFIGURATION
   const config = new DocumentBuilder()
@@ -47,5 +52,10 @@ async function bootstrap() {
   await app.listen(PORT, () => {
     console.log("Order service is running at " + PORT);
   });
+
+  //  Microservice Connection
+  const rmqService = app.get<RmqService>(RmqService);
+  app.connectMicroservice<RmqOptions>(rmqService.getOptions("ORDER_SERVICE"));
+  await app.startAllMicroservices();
 }
 bootstrap();

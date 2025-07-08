@@ -6,34 +6,40 @@ export declare class LikedProductController {
     constructor(likedProductService: LikedProductService);
     create(req: Request, createLikedProductDto: CreateLikedProductDto): Promise<{
         id: string;
-        createdAt: Date;
-        productId: string;
         userId: string | null;
+        productId: string;
+        createdAt: Date;
     } | {
         message: string;
     }>;
     findAll(req: Request): Promise<({
         product: {
-            description: string;
+            product_images: {
+                id: string;
+                productId: string;
+                imageUrl: string;
+            }[];
+        } & {
             id: string;
+            createdAt: Date;
             product_name: string;
-            price: number;
+            description: string;
             oldPrice: number;
+            price: number;
             quantity: number;
-            categoryId: string;
-            brandId: string;
             color: string[];
             filters: import("@prisma/client/runtime/library").JsonValue;
-            product_status: import("@prisma/client").$Enums.ProductStatus;
             ordered: string[];
-            createdAt: Date;
+            categoryId: string;
+            brandId: string;
+            product_status: import("@prisma/client").$Enums.ProductStatus;
             updatedAt: Date;
         };
     } & {
         id: string;
-        createdAt: Date;
-        productId: string;
         userId: string | null;
+        productId: string;
+        createdAt: Date;
     })[]>;
     remove(req: Request, id: string): Promise<{
         message: string;

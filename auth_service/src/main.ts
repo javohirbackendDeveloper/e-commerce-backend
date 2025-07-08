@@ -50,7 +50,7 @@ async function bootstrap() {
     .setTitle("auth_service")
     .setVersion("1.0.0")
     .addServer(
-      `http://localhost:${process.env.PORT || 8080}`,
+      `http://localhost:${process.env.PORT || 4001}`,
       "Local Development"
     )
     .addServer("https://e-commerce-backend-2-xcpq.onrender.com", "Production")
