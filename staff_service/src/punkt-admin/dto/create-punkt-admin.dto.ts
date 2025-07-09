@@ -11,12 +11,12 @@ export class CreatePunktAdminDto {
   username: string;
 
   @IsString()
-  @IsOptional()
-  punktId?: string;
-
-  @IsString()
   @IsNotEmpty()
   password: string;
+
+  @IsString()
+  @IsOptional()
+  punktId?: string;
 
   @IsString()
   @IsOptional()
@@ -29,4 +29,14 @@ export class CreatePunktAdminDto {
   @IsPhoneNumber()
   @IsNotEmpty()
   phone_number: string;
+}
+
+export class EnterAccountDto {
+  @IsString()
+  @IsNotEmpty()
+  username: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
 }

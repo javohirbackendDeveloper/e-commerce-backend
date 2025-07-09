@@ -11,6 +11,8 @@ export declare class OrderController {
     create(req: Request, dto: CreateOrderDto): Promise<{
         id: string;
         userId: string;
+        createdAt: Date;
+        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -23,12 +25,12 @@ export declare class OrderController {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     getUserOrders(query: Prisma.OrdersWhereInput, req: Request): Promise<{
         id: string;
         userId: string;
+        createdAt: Date;
+        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -41,12 +43,12 @@ export declare class OrderController {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
-        createdAt: Date;
-        updatedAt: Date;
     }[]>;
     update(req: Request, id: string, dto: UpdateOrderDto): Promise<{
         id: string;
         userId: string;
+        createdAt: Date;
+        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -59,8 +61,6 @@ export declare class OrderController {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     isExistLocation(lat: string, lng: string): Promise<{
         exists: boolean;
@@ -69,6 +69,8 @@ export declare class OrderController {
     findPunktOrders(query: Prisma.OrdersWhereInput, req: Request): Promise<{
         id: string;
         userId: string;
+        createdAt: Date;
+        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -81,12 +83,12 @@ export declare class OrderController {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
-        createdAt: Date;
-        updatedAt: Date;
     }[]>;
     updateForPunktAdmin(req: Request, id: string, dto: UpdateOrderDtoForPunktAdmin): Promise<{
         id: string;
         userId: string;
+        createdAt: Date;
+        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -99,17 +101,15 @@ export declare class OrderController {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     getAllOrders(query: Prisma.OrdersWhereInput, req: Request): Promise<({
         orderItems: {
             id: string;
             userId: string;
-            createdAt: Date;
-            updatedAt: Date;
             quantity: number;
             productId: string;
+            createdAt: Date;
+            updatedAt: Date;
             product_name: string;
             product_image: string;
             price: number;
@@ -118,6 +118,8 @@ export declare class OrderController {
     } & {
         id: string;
         userId: string;
+        createdAt: Date;
+        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -130,8 +132,6 @@ export declare class OrderController {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
-        createdAt: Date;
-        updatedAt: Date;
     })[]>;
     getYearOrders(query: GetOrdersByYear): Promise<import("./dto/monthlyData.dto").MonthlyDataDto>;
     getMonthOrders(query: GetOrdersByMonth): Promise<Record<string, number>>;
@@ -150,6 +150,8 @@ export declare class OrderController {
     updateForAdmin(id: string, dto: UpdateOrderDtoForPunktAdmin): Promise<{
         id: string;
         userId: string;
+        createdAt: Date;
+        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -162,8 +164,6 @@ export declare class OrderController {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     deleteLocation(id: string): Promise<{
         id: string;
@@ -175,10 +175,10 @@ export declare class OrderController {
         orderItems: {
             id: string;
             userId: string;
-            createdAt: Date;
-            updatedAt: Date;
             quantity: number;
             productId: string;
+            createdAt: Date;
+            updatedAt: Date;
             product_name: string;
             product_image: string;
             price: number;
@@ -187,6 +187,8 @@ export declare class OrderController {
     } & {
         id: string;
         userId: string;
+        createdAt: Date;
+        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -199,17 +201,15 @@ export declare class OrderController {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     get_ordered_products(userId: string): Promise<{
         orderItems: {
             id: string;
             userId: string;
-            createdAt: Date;
-            updatedAt: Date;
             quantity: number;
             productId: string;
+            createdAt: Date;
+            updatedAt: Date;
             product_name: string;
             product_image: string;
             price: number;

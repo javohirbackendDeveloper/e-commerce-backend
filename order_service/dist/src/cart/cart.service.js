@@ -206,8 +206,10 @@ let CartService = class CartService {
             throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    async payment(req, res) {
+    async payment(paymentDto, req, res) {
         try {
+            const { totalPrice } = paymentDto;
+            console.log({ totalPrice });
             const userId = req.headers["x_user_id"];
             const products = await this.findAll(req);
             const lineItems = products.cartItemsWithProduct.map((product) => {
@@ -219,7 +221,7 @@ let CartService = class CartService {
                             name: product.product_name,
                             images: [(_a = product.product_images[0]) === null || _a === void 0 ? void 0 : _a.imageUrl],
                         },
-                        unit_amount: Math.round((product.price / 12500) * 100),
+                        unit_amount: Math.round((totalPrice / 12500) * 100),
                     },
                     quantity: product.purchasedQuantity,
                 });

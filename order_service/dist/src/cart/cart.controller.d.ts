@@ -2,6 +2,7 @@ import { CartService } from "./cart.service";
 import { CreateCartDto } from "./dto/create-cart.dto";
 import { UpdateCartDto } from "./dto/update-cart.dto";
 import { Request, Response } from "express";
+import { PaymentDto } from "./dto/payment.dto";
 export declare class CartController {
     private readonly cartService;
     constructor(cartService: CartService);
@@ -35,5 +36,5 @@ export declare class CartController {
         createdAt: Date;
         updatedAt: Date;
     }>;
-    payment(req: Request, res: Response): Promise<void>;
+    payment(data: PaymentDto, req: Request, res: Response): Promise<void>;
 }

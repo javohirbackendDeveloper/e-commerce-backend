@@ -8,7 +8,10 @@ import {
   Delete,
 } from "@nestjs/common";
 import { PunktAdminService } from "./punkt-admin.service";
-import { CreatePunktAdminDto } from "./dto/create-punkt-admin.dto";
+import {
+  CreatePunktAdminDto,
+  EnterAccountDto,
+} from "./dto/create-punkt-admin.dto";
 import { UpdatePunktAdminDto } from "./dto/update-punkt-admin.dto";
 import { MessagePattern, Payload } from "@nestjs/microservices";
 import { ApiTags, ApiOperation, ApiParam } from "@nestjs/swagger";
@@ -62,7 +65,6 @@ export class PunktAdminController {
 
   @MessagePattern("get_one_punktAdmin")
   async getOne(@Payload() id: string) {
-    console.log("Message came to staff_controller ", id);
     return this.punktAdminService.findOne(id);
   }
 

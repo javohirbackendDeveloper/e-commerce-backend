@@ -1,4 +1,4 @@
-import { CreatePunktAdminDto } from "./dto/create-punkt-admin.dto";
+import { CreatePunktAdminDto, EnterAccountDto } from "./dto/create-punkt-admin.dto";
 import { UpdatePunktAdminDto } from "./dto/update-punkt-admin.dto";
 import { PrismaService } from "../../prisma/prisma.service";
 import { PunktAdmin } from "@prisma/client";
@@ -14,6 +14,17 @@ export declare class PunktAdminService {
         last_name: string | null;
         phone_number: string;
         role: import("@prisma/client").$Enums.Roles;
+    }>;
+    enterToAccount(enterToAccountDto: EnterAccountDto): Promise<{
+        otherData: {
+            id: string;
+            username: string;
+            punktId: string | null;
+            first_name: string | null;
+            last_name: string | null;
+            phone_number: string;
+            role: import("@prisma/client").$Enums.Roles;
+        };
     }>;
     findAll(): string;
     findOne(id: string): Promise<PunktAdmin>;

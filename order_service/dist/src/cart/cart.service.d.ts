@@ -5,6 +5,7 @@ import { ClientProxy } from "@nestjs/microservices";
 import { ReturnTotals } from "./dto/return.dto";
 import { PrismaService } from "prisma/prisma.service";
 import { CartItem } from "@prisma/client";
+import { PaymentDto } from "./dto/payment.dto";
 export declare class CartService {
     private readonly prismService;
     private readonly orderClient;
@@ -33,5 +34,5 @@ export declare class CartService {
         grandPrice: any;
     }>;
     removeAll(req: Request): Promise<import("@prisma/client").Prisma.BatchPayload>;
-    payment(req: Request, res: Response): Promise<void>;
+    payment(paymentDto: PaymentDto, req: Request, res: Response): Promise<void>;
 }

@@ -8,6 +8,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PunktAdminService = void 0;
 const common_1 = require("@nestjs/common");
@@ -29,6 +40,26 @@ let PunktAdminService = class PunktAdminService {
             data: Object.assign({}, createPunktAdminDto),
         });
         return punktAdmin;
+    }
+    async enterToAccount(enterToAccountDto) {
+        try {
+            const { password, username } = enterToAccountDto;
+            const existAdmin = await this.prismaService.punktAdmin.findUnique({
+                where: { username },
+            });
+            if (!existAdmin) {
+                throw new common_1.HttpException("This punkt admin not found with this username", common_1.HttpStatus.BAD_REQUEST);
+            }
+            const { password: passwordOfAdmin } = existAdmin, otherData = __rest(existAdmin, ["password"]);
+            const passwordChecker = password === existAdmin.password ? true : false;
+            if (!passwordChecker) {
+                throw new common_1.HttpException("You are entering invalid password", common_1.HttpStatus.BAD_REQUEST);
+            }
+            return { otherData };
+        }
+        catch (err) {
+            throw new common_1.HttpException(err.message || "Internal server error", err.statusCode || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     findAll() {
         return `This action returns all punktAdmin`;

@@ -1,5 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { CreatePunktAdminDto } from "./dto/create-punkt-admin.dto";
+import {
+  CreatePunktAdminDto,
+  EnterAccountDto,
+} from "./dto/create-punkt-admin.dto";
 import { UpdatePunktAdminDto } from "./dto/update-punkt-admin.dto";
 import { PrismaService } from "../../prisma/prisma.service";
 import { PunktAdmin } from "@prisma/client";

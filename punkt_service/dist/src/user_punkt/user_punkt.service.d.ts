@@ -15,15 +15,15 @@ export declare class UserPunktService {
             punktId: string;
         }[];
     } & {
+        city: string;
+        name: string;
         id: string;
         canTryOn: boolean;
-        name: string;
         isActive: boolean;
         locationText: string;
         locationLongitude: number;
         locationLatitude: number;
         region: string;
-        city: string;
         punktAdminId: string;
         couriers: string[];
         createdAt: Date;

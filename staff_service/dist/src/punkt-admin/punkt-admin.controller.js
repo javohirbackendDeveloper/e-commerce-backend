@@ -26,6 +26,9 @@ let PunktAdminController = class PunktAdminController {
     create(createPunktAdminDto) {
         return this.punktAdminService.create(createPunktAdminDto);
     }
+    enterToAccount(enterAccountDto) {
+        return this.punktAdminService.enterToAccount(enterAccountDto);
+    }
     findAll() {
         return this.punktAdminService.findAll();
     }
@@ -39,7 +42,6 @@ let PunktAdminController = class PunktAdminController {
         return this.punktAdminService.remove(+id);
     }
     async getOne(id) {
-        console.log("Message came to staff_controller ", id);
         return this.punktAdminService.findOne(id);
     }
     async updateOne(payload) {
@@ -56,6 +58,14 @@ __decorate([
     __metadata("design:paramtypes", [create_punkt_admin_dto_1.CreatePunktAdminDto]),
     __metadata("design:returntype", void 0)
 ], PunktAdminController.prototype, "create", null);
+__decorate([
+    (0, common_1.Post)("enterToAccount"),
+    (0, swagger_1.ApiOperation)({ summary: "Create a new punkt admin" }),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_punkt_admin_dto_1.EnterAccountDto]),
+    __metadata("design:returntype", void 0)
+], PunktAdminController.prototype, "enterToAccount", null);
 __decorate([
     (0, common_1.Get)(),
     (0, swagger_1.ApiOperation)({ summary: "Get all punkt admins" }),

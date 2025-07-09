@@ -3,6 +3,7 @@ import { CreateCouponDto } from "./dto/create-coupon.dto";
 import { UpdateCouponDto } from "./dto/update-coupon.dto";
 import { PrismaService } from "prisma/prisma.service";
 import { Coupon } from "@prisma/client";
+import { UseCouponDto } from "./dto/useCoupon.dto";
 
 @Injectable()
 export class CouponsService {
@@ -50,6 +51,38 @@ export class CouponsService {
     }
   }
 
+  async findByCode(data: UseCouponDto) {
+    try {
+      const { code, totalPrice } = data;
+
+      const coupon = await this.prismaService.coupon.findUnique({
+        where: {
+          code,
+          status: "FAOL",
+          end_date: { gte: new Date() },
+          usage_limit: { gte: 0 },
+        },
+      });
+
+      if (!coupon) {
+        return { message: "Bunday promokod mavjud emas", success: false };
+      }
+
+      if (coupon.min_order_amount > totalPrice) {
+        return {
+          message: `Siz bu promokoddan foydalanish uchun kamida ${coupon.min_order_amount.toLocaleString()} so'mlik harid qilishingiz kerak`,
+          success: false,
+        };
+      }
+
+      return { success: true, ...coupon };
+    } catch (err) {
+      throw new HttpException(
+        err.message || "Internal server error",
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
   async findAll(): Promise<Coupon[]> {
     try {
       const coupons = await this.prismaService.coupon.findMany();

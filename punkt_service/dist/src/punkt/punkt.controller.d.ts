@@ -5,6 +5,7 @@ export declare class PunktController {
     private readonly punktService;
     constructor(punktService: PunktService);
     create(createPunktDto: CreatePunktDto): Promise<{
+        city: string;
         name: string;
         id: string;
         canTryOn: boolean;
@@ -13,13 +14,13 @@ export declare class PunktController {
         locationLongitude: number;
         locationLatitude: number;
         region: string;
-        city: string;
         punktAdminId: string;
         couriers: string[];
         createdAt: Date;
         updatedAt: Date;
     }>;
     findAll(): Promise<{
+        city: string;
         name: string;
         id: string;
         canTryOn: boolean;
@@ -28,13 +29,13 @@ export declare class PunktController {
         locationLongitude: number;
         locationLatitude: number;
         region: string;
-        city: string;
         punktAdminId: string;
         couriers: string[];
         createdAt: Date;
         updatedAt: Date;
     }[]>;
     findOne(id: string): Promise<{
+        city: string;
         name: string;
         id: string;
         canTryOn: boolean;
@@ -43,7 +44,6 @@ export declare class PunktController {
         locationLongitude: number;
         locationLatitude: number;
         region: string;
-        city: string;
         punktAdminId: string;
         couriers: string[];
         createdAt: Date;
@@ -52,6 +52,7 @@ export declare class PunktController {
     update(id: string, updatePunktDto: UpdatePunktDto): string;
     remove(id: string): string;
     getOne(id: string): Promise<{
+        city: string;
         name: string;
         id: string;
         canTryOn: boolean;
@@ -60,13 +61,13 @@ export declare class PunktController {
         locationLongitude: number;
         locationLatitude: number;
         region: string;
-        city: string;
         punktAdminId: string;
         couriers: string[];
         createdAt: Date;
         updatedAt: Date;
     }>;
     getAll(): Promise<{
+        city: string;
         name: string;
         id: string;
         canTryOn: boolean;
@@ -75,7 +76,6 @@ export declare class PunktController {
         locationLongitude: number;
         locationLatitude: number;
         region: string;
-        city: string;
         punktAdminId: string;
         couriers: string[];
         createdAt: Date;

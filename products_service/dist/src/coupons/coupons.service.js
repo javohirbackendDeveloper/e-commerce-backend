@@ -38,6 +38,32 @@ let CouponsService = class CouponsService {
             throw new common_1.HttpException(err.message || "Internal server error", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    async findByCode(data) {
+        try {
+            const { code, totalPrice } = data;
+            const coupon = await this.prismaService.coupon.findUnique({
+                where: {
+                    code,
+                    status: "FAOL",
+                    end_date: { gte: new Date() },
+                    usage_limit: { gte: 0 },
+                },
+            });
+            if (!coupon) {
+                return { message: "Bunday promokod mavjud emas", success: false };
+            }
+            if (coupon.min_order_amount > totalPrice) {
+                return {
+                    message: `Siz bu promokoddan foydalanish uchun kamida ${coupon.min_order_amount.toLocaleString()} so'mlik harid qilishingiz kerak`,
+                    success: false,
+                };
+            }
+            return Object.assign({ success: true }, coupon);
+        }
+        catch (err) {
+            throw new common_1.HttpException(err.message || "Internal server error", common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     async findAll() {
         try {
             const coupons = await this.prismaService.coupon.findMany();

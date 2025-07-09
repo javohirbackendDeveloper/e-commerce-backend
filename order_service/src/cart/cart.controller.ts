@@ -21,6 +21,7 @@ import {
   ApiBody,
   ApiCookieAuth,
 } from "@nestjs/swagger";
+import { PaymentDto } from "./dto/payment.dto";
 
 @ApiTags("Cart")
 @ApiCookieAuth()
@@ -94,7 +95,7 @@ export class CartController {
   @ApiOperation({ summary: "Create Stripe checkout session" })
   @ApiResponse({ status: 200, description: "Checkout session created" })
   @ApiResponse({ status: 401, description: "Unauthorized" })
-  payment(@Req() req: Request, @Res() res: Response) {
-    return this.cartService.payment(req, res);
+  payment(@Body() data: PaymentDto, @Req() req: Request, @Res() res: Response) {
+    return this.cartService.payment(data, req, res);
   }
 }

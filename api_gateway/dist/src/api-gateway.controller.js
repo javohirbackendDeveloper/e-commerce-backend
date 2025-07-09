@@ -63,6 +63,9 @@ let ApiGatewayController = class ApiGatewayController {
             else if (url.startsWith("/products/liked-product")) {
                 isAuthorized = await this.validateToken(req, "User");
             }
+            else if (url.startsWith("/products/coupon/findByCode")) {
+                isAuthorized = await this.validateToken(req, "User");
+            }
             else {
                 isAuthorized = await this.validateToken(req, "Admin");
             }
@@ -111,7 +114,12 @@ let ApiGatewayController = class ApiGatewayController {
         }
         else if (url.startsWith("/staff")) {
             target = process.env.STAFF_SERVICE_URL;
-            isAuthorized = await this.validateToken(req, "Admin");
+            if (url.startsWith("/staff/punkt-admin/enterToAccount")) {
+                isAuthorized = true;
+            }
+            else {
+                isAuthorized = await this.validateToken(req, "Admin");
+            }
         }
         else if (url.startsWith("/punktbot")) {
             target = process.env.PUNKTBOT_URL;

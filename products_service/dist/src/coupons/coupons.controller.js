@@ -18,6 +18,7 @@ const coupons_service_1 = require("./coupons.service");
 const create_coupon_dto_1 = require("./dto/create-coupon.dto");
 const update_coupon_dto_1 = require("./dto/update-coupon.dto");
 const swagger_1 = require("@nestjs/swagger");
+const useCoupon_dto_1 = require("./dto/useCoupon.dto");
 let CouponsController = class CouponsController {
     constructor(couponsService) {
         this.couponsService = couponsService;
@@ -27,6 +28,9 @@ let CouponsController = class CouponsController {
     }
     findAll() {
         return this.couponsService.findAll();
+    }
+    findByCode(data) {
+        return this.couponsService.findByCode(data);
     }
     findOne(id) {
         return this.couponsService.findOne(id);
@@ -57,6 +61,15 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], CouponsController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Post)("findByCode"),
+    (0, swagger_1.ApiOperation)({ summary: "Bitta kuponni code orqali olish" }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: "Kupon by code" }),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [useCoupon_dto_1.UseCouponDto]),
+    __metadata("design:returntype", void 0)
+], CouponsController.prototype, "findByCode", null);
 __decorate([
     (0, common_1.Get)(":id"),
     (0, swagger_1.ApiOperation)({ summary: "ID bo'yicha kuponni olish" }),

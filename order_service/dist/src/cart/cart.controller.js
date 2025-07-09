@@ -18,6 +18,7 @@ const cart_service_1 = require("./cart.service");
 const create_cart_dto_1 = require("./dto/create-cart.dto");
 const update_cart_dto_1 = require("./dto/update-cart.dto");
 const swagger_1 = require("@nestjs/swagger");
+const payment_dto_1 = require("./dto/payment.dto");
 let CartController = class CartController {
     constructor(cartService) {
         this.cartService = cartService;
@@ -40,8 +41,8 @@ let CartController = class CartController {
     remove(req, id) {
         return this.cartService.remove(id, req);
     }
-    payment(req, res) {
-        return this.cartService.payment(req, res);
+    payment(data, req, res) {
+        return this.cartService.payment(data, req, res);
     }
 };
 exports.CartController = CartController;
@@ -124,10 +125,11 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: "Create Stripe checkout session" }),
     (0, swagger_1.ApiResponse)({ status: 200, description: "Checkout session created" }),
     (0, swagger_1.ApiResponse)({ status: 401, description: "Unauthorized" }),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
+    __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [payment_dto_1.PaymentDto, Object, Object]),
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "payment", null);
 exports.CartController = CartController = __decorate([

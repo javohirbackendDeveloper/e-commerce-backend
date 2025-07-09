@@ -17,6 +17,7 @@ import {
   ApiBody,
   ApiParam,
 } from "@nestjs/swagger";
+import { UseCouponDto } from "./dto/useCoupon.dto";
 
 @ApiTags("products_service/coupon")
 @Controller("coupon")
@@ -36,6 +37,13 @@ export class CouponsController {
   @ApiResponse({ status: 200, description: "Kuponlar ro'yxati" })
   findAll() {
     return this.couponsService.findAll();
+  }
+
+  @Post("findByCode")
+  @ApiOperation({ summary: "Bitta kuponni code orqali olish" })
+  @ApiResponse({ status: 200, description: "Kupon by code" })
+  findByCode(@Body() data: UseCouponDto) {
+    return this.couponsService.findByCode(data);
   }
 
   @Get(":id")

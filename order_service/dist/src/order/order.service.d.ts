@@ -34,10 +34,10 @@ export declare class OrderService {
         orderItems: {
             id: string;
             userId: string;
-            createdAt: Date;
-            updatedAt: Date;
             quantity: number;
             productId: string;
+            createdAt: Date;
+            updatedAt: Date;
             product_name: string;
             product_image: string;
             price: number;
@@ -46,6 +46,8 @@ export declare class OrderService {
     } & {
         id: string;
         userId: string;
+        createdAt: Date;
+        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -58,17 +60,15 @@ export declare class OrderService {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
-        createdAt: Date;
-        updatedAt: Date;
     })[]>;
     getOneOrder(orderId: string): Promise<{
         orderItems: {
             id: string;
             userId: string;
-            createdAt: Date;
-            updatedAt: Date;
             quantity: number;
             productId: string;
+            createdAt: Date;
+            updatedAt: Date;
             product_name: string;
             product_image: string;
             price: number;
@@ -77,6 +77,8 @@ export declare class OrderService {
     } & {
         id: string;
         userId: string;
+        createdAt: Date;
+        updatedAt: Date;
         status: import("@prisma/client").$Enums.OrderStatus;
         totalPrice: number;
         deliveringType: import("@prisma/client").$Enums.DeliveringType;
@@ -89,8 +91,6 @@ export declare class OrderService {
         recipient_lastname: string;
         recipient_phone: string;
         deliverTime: Date;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     getYearOrders(query: GetOrdersByYear): Promise<MonthlyDataDto>;
     getMonthOrders(query: GetOrdersByMonth): Promise<Record<string, number>>;
@@ -120,10 +120,10 @@ export declare class OrderService {
         orderItems: {
             id: string;
             userId: string;
-            createdAt: Date;
-            updatedAt: Date;
             quantity: number;
             productId: string;
+            createdAt: Date;
+            updatedAt: Date;
             product_name: string;
             product_image: string;
             price: number;

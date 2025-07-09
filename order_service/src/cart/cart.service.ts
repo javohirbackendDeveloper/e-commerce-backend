@@ -8,6 +8,7 @@ import { ReturnTotals } from "./dto/return.dto";
 import Stripe from "stripe";
 import { PrismaService } from "prisma/prisma.service";
 import { CartItem } from "@prisma/client";
+import { PaymentDto } from "./dto/payment.dto";
 
 const stripe = new Stripe(
   "sk_test_51Qg7BF097qSAwIsLIEx7f8HuBZdPToxhyOVQhRlw4MnAdBz3HJrpbzR8dDN93f6vgDWVdeSTHB4hChI5urFDqIeH00FbktL9xS"
@@ -326,8 +327,12 @@ export class CartService {
 
   // payment
 
-  async payment(req: Request, res: Response) {
+  async payment(paymentDto: PaymentDto, req: Request, res: Response) {
     try {
+      const { totalPrice } = paymentDto;
+
+      console.log({ totalPrice });
+
       const userId = req.headers["x_user_id"];
       const products = await this.findAll(req);
 
@@ -338,7 +343,7 @@ export class CartService {
             name: product.product_name,
             images: [product.product_images[0]?.imageUrl],
           },
-          unit_amount: Math.round((product.price / 12500) * 100),
+          unit_amount: Math.round((totalPrice / 12500) * 100),
         },
         quantity: product.purchasedQuantity,
       }));
