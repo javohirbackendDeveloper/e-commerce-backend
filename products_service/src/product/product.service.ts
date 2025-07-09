@@ -197,6 +197,13 @@ export class ProductService {
     try {
       const product = await this.prismaService.product.findUnique({
         where: { id },
+        include: {
+          brand: true,
+          category: true,
+          comments: true,
+          likes: true,
+          product_images: true,
+        },
       });
 
       if (!product) {
@@ -444,15 +451,19 @@ export class ProductService {
     return Array.from(visited);
   }
 
-  async filterProducts(
-    products: Product[],
-    allFilters: FilterQueryDto
-  ): Promise<Product[]> {
-    const { brand, color, starterPrice, endOfPrice, product_status, filters } =
-      allFilters;
+  async filterProducts(allFilters: FilterQueryDto): Promise<Product[]> {
+    const {
+      brand,
+      color,
+      starterPrice,
+      endOfPrice,
+      product_status,
+      filters,
+      categoryId,
+    } = allFilters;
+    console.log({ categoryId });
 
-    console.log({ allFilters });
-
+    const products = await this.getAllProductsByCategory(categoryId);
     const filtered = products.filter((product) => {
       if (
         brand &&
@@ -491,16 +502,9 @@ export class ProductService {
     return filtered;
   }
 
-  async getAllProductsByCategory(
-    categoryId: string,
-    filters: FilterQueryDto,
-    page = 1,
-    limit = 10
-  ): Promise<Product[]> {
+  async getAllProductsByCategory(categoryId: string): Promise<Product[]> {
     const allChildCategoryIds =
       await this.getAllChildCategoryIdsRecursive(categoryId);
-
-    const skip = (page - 1) * limit;
 
     const cacheKey = `all-products-byCategory:${categoryId}`;
 
@@ -509,8 +513,6 @@ export class ProductService {
 
     if (!products?.length) {
       products = await this.prismaService.product.findMany({
-        skip,
-        take: limit * 3,
         where: {
           OR: [{ categoryId: { in: allChildCategoryIds } }, { categoryId }],
         },
@@ -527,11 +529,7 @@ export class ProductService {
       console.log("it is coming from cache", products);
     }
 
-    const filteredProducts = await this.filterProducts(products, filters);
-
-    const paginatedProducts = filteredProducts.slice(skip, skip + limit);
-
-    return paginatedProducts;
+    return products;
   }
 
   async getMinMaxPrices(): Promise<ReturnMinMaxDto> {

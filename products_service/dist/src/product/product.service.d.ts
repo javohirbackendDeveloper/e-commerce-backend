@@ -23,6 +23,40 @@ export declare class ProductService {
     create(createProductDto: CreateProductDto): Promise<Product>;
     findAll(page?: number, limit?: number): Promise<Product[]>;
     findOne(id: string): Promise<{
+        product_images: {
+            id: string;
+            imageUrl: string;
+            productId: string;
+        }[];
+        comments: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            productId: string;
+            title: string;
+            sent_person: string;
+            image: string | null;
+            stars: number;
+            replyMessage: string | null;
+        }[];
+        likes: {
+            id: string;
+            createdAt: Date;
+            productId: string;
+            userId: string | null;
+        }[];
+        category: {
+            id: string;
+            title: string;
+            parentId: string | null;
+            icon: string | null;
+            children: number;
+        };
+        brand: {
+            id: string;
+            name: string;
+        };
+    } & {
         id: string;
         product_name: string;
         description: string;
@@ -73,8 +107,8 @@ export declare class ProductService {
     }>;
     getProductsByIds(productIds: string[]): Promise<Product[]>;
     getAllChildCategoryIdsRecursive(categoryId: string): Promise<string[]>;
-    filterProducts(products: Product[], allFilters: FilterQueryDto): Promise<Product[]>;
-    getAllProductsByCategory(categoryId: string, filters: FilterQueryDto, page?: number, limit?: number): Promise<Product[]>;
+    filterProducts(allFilters: FilterQueryDto): Promise<Product[]>;
+    getAllProductsByCategory(categoryId: string): Promise<Product[]>;
     getMinMaxPrices(): Promise<ReturnMinMaxDto>;
     keepHealthServer(res: Response): Promise<void>;
     reduce_quantity(reduceDto: ReduceQuantity[]): Promise<{

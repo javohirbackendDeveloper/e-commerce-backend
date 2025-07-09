@@ -61,6 +61,8 @@ export class ApiGatewayController {
           (await this.validateToken(req, "Admin"));
       } else if (url.startsWith("/products/category")) {
         isAuthorized = await this.validateToken(req, "Admin");
+      } else if (url.startsWith("/products/product/filter")) {
+        isAuthorized = await this.validateToken(req, "User");
       } else if (url.startsWith("/products/liked-product")) {
         isAuthorized = await this.validateToken(req, "User");
       } else if (url.startsWith("/products/coupon/findByCode")) {

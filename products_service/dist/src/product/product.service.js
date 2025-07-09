@@ -139,6 +139,13 @@ let ProductService = class ProductService {
         try {
             const product = await this.prismaService.product.findUnique({
                 where: { id },
+                include: {
+                    brand: true,
+                    category: true,
+                    comments: true,
+                    likes: true,
+                    product_images: true,
+                },
             });
             if (!product) {
                 throw new common_1.NotFoundException(`Product with ID ${id} not found`);
@@ -309,9 +316,10 @@ let ProductService = class ProductService {
         await collect(categoryId);
         return Array.from(visited);
     }
-    async filterProducts(products, allFilters) {
-        const { brand, color, starterPrice, endOfPrice, product_status, filters } = allFilters;
-        console.log({ allFilters });
+    async filterProducts(allFilters) {
+        const { brand, color, starterPrice, endOfPrice, product_status, filters, categoryId, } = allFilters;
+        console.log({ categoryId });
+        const products = await this.getAllProductsByCategory(categoryId);
         const filtered = products.filter((product) => {
             var _a;
             if (brand &&
@@ -343,16 +351,13 @@ let ProductService = class ProductService {
         });
         return filtered;
     }
-    async getAllProductsByCategory(categoryId, filters, page = 1, limit = 10) {
+    async getAllProductsByCategory(categoryId) {
         const allChildCategoryIds = await this.getAllChildCategoryIdsRecursive(categoryId);
-        const skip = (page - 1) * limit;
         const cacheKey = `all-products-byCategory:${categoryId}`;
         let products;
         products = (await this.cacheManager.get(cacheKey)) || [];
         if (!(products === null || products === void 0 ? void 0 : products.length)) {
             products = await this.prismaService.product.findMany({
-                skip,
-                take: limit * 3,
                 where: {
                     OR: [{ categoryId: { in: allChildCategoryIds } }, { categoryId }],
                 },
@@ -368,9 +373,7 @@ let ProductService = class ProductService {
         else {
             console.log("it is coming from cache", products);
         }
-        const filteredProducts = await this.filterProducts(products, filters);
-        const paginatedProducts = filteredProducts.slice(skip, skip + limit);
-        return paginatedProducts;
+        return products;
     }
     async getMinMaxPrices() {
         try {

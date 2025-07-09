@@ -92,11 +92,8 @@ export class ProductController {
   @ApiOperation({ summary: "Get products by category ID" })
   @ApiParam({ name: "categoryId", description: "Category ID" })
   @ApiResponse({ status: 200, description: "Products of category" })
-  getAllProductsByCategory(
-    @Param("categoryId") categoryId: string,
-    @Query() filter: FilterQueryDto
-  ) {
-    return this.productService.getAllProductsByCategory(categoryId, filter);
+  getAllProductsByCategory(@Param("categoryId") categoryId: string) {
+    return this.productService.getAllProductsByCategory(categoryId);
   }
 
   @Patch(":id")
@@ -148,14 +145,11 @@ export class ProductController {
     return this.productService.getMinMaxPrices();
   }
 
-  @Get("filter")
+  @Post("filter")
   @ApiOperation({ summary: "Filter products with various parameters" })
   @ApiBody({ type: FilterQueryDto })
-  async filterProducts(
-    @Query() filter: FilterQueryDto,
-    @Body() products: Product[]
-  ) {
-    return this.productService.filterProducts(products, filter);
+  async filterProducts(@Body() filters: FilterQueryDto) {
+    return this.productService.filterProducts(filters);
   }
 
   // APIS WITH RABBITMQ

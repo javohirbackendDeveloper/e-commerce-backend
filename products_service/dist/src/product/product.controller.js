@@ -43,8 +43,8 @@ let ProductController = class ProductController {
     findOne(id) {
         return this.productService.findOne(id);
     }
-    getAllProductsByCategory(categoryId, filter) {
-        return this.productService.getAllProductsByCategory(categoryId, filter);
+    getAllProductsByCategory(categoryId) {
+        return this.productService.getAllProductsByCategory(categoryId);
     }
     update(id, updateProductDto) {
         return this.productService.update(id, updateProductDto);
@@ -61,8 +61,8 @@ let ProductController = class ProductController {
     getMinMaxPrices() {
         return this.productService.getMinMaxPrices();
     }
-    async filterProducts(filter, products) {
-        return this.productService.filterProducts(products, filter);
+    async filterProducts(filters) {
+        return this.productService.filterProducts(filters);
     }
     async reduce_products_quantity(updatedProducts) {
         return this.productService.reduce_quantity(updatedProducts);
@@ -130,9 +130,8 @@ __decorate([
     (0, swagger_1.ApiParam)({ name: "categoryId", description: "Category ID" }),
     (0, swagger_1.ApiResponse)({ status: 200, description: "Products of category" }),
     __param(0, (0, common_1.Param)("categoryId")),
-    __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, filterQuery_dto_1.FilterQueryDto]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "getAllProductsByCategory", null);
 __decorate([
@@ -193,13 +192,12 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "getMinMaxPrices", null);
 __decorate([
-    (0, common_1.Get)("filter"),
+    (0, common_1.Post)("filter"),
     (0, swagger_1.ApiOperation)({ summary: "Filter products with various parameters" }),
     (0, swagger_1.ApiBody)({ type: filterQuery_dto_1.FilterQueryDto }),
-    __param(0, (0, common_1.Query)()),
-    __param(1, (0, common_1.Body)()),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [filterQuery_dto_1.FilterQueryDto, Array]),
+    __metadata("design:paramtypes", [filterQuery_dto_1.FilterQueryDto]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "filterProducts", null);
 __decorate([
