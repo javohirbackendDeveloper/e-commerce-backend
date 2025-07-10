@@ -13,7 +13,10 @@ async function bootstrap() {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.enableCors({
-    origin: ["https://e-commerce-admin-panel-indol.vercel.app/"],
+    origin: [
+      "https://e-commerce-admin-panel-indol.vercel.app",
+      "https://tezbuy-user-panel.vercel.app",
+    ],
     credentials: true,
   });
 
