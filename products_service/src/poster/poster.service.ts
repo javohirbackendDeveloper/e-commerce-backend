@@ -20,8 +20,8 @@ export class PosterService {
 
       const poster = await this.prisma.poster.create({
         data: {
-          img: imgUrl,
-          title,
+          img: imgUrl || "",
+          title: title || "",
         },
       });
       return poster;

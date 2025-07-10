@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PosterController = void 0;
 const common_1 = require("@nestjs/common");
 const poster_service_1 = require("./poster.service");
+const platform_express_1 = require("@nestjs/platform-express");
 const swagger_1 = require("@nestjs/swagger");
 class CreatePosterDto {
 }
@@ -22,8 +23,9 @@ let PosterController = class PosterController {
     constructor(posterService) {
         this.posterService = posterService;
     }
-    create(data, file) {
-        return this.posterService.create(data.title, file);
+    create(req, file) {
+        console.log({ data: req.body.title, messa: "request" });
+        return this.posterService.create(req.body.title, file);
     }
     findAll() {
         return this.posterService.findAll();
@@ -38,6 +40,7 @@ let PosterController = class PosterController {
 exports.PosterController = PosterController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)("img")),
     (0, swagger_1.ApiOperation)({ summary: "Yangi poster yaratish" }),
     (0, swagger_1.ApiConsumes)("multipart/form-data"),
     (0, swagger_1.ApiBody)({
@@ -55,10 +58,10 @@ __decorate([
         },
     }),
     (0, swagger_1.ApiResponse)({ status: 201, description: "Poster muvaffaqiyatli yaratildi" }),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [CreatePosterDto, Object]),
+    __metadata("design:paramtypes", [Request, Object]),
     __metadata("design:returntype", void 0)
 ], PosterController.prototype, "create", null);
 __decorate([

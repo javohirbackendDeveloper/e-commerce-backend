@@ -23,8 +23,8 @@ let PosterService = class PosterService {
             const imgUrl = await this.cloudinary.uploadFile(img, "Poster");
             const poster = await this.prisma.poster.create({
                 data: {
-                    img: imgUrl,
-                    title,
+                    img: imgUrl || "",
+                    title: title || "",
                 },
             });
             return poster;

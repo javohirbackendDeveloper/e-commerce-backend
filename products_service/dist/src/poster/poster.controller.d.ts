@@ -1,11 +1,8 @@
 import { PosterService } from "./poster.service";
-declare class CreatePosterDto {
-    title: string;
-}
 export declare class PosterController {
     private readonly posterService;
     constructor(posterService: PosterService);
-    create(data: CreatePosterDto, file: Express.Multer.File): Promise<{
+    create(req: Request, file: Express.Multer.File): Promise<{
         id: string;
         title: string;
         img: string;
@@ -30,4 +27,3 @@ export declare class PosterController {
         sectionId: string | null;
     }>;
 }
-export {};

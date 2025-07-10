@@ -8,6 +8,7 @@ import {
   Body,
   UseInterceptors,
   UploadedFile,
+  Req,
 } from "@nestjs/common";
 import { PosterService } from "./poster.service";
 import { FileInterceptor } from "@nestjs/platform-express";
@@ -30,6 +31,7 @@ export class PosterController {
   constructor(private readonly posterService: PosterService) {}
 
   @Post()
+  @UseInterceptors(FileInterceptor("img"))
   @ApiOperation({ summary: "Yangi poster yaratish" })
   @ApiConsumes("multipart/form-data")
   @ApiBody({
@@ -47,11 +49,10 @@ export class PosterController {
     },
   })
   @ApiResponse({ status: 201, description: "Poster muvaffaqiyatli yaratildi" })
-  create(
-    @Body() data: CreatePosterDto,
-    @UploadedFile() file: Express.Multer.File
-  ) {
-    return this.posterService.create(data.title, file);
+  create(@Req() req: Request, @UploadedFile() file: Express.Multer.File) {
+    console.log({ data: (req.body as any).title, messa: "request" });
+
+    return this.posterService.create((req.body as any).title, file);
   }
 
   @Get()
