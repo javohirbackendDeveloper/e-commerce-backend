@@ -13,6 +13,7 @@ import { HttpService } from "@nestjs/axios";
 import { ConfigService } from "@nestjs/config";
 import { Roles } from "./constants/enum_roles";
 import * as https from "https";
+import * as http from "http";
 
 @Injectable()
 @Controller()
@@ -148,43 +149,31 @@ export class ApiGatewayController {
       }
     }
 
-    // MULTIPART REQUEST
+    // MULTIPART request uchun to‘g‘ridan-to‘g‘ri stream bilan ishlash
     if (req.headers["content-type"]?.includes("multipart/form-data")) {
-      try {
-        const proxiedRequest = await this.httpService.axiosRef.request({
+      const proxyReq = http.request(
+        `${target}${url}`,
+        {
           method,
-          url: `${target}${url}`,
           headers: {
             ...headers,
             x_allowed_origin: process.env.API_GATEWAY_URL,
-            "content-type": req.headers["content-type"]!,
           },
-          data: req,
-          responseType: "stream",
-        });
-
-        const response = await proxiedRequest;
-
-        res.setHeader(
-          "Content-Type",
-          response.headers["content-type"] || "application/json"
-        );
-        if (response.headers["set-cookie"]) {
-          res.setHeader("Set-Cookie", response.headers["set-cookie"]);
+        },
+        (proxyRes) => {
+          res.writeHead(proxyRes.statusCode || 200, proxyRes.headers);
+          proxyRes.pipe(res);
         }
+      );
 
-        return response.data.pipe(res);
-      } catch (error) {
-        console.log(error);
-
-        const status =
-          error.response?.status || HttpStatus.INTERNAL_SERVER_ERROR;
-        const message = error.response?.data?.message || "Internal error";
-        return res.status(status).json({ message, status });
-      }
+      req.pipe(proxyReq);
+      proxyReq.on("error", (err) => {
+        console.error("Proxy error:", err);
+        res.status(500).json({ message: "Internal Proxy Error" });
+      });
+      return;
     }
 
-    // JSON va boshqa content-type uchun:
     const data = req.body;
 
     try {

@@ -20,6 +20,7 @@ const axios_1 = require("@nestjs/axios");
 const config_1 = require("@nestjs/config");
 const enum_roles_1 = require("./constants/enum_roles");
 const https = require("https");
+const http = require("http");
 let ApiGatewayController = class ApiGatewayController {
     constructor(configService, httpService) {
         this.configService = configService;
@@ -40,7 +41,7 @@ let ApiGatewayController = class ApiGatewayController {
         }
     }
     async proxy(req, res) {
-        var _a, _b, _c, _d, _e, _f, _g;
+        var _a, _b, _c, _d;
         const url = req.url;
         const method = req.method;
         let isAuthorized = false;
@@ -152,31 +153,23 @@ let ApiGatewayController = class ApiGatewayController {
                         headers["x_user_role"] = decoded.role;
                     }
                 }
-                catch (_h) { }
+                catch (_e) { }
             }
         }
         if ((_a = req.headers["content-type"]) === null || _a === void 0 ? void 0 : _a.includes("multipart/form-data")) {
-            try {
-                const proxiedRequest = await this.httpService.axiosRef.request({
-                    method,
-                    url: `${target}${url}`,
-                    headers: Object.assign(Object.assign({}, headers), { x_allowed_origin: process.env.API_GATEWAY_URL, "content-type": req.headers["content-type"] }),
-                    data: req,
-                    responseType: "stream",
-                });
-                const response = await proxiedRequest;
-                res.setHeader("Content-Type", response.headers["content-type"] || "application/json");
-                if (response.headers["set-cookie"]) {
-                    res.setHeader("Set-Cookie", response.headers["set-cookie"]);
-                }
-                return response.data.pipe(res);
-            }
-            catch (error) {
-                console.log(error);
-                const status = ((_b = error.response) === null || _b === void 0 ? void 0 : _b.status) || common_1.HttpStatus.INTERNAL_SERVER_ERROR;
-                const message = ((_d = (_c = error.response) === null || _c === void 0 ? void 0 : _c.data) === null || _d === void 0 ? void 0 : _d.message) || "Internal error";
-                return res.status(status).json({ message, status });
-            }
+            const proxyReq = http.request(`${target}${url}`, {
+                method,
+                headers: Object.assign(Object.assign({}, headers), { x_allowed_origin: process.env.API_GATEWAY_URL }),
+            }, (proxyRes) => {
+                res.writeHead(proxyRes.statusCode || 200, proxyRes.headers);
+                proxyRes.pipe(res);
+            });
+            req.pipe(proxyReq);
+            proxyReq.on("error", (err) => {
+                console.error("Proxy error:", err);
+                res.status(500).json({ message: "Internal Proxy Error" });
+            });
+            return;
         }
         const data = req.body;
         try {
@@ -196,8 +189,8 @@ let ApiGatewayController = class ApiGatewayController {
             return res.status(response.status).json(response.data);
         }
         catch (error) {
-            const status = ((_e = error.response) === null || _e === void 0 ? void 0 : _e.status) || common_1.HttpStatus.INTERNAL_SERVER_ERROR;
-            const message = ((_g = (_f = error.response) === null || _f === void 0 ? void 0 : _f.data) === null || _g === void 0 ? void 0 : _g.message) || "Internal error";
+            const status = ((_b = error.response) === null || _b === void 0 ? void 0 : _b.status) || common_1.HttpStatus.INTERNAL_SERVER_ERROR;
+            const message = ((_d = (_c = error.response) === null || _c === void 0 ? void 0 : _c.data) === null || _d === void 0 ? void 0 : _d.message) || "Internal error";
             return res.status(status).json({
                 message,
                 status,

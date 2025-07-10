@@ -13,7 +13,10 @@ async function bootstrap() {
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.enableCors({
-        origin: ["http://localhost:5173", "http://localhost:5174"],
+        origin: [
+            "https://e-commerce-admin-panel-indol.vercel.app",
+            "https://tezbuy-user-panel.vercel.app",
+        ],
         credentials: true,
     });
     const mergedSwagger = await (0, swagger_merge_service_1.getMergedSwaggerApis)();

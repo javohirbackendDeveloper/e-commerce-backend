@@ -43,8 +43,8 @@ let UserController = class UserController {
         return this.userService.logoutAdmin(res);
     }
     async getUserByToken(req) {
-        console.log();
         const user = req.user;
+        console.log({ user });
         return user;
     }
     async keepHealthServer(res) {
