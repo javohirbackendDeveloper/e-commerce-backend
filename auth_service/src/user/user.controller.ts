@@ -127,6 +127,8 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   async getUserByToken(@Req() req: Request) {
     const user = (req as any).user;
+    console.log({ user });
+
     return user;
   }
 
