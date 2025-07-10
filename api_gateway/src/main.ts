@@ -13,7 +13,7 @@ async function bootstrap() {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.enableCors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: ["https://e-commerce-admin-panel-indol.vercel.app/"],
     credentials: true,
   });
 
