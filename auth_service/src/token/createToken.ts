@@ -62,7 +62,7 @@ export class CreateToken {
           httpOnly: true,
           secure: false,
           // secure: this.configService.get<string>("NODE_ENV") === "production",
-          sameSite: "lax",
+          sameSite: "strict",
           maxAge: 7 * 24 * 60 * 60 * 1000,
         }
       );
